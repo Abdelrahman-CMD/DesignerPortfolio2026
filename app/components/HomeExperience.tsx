@@ -148,23 +148,245 @@ const personalStory = [
   },
 ] as const;
 
-const storyPhotoPieces = Array.from({ length: 6 }, (_, index) => {
-  const columns = 3;
-  const rows = 2;
-  const column = index % columns;
-  const row = Math.floor(index / columns);
-  const gap = 0.28;
-  const left = column * (100 / columns) + gap;
-  const right = (column + 1) * (100 / columns) - gap;
-  const top = row * (100 / rows) + gap;
-  const bottom = (row + 1) * (100 / rows) - gap;
+type StoryMosaicController = {
+  render: (reveal: number, exit: number) => void;
+  resize: () => void;
+  dispose: () => void;
+};
+
+const clamp01 = (value: number) => Math.max(0, Math.min(1, value));
+
+function createStoryMosaic(
+  canvas: HTMLCanvasElement,
+  fullImage: HTMLElement,
+  source: string,
+  objectPosition: string,
+  direction: number,
+): StoryMosaicController {
+  const stage = canvas.parentElement;
+  let gl: WebGLRenderingContext | null = null;
+  let program: WebGLProgram | null = null;
+  let texture: WebGLTexture | null = null;
+  let image: HTMLImageElement | null = null;
+  let revealProgress = 0;
+  let exitProgress = 0;
+  let disposed = false;
+  let supported = true;
+
+  const parsePosition = () => {
+    const values = objectPosition.trim().split(/\s+/);
+    const toFraction = (value: string | undefined, fallback: number) => {
+      if (!value || value === "center") return fallback;
+      if (value === "top" || value === "left") return 0;
+      if (value === "bottom" || value === "right") return 1;
+      const parsed = Number.parseFloat(value);
+      return Number.isFinite(parsed) ? clamp01(parsed / 100) : fallback;
+    };
+
+    return {
+      x: toFraction(values[0], 0.5),
+      y: toFraction(values[1], values[0]?.includes("%") ? 0.5 : 0.5),
+    };
+  };
+
+  const compileShader = (context: WebGLRenderingContext, type: number, sourceCode: string) => {
+    const shader = context.createShader(type);
+    if (!shader) return null;
+    context.shaderSource(shader, sourceCode);
+    context.compileShader(shader);
+    if (!context.getShaderParameter(shader, context.COMPILE_STATUS)) {
+      context.deleteShader(shader);
+      return null;
+    }
+    return shader;
+  };
+
+  const initialize = () => {
+    if (gl || !supported || disposed) return;
+    gl = canvas.getContext("webgl", {
+      alpha: true,
+      antialias: false,
+      depth: false,
+      premultipliedAlpha: true,
+      preserveDrawingBuffer: false,
+    });
+
+    if (!gl) {
+      supported = false;
+      canvas.classList.add("is-unsupported");
+      return;
+    }
+
+    const vertexShader = compileShader(gl, gl.VERTEX_SHADER, `
+      attribute vec2 aPosition;
+      varying vec2 vUv;
+      void main() {
+        vUv = aPosition * 0.5 + 0.5;
+        gl_Position = vec4(aPosition, 0.0, 1.0);
+      }
+    `);
+    const fragmentShader = compileShader(gl, gl.FRAGMENT_SHADER, `
+      precision mediump float;
+      uniform sampler2D uTexture;
+      uniform vec2 uResolution;
+      uniform vec2 uUvScale;
+      uniform vec2 uUvOffset;
+      uniform float uReveal;
+      uniform float uExit;
+      uniform float uDirection;
+      varying vec2 vUv;
+
+      float randomTile(vec2 tile) {
+        return fract(sin(dot(tile, vec2(12.9898, 78.233))) * 43758.5453);
+      }
+
+      void main() {
+        const float tileSize = 8.0;
+        vec2 pixel = vUv * uResolution;
+        vec2 tile = floor(pixel / tileSize);
+        vec2 tileCount = ceil(uResolution / tileSize);
+        vec2 normalizedTile = (tile + 0.5) / tileCount;
+        float horizontal = uDirection < 0.0 ? normalizedTile.x : 1.0 - normalizedTile.x;
+        float diagonal = (horizontal + (1.0 - normalizedTile.y)) * 0.5;
+        float noise = randomTile(tile);
+        float enterOrder = diagonal * 0.68 + noise * 0.2;
+        float leaveOrder = (1.0 - diagonal) * 0.68 + randomTile(tile + vec2(19.0)) * 0.2;
+        float assembled = smoothstep(enterOrder, enterOrder + 0.08, uReveal);
+        float remaining = 1.0 - smoothstep(leaveOrder, leaveOrder + 0.08, uExit);
+        vec2 imageUv = uUvOffset + vUv * uUvScale;
+        vec4 color = texture2D(uTexture, imageUv);
+        gl_FragColor = vec4(color.rgb, color.a * assembled * remaining);
+      }
+    `);
+
+    if (!vertexShader || !fragmentShader) {
+      supported = false;
+      canvas.classList.add("is-unsupported");
+      return;
+    }
+
+    program = gl.createProgram();
+    if (!program) {
+      supported = false;
+      return;
+    }
+    gl.attachShader(program, vertexShader);
+    gl.attachShader(program, fragmentShader);
+    gl.linkProgram(program);
+    gl.deleteShader(vertexShader);
+    gl.deleteShader(fragmentShader);
+
+    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+      supported = false;
+      canvas.classList.add("is-unsupported");
+      return;
+    }
+
+    const buffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+    gl.bufferData(
+      gl.ARRAY_BUFFER,
+      new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]),
+      gl.STATIC_DRAW,
+    );
+    gl.useProgram(program);
+    const position = gl.getAttribLocation(program, "aPosition");
+    gl.enableVertexAttribArray(position);
+    gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0);
+    gl.disable(gl.DEPTH_TEST);
+    gl.enable(gl.BLEND);
+    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+
+    image = new window.Image();
+    image.decoding = "async";
+    image.onload = () => {
+      if (!gl || !program || !image || disposed) return;
+      texture = gl.createTexture();
+      gl.bindTexture(gl.TEXTURE_2D, texture);
+      gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
+      draw();
+    };
+    image.src = source;
+  };
+
+  const draw = () => {
+    if (!gl || !program || !texture || !image || disposed) return;
+    const rect = canvas.getBoundingClientRect();
+    if (rect.width < 2 || rect.height < 2) return;
+    const pixelRatio = 1;
+    const width = Math.max(1, Math.round(rect.width * pixelRatio));
+    const height = Math.max(1, Math.round(rect.height * pixelRatio));
+    if (canvas.width !== width || canvas.height !== height) {
+      canvas.width = width;
+      canvas.height = height;
+    }
+
+    const canvasAspect = width / height;
+    const imageAspect = image.naturalWidth / image.naturalHeight;
+    const position = parsePosition();
+    let scaleX = 1;
+    let scaleY = 1;
+    let offsetX = 0;
+    let offsetY = 0;
+    if (imageAspect > canvasAspect) {
+      scaleX = canvasAspect / imageAspect;
+      offsetX = (1 - scaleX) * position.x;
+    } else {
+      scaleY = imageAspect / canvasAspect;
+      offsetY = (1 - scaleY) * (1 - position.y);
+    }
+
+    gl.viewport(0, 0, width, height);
+    gl.clearColor(0, 0, 0, 0);
+    gl.clear(gl.COLOR_BUFFER_BIT);
+    gl.useProgram(program);
+    gl.uniform2f(gl.getUniformLocation(program, "uResolution"), width, height);
+    gl.uniform2f(gl.getUniformLocation(program, "uUvScale"), scaleX, scaleY);
+    gl.uniform2f(gl.getUniformLocation(program, "uUvOffset"), offsetX, offsetY);
+    gl.uniform1f(gl.getUniformLocation(program, "uReveal"), revealProgress);
+    gl.uniform1f(gl.getUniformLocation(program, "uExit"), exitProgress);
+    gl.uniform1f(gl.getUniformLocation(program, "uDirection"), direction);
+    gl.drawArrays(gl.TRIANGLES, 0, 6);
+  };
 
   return {
-    clipPath: `polygon(${left}% ${top}%, ${right}% ${top}%, ${right}% ${bottom}%, ${left}% ${bottom}%)`,
-    column,
-    row,
+    render(reveal, exit) {
+      revealProgress = clamp01(reveal);
+      exitProgress = clamp01(exit);
+      if (stage) stage.style.opacity = `${1 - exitProgress}`;
+      if ((revealProgress > 0 || exitProgress > 0) && !gl && supported) initialize();
+
+      if (!supported) {
+        fullImage.style.opacity = `${revealProgress * (1 - exitProgress)}`;
+        return;
+      }
+
+      const showFullImage = revealProgress >= 0.995 && exitProgress <= 0.001;
+      fullImage.style.opacity = showFullImage ? "1" : "0";
+      canvas.style.opacity = showFullImage ? "0" : "1";
+      draw();
+    },
+    resize() {
+      draw();
+    },
+    dispose() {
+      disposed = true;
+      if (gl && texture) gl.deleteTexture(texture);
+      if (gl && program) gl.deleteProgram(program);
+      const loseContext = gl?.getExtension("WEBGL_lose_context");
+      loseContext?.loseContext();
+      gl = null;
+      program = null;
+      texture = null;
+      image = null;
+    },
   };
-});
+}
 
 const workingMethod = [
   {
@@ -210,40 +432,8 @@ export function HomeExperience() {
   useLayoutEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
-    const reduceMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
-
-    if (reduceMotion) {
-      const reducedContext = gsap.context(() => {
-        gsap.set(".story-stop-dot-fill", { scaleY: 1 });
-        gsap.utils.toArray<HTMLElement>(".project-entry").forEach((entry, index) => {
-          ScrollTrigger.create({
-            trigger: entry,
-            start: "top 54%",
-            end: "bottom 46%",
-            onEnter: () => {
-              setActiveProject(index);
-              gsap.set(showcase.current, {
-                backgroundColor: projects[index].bg,
-                color: projects[index].ink,
-              });
-            },
-            onEnterBack: () => {
-              setActiveProject(index);
-              gsap.set(showcase.current, {
-                backgroundColor: projects[index].bg,
-                color: projects[index].ink,
-              });
-            },
-          });
-        });
-      }, root);
-
-      return () => reducedContext.revert();
-    }
-
     let cleanupStoryRoute = () => {};
+    let cleanupStoryMosaics = () => {};
 
     const context = gsap.context(() => {
       const intro = gsap.timeline({ defaults: { ease: "power4.out" } });
@@ -390,6 +580,8 @@ export function HomeExperience() {
         let routeLength = 0;
         let routeProgress = 0;
         let resizeFrame = 0;
+        let dotDistances: number[] = [];
+        let routeSamples: Point[] = [];
 
         const createSmoothPath = (points: Point[]) => {
           if (points.length < 2) return "";
@@ -414,10 +606,60 @@ export function HomeExperience() {
 
         const drawRoute = (progress: number) => {
           if (!routeLength) return;
-          const visibleLength = Math.max(0, Math.min(1, progress)) * routeLength;
-          progressPath.style.strokeDashoffset = `${routeLength - visibleLength}`;
-          const runnerPoint = progressPath.getPointAtLength(visibleLength);
+          const normalizedProgress = clamp01(progress);
+          const visibleLength = normalizedProgress * routeLength;
+          const runnerPoint = basePath.getPointAtLength(visibleLength);
+          const visibleSampleCount = Math.max(
+            1,
+            Math.ceil(normalizedProgress * Math.max(1, routeSamples.length - 1)),
+          );
+          const visibleSamples = routeSamples.slice(0, visibleSampleCount);
+          const partialPath = visibleSamples.length > 0
+            ? `M ${visibleSamples[0].x} ${visibleSamples[0].y}${visibleSamples
+              .slice(1)
+              .map((point) => ` L ${point.x} ${point.y}`)
+              .join("")} L ${runnerPoint.x} ${runnerPoint.y}`
+            : `M ${runnerPoint.x} ${runnerPoint.y}`;
+          progressPath.setAttribute("d", partialPath);
           gsap.set(runner, { x: runnerPoint.x - 7, y: runnerPoint.y - 7 });
+
+          dotDistances.forEach((distance, index) => {
+            const previousDistance = index === 0 ? 0 : dotDistances[index - 1];
+            const approachDistance = Math.max(120, (distance - previousDistance) * 0.42);
+            const fillProgress = clamp01(
+              (visibleLength - (distance - approachDistance)) / approachDistance,
+            );
+            const fill = stops[index]?.querySelector<HTMLElement>(".story-stop-dot-fill");
+            if (fill) gsap.set(fill, { scaleY: fillProgress });
+            stops[index]
+              ?.querySelector<HTMLElement>(".story-stop-dot")
+              ?.classList.toggle("is-current", Math.abs(visibleLength - distance) < 18);
+          });
+        };
+
+        const findClosestDistance = (target: Point) => {
+          const coarseStep = Math.max(8, routeLength / 900);
+          let closestDistance = 0;
+          let closestDelta = Number.POSITIVE_INFINITY;
+          for (let distance = 0; distance <= routeLength; distance += coarseStep) {
+            const point = basePath.getPointAtLength(distance);
+            const delta = (point.x - target.x) ** 2 + (point.y - target.y) ** 2;
+            if (delta < closestDelta) {
+              closestDelta = delta;
+              closestDistance = distance;
+            }
+          }
+          const start = Math.max(0, closestDistance - coarseStep);
+          const end = Math.min(routeLength, closestDistance + coarseStep);
+          for (let distance = start; distance <= end; distance += 1) {
+            const point = basePath.getPointAtLength(distance);
+            const delta = (point.x - target.x) ** 2 + (point.y - target.y) ** 2;
+            if (delta < closestDelta) {
+              closestDelta = delta;
+              closestDistance = distance;
+            }
+          }
+          return closestDistance;
         };
 
         const calculateRoute = () => {
@@ -435,15 +677,21 @@ export function HomeExperience() {
             };
           });
           const points: Point[] = [
-            { x: width * 0.18, y: 0 },
+            { x: width * 0.18, y: Math.min(64, height * 0.015) },
             ...dotPoints,
             { x: width * 0.78, y: height },
           ];
           const pathData = createSmoothPath(points);
           basePath.setAttribute("d", pathData);
           progressPath.setAttribute("d", pathData);
-          routeLength = progressPath.getTotalLength();
-          progressPath.style.strokeDasharray = `${routeLength}`;
+          routeLength = basePath.getTotalLength();
+          routeSamples = Array.from(
+            { length: Math.ceil(routeLength / 12) + 1 },
+            (_, index) => basePath.getPointAtLength(Math.min(routeLength, index * 12)),
+          );
+          dotDistances = dotPoints.map(findClosestDistance);
+          progressPath.style.opacity = "1";
+          runner.style.opacity = "1";
           drawRoute(routeProgress);
         };
 
@@ -474,33 +722,32 @@ export function HomeExperience() {
         };
       }
 
+      const mosaicControllers: StoryMosaicController[] = [];
+
       stops.forEach((stop, storyIndex) => {
-        const pieces = Array.from(
-          stop.querySelectorAll<HTMLElement>(".story-photo-piece"),
-        );
         const copyElements = stop.querySelectorAll<HTMLElement>(
           ".story-stop-copy .label, .story-stop-copy h3, .story-stop-copy > p:last-child",
         );
-        const fill = stop.querySelector<HTMLElement>(".story-stop-dot-fill");
         const note = stop.querySelector<HTMLElement>(".story-margin-note");
         const tape = stop.querySelector<HTMLElement>(".story-tape");
         const photo = stop.querySelector<HTMLElement>(".story-photo");
+        const canvas = stop.querySelector<HTMLCanvasElement>(".story-photo-mosaic");
+        const fullImage = stop.querySelector<HTMLElement>(".story-photo-full");
         const ephemera = [note, tape].filter(
           (element): element is HTMLElement => Boolean(element),
         );
         const direction = storyIndex % 2 === 0 ? -1 : 1;
+        const story = personalStory[storyIndex];
+        const mosaic = canvas && fullImage
+          ? createStoryMosaic(canvas, fullImage, story.image, story.position, direction)
+          : null;
+        let revealProgress = 0;
+        let exitProgress = 0;
 
-        pieces.forEach((piece) => {
-          const column = Number(piece.dataset.column ?? 0);
-          const row = Number(piece.dataset.row ?? 0);
-          gsap.set(piece, {
-            autoAlpha: 0,
-            x: direction * (150 + column * 38),
-            y: -120 + row * 72,
-            rotation: direction * (8 + column * 2) - row * 3,
-            scale: 0.78,
-          });
-        });
+        if (mosaic) {
+          mosaicControllers.push(mosaic);
+          mosaic.render(0, 0);
+        }
 
         const revealTimeline = gsap.timeline({
           scrollTrigger: {
@@ -508,19 +755,13 @@ export function HomeExperience() {
             start: "top 90%",
             end: "48% 57%",
             scrub: 0.75,
+            onUpdate: (self) => {
+              revealProgress = self.progress;
+              mosaic?.render(revealProgress, exitProgress);
+            },
           },
         });
         revealTimeline
-          .to(pieces, {
-            autoAlpha: 1,
-            x: 0,
-            y: 0,
-            rotation: 0,
-            scale: 1,
-            stagger: { each: 0.035, from: direction < 0 ? "end" : "start" },
-            ease: "power3.out",
-            duration: 1,
-          })
           .fromTo(copyElements, {
             autoAlpha: 0,
             y: 55,
@@ -532,7 +773,7 @@ export function HomeExperience() {
             stagger: 0.08,
             ease: "power3.out",
             duration: 0.65,
-          }, 0.28)
+          }, 0.16)
           .fromTo(ephemera, {
             autoAlpha: 0,
             scale: 0.7,
@@ -543,20 +784,7 @@ export function HomeExperience() {
             rotation: 0,
             ease: "back.out(1.5)",
             duration: 0.45,
-          }, 0.44);
-
-        if (fill) {
-          gsap.fromTo(fill, { scaleY: 0 }, {
-            scaleY: 1,
-            ease: "none",
-            scrollTrigger: {
-              trigger: stop,
-              start: "top 82%",
-              end: "top 51%",
-              scrub: true,
-            },
-          });
-        }
+          }, 0.35);
 
         if (photo) {
           gsap.fromTo(photo, {
@@ -575,19 +803,13 @@ export function HomeExperience() {
           });
         }
 
-        gsap.to(pieces, {
-          autoAlpha: 0.06,
-          x: (pieceIndex) => direction * (-95 - (pieceIndex % 3) * 42),
-          y: (pieceIndex) => 80 + Math.floor(pieceIndex / 3) * 52,
-          rotation: (pieceIndex) => direction * (-5 - (pieceIndex % 3) * 2.5),
-          scale: 0.86,
-          stagger: { each: 0.018, from: "center" },
-          ease: "power2.in",
-          scrollTrigger: {
-            trigger: stop,
-            start: "70% 48%",
-            end: "bottom 8%",
-            scrub: 0.8,
+        ScrollTrigger.create({
+          trigger: stop,
+          start: "70% 48%",
+          end: "bottom 8%",
+          onUpdate: (self) => {
+            exitProgress = self.progress;
+            mosaic?.render(revealProgress, exitProgress);
           },
         });
 
@@ -604,6 +826,15 @@ export function HomeExperience() {
           },
         });
       });
+
+      const resizeMosaics = () => mosaicControllers.forEach((controller) => controller.resize());
+      window.addEventListener("resize", resizeMosaics);
+      ScrollTrigger.addEventListener("refreshInit", resizeMosaics);
+      cleanupStoryMosaics = () => {
+        window.removeEventListener("resize", resizeMosaics);
+        ScrollTrigger.removeEventListener("refreshInit", resizeMosaics);
+        mosaicControllers.forEach((controller) => controller.dispose());
+      };
 
       gsap.from(".method-title-line > span", {
         yPercent: 112,
@@ -687,6 +918,7 @@ export function HomeExperience() {
 
     return () => {
       cleanupStoryRoute();
+      cleanupStoryMosaics();
       context.revert();
     };
   }, []);
@@ -902,13 +1134,6 @@ export function HomeExperience() {
 
         <div className="story-route">
           <svg className="story-route-svg" aria-hidden="true" focusable="false" preserveAspectRatio="none">
-            <defs>
-              <linearGradient id="story-route-gradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#ff553a" />
-                <stop offset="58%" stopColor="#e85e3f" />
-                <stop offset="100%" stopColor="#9f543b" />
-              </linearGradient>
-            </defs>
             <path className="story-route-base" />
             <path className="story-route-progress" />
           </svg>
@@ -932,19 +1157,17 @@ export function HomeExperience() {
               </div>
               <figure className="story-photo">
                 <div className="story-photo-stage" role="img" aria-label={story.alt}>
-                  {storyPhotoPieces.map((piece, pieceIndex) => (
-                    <span
-                      className="story-photo-piece"
-                      data-column={piece.column}
-                      data-row={piece.row}
-                      key={`${story.step}-${pieceIndex}`}
-                      style={{
-                        backgroundImage: `url(${story.image})`,
-                        backgroundPosition: story.position,
-                        clipPath: piece.clipPath,
-                      }}
-                    />
-                  ))}
+                  <Image
+                    className="story-photo-full"
+                    src={story.image}
+                    alt=""
+                    aria-hidden="true"
+                    fill
+                    unoptimized
+                    sizes="(max-width: 720px) 88vw, 48vw"
+                    style={{ objectPosition: story.position }}
+                  />
+                  <canvas className="story-photo-mosaic" width="1" height="1" aria-hidden="true" />
                   <span className="story-tape" aria-hidden="true" />
                 </div>
                 <figcaption><span>{story.caption}</span><span>© Abdelrahman</span></figcaption>

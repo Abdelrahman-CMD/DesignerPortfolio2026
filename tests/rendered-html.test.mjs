@@ -35,7 +35,7 @@ test("server-renders the complete portfolio homepage", async () => {
   assert.match(html, /class="method-horizontal"/);
   assert.equal((html.match(/class="project-entry /g) ?? []).length, 6);
   assert.equal((html.match(/class="method-note /g) ?? []).length, 4);
-  assert.doesNotMatch(html, /<canvas\b/i);
+  assert.equal((html.match(/<canvas class="story-photo-mosaic"/g) ?? []).length, 4);
 });
 
 test("uses bounded raster assets on the homepage and case pages", async () => {
@@ -51,10 +51,12 @@ test("uses bounded raster assets on the homepage and case pages", async () => {
   assert.match(caseHtml, /Guidance Travel/);
   assert.match(caseHtml, /case-shots%2Fguidance-overview\.webp/);
 
-  assert.match(homeSource, /Array\.from\(\{ length: 6 \}/);
+  assert.match(homeSource, /className="story-photo-mosaic"/);
+  assert.doesNotMatch(homeSource, /story-photo-piece/);
   assert.match(homeSource, /\/projects\/home\/tareeqi\.webp/);
   assert.match(homeSource, /\/about\/web\/fatherhood\.webp/);
   assert.doesNotMatch(homeSource, /image: "\/projects\/(tareeqi|ayn|guidance|bayn)-overview\.jpg"/);
   assert.match(caseData, /\/projects\/case-shots\/ayn-detail\.webp/);
   assert.doesNotMatch(css, /backdrop-filter:\s*blur/i);
+  assert.doesNotMatch(css, /prefers-reduced-motion:\s*reduce/i);
 });

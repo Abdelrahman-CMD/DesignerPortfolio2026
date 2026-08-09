@@ -1796,7 +1796,8 @@ img {
 }
 
 .story-route-progress {
-  stroke: url(#story-route-gradient);
+  opacity: 0;
+  stroke: #f45136;
   stroke-width: 3.25;
 }
 
@@ -1812,6 +1813,7 @@ img {
   border-radius: 50%;
   background: #fffaf0;
   box-shadow: 0 0 0 6px rgba(244, 81, 54, 0.12);
+  opacity: 0;
   pointer-events: none;
   will-change: transform;
 }
@@ -1866,6 +1868,14 @@ img {
   background: #f8f3e9;
   box-shadow: 0 8px 0 rgba(47, 43, 38, 0.11);
   transform: translate(-50%, -50%);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.story-stop-dot.is-current {
+  box-shadow:
+    0 8px 0 rgba(47, 43, 38, 0.11),
+    0 0 0 8px rgba(244, 81, 54, 0.18);
+  transform: translate(-50%, -50%) scale(1.045);
 }
 
 .story-stop-dot-fill {
@@ -1913,13 +1923,28 @@ img {
   pointer-events: none;
 }
 
-.story-photo-piece {
+.story-photo-full,
+.story-photo-mosaic {
   position: absolute;
   z-index: 2;
   inset: 0;
   display: block;
-  background-repeat: no-repeat;
-  background-size: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.story-photo-full {
+  object-fit: cover;
+  opacity: 0;
+}
+
+.story-photo-mosaic {
+  z-index: 3;
+  pointer-events: none;
+}
+
+.story-photo-mosaic.is-unsupported {
+  display: none;
 }
 
 .story-photo figcaption {
@@ -3359,56 +3384,4 @@ img {
   .impact-stats > div, .impact-stats > div + div { padding: 1.5rem 0; border-right: 0; border-bottom: 1px solid rgba(249,246,240,0.2); }
   .case-footer { padding: 8vh 1rem 2rem; }
   .case-footer > a { font-size: 13vw; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .story-route-svg,
-  .story-route-runner {
-    display: none;
-  }
-
-  .method-pin {
-    height: auto;
-    overflow: visible;
-  }
-
-  .method-horizontal-meta {
-    position: relative;
-    top: auto;
-    right: auto;
-    left: auto;
-    margin: 0 4vw;
-  }
-
-  .method-horizontal-progress span { transform: scaleX(1); }
-
-  .method-track {
-    display: grid;
-    width: auto;
-    gap: 3rem;
-    padding: 12vh 8vw;
-    transform: none !important;
-    will-change: auto;
-  }
-
-  .method-note {
-    width: auto;
-    min-height: 0;
-    transform: none !important;
-  }
-
-  .method-track-exit { display: none; }
-
-  .story-stop-dot-fill {
-    transform: scaleY(1);
-  }
-
-  *,
-  *::before,
-  *::after {
-    scroll-behavior: auto !important;
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
 }
