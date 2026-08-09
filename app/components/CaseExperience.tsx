@@ -154,7 +154,7 @@ export function CaseExperience() {
           <div className="browser-bar"><i /><i /><i /><span>tareeqi.app</span></div>
           <div className="browser-image">
             <Image
-              src="/projects/site/tareeqi-featured.jpg"
+              src="/projects/home/tareeqi.webp"
               alt="Tareeqi concept gepresenteerd op twee laptops"
               fill
               priority
@@ -315,7 +315,7 @@ export function CaseExperience() {
           <figure className="case-gallery-image reveal-up">
             <div className="case-gallery-media">
               <Image
-                src="/projects/tareeqi-map.jpg"
+                src="/projects/case-shots/tareeqi-map.webp"
                 alt="Tareeqi kaartinterface met filters en lokale plekken"
                 fill
                 sizes="92vw"

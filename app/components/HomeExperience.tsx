@@ -17,8 +17,8 @@ const projects = [
     services: "Strategy · UX/UI · Product concept",
     bg: "#eadfd3",
     ink: "#332a24",
-    image: "/projects/tareeqi-overview.jpg",
-    imagePosition: "top",
+    image: "/projects/home/tareeqi.webp",
+    imagePosition: "center",
     href: "/cases/tareeqi",
   },
   {
@@ -31,8 +31,8 @@ const projects = [
     services: "Strategy · E-commerce · Learning UX",
     bg: "#f2cf82",
     ink: "#401818",
-    image: "/projects/ayn-overview.jpg",
-    imagePosition: "top",
+    image: "/projects/home/ayn.webp",
+    imagePosition: "center",
     href: "/cases/ayn-al-hikmah",
   },
   {
@@ -45,8 +45,8 @@ const projects = [
     services: "Conversion strategy · UX/UI · Web design",
     bg: "#ff9e43",
     ink: "#28231f",
-    image: "/projects/guidance-overview.jpg",
-    imagePosition: "top",
+    image: "/projects/home/guidance.webp",
+    imagePosition: "center",
     href: "/cases/guidance-travel",
   },
   {
@@ -59,8 +59,8 @@ const projects = [
     services: "Editorial strategy · UX/UI · Platform concept",
     bg: "#cbd9cc",
     ink: "#123f37",
-    image: "/projects/bayn-overview.jpg",
-    imagePosition: "top",
+    image: "/projects/home/bayn.webp",
+    imagePosition: "center",
     href: "/cases/bayn-signal",
   },
   {
@@ -73,8 +73,8 @@ const projects = [
     services: "Strategy · UX/UI · Framer design & build",
     bg: "#dae5dd",
     ink: "#0b4a20",
-    image: "/projects/live/hijaman-cups-rose.jpg",
-    imagePosition: "center 58%",
+    image: "/projects/home/hijaman-cups.webp",
+    imagePosition: "center",
     href: "/cases/hijaman-cups",
   },
   {
@@ -87,7 +87,7 @@ const projects = [
     services: "Positioning · UX/UI · Framer design & build",
     bg: "#1c2a3a",
     ink: "#f9fafb",
-    image: "/projects/live/atotz-people.jpg",
+    image: "/projects/home/atotz.webp",
     imagePosition: "center",
     href: "/cases/atotz-detachering",
   },
@@ -99,7 +99,7 @@ const personalStory = [
     kicker: "Wie ik ben",
     title: "Nieuwsgierig van nature. Strategisch uit overtuiging.",
     body: "Ik ben Abdelrahman, senior digital designer en strategisch sparringpartner. Ik gebruik design om complexe vragen terug te brengen tot iets dat mensen begrijpen, vertrouwen en willen gebruiken.",
-    image: "/about/portrait-studio.jpg",
+    image: "/about/web/portrait-studio.webp",
     alt: "Abdelrahman in zijn ontwerpstudio",
     position: "center 35%",
     note: "Curiosity over certainty",
@@ -112,7 +112,7 @@ const personalStory = [
     kicker: "Wat ik doe",
     title: "Eerst de dialoog. Dan de richting. Daarna pas pixels.",
     body: "Mijn beste werk ontstaat niet uit een briefing die meteen dichtgetimmerd is. Ik vraag door, leg aannames op tafel en wacht tot het kwartje valt. Daar, tussen structuur en vrije verbeelding, begint het echte ontwerp.",
-    image: "/about/designing.jpg",
+    image: "/about/web/designing.webp",
     alt: "Abdelrahman werkt aan een digitaal ontwerp achter zijn bureau",
     position: "center",
     note: "Strategy before screens",
@@ -125,7 +125,7 @@ const personalStory = [
     kicker: "Hoe ik blijf groeien",
     title: "Kennis is geen zijpad. Het is onderdeel van mijn vak.",
     body: "Ik blijf lezen, onderzoeken en bouwen. Van designpsychologie en strategie tot techniek en cultuur: nieuwe kennis scherpt mijn blik en voorkomt dat ik steeds hetzelfde antwoord op een nieuwe vraag geef.",
-    image: "/about/learning.jpg",
+    image: "/about/web/learning.webp",
     alt: "Abdelrahman leest The Heart of Design",
     position: "center",
     note: "Stay a student",
@@ -138,7 +138,7 @@ const personalStory = [
     kicker: "En buiten het scherm",
     title: "Oh ja — ik ben natuurlijk ook papa.",
     body: "Vaderschap maakt mijn kijk op verantwoordelijkheid heel concreet. Het herinnert me eraan voor wie we uiteindelijk ontwerpen: echte mensen, met weinig tijd, veel context en een leven dat nooit netjes in een user flow past.",
-    image: "/about/fatherhood.jpg",
+    image: "/about/web/fatherhood.webp",
     alt: "Abdelrahman als vader bij de kinderwagen",
     position: "center 35%",
     note: "Design starts at home",
@@ -148,9 +148,9 @@ const personalStory = [
   },
 ] as const;
 
-const storyPhotoPieces = Array.from({ length: 12 }, (_, index) => {
-  const columns = 4;
-  const rows = 3;
+const storyPhotoPieces = Array.from({ length: 6 }, (_, index) => {
+  const columns = 3;
+  const rows = 2;
   const column = index % columns;
   const row = Math.floor(index / columns);
   const gap = 0.28;
@@ -173,6 +173,7 @@ const workingMethod = [
     title: "Richting ontstaat in de dialoog.",
     body: "Aan tafel met de klant maak ik aannames zichtbaar. We bepalen niet alleen wat er gebouwd moet worden, maar vooral welke verandering het werk moet veroorzaken.",
     tools: "Client sessions · Workshops · Direction",
+    annotation: "Begin met de vraag — niet met de deliverable.",
   },
   {
     number: "02",
@@ -180,6 +181,7 @@ const workingMethod = [
     title: "Desk, field en AI brengen het probleem dichtbij.",
     body: "Ik combineer deskresearch met gesprekken en observaties uit de echte context. AI helpt patronen sneller toetsen en nieuwe vragen formuleren — het oordeel en de richting blijven menselijk.",
     tools: "Desk research · Field research · AI",
+    annotation: "AI versnelt het zoeken. Het oordeel blijft menselijk.",
   },
   {
     number: "03",
@@ -187,6 +189,7 @@ const workingMethod = [
     title: "Van inzicht naar een voelbaar product.",
     body: "In Figma krijgt de ervaring structuur. In Framer of code wordt ze tastbaar, beweeglijk en testbaar. AI versnelt varianten en uitvoering, zonder de ontwerpintentie over te nemen.",
     tools: "Figma · Framer · AI-assisted build",
+    annotation: "Maak het vroeg voelbaar. Dan wordt feedback concreet.",
   },
   {
     number: "04",
@@ -194,6 +197,7 @@ const workingMethod = [
     title: "Check-ins maken van uitvoering een gedeelde regie.",
     body: "Tijdens iedere fase kijken we samen: klopt de richting nog, begrijpen gebruikers dit en draagt iedere keuze bij aan het doel? Zo dirigeer ik het proces én blijft de klant onderdeel van het ontwerp.",
     tools: "Prototype reviews · Check-ins · Iteration",
+    annotation: "Check in. Stel bij. Houd samen koers.",
   },
 ] as const;
 
@@ -201,6 +205,7 @@ export function HomeExperience() {
   const root = useRef<HTMLElement>(null);
   const showcase = useRef<HTMLElement>(null);
   const [activeProject, setActiveProject] = useState(0);
+  const [activeHeroProject, setActiveHeroProject] = useState(0);
 
   useLayoutEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -259,7 +264,7 @@ export function HomeExperience() {
           "-=0.65",
         )
         .from(".hero-rule span", { scaleX: 0, transformOrigin: "left", duration: 1 }, "-=0.7")
-        .from(".hero-orbit", { opacity: 0, scale: 0.72, duration: 1.1 }, "-=1");
+        .from(".hero-case-preview", { opacity: 0, scale: 0.88, rotation: 6, duration: 1.05 }, "-=1");
 
       gsap.to(".hero-copy", {
         opacity: 0.14,
@@ -275,9 +280,10 @@ export function HomeExperience() {
         },
       });
 
-      gsap.to(".hero-orbit", {
-        rotation: 24,
-        scale: 1.12,
+      gsap.to(".hero-case-preview", {
+        yPercent: -8,
+        scale: 0.96,
+        opacity: 0.2,
         ease: "none",
         scrollTrigger: {
           trigger: ".hero",
@@ -371,108 +377,54 @@ export function HomeExperience() {
       });
 
       const route = root.current?.querySelector<HTMLElement>(".story-route");
-      const canvas = route?.querySelector<HTMLCanvasElement>(".story-route-canvas");
+      const routeSvg = route?.querySelector<SVGSVGElement>(".story-route-svg");
+      const basePath = route?.querySelector<SVGPathElement>(".story-route-base");
+      const progressPath = route?.querySelector<SVGPathElement>(".story-route-progress");
       const runner = route?.querySelector<HTMLElement>(".story-route-runner");
       const stops = route
         ? Array.from(route.querySelectorAll<HTMLElement>(".story-stop"))
         : [];
 
-      if (route && canvas && runner && stops.length > 0) {
+      if (route && routeSvg && basePath && progressPath && runner && stops.length > 0) {
         type Point = { x: number; y: number };
-        let samples: Point[] = [];
+        let routeLength = 0;
         let routeProgress = 0;
         let resizeFrame = 0;
 
-        const catmullRom = (
-          point0: Point,
-          point1: Point,
-          point2: Point,
-          point3: Point,
-          amount: number,
-        ): Point => {
-          const amount2 = amount * amount;
-          const amount3 = amount2 * amount;
-          return {
-            x: 0.5 * ((2 * point1.x) + (-point0.x + point2.x) * amount +
-              (2 * point0.x - 5 * point1.x + 4 * point2.x - point3.x) * amount2 +
-              (-point0.x + 3 * point1.x - 3 * point2.x + point3.x) * amount3),
-            y: 0.5 * ((2 * point1.y) + (-point0.y + point2.y) * amount +
-              (2 * point0.y - 5 * point1.y + 4 * point2.y - point3.y) * amount2 +
-              (-point0.y + 3 * point1.y - 3 * point2.y + point3.y) * amount3),
-          };
-        };
-
-        const sampleRoute = (points: Point[]) => {
-          const nextSamples: Point[] = [];
-          const steps = 44;
+        const createSmoothPath = (points: Point[]) => {
+          if (points.length < 2) return "";
+          let path = `M ${points[0].x} ${points[0].y}`;
           for (let index = 0; index < points.length - 1; index += 1) {
-            const point0 = points[Math.max(0, index - 1)];
-            const point1 = points[index];
-            const point2 = points[index + 1];
-            const point3 = points[Math.min(points.length - 1, index + 2)];
-            for (let step = 0; step < steps; step += 1) {
-              nextSamples.push(catmullRom(point0, point1, point2, point3, step / steps));
-            }
+            const previous = points[Math.max(0, index - 1)];
+            const current = points[index];
+            const next = points[index + 1];
+            const after = points[Math.min(points.length - 1, index + 2)];
+            const controlOne = {
+              x: current.x + (next.x - previous.x) / 6,
+              y: current.y + (next.y - previous.y) / 6,
+            };
+            const controlTwo = {
+              x: next.x - (after.x - current.x) / 6,
+              y: next.y - (after.y - current.y) / 6,
+            };
+            path += ` C ${controlOne.x} ${controlOne.y}, ${controlTwo.x} ${controlTwo.y}, ${next.x} ${next.y}`;
           }
-          nextSamples.push(points[points.length - 1]);
-          return nextSamples;
+          return path;
         };
 
         const drawRoute = (progress: number) => {
-          const drawingContext = canvas.getContext("2d");
-          if (!drawingContext || samples.length === 0) return;
-
-          const width = route.clientWidth;
-          const height = route.scrollHeight;
-          drawingContext.clearRect(0, 0, width, height);
-          drawingContext.lineCap = "round";
-          drawingContext.lineJoin = "round";
-
-          drawingContext.beginPath();
-          drawingContext.moveTo(samples[0].x, samples[0].y);
-          samples.slice(1).forEach((point) => drawingContext.lineTo(point.x, point.y));
-          drawingContext.strokeStyle = "rgba(47, 43, 38, 0.17)";
-          drawingContext.lineWidth = 1.25;
-          drawingContext.setLineDash([3, 8]);
-          drawingContext.stroke();
-
-          const finalIndex = Math.max(
-            1,
-            Math.min(samples.length - 1, Math.round(progress * (samples.length - 1))),
-          );
-          const gradient = drawingContext.createLinearGradient(0, 0, 0, height);
-          gradient.addColorStop(0, "#ff553a");
-          gradient.addColorStop(0.58, "#e85e3f");
-          gradient.addColorStop(1, "#9f543b");
-
-          drawingContext.beginPath();
-          drawingContext.moveTo(samples[0].x, samples[0].y);
-          for (let index = 1; index <= finalIndex; index += 1) {
-            const point = samples[index];
-            drawingContext.lineTo(point.x, point.y);
-          }
-          drawingContext.setLineDash([]);
-          drawingContext.strokeStyle = gradient;
-          drawingContext.lineWidth = 3.25;
-          drawingContext.shadowColor = "rgba(244, 81, 54, 0.24)";
-          drawingContext.shadowBlur = 12;
-          drawingContext.stroke();
-          drawingContext.shadowBlur = 0;
-
-          const runnerPoint = samples[finalIndex];
+          if (!routeLength) return;
+          const visibleLength = Math.max(0, Math.min(1, progress)) * routeLength;
+          progressPath.style.strokeDashoffset = `${routeLength - visibleLength}`;
+          const runnerPoint = progressPath.getPointAtLength(visibleLength);
           gsap.set(runner, { x: runnerPoint.x - 7, y: runnerPoint.y - 7 });
         };
 
         const calculateRoute = () => {
-          const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
           const width = route.clientWidth;
           const height = route.scrollHeight;
           const routeRect = route.getBoundingClientRect();
-          canvas.width = Math.max(1, Math.round(width * pixelRatio));
-          canvas.height = Math.max(1, Math.round(height * pixelRatio));
-          canvas.style.width = `${width}px`;
-          canvas.style.height = `${height}px`;
-          canvas.getContext("2d")?.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+          routeSvg.setAttribute("viewBox", `0 0 ${width} ${height}`);
 
           const dotPoints = stops.map((stop) => {
             const dot = stop.querySelector<HTMLElement>(".story-stop-dot");
@@ -487,7 +439,11 @@ export function HomeExperience() {
             ...dotPoints,
             { x: width * 0.78, y: height },
           ];
-          samples = sampleRoute(points);
+          const pathData = createSmoothPath(points);
+          basePath.setAttribute("d", pathData);
+          progressPath.setAttribute("d", pathData);
+          routeLength = progressPath.getTotalLength();
+          progressPath.style.strokeDasharray = `${routeLength}`;
           drawRoute(routeProgress);
         };
 
@@ -621,9 +577,9 @@ export function HomeExperience() {
 
         gsap.to(pieces, {
           autoAlpha: 0.06,
-          x: (pieceIndex) => direction * (-95 - (pieceIndex % 4) * 34),
-          y: (pieceIndex) => 80 + Math.floor(pieceIndex / 4) * 52,
-          rotation: (pieceIndex) => direction * (-5 - (pieceIndex % 4) * 2),
+          x: (pieceIndex) => direction * (-95 - (pieceIndex % 3) * 42),
+          y: (pieceIndex) => 80 + Math.floor(pieceIndex / 3) * 52,
+          rotation: (pieceIndex) => direction * (-5 - (pieceIndex % 3) * 2.5),
           scale: 0.86,
           stagger: { each: 0.018, from: "center" },
           ease: "power2.in",
@@ -665,36 +621,32 @@ export function HomeExperience() {
         scrollTrigger: { trigger: ".method-intro-copy", start: "top 82%" },
       });
 
-      gsap.utils.toArray<HTMLElement>(".method-step").forEach((step, index) => {
-        const content = step.querySelectorAll<HTMLElement>(
-          ".method-step-number, .method-step > .label, .method-step h3, .method-step > p:not(.label), .method-tools",
-        );
-        const progress = step.querySelector<HTMLElement>(".method-step-progress span");
+      const methodPin = root.current?.querySelector<HTMLElement>(".method-pin");
+      const methodTrack = root.current?.querySelector<HTMLElement>(".method-track");
+      const methodProgress = root.current?.querySelector<HTMLElement>(".method-horizontal-progress span");
 
-        gsap.from(content, {
-          opacity: 0,
-          y: 38,
-          rotation: index % 2 === 0 ? -0.8 : 0.8,
-          stagger: 0.055,
-          duration: 0.8,
-          ease: "power3.out",
-          scrollTrigger: { trigger: step, start: "top 78%" },
+      if (methodPin && methodTrack && methodProgress) {
+        const getMethodDistance = () => Math.max(0, methodTrack.scrollWidth - methodPin.clientWidth);
+        const horizontalTimeline = gsap.timeline({
+          scrollTrigger: {
+            trigger: methodPin,
+            start: "top top",
+            end: () => `+=${getMethodDistance() + window.innerHeight * 0.35}`,
+            pin: true,
+            scrub: 0.65,
+            invalidateOnRefresh: true,
+            anticipatePin: 1,
+          },
         });
 
-        if (progress) {
-          gsap.fromTo(progress, { scaleX: 0 }, {
+        horizontalTimeline
+          .to(methodTrack, { x: () => -getMethodDistance(), ease: "none" }, 0)
+          .fromTo(methodProgress, { scaleX: 0 }, {
             scaleX: 1,
             transformOrigin: "left",
             ease: "none",
-            scrollTrigger: {
-              trigger: step,
-              start: "top 79%",
-              end: "bottom 44%",
-              scrub: true,
-            },
-          });
-        }
-      });
+          }, 0);
+      }
 
       gsap.from(".method-stack-chip", {
         opacity: 0,
@@ -742,6 +694,28 @@ export function HomeExperience() {
   const manifesto =
     "Mooie plaatjes bouwen is makkelijk. Iets ontwerpen dat écht werkt, vergt nieuwsgierigheid en een scherpe dialoog. Ik wacht tot het kwartje valt. Pas als we de kern begrijpen, begin ik met ontwerpen.";
 
+  const heroProject = projects[activeHeroProject];
+  const projectLetter = (letter: string, projectIndex: number) => {
+    const project = projects[projectIndex];
+    return (
+      <button
+        type="button"
+        className={`hero-project-letter ${activeHeroProject === projectIndex ? "is-active" : ""}`}
+        style={{
+          "--letter-bg": project.bg,
+          "--letter-ink": project.ink,
+        } as CSSProperties}
+        aria-label={`Toon ${project.name} in de hero-preview`}
+        aria-pressed={activeHeroProject === projectIndex}
+        onMouseEnter={() => setActiveHeroProject(projectIndex)}
+        onFocus={() => setActiveHeroProject(projectIndex)}
+        onClick={() => setActiveHeroProject(projectIndex)}
+      >
+        {letter}
+      </button>
+    );
+  };
+
   return (
     <main ref={root} className="site-shell">
       <a className="skip-link" href="#werk">
@@ -769,10 +743,40 @@ export function HomeExperience() {
             <span>Strategy / UX / Direction</span>
           </div>
           <p className="hero-index label">Een portfolio over ontwerp dat ertoe doet</p>
-          <h1 id="hero-title">
-            <span className="hero-line"><span>Ontwerpen voor <em className="hero-mark">impact,</em></span></span>
-            <span className="hero-line hero-line-indent"><span>niet voor de spotlights.</span></span>
+          <h1 id="hero-title" aria-label="Ontwerpen voor impact, voorbij de spotlights. Alles zonder ruis.">
+            <span className="hero-line"><span>On{projectLetter("t", 0)}werpen voor <em className="hero-mark">imp{projectLetter("a", 1)}ct,</em></span></span>
+            <span className="hero-line hero-line-indent"><span>voor{projectLetter("b", 3)}ij de spotli{projectLetter("g", 2)}{projectLetter("h", 4)}ts.</span></span>
+            <span className="hero-line hero-line-quiet"><span>{projectLetter("A", 5)}lles zonder ruis.</span></span>
           </h1>
+          <aside
+            className="hero-case-preview"
+            style={{
+              "--preview-bg": heroProject.bg,
+              "--preview-ink": heroProject.ink,
+            } as CSSProperties}
+            aria-live="polite"
+          >
+            <Link href={heroProject.href} aria-label={`Open de case ${heroProject.name}`}>
+              <figure>
+                <div className="hero-preview-media">
+                  <Image
+                    key={heroProject.slug}
+                    src={heroProject.image}
+                    alt={`Preview van ${heroProject.name}`}
+                    fill
+                    priority={activeHeroProject === 0}
+                    sizes="(max-width: 720px) 46vw, 18vw"
+                    style={{ objectPosition: heroProject.imagePosition }}
+                  />
+                </div>
+                <figcaption>
+                  <span>{heroProject.number} / 06</span>
+                  <strong>{heroProject.name}</strong>
+                  <span>Bekijk case ↗</span>
+                </figcaption>
+              </figure>
+            </Link>
+          </aside>
           <div className="hero-bottom">
             <aside className="hero-note">
               <span>design is a dialogue</span>
@@ -788,7 +792,6 @@ export function HomeExperience() {
           </div>
           <div className="hero-rule" aria-hidden="true"><span /></div>
         </div>
-        <div className="hero-orbit" aria-hidden="true"><span /></div>
       </section>
 
       <section className="manifesto" id="houding" aria-labelledby="manifesto-label">
@@ -829,7 +832,7 @@ export function HomeExperience() {
         </div>
 
         <div className="project-stream">
-          {projects.map((project, index) => (
+          {projects.map((project) => (
             <article
               className={`project-entry project-${project.slug}`}
               data-bg={project.bg}
@@ -851,7 +854,6 @@ export function HomeExperience() {
                       src={project.image}
                       alt={`Ontwerpoverzicht van ${project.name}`}
                       fill
-                      priority={index === 0}
                       sizes="(max-width: 720px) 82vw, 53vw"
                       style={{ objectPosition: project.imagePosition }}
                     />
@@ -899,7 +901,17 @@ export function HomeExperience() {
         </div>
 
         <div className="story-route">
-          <canvas className="story-route-canvas" aria-hidden="true" />
+          <svg className="story-route-svg" aria-hidden="true" focusable="false" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="story-route-gradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#ff553a" />
+                <stop offset="58%" stopColor="#e85e3f" />
+                <stop offset="100%" stopColor="#9f543b" />
+              </linearGradient>
+            </defs>
+            <path className="story-route-base" />
+            <path className="story-route-progress" />
+          </svg>
           <span className="story-route-runner" aria-hidden="true" />
           <div className="story-board-meta label" aria-hidden="true">
             <span>Personal field notes</span>
@@ -965,17 +977,33 @@ export function HomeExperience() {
           </div>
         </div>
 
-        <div className="method-flow">
-          {workingMethod.map((step) => (
-            <article className="method-step" key={step.number}>
-              <div className="method-step-progress" aria-hidden="true"><span /></div>
-              <div className="method-step-number">{step.number}</div>
-              <p className="label">{step.phase}</p>
-              <h3>{step.title}</h3>
-              <p>{step.body}</p>
-              <span className="method-tools label">{step.tools}</span>
-            </article>
-          ))}
+        <div className="method-horizontal" aria-label="Vier stappen in mijn werkwijze">
+          <div className="method-pin">
+            <div className="method-horizontal-meta">
+              <p className="label">Scrollroute · links naar rechts</p>
+              <div className="method-horizontal-progress" aria-hidden="true"><span /></div>
+              <p className="label">01 — 04</p>
+            </div>
+            <div className="method-track">
+              {workingMethod.map((step, index) => (
+                <article className={`method-note method-note-${index + 1}`} key={step.number}>
+                  <span className="method-note-tape" aria-hidden="true" />
+                  <header>
+                    <span className="method-note-number">{step.number}</span>
+                    <p className="label">{step.phase}</p>
+                  </header>
+                  <h3>{step.title}</h3>
+                  <p>{step.body}</p>
+                  <span className="method-tools label">{step.tools}</span>
+                  <aside>{step.annotation}</aside>
+                </article>
+              ))}
+              <div className="method-track-exit" aria-hidden="true">
+                <span>↓</span>
+                <p>Vanaf hier weer verticaal.</p>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div className="method-stack" aria-label="Mijn ontwerpstack">
