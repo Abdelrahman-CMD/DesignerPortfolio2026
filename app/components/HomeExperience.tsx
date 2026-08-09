@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useLayoutEffect, useRef, useState } from "react";
+import { CSSProperties, useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -74,6 +74,10 @@ const personalStory = [
     image: "/about/portrait-studio.jpg",
     alt: "Abdelrahman in zijn ontwerpstudio",
     position: "center 35%",
+    note: "Curiosity over certainty",
+    caption: "Home studio / waar vragen vorm krijgen",
+    dotX: "55%",
+    dotMobileX: "8%",
   },
   {
     step: "02",
@@ -83,6 +87,10 @@ const personalStory = [
     image: "/about/designing.jpg",
     alt: "Abdelrahman werkt aan een digitaal ontwerp achter zijn bureau",
     position: "center",
+    note: "Strategy before screens",
+    caption: "In progress / bouwen, testen, opnieuw kijken",
+    dotX: "39%",
+    dotMobileX: "91%",
   },
   {
     step: "03",
@@ -92,6 +100,10 @@ const personalStory = [
     image: "/about/learning.jpg",
     alt: "Abdelrahman leest The Heart of Design",
     position: "center",
+    note: "Stay a student",
+    caption: "Field notes / kennis houdt mijn blik beweeglijk",
+    dotX: "63%",
+    dotMobileX: "11%",
   },
   {
     step: "04",
@@ -101,8 +113,30 @@ const personalStory = [
     image: "/about/fatherhood.jpg",
     alt: "Abdelrahman als vader bij de kinderwagen",
     position: "center 35%",
+    note: "Design starts at home",
+    caption: "Real life / de belangrijkste rol buiten het scherm",
+    dotX: "44%",
+    dotMobileX: "88%",
   },
 ] as const;
+
+const storyPhotoPieces = Array.from({ length: 12 }, (_, index) => {
+  const columns = 4;
+  const rows = 3;
+  const column = index % columns;
+  const row = Math.floor(index / columns);
+  const gap = 0.28;
+  const left = column * (100 / columns) + gap;
+  const right = (column + 1) * (100 / columns) - gap;
+  const top = row * (100 / rows) + gap;
+  const bottom = (row + 1) * (100 / rows) - gap;
+
+  return {
+    clipPath: `polygon(${left}% ${top}%, ${right}% ${top}%, ${right}% ${bottom}%, ${left}% ${bottom}%)`,
+    column,
+    row,
+  };
+});
 
 export function HomeExperience() {
   const root = useRef<HTMLElement>(null);
@@ -117,6 +151,8 @@ export function HomeExperience() {
     ).matches;
 
     if (reduceMotion) return;
+
+    let cleanupStoryRoute = () => {};
 
     const context = gsap.context(() => {
       const intro = gsap.timeline({ defaults: { ease: "power4.out" } });
@@ -218,30 +254,245 @@ export function HomeExperience() {
         }
       });
 
-      gsap.to(".story-line-progress", {
-        scaleY: 1,
-        ease: "none",
-        scrollTrigger: {
-          trigger: ".story-route",
+      const route = root.current?.querySelector<HTMLElement>(".story-route");
+      const canvas = route?.querySelector<HTMLCanvasElement>(".story-route-canvas");
+      const runner = route?.querySelector<HTMLElement>(".story-route-runner");
+      const stops = route
+        ? Array.from(route.querySelectorAll<HTMLElement>(".story-stop"))
+        : [];
+
+      if (route && canvas && runner && stops.length > 0) {
+        type Point = { x: number; y: number };
+        let samples: Point[] = [];
+        let routeProgress = 0;
+        let resizeFrame = 0;
+
+        const catmullRom = (
+          point0: Point,
+          point1: Point,
+          point2: Point,
+          point3: Point,
+          amount: number,
+        ): Point => {
+          const amount2 = amount * amount;
+          const amount3 = amount2 * amount;
+          return {
+            x: 0.5 * ((2 * point1.x) + (-point0.x + point2.x) * amount +
+              (2 * point0.x - 5 * point1.x + 4 * point2.x - point3.x) * amount2 +
+              (-point0.x + 3 * point1.x - 3 * point2.x + point3.x) * amount3),
+            y: 0.5 * ((2 * point1.y) + (-point0.y + point2.y) * amount +
+              (2 * point0.y - 5 * point1.y + 4 * point2.y - point3.y) * amount2 +
+              (-point0.y + 3 * point1.y - 3 * point2.y + point3.y) * amount3),
+          };
+        };
+
+        const sampleRoute = (points: Point[]) => {
+          const nextSamples: Point[] = [];
+          const steps = 44;
+          for (let index = 0; index < points.length - 1; index += 1) {
+            const point0 = points[Math.max(0, index - 1)];
+            const point1 = points[index];
+            const point2 = points[index + 1];
+            const point3 = points[Math.min(points.length - 1, index + 2)];
+            for (let step = 0; step < steps; step += 1) {
+              nextSamples.push(catmullRom(point0, point1, point2, point3, step / steps));
+            }
+          }
+          nextSamples.push(points[points.length - 1]);
+          return nextSamples;
+        };
+
+        const drawRoute = (progress: number) => {
+          const drawingContext = canvas.getContext("2d");
+          if (!drawingContext || samples.length === 0) return;
+
+          const width = route.clientWidth;
+          const height = route.scrollHeight;
+          drawingContext.clearRect(0, 0, width, height);
+          drawingContext.lineCap = "round";
+          drawingContext.lineJoin = "round";
+
+          drawingContext.beginPath();
+          drawingContext.moveTo(samples[0].x, samples[0].y);
+          samples.slice(1).forEach((point) => drawingContext.lineTo(point.x, point.y));
+          drawingContext.strokeStyle = "rgba(47, 43, 38, 0.17)";
+          drawingContext.lineWidth = 1.25;
+          drawingContext.setLineDash([3, 8]);
+          drawingContext.stroke();
+
+          const finalIndex = Math.max(
+            1,
+            Math.min(samples.length - 1, Math.round(progress * (samples.length - 1))),
+          );
+          const gradient = drawingContext.createLinearGradient(0, 0, 0, height);
+          gradient.addColorStop(0, "#ff553a");
+          gradient.addColorStop(0.58, "#e85e3f");
+          gradient.addColorStop(1, "#9f543b");
+
+          drawingContext.beginPath();
+          drawingContext.moveTo(samples[0].x, samples[0].y);
+          for (let index = 1; index <= finalIndex; index += 1) {
+            const point = samples[index];
+            drawingContext.lineTo(point.x, point.y);
+          }
+          drawingContext.setLineDash([]);
+          drawingContext.strokeStyle = gradient;
+          drawingContext.lineWidth = 3.25;
+          drawingContext.shadowColor = "rgba(244, 81, 54, 0.24)";
+          drawingContext.shadowBlur = 12;
+          drawingContext.stroke();
+          drawingContext.shadowBlur = 0;
+
+          const runnerPoint = samples[finalIndex];
+          gsap.set(runner, { x: runnerPoint.x - 7, y: runnerPoint.y - 7 });
+        };
+
+        const calculateRoute = () => {
+          const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+          const width = route.clientWidth;
+          const height = route.scrollHeight;
+          const routeRect = route.getBoundingClientRect();
+          canvas.width = Math.max(1, Math.round(width * pixelRatio));
+          canvas.height = Math.max(1, Math.round(height * pixelRatio));
+          canvas.style.width = `${width}px`;
+          canvas.style.height = `${height}px`;
+          canvas.getContext("2d")?.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+
+          const dotPoints = stops.map((stop) => {
+            const dot = stop.querySelector<HTMLElement>(".story-stop-dot");
+            const dotRect = dot?.getBoundingClientRect();
+            return {
+              x: dotRect ? dotRect.left + dotRect.width / 2 - routeRect.left : width / 2,
+              y: dotRect ? dotRect.top + dotRect.height / 2 - routeRect.top : 0,
+            };
+          });
+          const points: Point[] = [
+            { x: width * 0.18, y: 0 },
+            ...dotPoints,
+            { x: width * 0.78, y: height },
+          ];
+          samples = sampleRoute(points);
+          drawRoute(routeProgress);
+        };
+
+        const scheduleRouteCalculation = () => {
+          window.cancelAnimationFrame(resizeFrame);
+          resizeFrame = window.requestAnimationFrame(calculateRoute);
+        };
+
+        scheduleRouteCalculation();
+        window.addEventListener("resize", scheduleRouteCalculation);
+        ScrollTrigger.addEventListener("refreshInit", scheduleRouteCalculation);
+
+        ScrollTrigger.create({
+          trigger: route,
           start: "top 68%",
           end: "bottom 72%",
           scrub: true,
-        },
-      });
-
-      gsap.utils.toArray<HTMLElement>(".story-stop").forEach((stop) => {
-        gsap.from(stop.querySelector(".story-stop-copy"), {
-          opacity: 0,
-          y: 45,
-          duration: 0.9,
-          ease: "power3.out",
-          scrollTrigger: { trigger: stop, start: "top 78%" },
+          onUpdate: (self) => {
+            routeProgress = self.progress;
+            drawRoute(routeProgress);
+          },
         });
 
-        const image = stop.querySelector("img");
-        if (image) {
-          gsap.fromTo(image, { yPercent: -4 }, {
-            yPercent: 7,
+        cleanupStoryRoute = () => {
+          window.cancelAnimationFrame(resizeFrame);
+          window.removeEventListener("resize", scheduleRouteCalculation);
+          ScrollTrigger.removeEventListener("refreshInit", scheduleRouteCalculation);
+        };
+      }
+
+      stops.forEach((stop, storyIndex) => {
+        const pieces = Array.from(
+          stop.querySelectorAll<HTMLElement>(".story-photo-piece"),
+        );
+        const copyElements = stop.querySelectorAll<HTMLElement>(
+          ".story-stop-copy .label, .story-stop-copy h3, .story-stop-copy > p:last-child",
+        );
+        const fill = stop.querySelector<HTMLElement>(".story-stop-dot-fill");
+        const note = stop.querySelector<HTMLElement>(".story-margin-note");
+        const tape = stop.querySelector<HTMLElement>(".story-tape");
+        const photo = stop.querySelector<HTMLElement>(".story-photo");
+        const ephemera = [note, tape].filter(
+          (element): element is HTMLElement => Boolean(element),
+        );
+        const direction = storyIndex % 2 === 0 ? -1 : 1;
+
+        pieces.forEach((piece) => {
+          const column = Number(piece.dataset.column ?? 0);
+          const row = Number(piece.dataset.row ?? 0);
+          gsap.set(piece, {
+            autoAlpha: 0,
+            x: direction * (150 + column * 38),
+            y: -120 + row * 72,
+            rotation: direction * (8 + column * 2) - row * 3,
+            scale: 0.78,
+          });
+        });
+
+        const revealTimeline = gsap.timeline({
+          scrollTrigger: {
+            trigger: stop,
+            start: "top 90%",
+            end: "48% 57%",
+            scrub: 0.75,
+          },
+        });
+        revealTimeline
+          .to(pieces, {
+            autoAlpha: 1,
+            x: 0,
+            y: 0,
+            rotation: 0,
+            scale: 1,
+            stagger: { each: 0.035, from: direction < 0 ? "end" : "start" },
+            ease: "power3.out",
+            duration: 1,
+          })
+          .fromTo(copyElements, {
+            autoAlpha: 0,
+            y: 55,
+            rotation: direction * 1.5,
+          }, {
+            autoAlpha: 1,
+            y: 0,
+            rotation: 0,
+            stagger: 0.08,
+            ease: "power3.out",
+            duration: 0.65,
+          }, 0.28)
+          .fromTo(ephemera, {
+            autoAlpha: 0,
+            scale: 0.7,
+            rotation: direction * 14,
+          }, {
+            autoAlpha: 1,
+            scale: 1,
+            rotation: 0,
+            ease: "back.out(1.5)",
+            duration: 0.45,
+          }, 0.44);
+
+        if (fill) {
+          gsap.fromTo(fill, { scaleY: 0 }, {
+            scaleY: 1,
+            ease: "none",
+            scrollTrigger: {
+              trigger: stop,
+              start: "top 82%",
+              end: "top 51%",
+              scrub: true,
+            },
+          });
+        }
+
+        if (photo) {
+          gsap.fromTo(photo, {
+            y: 42,
+            rotation: direction * 2.3,
+          }, {
+            y: -28,
+            rotation: direction * -0.7,
             ease: "none",
             scrollTrigger: {
               trigger: stop,
@@ -251,6 +502,35 @@ export function HomeExperience() {
             },
           });
         }
+
+        gsap.to(pieces, {
+          autoAlpha: 0.06,
+          x: (pieceIndex) => direction * (-95 - (pieceIndex % 4) * 34),
+          y: (pieceIndex) => 80 + Math.floor(pieceIndex / 4) * 52,
+          rotation: (pieceIndex) => direction * (-5 - (pieceIndex % 4) * 2),
+          scale: 0.86,
+          stagger: { each: 0.018, from: "center" },
+          ease: "power2.in",
+          scrollTrigger: {
+            trigger: stop,
+            start: "70% 48%",
+            end: "bottom 8%",
+            scrub: 0.8,
+          },
+        });
+
+        gsap.to(copyElements, {
+          autoAlpha: 0.14,
+          y: -50,
+          stagger: 0.025,
+          ease: "power2.in",
+          scrollTrigger: {
+            trigger: stop,
+            start: "75% 46%",
+            end: "bottom 5%",
+            scrub: true,
+          },
+        });
       });
 
       gsap.from(".footer-cta-line > span", {
@@ -262,7 +542,10 @@ export function HomeExperience() {
       });
     }, root);
 
-    return () => context.revert();
+    return () => {
+      cleanupStoryRoute();
+      context.revert();
+    };
   }, []);
 
   const manifesto =
@@ -402,27 +685,60 @@ export function HomeExperience() {
       <section className="about-story" id="over" aria-labelledby="about-title">
         <div className="about-story-heading">
           <p className="section-kicker"><span>04</span> De mens achter het werk</p>
-          <h2 id="about-title">Ik ontwerp met alles wat ik onderweg leer.</h2>
+          <h2 id="about-title">
+            <span>Ik ontwerp met alles</span>
+            <span>wat ik onderweg leer.</span>
+          </h2>
           <p>Geen rechte carrièrelijn, maar een route van vragen stellen, maken, lezen, opnieuw kijken — en thuiskomen.</p>
         </div>
 
         <div className="story-route">
-          <div className="story-line" aria-hidden="true"><span className="story-line-progress" /></div>
+          <canvas className="story-route-canvas" aria-hidden="true" />
+          <span className="story-route-runner" aria-hidden="true" />
+          <div className="story-board-meta label" aria-hidden="true">
+            <span>Personal field notes</span>
+            <span>01 — 04</span>
+          </div>
           {personalStory.map((story, index) => (
-            <article className={`story-stop story-stop-${index + 1}`} key={story.step}>
-              <div className="story-stop-dot" aria-hidden="true"><span>{story.step}</span></div>
+            <article
+              className={`story-stop story-stop-${index + 1}`}
+              key={story.step}
+              style={{
+                "--dot-x": story.dotX,
+                "--dot-mobile-x": story.dotMobileX,
+              } as CSSProperties}
+            >
+              <div className="story-stop-dot" aria-hidden="true">
+                <span className="story-stop-dot-fill" />
+                <strong>{story.step}</strong>
+              </div>
               <figure className="story-photo">
-                <Image
-                  src={story.image}
-                  alt={story.alt}
-                  fill
-                  sizes="(max-width: 720px) 88vw, 43vw"
-                  style={{ objectPosition: story.position }}
-                />
+                <div className="story-photo-stage" role="img" aria-label={story.alt}>
+                  {storyPhotoPieces.map((piece, pieceIndex) => (
+                    <span
+                      className="story-photo-piece"
+                      data-column={piece.column}
+                      data-row={piece.row}
+                      key={`${story.step}-${pieceIndex}`}
+                      style={{
+                        backgroundImage: `url(${story.image})`,
+                        backgroundPosition: story.position,
+                        clipPath: piece.clipPath,
+                      }}
+                    />
+                  ))}
+                  <span className="story-tape" aria-hidden="true" />
+                </div>
+                <figcaption><span>{story.caption}</span><span>© Abdelrahman</span></figcaption>
               </figure>
+              <aside className="story-margin-note" aria-hidden="true">{story.note}</aside>
               <div className="story-stop-copy">
                 <p className="label">{story.kicker}</p>
-                <h3>{story.title}</h3>
+                <h3>
+                  {story.title.split(" ").map((word, wordIndex) => (
+                    <span className="story-heading-word" key={`${word}-${wordIndex}`}>{word}{" "}</span>
+                  ))}
+                </h3>
                 <p>{story.body}</p>
               </div>
             </article>
