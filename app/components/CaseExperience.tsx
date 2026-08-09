@@ -154,8 +154,8 @@ export function CaseExperience() {
           <div className="browser-bar"><i /><i /><i /><span>tareeqi.app</span></div>
           <div className="browser-image">
             <Image
-              src="/projects/tareeqi-overview.jpg"
-              alt="Tareeqi homepage met een kaart van Mekka en Medina"
+              src="/projects/site/tareeqi-featured.jpg"
+              alt="Tareeqi concept gepresenteerd op twee laptops"
               fill
               priority
               sizes="(max-width: 720px) 92vw, 52vw"
@@ -352,8 +352,8 @@ export function CaseExperience() {
       </div>
 
       <footer className="case-footer">
-        <p className="section-kicker"><span>Next</span> Terug naar het overzicht</p>
-        <Link href="/#werk"><span>Ontdek de andere concepten</span><span aria-hidden="true">↗</span></Link>
+        <p className="section-kicker"><span>Next</span> Volgende case</p>
+        <Link href="/cases/ayn-al-hikmah"><span>Ayn Al-Hikmah</span><span aria-hidden="true">↗</span></Link>
         <div><span>Abdelrahman / Digital designer</span><span>© 2026</span></div>
       </footer>
     </main>
