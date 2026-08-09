@@ -63,6 +63,34 @@ const projects = [
     imagePosition: "top",
     href: "/cases/bayn-signal",
   },
+  {
+    number: "05",
+    slug: "hijaman-cups",
+    name: "Hijama’N Cups",
+    title: "Turning traditional care into a calm, clear digital welcome",
+    summary:
+      "Een warme Framer-website voor een zelfstandige behandelpraktijk, waarin uitleg, vertrouwen en laagdrempelig boeken samenkomen.",
+    services: "Strategy · UX/UI · Framer design & build",
+    bg: "#dae5dd",
+    ink: "#15662d",
+    image: "/projects/live/hijaman-cups-rose.jpg",
+    imagePosition: "center 58%",
+    href: "/cases/hijaman-cups",
+  },
+  {
+    number: "06",
+    slug: "atotz",
+    name: "AtotZ Detachering",
+    title: "Putting the right people in the right place — without the friction",
+    summary:
+      "Een directe, conversiegerichte Framer-website voor een detacheringsbureau dat snelheid koppelt aan persoonlijke aandacht.",
+    services: "Positioning · UX/UI · Framer design & build",
+    bg: "#1c2a3a",
+    ink: "#f9fafb",
+    image: "/projects/live/atotz-people.jpg",
+    imagePosition: "center",
+    href: "/cases/atotz-detachering",
+  },
 ] as const;
 
 const personalStory = [
@@ -137,6 +165,37 @@ const storyPhotoPieces = Array.from({ length: 12 }, (_, index) => {
     row,
   };
 });
+
+const workingMethod = [
+  {
+    number: "01",
+    phase: "Sparren",
+    title: "Richting ontstaat in de dialoog.",
+    body: "Aan tafel met de klant maak ik aannames zichtbaar. We bepalen niet alleen wat er gebouwd moet worden, maar vooral welke verandering het werk moet veroorzaken.",
+    tools: "Client sessions · Workshops · Direction",
+  },
+  {
+    number: "02",
+    phase: "Verdiepen",
+    title: "Desk, field en AI brengen het probleem dichtbij.",
+    body: "Ik combineer deskresearch met gesprekken en observaties uit de echte context. AI helpt patronen sneller toetsen en nieuwe vragen formuleren — het oordeel en de richting blijven menselijk.",
+    tools: "Desk research · Field research · AI",
+  },
+  {
+    number: "03",
+    phase: "Vormgeven",
+    title: "Van inzicht naar een voelbaar product.",
+    body: "In Figma krijgt de ervaring structuur. In Framer of code wordt ze tastbaar, beweeglijk en testbaar. AI versnelt varianten en uitvoering, zonder de ontwerpintentie over te nemen.",
+    tools: "Figma · Framer · AI-assisted build",
+  },
+  {
+    number: "04",
+    phase: "Koers houden",
+    title: "Check-ins maken van uitvoering een gedeelde regie.",
+    body: "Tijdens iedere fase kijken we samen: klopt de richting nog, begrijpen gebruikers dit en draagt iedere keuze bij aan het doel? Zo dirigeer ik het proces én blijft de klant onderdeel van het ontwerp.",
+    tools: "Prototype reviews · Check-ins · Iteration",
+  },
+] as const;
 
 export function HomeExperience() {
   const root = useRef<HTMLElement>(null);
@@ -533,6 +592,64 @@ export function HomeExperience() {
         });
       });
 
+      gsap.from(".method-title-line > span", {
+        yPercent: 112,
+        duration: 1,
+        stagger: 0.12,
+        ease: "power4.out",
+        scrollTrigger: { trigger: ".method-intro", start: "top 72%" },
+      });
+
+      gsap.from(".method-intro-copy", {
+        opacity: 0,
+        y: 40,
+        duration: 0.85,
+        ease: "power3.out",
+        scrollTrigger: { trigger: ".method-intro-copy", start: "top 82%" },
+      });
+
+      gsap.utils.toArray<HTMLElement>(".method-step").forEach((step, index) => {
+        const content = step.querySelectorAll<HTMLElement>(
+          ".method-step-number, .method-step > .label, .method-step h3, .method-step > p:not(.label), .method-tools",
+        );
+        const progress = step.querySelector<HTMLElement>(".method-step-progress span");
+
+        gsap.from(content, {
+          opacity: 0,
+          y: 38,
+          rotation: index % 2 === 0 ? -0.8 : 0.8,
+          stagger: 0.055,
+          duration: 0.8,
+          ease: "power3.out",
+          scrollTrigger: { trigger: step, start: "top 78%" },
+        });
+
+        if (progress) {
+          gsap.fromTo(progress, { scaleX: 0 }, {
+            scaleX: 1,
+            transformOrigin: "left",
+            ease: "none",
+            scrollTrigger: {
+              trigger: step,
+              start: "top 79%",
+              end: "bottom 44%",
+              scrub: true,
+            },
+          });
+        }
+      });
+
+      gsap.from(".method-stack-chip", {
+        opacity: 0,
+        scale: 0.65,
+        y: 36,
+        rotation: (index) => (index % 2 === 0 ? -8 : 8),
+        stagger: { each: 0.06, from: "random" },
+        duration: 0.7,
+        ease: "back.out(1.6)",
+        scrollTrigger: { trigger: ".method-stack", start: "top 75%" },
+      });
+
       gsap.from(".footer-cta-line > span", {
         yPercent: 110,
         duration: 1,
@@ -565,6 +682,7 @@ export function HomeExperience() {
         <nav className="top-nav">
           <a href="#werk">Werk</a>
           <a href="#over">Over</a>
+          <a href="#aanpak">Aanpak</a>
           <a href="#contact">Contact</a>
         </nav>
       </header>
@@ -610,9 +728,9 @@ export function HomeExperience() {
         aria-labelledby="work-title"
       >
         <div className="showcase-sticky">
-          <p className="section-kicker"><span>02</span> Selected concepts</p>
+          <p className="section-kicker"><span>02</span> Selected work</p>
           <div className="showcase-title-wrap">
-            <p className="label">Case {projects[activeProject].number} / 04</p>
+            <p className="label">Case {projects[activeProject].number} / 06</p>
             <h2 id="work-title" aria-live="polite">{projects[activeProject].name}</h2>
           </div>
           <div className="project-dots" aria-hidden="true">
@@ -631,7 +749,7 @@ export function HomeExperience() {
               style={{ color: project.ink }}
             >
               <div className="project-meta label">
-                <span>{project.number} / 04</span>
+                <span>{project.number} / 06</span>
                 <span>{project.services}</span>
               </div>
               <div className="project-visual">
@@ -746,8 +864,52 @@ export function HomeExperience() {
         </div>
       </section>
 
+      <section className="method" id="aanpak" aria-labelledby="method-title">
+        <div className="method-intro">
+          <p className="section-kicker section-kicker-light"><span>05</span> Hoe ik werk</p>
+          <h2 id="method-title">
+            <span className="method-title-line"><span>Niet alleen ontwerpen.</span></span>
+            <span className="method-title-line method-title-indent"><span>Het proces dirigeren.</span></span>
+          </h2>
+          <div className="method-intro-copy">
+            <p>Mijn stack is geen gereedschapskist die het gesprek vervangt. Ze helpt om sneller van vraag naar inzicht en van inzicht naar een werkend product te bewegen.</p>
+            <span className="label">Strategy → Research → Design → Direction</span>
+          </div>
+        </div>
+
+        <div className="method-flow">
+          {workingMethod.map((step) => (
+            <article className="method-step" key={step.number}>
+              <div className="method-step-progress" aria-hidden="true"><span /></div>
+              <div className="method-step-number">{step.number}</div>
+              <p className="label">{step.phase}</p>
+              <h3>{step.title}</h3>
+              <p>{step.body}</p>
+              <span className="method-tools label">{step.tools}</span>
+            </article>
+          ))}
+        </div>
+
+        <div className="method-stack" aria-label="Mijn ontwerpstack">
+          <p className="label">The working stack</p>
+          <div>
+            {[
+              "Strategie",
+              "Desk research",
+              "Field research",
+              "AI",
+              "Figma",
+              "Framer",
+              "Prototyping",
+              "Check-ins",
+            ].map((tool) => <span className="method-stack-chip" key={tool}>{tool}</span>)}
+          </div>
+          <p>Tools versnellen. Richting blijft mensenwerk.</p>
+        </div>
+      </section>
+
       <footer className="contact" id="contact">
-        <p className="section-kicker section-kicker-light"><span>05</span> Een goed gesprek begint hier</p>
+        <p className="section-kicker section-kicker-light"><span>06</span> Een goed gesprek begint hier</p>
         <h2>
           <span className="footer-cta-line"><span>Klaar om te sparren?</span></span>
           <span className="footer-cta-line footer-cta-indent"><span>Laten we het kwartje</span></span>

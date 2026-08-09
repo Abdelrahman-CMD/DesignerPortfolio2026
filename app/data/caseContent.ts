@@ -11,9 +11,12 @@ export type EditorialCase = {
   surface: string;
   dark: string;
   featured: string;
+  featuredAlt?: string;
+  creditLine?: string;
   role: string;
   focus: string;
   year: string;
+  yearLabel?: string;
   contextTitle: string;
   contextLead: string;
   contextBody: string;
@@ -29,11 +32,13 @@ export type EditorialCase = {
   bodyFont: string;
   colors: { name: string; hex: string; text?: string }[];
   shots: { src: string; alt: string; caption: string }[];
+  galleryIntro?: string;
   impactTitle: string;
   impactBody: string[];
   stats: { value: string; label: string }[];
   next: { slug: string; name: string };
-  prototype: "guidance" | "bayn" | "ayn";
+  externalUrl?: string;
+  prototype: "guidance" | "bayn" | "ayn" | "hijaman" | "atotz";
 };
 
 export const editorialCases: Record<string, EditorialCase> = {
@@ -188,7 +193,7 @@ export const editorialCases: Record<string, EditorialCase> = {
       { value: "2K+", label: "beoogde lokale lezers" },
       { value: "01", label: "persoonlijke lokale pulse" },
     ],
-    next: { slug: "tareeqi", name: "Tareeqi" },
+    next: { slug: "hijaman-cups", name: "Hijama’N Cups" },
     prototype: "bayn",
   },
   "ayn-al-hikmah": {
@@ -267,6 +272,172 @@ export const editorialCases: Record<string, EditorialCase> = {
     ],
     next: { slug: "guidance-travel", name: "Guidance Travel" },
     prototype: "ayn",
+  },
+  "hijaman-cups": {
+    slug: "hijaman-cups",
+    number: "05",
+    name: "Hijama’N Cups",
+    eyebrow: "Live client work · Framer",
+    headline: "Turning traditional care into a calm, clear digital welcome.",
+    description:
+      "Een warme Framer-website voor een zelfstandige behandelpraktijk, waarin vertrouwen, uitleg en laagdrempelig boeken samenkomen.",
+    heroBg: "#dae5dd",
+    heroInk: "#15662d",
+    accent: "#e8d5b0",
+    surface: "#f7f7f2",
+    dark: "#124d24",
+    featured: "/projects/live/hijaman-cups-rose.jpg",
+    featuredAlt: "Cuppingglas met een rode roos uit de fotografie van Hijama’N Cups",
+    creditLine: "Strategy / UX/UI / Framer design & build",
+    role: "Strategie · UX/UI · Framer Design & Build",
+    focus: "Trust · Service discovery · Booking",
+    year: "Live website",
+    yearLabel: "Status",
+    contextTitle: "Persoonlijke zorg vraagt om digitale rust.",
+    contextLead:
+      "Hijama’N Cups biedt vrouwen en kinderen een breed aanbod van hijama, cupping en massages. Voor een nieuwe bezoeker kunnen de behandeling, voorbereiding en keuze echter veel vragen oproepen.",
+    contextBody:
+      "De website moest tegelijk warm, deskundig en praktisch zijn: iemand welkom heten, behandelingen vergelijkbaar maken en eerlijke informatie bieden over duur, prijs, aanpak en nazorg. De zelfstandige behandelaar moest bovendien alles makkelijk kunnen beheren in Framer.",
+    insightQuote:
+      "Voordat iemand een behandeling boekt, moet de website eerst de drempel verlagen om een vraag te stellen.",
+    insightBody:
+      "Daarom begint de ervaring niet met medische afstand of commerciële druk, maar met herkenning. Welkom in meerdere talen, rustige productfotografie en een duidelijke route van behoefte naar behandeling creëren ruimte om op eigen tempo vertrouwen op te bouwen.",
+    conceptTitle: "Van onzeker oriënteren naar met vertrouwen boeken.",
+    freedomTitle: "Een visuele wereld die zacht én onderscheidend voelt.",
+    freedomBody:
+      "De minimalistische productfotografie maakt cups herkenbaar zonder klinisch te worden. Groen, beige en veel witruimte geven de traditionele behandelvorm een eigentijdse, verzorgde uitstraling.",
+    responsibilityTitle: "Iedere behandeling krijgt concrete context.",
+    responsibilityBody:
+      "Prijzen, behandeltijd, stappen, effecten, voorzorgsmaatregelen en veelgestelde vragen zijn logisch verdeeld. Zo blijft de ervaring toegankelijk, ook voor iemand die nog nooit hijama of cupping heeft gehad.",
+    features: [
+      "Behandeloverzicht met prijs en tijdsduur",
+      "Stap-voor-stap uitleg per behandeling",
+      "Voorzorg en nazorg in heldere taal",
+      "Direct boeken en vragen stellen via WhatsApp",
+    ],
+    headingFont: "Chillax",
+    bodyFont: "Montserrat",
+    colors: [
+      { name: "Care Green", hex: "#15662D", text: "#F7F7F2" },
+      { name: "Soft Sage", hex: "#DAE5DD" },
+      { name: "Warm Sand", hex: "#E8D5B0" },
+      { name: "Calm White", hex: "#F7F7F2" },
+    ],
+    shots: [
+      {
+        src: "/projects/live/hijaman-cups-rose.jpg",
+        alt: "Cuppingglas met een rode roos",
+        caption: "Art direction · een zachte introductie",
+      },
+      {
+        src: "/projects/live/hijaman-cups-green.jpg",
+        alt: "Groene dry-cuppingglazen uit de praktijkfotografie",
+        caption: "Treatment language · herkenbaar en rustig",
+      },
+      {
+        src: "/projects/live/hijaman-cups-glass.jpg",
+        alt: "Transparante fire-cuppingglazen",
+        caption: "Service detail · fotografie als uitleg",
+      },
+    ],
+    galleryIntro:
+      "Een selectie uit de beeldtaal en inhoud van de live website: herkenbare instrumenten, veel ademruimte en informatie die een eerste bezoek minder onbekend maakt.",
+    impactTitle: "Een zelfstandige praktijk die online even persoonlijk voelt als in de behandelkamer.",
+    impactBody: [
+      "De website brengt een uitgebreid behandelaanbod terug tot een rustige route. Bezoekers kunnen zich eerst verdiepen, zien wat een behandeling inhoudt en vervolgens rechtstreeks een afspraak of vraag starten.",
+      "Voor de ondernemer vormt Framer één beheersbare plek voor merk, informatie en conversie. Daarmee is de site niet alleen een visitekaartje, maar een verlengstuk van haar persoonlijke manier van werken.",
+    ],
+    stats: [
+      { value: "09+", label: "behandelingen helder ontsloten" },
+      { value: "03", label: "talen in het welkom" },
+      { value: "01", label: "directe route naar een afspraak" },
+    ],
+    next: { slug: "atotz-detachering", name: "AtotZ Detachering" },
+    externalUrl: "https://hijamancups.com/",
+    prototype: "hijaman",
+  },
+  "atotz-detachering": {
+    slug: "atotz-detachering",
+    number: "06",
+    name: "AtotZ Detachering",
+    eyebrow: "Live client work · Framer",
+    headline: "Putting the right people in the right place — without the friction.",
+    description:
+      "Een scherpe, conversiegerichte Framer-website voor een zelfstandig detacheringsbureau dat menselijkheid en snelheid wil combineren.",
+    heroBg: "#1c2a3a",
+    heroInk: "#f9fafb",
+    accent: "#128c7e",
+    surface: "#f9fafb",
+    dark: "#101828",
+    featured: "/projects/live/atotz-people.jpg",
+    featuredAlt: "Professional voor een team, uit de fotografie van AtotZ Detachering",
+    creditLine: "Strategy / UX/UI / Framer design & build",
+    role: "Strategie · UX/UI · Framer Design & Build",
+    focus: "Positioning · Lead generation · Service clarity",
+    year: "Live website",
+    yearLabel: "Status",
+    contextTitle: "Snel schakelen werkt alleen als vertrouwen vooroploopt.",
+    contextLead:
+      "AtotZ verbindt bedrijven en professionals in techniek, bouw, administratie, logistiek, zorg, onderwijs en IT. De markt belooft vaak snelheid; het merk wilde laten zien dat een snelle match ook persoonlijk en zorgvuldig kan zijn.",
+    contextBody:
+      "De website moest meerdere sectoren en twee doelgroepen bedienen zonder te versnipperen. Werkgevers moeten direct personeel kunnen aanvragen, terwijl professionals en freelancers herkennen dat AtotZ hun expertise serieus neemt.",
+    insightQuote:
+      "De echte belofte is niet ‘wij hebben mensen’. Het is: wij begrijpen wie op welke plek tot zijn recht komt.",
+    insightBody:
+      "Dat inzicht gaf de site één duidelijk ritme: belofte, bewijs, sector, werkwijze en actie. De gemiddelde match binnen vijf dagen wordt geloofwaardig doordat bezoekers ook zien wat er in de eerste 24 uur gebeurt.",
+    conceptTitle: "Zakelijke daadkracht met een menselijke voordeur.",
+    freedomTitle: "Eén merk dat door iedere sector heen herkenbaar blijft.",
+    freedomBody:
+      "Grote typografie, directe fotografie en korte statements geven AtotZ energie. De content wisselt per vakgebied, maar de belofte blijft consequent: de juiste mensen, op de juiste plek, zonder gedoe.",
+    responsibilityTitle: "Een proces dat verwachtingen vooraf helder maakt.",
+    responsibilityBody:
+      "Kennismaken, selecteren, voorstellen en starten worden als vier concrete stappen uitgelegd. Reactietijden en vervolgstappen staan zichtbaar in de flow, zodat snelheid geen lege marketingclaim blijft.",
+    features: [
+      "Sectorgerichte routes voor werkgevers",
+      "Heldere vierstaps werkwijze",
+      "WhatsApp en formulier als directe leadroutes",
+      "FAQ die commerciële onzekerheid wegneemt",
+    ],
+    headingFont: "Baron Neue Black",
+    bodyFont: "Poppins",
+    colors: [
+      { name: "AtotZ Navy", hex: "#1C2A3A", text: "#F9FAFB" },
+      { name: "Signal Teal", hex: "#128C7E", text: "#F9FAFB" },
+      { name: "Clear White", hex: "#F9FAFB" },
+      { name: "Deep Ink", hex: "#101828", text: "#F9FAFB" },
+    ],
+    shots: [
+      {
+        src: "/projects/live/atotz-people.jpg",
+        alt: "Professional met team op de achtergrond",
+        caption: "Positioning · mensen maken de organisatie",
+      },
+      {
+        src: "/projects/live/atotz-technical.jpg",
+        alt: "Technisch professional in een industriële omgeving",
+        caption: "Sector route · techniek",
+      },
+      {
+        src: "/projects/live/atotz-construction.jpg",
+        alt: "Bouwprofessional op locatie",
+        caption: "Sector route · bouw en uitvoering",
+      },
+    ],
+    galleryIntro:
+      "De fotografie brengt de brede dienstverlening terug naar de essentie: echte professionals in de context waar hun expertise waarde toevoegt.",
+    impactTitle: "Een jong bureau dat digitaal direct als een volwassen partner opereert.",
+    impactBody: [
+      "AtotZ presenteert complexe dienstverlening als een helder gesprek. Werkgevers zien snel wat het bureau levert, hoe het proces werkt en wanneer zij de eerste kandidaten kunnen verwachten.",
+      "De modulaire Framer-opbouw laat de ondernemer nieuwe sectoren, proposities en bewijs toevoegen zonder de merkconsistentie of conversieroute kwijt te raken.",
+    ],
+    stats: [
+      { value: "24u", label: "reactie en eerste profielen" },
+      { value: "05", label: "dagen tot gemiddelde match" },
+      { value: "08", label: "expertiseroutes op één platform" },
+    ],
+    next: { slug: "tareeqi", name: "Tareeqi" },
+    externalUrl: "https://atotzdetachering.nl/",
+    prototype: "atotz",
   },
 };
 

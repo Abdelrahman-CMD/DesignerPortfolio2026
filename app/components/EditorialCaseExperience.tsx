@@ -38,6 +38,26 @@ const prototypeContent = {
       Fiqh: ["Fiqh foundations", "Van basis naar klassieke tekst"],
     },
   },
+  hijaman: {
+    label: "Treatment finder",
+    question: "Waar heb je vandaag behoefte aan?",
+    options: ["Hijama", "Ontspanning", "Warmte"],
+    results: {
+      Hijama: ["Wet Cupping", "€55 · 60—90 min"],
+      Ontspanning: ["Relax Massage", "€55 · 60 min"],
+      Warmte: ["Hot Stone Massage", "€55 · 45 min"],
+    },
+  },
+  atotz: {
+    label: "Talent matcher",
+    question: "Welke expertise heeft je team nodig?",
+    options: ["Techniek", "Zorg", "IT"],
+    results: {
+      Techniek: ["Technisch personeel", "Eerste profielen binnen 24 uur"],
+      Zorg: ["Betrokken zorgprofessionals", "Menselijke match · flexibel inzetbaar"],
+      IT: ["IT-specialisten", "Direct waarde in projecten"],
+    },
+  },
 } as const;
 
 export function EditorialCaseExperience({ project }: { project: EditorialCase }) {
@@ -155,18 +175,18 @@ export function EditorialCaseExperience({ project }: { project: EditorialCase })
           <dl className="ec-meta">
             <div><dt>Rol</dt><dd>{project.role}</dd></div>
             <div><dt>Focus</dt><dd>{project.focus}</dd></div>
-            <div><dt>Jaar</dt><dd>{project.year}</dd></div>
+            <div><dt>{project.yearLabel ?? "Jaar"}</dt><dd>{project.year}</dd></div>
           </dl>
         </div>
         <figure className="ec-featured">
           <Image
             src={project.featured}
-            alt={`${project.name} uitgelicht op twee laptops`}
+            alt={project.featuredAlt ?? `${project.name} projectoverzicht`}
             fill
             priority
             sizes="94vw"
           />
-          <figcaption><span>Project overview</span><span>Concept / UX/UI / Strategy</span></figcaption>
+          <figcaption><span>Project overview</span><span>{project.creditLine ?? "Concept / UX/UI / Strategy"}</span></figcaption>
         </figure>
       </header>
 
@@ -280,7 +300,7 @@ export function EditorialCaseExperience({ project }: { project: EditorialCase })
           <div className="ec-gallery-heading ec-reveal">
             <p className="section-kicker"><span>05</span> De ervaring</p>
             <h2>Van principe naar product.</h2>
-            <p>De belangrijkste schermen uit het concept, rechtstreeks uit de casepresentatie.</p>
+            <p>{project.galleryIntro ?? "De belangrijkste schermen uit het concept, rechtstreeks uit de casepresentatie."}</p>
           </div>
           <div className="ec-shot-grid">
             {project.shots.map((shot, index) => (
@@ -298,7 +318,14 @@ export function EditorialCaseExperience({ project }: { project: EditorialCase })
           <p className="section-kicker section-kicker-light"><span>06</span> De bijdrage</p>
           <div className="ec-impact-grid ec-reveal">
             <h2>{project.impactTitle}</h2>
-            <div>{project.impactBody.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}</div>
+            <div>
+              {project.impactBody.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+              {project.externalUrl ? (
+                <a className="ec-live-link" href={project.externalUrl} target="_blank" rel="noreferrer">
+                  Bekijk de live website <span aria-hidden="true">↗</span>
+                </a>
+              ) : null}
+            </div>
           </div>
           <dl className="ec-stats ec-reveal">
             {project.stats.map((stat) => (
