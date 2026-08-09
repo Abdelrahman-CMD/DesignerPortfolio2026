@@ -7,6 +7,9 @@ export type EditorialCase = {
   description: string;
   heroBg: string;
   heroInk: string;
+  contentInk?: string;
+  footerInk?: string;
+  titleLines?: string[];
   accent: string;
   surface: string;
   dark: string;
@@ -282,7 +285,7 @@ export const editorialCases: Record<string, EditorialCase> = {
     description:
       "Een warme Framer-website voor een zelfstandige behandelpraktijk, waarin vertrouwen, uitleg en laagdrempelig boeken samenkomen.",
     heroBg: "#dae5dd",
-    heroInk: "#15662d",
+    heroInk: "#0b4a20",
     accent: "#e8d5b0",
     surface: "#f7f7f2",
     dark: "#124d24",
@@ -325,6 +328,11 @@ export const editorialCases: Record<string, EditorialCase> = {
     ],
     shots: [
       {
+        src: "/projects/live/hijaman-site-desktop.png",
+        alt: "Homepage van de live Hijama’N Cups website op desktop",
+        caption: "Live website · meertalig welkom en behandelingsroute",
+      },
+      {
         src: "/projects/live/hijaman-cups-rose.jpg",
         alt: "Cuppingglas met een rode roos",
         caption: "Art direction · een zachte introductie",
@@ -334,14 +342,9 @@ export const editorialCases: Record<string, EditorialCase> = {
         alt: "Groene dry-cuppingglazen uit de praktijkfotografie",
         caption: "Treatment language · herkenbaar en rustig",
       },
-      {
-        src: "/projects/live/hijaman-cups-glass.jpg",
-        alt: "Transparante fire-cuppingglazen",
-        caption: "Service detail · fotografie als uitleg",
-      },
     ],
     galleryIntro:
-      "Een selectie uit de beeldtaal en inhoud van de live website: herkenbare instrumenten, veel ademruimte en informatie die een eerste bezoek minder onbekend maakt.",
+      "De live desktopervaring naast de eigen fotografie: een meertalig welkom, herkenbare instrumenten en informatie die een eerste behandeling minder onbekend maakt.",
     impactTitle: "Een zelfstandige praktijk die online even persoonlijk voelt als in de behandelkamer.",
     impactBody: [
       "De website brengt een uitgebreid behandelaanbod terug tot een rustige route. Bezoekers kunnen zich eerst verdiepen, zien wat een behandeling inhoudt en vervolgens rechtstreeks een afspraak of vraag starten.",
@@ -366,6 +369,9 @@ export const editorialCases: Record<string, EditorialCase> = {
       "Een scherpe, conversiegerichte Framer-website voor een zelfstandig detacheringsbureau dat menselijkheid en snelheid wil combineren.",
     heroBg: "#1c2a3a",
     heroInk: "#f9fafb",
+    contentInk: "#1c2a3a",
+    footerInk: "#07101a",
+    titleLines: ["AtotZ", "Detachering"],
     accent: "#128c7e",
     surface: "#f9fafb",
     dark: "#101828",
@@ -402,20 +408,20 @@ export const editorialCases: Record<string, EditorialCase> = {
     bodyFont: "Poppins",
     colors: [
       { name: "AtotZ Navy", hex: "#1C2A3A", text: "#F9FAFB" },
-      { name: "Signal Teal", hex: "#128C7E", text: "#F9FAFB" },
+      { name: "Signal Teal", hex: "#128C7E", text: "#07101A" },
       { name: "Clear White", hex: "#F9FAFB" },
       { name: "Deep Ink", hex: "#101828", text: "#F9FAFB" },
     ],
     shots: [
       {
-        src: "/projects/live/atotz-people.jpg",
-        alt: "Professional met team op de achtergrond",
-        caption: "Positioning · mensen maken de organisatie",
+        src: "/projects/live/atotz-site-desktop.png",
+        alt: "Homepage van de live AtotZ Detachering website op desktop",
+        caption: "Live website · heldere positionering en directe leadroute",
       },
       {
-        src: "/projects/live/atotz-technical.jpg",
-        alt: "Technisch professional in een industriële omgeving",
-        caption: "Sector route · techniek",
+        src: "/projects/live/atotz-site-mobile.png",
+        alt: "Mobiele homepage van de live AtotZ Detachering website",
+        caption: "Responsive experience · mobile",
       },
       {
         src: "/projects/live/atotz-construction.jpg",
@@ -424,7 +430,7 @@ export const editorialCases: Record<string, EditorialCase> = {
       },
     ],
     galleryIntro:
-      "De fotografie brengt de brede dienstverlening terug naar de essentie: echte professionals in de context waar hun expertise waarde toevoegt.",
+      "De live desktop- en mobiele ervaring naast de sectorfotografie: één positionering die werkgevers snel van belofte naar bewijs en contact brengt.",
     impactTitle: "Een jong bureau dat digitaal direct als een volwassen partner opereert.",
     impactBody: [
       "AtotZ presenteert complexe dienstverlening als een helder gesprek. Werkgevers zien snel wat het bureau levert, hoe het proces werkt en wanneer zij de eerste kandidaten kunnen verwachten.",

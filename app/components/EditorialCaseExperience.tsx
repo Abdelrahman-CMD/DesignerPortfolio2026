@@ -148,7 +148,9 @@ export function EditorialCaseExperience({ project }: { project: EditorialCase })
 
   const style = {
     "--case-bg": project.heroBg,
-    "--case-ink": project.heroInk,
+    "--case-hero-ink": project.heroInk,
+    "--case-ink": project.contentInk ?? project.heroInk,
+    "--case-footer-ink": project.footerInk ?? project.contentInk ?? project.heroInk,
     "--case-accent": project.accent,
     "--case-surface": project.surface,
     "--case-dark": project.dark,
@@ -169,7 +171,9 @@ export function EditorialCaseExperience({ project }: { project: EditorialCase })
         <div className="ec-hero-copy">
           <p className="section-kicker"><span>Case {project.number}</span> {project.eyebrow}</p>
           <h1>
-            <span className="ec-title-line"><span>{project.name}</span></span>
+            {(project.titleLines ?? [project.name]).map((line, index) => (
+              <span className={`ec-title-line ec-title-line-${index + 1}`} key={line}><span>{line}</span></span>
+            ))}
           </h1>
           <p className="ec-hero-headline">{project.headline}</p>
           <dl className="ec-meta">
@@ -288,7 +292,7 @@ export function EditorialCaseExperience({ project }: { project: EditorialCase })
               <div
                 className="ec-color ec-reveal"
                 key={color.name}
-                style={{ background: color.hex, color: color.text ?? project.heroInk }}
+                style={{ background: color.hex, color: color.text ?? project.contentInk ?? project.heroInk }}
               >
                 <span>{color.name}</span><small>{color.hex}</small>
               </div>
@@ -304,7 +308,7 @@ export function EditorialCaseExperience({ project }: { project: EditorialCase })
           </div>
           <div className="ec-shot-grid">
             {project.shots.map((shot, index) => (
-              <figure className={`ec-shot ec-shot-${index + 1} ec-reveal`} key={shot.src}>
+              <figure className={`ec-shot ec-shot-${index + 1} ${shot.src.includes("-site-") ? "ec-shot-website" : ""} ec-reveal`} key={shot.src}>
                 <div className="ec-shot-media">
                   <Image src={shot.src} alt={shot.alt} fill sizes={index === 0 ? "92vw" : "46vw"} />
                 </div>

@@ -72,7 +72,7 @@ const projects = [
       "Een warme Framer-website voor een zelfstandige behandelpraktijk, waarin uitleg, vertrouwen en laagdrempelig boeken samenkomen.",
     services: "Strategy · UX/UI · Framer design & build",
     bg: "#dae5dd",
-    ink: "#15662d",
+    ink: "#0b4a20",
     image: "/projects/live/hijaman-cups-rose.jpg",
     imagePosition: "center 58%",
     href: "/cases/hijaman-cups",
@@ -209,7 +209,34 @@ export function HomeExperience() {
       "(prefers-reduced-motion: reduce)",
     ).matches;
 
-    if (reduceMotion) return;
+    if (reduceMotion) {
+      const reducedContext = gsap.context(() => {
+        gsap.set(".story-stop-dot-fill", { scaleY: 1 });
+        gsap.utils.toArray<HTMLElement>(".project-entry").forEach((entry, index) => {
+          ScrollTrigger.create({
+            trigger: entry,
+            start: "top 54%",
+            end: "bottom 46%",
+            onEnter: () => {
+              setActiveProject(index);
+              gsap.set(showcase.current, {
+                backgroundColor: projects[index].bg,
+                color: projects[index].ink,
+              });
+            },
+            onEnterBack: () => {
+              setActiveProject(index);
+              gsap.set(showcase.current, {
+                backgroundColor: projects[index].bg,
+                color: projects[index].ink,
+              });
+            },
+          });
+        });
+      }, root);
+
+      return () => reducedContext.revert();
+    }
 
     let cleanupStoryRoute = () => {};
 
@@ -227,18 +254,34 @@ export function HomeExperience() {
           "-=0.35",
         )
         .from(
-          ".hero-intro, .hero-index, .scroll-note",
+          ".hero-intro, .hero-index, .hero-note, .hero-cover-meta span, .scroll-note",
           { opacity: 0, y: 22, duration: 0.8, stagger: 0.1 },
           "-=0.65",
-        );
+        )
+        .from(".hero-rule span", { scaleX: 0, transformOrigin: "left", duration: 1 }, "-=0.7")
+        .from(".hero-orbit", { opacity: 0, scale: 0.72, duration: 1.1 }, "-=1");
 
       gsap.to(".hero-copy", {
         opacity: 0.14,
         yPercent: -13,
+        scale: 0.945,
+        transformOrigin: "center top",
         ease: "none",
         scrollTrigger: {
           trigger: ".hero",
           start: "58% center",
+          end: "bottom top",
+          scrub: true,
+        },
+      });
+
+      gsap.to(".hero-orbit", {
+        rotation: 24,
+        scale: 1.12,
+        ease: "none",
+        scrollTrigger: {
+          trigger: ".hero",
+          start: "top top",
           end: "bottom top",
           scrub: true,
         },
@@ -268,6 +311,7 @@ export function HomeExperience() {
             setActiveProject(index);
             gsap.to(showcase.current, {
               backgroundColor: background,
+              color: projects[index].ink,
               duration: 0.75,
               ease: "power2.out",
             });
@@ -276,6 +320,7 @@ export function HomeExperience() {
             setActiveProject(index);
             gsap.to(showcase.current, {
               backgroundColor: background,
+              color: projects[index].ink,
               duration: 0.75,
               ease: "power2.out",
             });
@@ -311,6 +356,18 @@ export function HomeExperience() {
             },
           );
         }
+      });
+
+      gsap.fromTo(".showcase-progress span", { scaleY: 0 }, {
+        scaleY: 1,
+        transformOrigin: "top",
+        ease: "none",
+        scrollTrigger: {
+          trigger: ".project-stream",
+          start: "top 62%",
+          end: "bottom 62%",
+          scrub: true,
+        },
       });
 
       const route = root.current?.querySelector<HTMLElement>(".story-route");
@@ -657,6 +714,23 @@ export function HomeExperience() {
         ease: "power4.out",
         scrollTrigger: { trigger: ".contact", start: "top 70%" },
       });
+
+      gsap.fromTo(".contact-issue", {
+        scale: 0.72,
+        rotation: -6,
+        opacity: 0.12,
+      }, {
+        scale: 1,
+        rotation: 0,
+        opacity: 0.82,
+        ease: "none",
+        scrollTrigger: {
+          trigger: ".contact",
+          start: "top bottom",
+          end: "58% 58%",
+          scrub: true,
+        },
+      });
     }, root);
 
     return () => {
@@ -689,12 +763,21 @@ export function HomeExperience() {
 
       <section className="hero" id="top" aria-labelledby="hero-title">
         <div className="hero-copy">
-          <p className="hero-index label">Portfolio / 2026</p>
+          <div className="hero-cover-meta label" aria-label="Portfolio metadata">
+            <span>Portfolio / 2026</span>
+            <span>Issue 01 · Digital products</span>
+            <span>Strategy / UX / Direction</span>
+          </div>
+          <p className="hero-index label">Een portfolio over ontwerp dat ertoe doet</p>
           <h1 id="hero-title">
-            <span className="hero-line"><span>Ontwerpen voor impact,</span></span>
+            <span className="hero-line"><span>Ontwerpen voor <em className="hero-mark">impact,</em></span></span>
             <span className="hero-line hero-line-indent"><span>niet voor de spotlights.</span></span>
           </h1>
           <div className="hero-bottom">
+            <aside className="hero-note">
+              <span>design is a dialogue</span>
+              <p>06 cases over vertrouwen, richting en menselijke waarde.</p>
+            </aside>
             <p className="hero-intro">
               Ik ben een digital designer en strategisch sparringpartner. Ik bouw
               digitale producten waar strakke structuur en out-of-the-box denken
@@ -703,6 +786,7 @@ export function HomeExperience() {
             </p>
             <p className="scroll-note label"><span aria-hidden="true">↓</span> Scroll om te ontdekken</p>
           </div>
+          <div className="hero-rule" aria-hidden="true"><span /></div>
         </div>
         <div className="hero-orbit" aria-hidden="true"><span /></div>
       </section>
@@ -724,7 +808,10 @@ export function HomeExperience() {
         className="showcase"
         id="werk"
         ref={showcase}
-        style={{ backgroundColor: projects[0].bg }}
+        style={{
+          backgroundColor: projects[0].bg,
+          color: projects[0].ink,
+        }}
         aria-labelledby="work-title"
       >
         <div className="showcase-sticky">
@@ -738,6 +825,7 @@ export function HomeExperience() {
               <span key={project.slug} className={index === activeProject ? "is-active" : ""} />
             ))}
           </div>
+          <div className="showcase-progress" aria-hidden="true"><span /></div>
         </div>
 
         <div className="project-stream">
@@ -746,7 +834,7 @@ export function HomeExperience() {
               className={`project-entry project-${project.slug}`}
               data-bg={project.bg}
               key={project.slug}
-              style={{ color: project.ink }}
+              style={{ color: project.ink, backgroundColor: project.bg }}
             >
               <div className="project-meta label">
                 <span>{project.number} / 06</span>
@@ -909,12 +997,26 @@ export function HomeExperience() {
       </section>
 
       <footer className="contact" id="contact">
-        <p className="section-kicker section-kicker-light"><span>06</span> Een goed gesprek begint hier</p>
-        <h2>
-          <span className="footer-cta-line"><span>Klaar om te sparren?</span></span>
-          <span className="footer-cta-line footer-cta-indent"><span>Laten we het kwartje</span></span>
-          <span className="footer-cta-line"><span>samen laten vallen.</span></span>
-        </h2>
+        <div className="contact-cover-meta label">
+          <span>Back cover / contact</span>
+          <span>Abdelrahman · Digital direction</span>
+          <span>06 / 06</span>
+        </div>
+        <div className="contact-heading-grid">
+          <span className="contact-issue" aria-hidden="true">06</span>
+          <div>
+            <p className="section-kicker section-kicker-light"><span>06</span> Een goed gesprek begint hier</p>
+            <h2>
+              <span className="footer-cta-line"><span>Klaar om te sparren?</span></span>
+              <span className="footer-cta-line footer-cta-indent"><span>Laten we het kwartje</span></span>
+              <span className="footer-cta-line"><span>samen laten vallen.</span></span>
+            </h2>
+          </div>
+        </div>
+        <aside className="contact-note">
+          <span>you bring the question</span>
+          <p>Ik breng nieuwsgierigheid, structuur en een richting die we samen kunnen toetsen.</p>
+        </aside>
         <a className="contact-button" href="mailto:abdel@muminstudio.com">
           <span>Vertel me waar je aan werkt</span>
           <span aria-hidden="true">↗</span>
