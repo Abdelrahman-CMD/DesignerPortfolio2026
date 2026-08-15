@@ -41,7 +41,7 @@ export type EditorialCase = {
   stats: { value: string; label: string }[];
   next: { slug: string; name: string };
   externalUrl?: string;
-  prototype: "guidance" | "bayn" | "ayn" | "hijaman" | "atotz";
+  prototype: "guidance" | "bayn" | "ayn" | "hijaman" | "atotz" | "oppas";
 };
 
 export const editorialCases: Record<string, EditorialCase> = {
@@ -441,9 +441,95 @@ export const editorialCases: Record<string, EditorialCase> = {
       { value: "05", label: "dagen tot gemiddelde match" },
       { value: "08", label: "expertiseroutes op één platform" },
     ],
-    next: { slug: "tareeqi", name: "Tareeqi" },
+    next: { slug: "oppas-by-chaima", name: "Oppas by Chaima" },
     externalUrl: "https://atotzdetachering.nl/",
     prototype: "atotz",
+  },
+  "oppas-by-chaima": {
+    slug: "oppas-by-chaima",
+    number: "07",
+    name: "Oppas by Chaima",
+    eyebrow: "Live client work · Web design & build",
+    headline: "Turning a parent’s biggest question into calm digital trust.",
+    description:
+      "Een warme, heldere website voor een pedagogisch opgeleide oppas aan huis, ontworpen rond vertrouwen, thuisritme en duidelijke afspraken.",
+    heroBg: "#f0e2ce",
+    heroInk: "#342d27",
+    contentInk: "#342d27",
+    footerInk: "#342d27",
+    titleLines: ["Oppas by", "Chaima"],
+    accent: "#c9673a",
+    surface: "#fbf6ea",
+    dark: "#342d27",
+    featured: "/projects/live/oppas-site-desktop.png",
+    featuredAlt: "Homepage van Oppas by Chaima met een rustige introductie en warme illustratie",
+    creditLine: "Positioning / UX/UI / Web design & build",
+    role: "Positionering · UX/UI · Web Design & Build",
+    focus: "Trust · Family fit · Availability",
+    year: "Live website",
+    yearLabel: "Status",
+    contextTitle: "Wie je binnenlaat, moet al vóór de voordeur vertrouwd voelen.",
+    contextLead:
+      "Ouders zoeken niet alleen iemand die een paar uur beschikbaar is. Ze zoeken rust: iemand die het ritme van thuis begrijpt, helder communiceert en zorgvuldig omgaat met wat voor hen het belangrijkst is.",
+    contextBody:
+      "Oppas by Chaima richt zich op gezinnen met kinderen van 0 tot 12 jaar in Amsterdam en omgeving. De website moest tien jaar ervaring, een pedagogische basis en de praktische werkwijze vertalen naar een warme eerste kennismaking — zonder grote claims of commerciële druk.",
+    insightQuote:
+      "Een ouder boekt geen oppasuur. Die geeft iemand tijdelijk een plek in het ritme van thuis.",
+    insightBody:
+      "Dat inzicht maakte vertrouwen tot de hoofdstructuur van de site. Eerst herkenning en menselijke context, daarna de stappen, afspraken, ervaring en ouderverhalen. De beschikbaarheidsvraag komt pas wanneer iemand voldoende weet om met een gerust gevoel contact te leggen.",
+    conceptTitle: "Digitale rust voordat de oppasavond begint.",
+    freedomTitle: "Een zachte beeldwereld die zorg voelbaar maakt.",
+    freedomBody:
+      "Handgemaakte illustraties, organische vormen en warme natuurtinten geven de website het gevoel van een vertrouwd huis. Fraunces voegt persoonlijkheid toe, terwijl speelse details de ervaring vriendelijk houden zonder kinderachtig te worden.",
+    responsibilityTitle: "Duidelijkheid die ouders controle teruggeeft.",
+    responsibilityBody:
+      "Tarief, regio, kennismaking en vier concrete stappen staan vroeg in de flow. Ouders zien hoe updates werken, welke informatie vooraf wordt afgestemd en hoe Chaima aansluit bij eten, spel, slaap en opvoedstijl.",
+    features: [
+      "Vier heldere stappen van eerste appje tot oppasmoment",
+      "Tarieven en beschikbaarheid zichtbaar vóór contact",
+      "Pedagogische ervaring vertaald naar voordelen thuis",
+      "Ouderverhalen en FAQ als rustig bewijs",
+    ],
+    headingFont: "Fraunces",
+    bodyFont: "Manrope",
+    colors: [
+      { name: "Warm Paper", hex: "#FBF6EA" },
+      { name: "Terracotta", hex: "#C9673A", text: "#FFF8EC" },
+      { name: "Soft Sand", hex: "#F0E2CE" },
+      { name: "Home Ink", hex: "#342D27", text: "#FBF6EA" },
+    ],
+    shots: [
+      {
+        src: "/projects/live/oppas-site-desktop.png",
+        alt: "Live homepage van Oppas by Chaima op desktop",
+        caption: "Live website · vertrouwen en beschikbaarheid in één eerste blik",
+      },
+      {
+        src: "/projects/live/oppas-over-mij.webp",
+        alt: "Warme illustratie van Chaima die met twee kinderen een boek leest",
+        caption: "About story · ervaring wordt persoonlijk en herkenbaar",
+      },
+      {
+        src: "/projects/live/oppas-bedtijd.webp",
+        alt: "Illustratie van een rustige bedtijdroutine met jonge kinderen",
+        caption: "Service detail · thuisritme als uitgangspunt",
+      },
+    ],
+    galleryIntro:
+      "De live homepage naast de illustraties die het merk menselijk maken: één rustige route van eerste indruk naar werkwijze, ervaring en een vrijblijvende beschikbaarheidsvraag.",
+    impactTitle: "Een persoonlijke dienst die online niet onpersoonlijk wordt.",
+    impactBody: [
+      "De website maakt een moeilijk vergelijkbare keuze concreet. Ouders begrijpen wie Chaima is, hoe zij werkt, wat een oppasmoment kost en welke afspraken vooraf worden gemaakt — zonder eerst een lang gesprek te hoeven voeren.",
+      "Voor Chaima vormt de site een digitale kennismaking die veel terugkerende vragen al zorgvuldig beantwoordt. Daardoor begint WhatsApp niet meer bij nul, maar bij een gezin dat al beter weet of de samenwerking past.",
+    ],
+    stats: [
+      { value: "10", label: "jaar ervaring met kinderen" },
+      { value: "0–12", label: "jaar als leeftijdsbereik" },
+      { value: "04", label: "duidelijke stappen vóór de oppas" },
+    ],
+    next: { slug: "tareeqi", name: "Tareeqi" },
+    externalUrl: "https://oppasbychaima.nl/",
+    prototype: "oppas",
   },
 };
 

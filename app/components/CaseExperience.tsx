@@ -1,6 +1,6 @@
 "use client";
+/* eslint-disable @next/next/no-html-link-for-pages -- Native document navigation avoids a vinext RSC link interception failure. */
 
-import Link from "next/link";
 import Image from "next/image";
 import { useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
@@ -33,11 +33,6 @@ export function CaseExperience() {
 
   useLayoutEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
-    const reduceMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
-
-    if (reduceMotion) return;
 
     const context = gsap.context(() => {
       const intro = gsap.timeline({ defaults: { ease: "power4.out" } });
@@ -123,8 +118,8 @@ export function CaseExperience() {
       <a className="skip-link" href="#case-content">Ga naar de case</a>
 
       <nav className="case-nav" aria-label="Case navigatie">
-        <Link href="/#werk" className="case-back"><span aria-hidden="true">←</span> Alle cases</Link>
-        <Link href="/" className="case-brand">Abdelrahman / Digital designer</Link>
+        <a href="/#werk" className="case-back"><span aria-hidden="true">←</span> Alle cases</a>
+        <a href="/" className="case-brand">Abdelrahman / Digital designer</a>
         <a href="mailto:abdel@muminstudio.com">Start een gesprek</a>
       </nav>
 
@@ -353,7 +348,7 @@ export function CaseExperience() {
 
       <footer className="case-footer">
         <p className="section-kicker"><span>Next</span> Volgende case</p>
-        <Link href="/cases/ayn-al-hikmah"><span>Ayn Al-Hikmah</span><span aria-hidden="true">↗</span></Link>
+        <a href="/cases/ayn-al-hikmah"><span>Ayn Al-Hikmah</span><span aria-hidden="true">↗</span></a>
         <div><span>Abdelrahman / Digital designer</span><span>© 2026</span></div>
       </footer>
     </main>

@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import Image from "next/image";
 import { CSSProperties, useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
@@ -91,7 +90,23 @@ const projects = [
     imagePosition: "center",
     href: "/cases/atotz-detachering",
   },
+  {
+    number: "07",
+    slug: "oppasbychaima",
+    name: "Oppas by Chaima",
+    title: "Turning care at home into calm, credible digital trust",
+    summary:
+      "Een warme website voor een pedagogisch opgeleide oppas, waarin thuisritme, duidelijke afspraken en oudervertrouwen samenkomen.",
+    services: "Positioning · UX/UI · Web design & build",
+    bg: "#f0e2ce",
+    ink: "#342d27",
+    image: "/projects/live/oppas-site-desktop.png",
+    imagePosition: "center",
+    href: "/cases/oppas-by-chaima",
+  },
 ] as const;
+
+const projectCount = String(projects.length).padStart(2, "0");
 
 const personalStory = [
   {
@@ -428,14 +443,67 @@ export function HomeExperience() {
   const showcase = useRef<HTMLElement>(null);
   const [activeProject, setActiveProject] = useState(0);
   const [activeHeroProject, setActiveHeroProject] = useState(0);
+  const [activeNav, setActiveNav] = useState("");
 
   useLayoutEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
     let cleanupStoryRoute = () => {};
     let cleanupStoryMosaics = () => {};
+    let cleanupHeader = () => {};
 
     const context = gsap.context(() => {
+      const header = root.current?.querySelector<HTMLElement>(".site-header");
+      let previousScroll = window.scrollY;
+      let headerVisible = true;
+      let scrollFrame = 0;
+
+      const setHeaderVisibility = (visible: boolean) => {
+        if (!header || visible === headerVisible) return;
+        headerVisible = visible;
+        gsap.to(header, {
+          autoAlpha: visible ? 1 : 0,
+          yPercent: visible ? 0 : -125,
+          duration: visible ? 0.42 : 0.3,
+          ease: visible ? "power3.out" : "power2.in",
+          overwrite: true,
+        });
+      };
+
+      const handleDirectionalScroll = () => {
+        if (scrollFrame) return;
+        scrollFrame = window.requestAnimationFrame(() => {
+          const currentScroll = window.scrollY;
+          const delta = currentScroll - previousScroll;
+          if (currentScroll < 90) setHeaderVisibility(true);
+          else if (delta > 7) setHeaderVisibility(false);
+          else if (delta < -7) setHeaderVisibility(true);
+          previousScroll = currentScroll;
+          scrollFrame = 0;
+        });
+      };
+
+      const updateNavigation = (section: HTMLElement) => {
+        if (header) header.dataset.theme = section.dataset.navTheme ?? "light";
+        setActiveNav(section.dataset.navKey ?? "");
+      };
+
+      window.addEventListener("scroll", handleDirectionalScroll, { passive: true });
+      gsap.utils.toArray<HTMLElement>("[data-nav-theme]").forEach((section) => {
+        ScrollTrigger.create({
+          trigger: section,
+          start: "top 18%",
+          end: "bottom 18%",
+          onEnter: () => updateNavigation(section),
+          onEnterBack: () => updateNavigation(section),
+        });
+      });
+
+      cleanupHeader = () => {
+        window.removeEventListener("scroll", handleDirectionalScroll);
+        if (scrollFrame) window.cancelAnimationFrame(scrollFrame);
+      };
+
       const intro = gsap.timeline({ defaults: { ease: "power4.out" } });
       intro
         .from(".site-mark, .top-nav", {
@@ -505,6 +573,8 @@ export function HomeExperience() {
           end: "bottom 46%",
           onEnter: () => {
             setActiveProject(index);
+            if (header) header.dataset.theme = projects[index].ink === "#f9fafb" ? "dark" : "light";
+            setActiveNav("werk");
             gsap.to(showcase.current, {
               backgroundColor: background,
               color: projects[index].ink,
@@ -514,6 +584,8 @@ export function HomeExperience() {
           },
           onEnterBack: () => {
             setActiveProject(index);
+            if (header) header.dataset.theme = projects[index].ink === "#f9fafb" ? "dark" : "light";
+            setActiveNav("werk");
             gsap.to(showcase.current, {
               backgroundColor: background,
               color: projects[index].ink,
@@ -919,6 +991,7 @@ export function HomeExperience() {
     return () => {
       cleanupStoryRoute();
       cleanupStoryMosaics();
+      cleanupHeader();
       context.revert();
     };
   }, []);
@@ -954,20 +1027,20 @@ export function HomeExperience() {
         Ga naar het werk
       </a>
 
-      <header className="site-header" aria-label="Hoofdnavigatie">
-        <Link className="site-mark" href="#top" aria-label="Naar boven">
+      <header className="site-header" data-theme="light" aria-label="Hoofdnavigatie">
+        <a className="site-mark" href="#top" aria-label="Naar boven">
           <span>A</span>
           <span className="site-mark-copy">Abdelrahman<br />Digital designer</span>
-        </Link>
-        <nav className="top-nav">
-          <a href="#werk">Werk</a>
-          <a href="#over">Over</a>
-          <a href="#aanpak">Aanpak</a>
-          <a href="#contact">Contact</a>
+        </a>
+        <nav className="top-nav" aria-label="Portfolio tabs">
+          <a href="#werk" aria-current={activeNav === "werk" ? "location" : undefined}>Werk</a>
+          <a href="#over" aria-current={activeNav === "over" ? "location" : undefined}>Over</a>
+          <a href="#aanpak" aria-current={activeNav === "aanpak" ? "location" : undefined}>Aanpak</a>
+          <a href="#contact" aria-current={activeNav === "contact" ? "location" : undefined}>Contact</a>
         </nav>
       </header>
 
-      <section className="hero" id="top" aria-labelledby="hero-title">
+      <section className="hero" id="top" data-nav-theme="light" aria-labelledby="hero-title">
         <div className="hero-copy">
           <div className="hero-cover-meta label" aria-label="Portfolio metadata">
             <span>Portfolio / 2026</span>
@@ -976,7 +1049,7 @@ export function HomeExperience() {
           </div>
           <p className="hero-index label">Een portfolio over ontwerp dat ertoe doet</p>
           <h1 id="hero-title" aria-label="Ontwerpen voor impact, voorbij de spotlights. Alles zonder ruis.">
-            <span className="hero-line"><span>On{projectLetter("t", 0)}werpen voor <em className="hero-mark">imp{projectLetter("a", 1)}ct,</em></span></span>
+            <span className="hero-line"><span>{projectLetter("O", 6)}n{projectLetter("t", 0)}werpen voor <em className="hero-mark">imp{projectLetter("a", 1)}ct,</em></span></span>
             <span className="hero-line hero-line-indent"><span>voor{projectLetter("b", 3)}ij de spotli{projectLetter("g", 2)}{projectLetter("h", 4)}ts.</span></span>
             <span className="hero-line hero-line-quiet"><span>{projectLetter("A", 5)}lles zonder ruis.</span></span>
           </h1>
@@ -988,7 +1061,7 @@ export function HomeExperience() {
             } as CSSProperties}
             aria-live="polite"
           >
-            <Link href={heroProject.href} aria-label={`Open de case ${heroProject.name}`}>
+            <a href={heroProject.href} aria-label={`Open de case ${heroProject.name}`}>
               <figure>
                 <div className="hero-preview-media">
                   <Image
@@ -1002,17 +1075,17 @@ export function HomeExperience() {
                   />
                 </div>
                 <figcaption>
-                  <span>{heroProject.number} / 06</span>
+                  <span>{heroProject.number} / {projectCount}</span>
                   <strong>{heroProject.name}</strong>
                   <span>Bekijk case ↗</span>
                 </figcaption>
               </figure>
-            </Link>
+            </a>
           </aside>
           <div className="hero-bottom">
             <aside className="hero-note">
               <span>design is a dialogue</span>
-              <p>06 cases over vertrouwen, richting en menselijke waarde.</p>
+              <p>{projectCount} cases over vertrouwen, richting en menselijke waarde.</p>
             </aside>
             <p className="hero-intro">
               Ik ben een digital designer en strategisch sparringpartner. Ik bouw
@@ -1026,7 +1099,7 @@ export function HomeExperience() {
         </div>
       </section>
 
-      <section className="manifesto" id="houding" aria-labelledby="manifesto-label">
+      <section className="manifesto" id="houding" data-nav-theme="light" aria-labelledby="manifesto-label">
         <p className="section-kicker" id="manifesto-label"><span>01</span> Mijn houding</p>
         <p className="manifesto-copy">
           {manifesto.split(" ").map((word, index) => (
@@ -1042,6 +1115,8 @@ export function HomeExperience() {
       <section
         className="showcase"
         id="werk"
+        data-nav-theme="light"
+        data-nav-key="werk"
         ref={showcase}
         style={{
           backgroundColor: projects[0].bg,
@@ -1052,7 +1127,7 @@ export function HomeExperience() {
         <div className="showcase-sticky">
           <p className="section-kicker"><span>02</span> Selected work</p>
           <div className="showcase-title-wrap">
-            <p className="label">Case {projects[activeProject].number} / 06</p>
+            <p className="label">Case {projects[activeProject].number} / {projectCount}</p>
             <h2 id="work-title" aria-live="polite">{projects[activeProject].name}</h2>
           </div>
           <div className="project-dots" aria-hidden="true">
@@ -1072,7 +1147,7 @@ export function HomeExperience() {
               style={{ color: project.ink, backgroundColor: project.bg }}
             >
               <div className="project-meta label">
-                <span>{project.number} / 06</span>
+                <span>{project.number} / {projectCount}</span>
                 <span>{project.services}</span>
               </div>
               <div className="project-visual">
@@ -1097,9 +1172,9 @@ export function HomeExperience() {
                 <div>
                   <p>{project.summary}</p>
                   {project.href ? (
-                    <Link className="text-link" href={project.href}>
+                    <a className="text-link" href={project.href}>
                       Bekijk de case <span aria-hidden="true">↗</span>
-                    </Link>
+                    </a>
                   ) : (
                     <span className="text-link text-link-muted">Concept preview</span>
                   )}
@@ -1110,7 +1185,7 @@ export function HomeExperience() {
         </div>
       </section>
 
-      <section className="principle" aria-label="Ontwerpprincipe">
+      <section className="principle" data-nav-theme="light" aria-label="Ontwerpprincipe">
         <p className="section-kicker"><span>03</span> De balans</p>
         <div className="principle-grid">
           <p className="principle-big">Vorm volgt <em>begrip.</em></p>
@@ -1122,7 +1197,7 @@ export function HomeExperience() {
         </div>
       </section>
 
-      <section className="about-story" id="over" aria-labelledby="about-title">
+      <section className="about-story" id="over" data-nav-theme="light" data-nav-key="over" aria-labelledby="about-title">
         <div className="about-story-heading">
           <p className="section-kicker"><span>04</span> De mens achter het werk</p>
           <h2 id="about-title">
@@ -1187,7 +1262,7 @@ export function HomeExperience() {
         </div>
       </section>
 
-      <section className="method" id="aanpak" aria-labelledby="method-title">
+      <section className="method" id="aanpak" data-nav-theme="dark" data-nav-key="aanpak" aria-labelledby="method-title">
         <div className="method-intro">
           <p className="section-kicker section-kicker-light"><span>05</span> Hoe ik werk</p>
           <h2 id="method-title">
@@ -1247,7 +1322,7 @@ export function HomeExperience() {
         </div>
       </section>
 
-      <footer className="contact" id="contact">
+      <footer className="contact" id="contact" data-nav-theme="dark" data-nav-key="contact">
         <div className="contact-cover-meta label">
           <span>Back cover / contact</span>
           <span>Abdelrahman · Digital direction</span>

@@ -1,7 +1,7 @@
 "use client";
+/* eslint-disable @next/next/no-html-link-for-pages -- Native document navigation avoids a vinext RSC link interception failure. */
 
 import Image from "next/image";
-import Link from "next/link";
 import { CSSProperties, useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -58,6 +58,16 @@ const prototypeContent = {
       IT: ["IT-specialisten", "Direct waarde in projecten"],
     },
   },
+  oppas: {
+    label: "Family fit",
+    question: "Waar heeft jullie gezin vooral behoefte aan?",
+    options: ["Babyzorg", "Bedtijd", "Gezinsritme"],
+    results: {
+      Babyzorg: ["Vertrouwde babyzorg", "Voeding · slaap · een rustige update"],
+      Bedtijd: ["Een herkenbare bedtijdroutine", "Pyjama · boekje · heldere overdracht"],
+      Gezinsritme: ["Oppas die thuis aansluit", "Eten · spel · afspraken vooraf"],
+    },
+  },
 } as const;
 
 export function EditorialCaseExperience({ project }: { project: EditorialCase }) {
@@ -67,10 +77,6 @@ export function EditorialCaseExperience({ project }: { project: EditorialCase })
 
   useLayoutEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
-    const reduceMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
-    if (reduceMotion) return;
 
     const context = gsap.context(() => {
       const intro = gsap.timeline({ defaults: { ease: "power4.out" } });
@@ -161,8 +167,8 @@ export function EditorialCaseExperience({ project }: { project: EditorialCase })
       <a className="skip-link" href="#case-story">Ga naar de case</a>
 
       <nav className="ec-nav" aria-label="Case navigatie">
-        <Link href="/#werk" className="case-back"><span aria-hidden="true">←</span> Alle cases</Link>
-        <Link href="/" className="case-brand">Abdelrahman / Digital designer</Link>
+        <a href="/#werk" className="case-back"><span aria-hidden="true">←</span> Alle cases</a>
+        <a href="/" className="case-brand">Abdelrahman / Digital designer</a>
         <a href="mailto:abdel@muminstudio.com">Start een gesprek</a>
       </nav>
 
@@ -341,9 +347,9 @@ export function EditorialCaseExperience({ project }: { project: EditorialCase })
 
       <footer className="ec-footer">
         <p className="section-kicker"><span>Next</span> Volgende case</p>
-        <Link href={`/cases/${project.next.slug}`}>
+        <a href={`/cases/${project.next.slug}`}>
           <span>{project.next.name}</span><span aria-hidden="true">↗</span>
-        </Link>
+        </a>
         <div><span>Abdelrahman / Digital designer</span><span>© 2026</span></div>
       </footer>
     </main>

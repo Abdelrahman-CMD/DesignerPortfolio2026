@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+/* eslint-disable @next/next/no-html-link-for-pages -- Keep the fallback route independent from the client router. */
 import { CaseExperience } from "../../components/CaseExperience";
 import { EditorialCaseExperience } from "../../components/EditorialCaseExperience";
 import { editorialCases } from "../../data/caseContent";
@@ -48,7 +48,7 @@ export default async function CasePage({
     return (
       <main className="not-found">
         <p>Deze case is nog niet gepubliceerd.</p>
-        <Link href="/#werk">Terug naar het werk</Link>
+        <a href="/#werk">Terug naar het werk</a>
       </main>
     );
   }
