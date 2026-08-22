@@ -35,10 +35,11 @@ test("server-renders the complete portfolio homepage", async () => {
   assert.match(html, /mind-hero-base\.webp/);
   assert.equal((html.match(/class="mind-zone mind-zone-/g) ?? []).length, 5);
   assert.match(html, /class="mind-cosmos"/);
-  assert.match(html, /Tools: Figma, Framer, AI en GSAP/);
+  assert.match(html, /Tools: Figma, Framer en AI/);
   assert.doesNotMatch(html, /hero-project-letter|hero-rule/);
   assert.match(html, /class="contact-postcard"/);
-  assert.equal((html.match(/class="link-icon"/g) ?? []).length, 15);
+  assert.match(html, /class="floating-contact"/);
+  assert.equal((html.match(/class="link-icon"/g) ?? []).length, 14);
   assert.match(html, /class="method-horizontal"/);
   assert.equal((html.match(/class="project-entry /g) ?? []).length, 7);
   assert.match(html, /href="\/cases\/oppas-by-chaima"/);

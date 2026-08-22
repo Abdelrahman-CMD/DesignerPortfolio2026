@@ -239,12 +239,115 @@ img {
     transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+.link-icon svg {
+  width: 1em;
+  height: 1em;
+  stroke-width: 1.8;
+}
+
+.link-icon svg * {
+  stroke-dasharray: 48;
+  stroke-dashoffset: 48;
+  transition: stroke-dashoffset 0.5s ease;
+}
+
 a:hover > .link-icon,
 a:focus-visible > .link-icon {
   width: 1.05em;
   margin-right: 0.36rem;
   opacity: 1;
   transform: translateX(0) scale(1);
+}
+
+a:hover > .link-icon svg *,
+a:focus-visible > .link-icon svg * {
+  stroke-dashoffset: 0;
+}
+
+.floating-contact {
+  position: fixed;
+  z-index: 90;
+  right: clamp(0.8rem, 2vw, 1.5rem);
+  bottom: clamp(0.8rem, 2vw, 1.5rem);
+  display: flex;
+  min-height: 3.55rem;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.28rem;
+  overflow: clip;
+  border: 1px solid rgba(41, 38, 34, 0.24);
+  border-radius: 999px;
+  background: rgba(248, 245, 239, 0.96);
+  box-shadow: 0 0.75rem 2.25rem rgba(31, 28, 25, 0.18);
+  color: #292622;
+}
+
+.floating-contact-links {
+  display: grid;
+  max-width: 0;
+  grid-template-columns: repeat(3, max-content);
+  gap: 0.2rem;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateX(1rem);
+  transition:
+    max-width 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.26s ease,
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.floating-contact:hover .floating-contact-links,
+.floating-contact:focus-within .floating-contact-links,
+.floating-contact.is-open .floating-contact-links {
+  max-width: 24rem;
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.floating-contact-links a,
+.floating-contact-trigger {
+  display: inline-flex;
+  min-height: 2.95rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0 0.78rem;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 0.67rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.26s ease, color 0.26s ease, transform 0.26s ease;
+}
+
+.floating-contact-links a:hover,
+.floating-contact-links a:focus-visible {
+  background: #deddd9;
+  transform: translateY(-1px);
+}
+
+.floating-contact-links svg,
+.floating-contact-trigger svg {
+  width: 1.08rem;
+  height: 1.08rem;
+  flex: 0 0 auto;
+  stroke-width: 1.8;
+}
+
+.floating-contact-trigger {
+  min-width: 7rem;
+  background: #292622;
+  color: #faf6ee;
+}
+
+.floating-contact-trigger:hover,
+.floating-contact-trigger:focus-visible {
+  background: #b83225;
 }
 
 .case-nav a {
@@ -337,6 +440,23 @@ a:focus-visible > .link-icon {
   overflow: hidden;
 }
 
+.golden-ratio-detail {
+  position: absolute;
+  z-index: 2;
+  bottom: -0.5%;
+  left: -1.25%;
+  width: 43%;
+  aspect-ratio: 690 / 296;
+  opacity: 0.74;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+  mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 0.7) 14%, #000 28%);
+}
+
+.golden-ratio-detail img {
+  object-fit: cover;
+}
+
 .mind-hero-base {
   object-fit: cover;
   object-position: center;
@@ -410,11 +530,23 @@ a:focus-visible > .link-icon {
   transition: gap 0.35s cubic-bezier(0.22, 1, 0.36, 1), background 0.3s ease, color 0.3s ease;
 }
 
+.mind-hero-actions > a svg {
+  width: 1rem;
+  height: 1rem;
+  stroke-width: 1.75;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 .mind-hero-actions > a:hover,
 .mind-hero-actions > a:focus-visible {
   gap: 1.75rem;
   background: var(--ink);
   color: var(--paper);
+}
+
+.mind-hero-actions > a:hover svg,
+.mind-hero-actions > a:focus-visible svg {
+  transform: translateY(0.2rem);
 }
 
 .mind-hero-actions > .label {
@@ -602,28 +734,14 @@ a:focus-visible > .link-icon {
   border: 1px solid var(--line-strong);
   background: rgba(249, 246, 240, 0.75);
   color: var(--ink);
-  font-size: 0.66rem;
-  font-weight: 700;
+  border-radius: 0.2rem;
 }
 
-.tool-glyph-figma {
-  grid-template-columns: repeat(2, 0.36rem);
-  grid-template-rows: repeat(3, 0.36rem);
-  align-content: center;
+.tool-glyph svg {
+  width: 1.05rem;
+  height: 1.05rem;
+  stroke-width: 1.7;
 }
-
-.tool-glyph-figma i { width: 0.36rem; height: 0.36rem; border-radius: 50%; background: #d8644a; }
-.tool-glyph-figma i:nth-child(2) { background: #e6a04c; }
-.tool-glyph-figma i:nth-child(3) { background: #9a6aa2; }
-.tool-glyph-figma i:nth-child(4) { background: #63a5a0; }
-.tool-glyph-figma i:nth-child(5) { background: #879a75; }
-
-.tool-glyph-framer { display: block; padding: 0.46rem; }
-.tool-glyph-framer i { position: absolute; left: 0.48rem; width: 1rem; height: 0.56rem; background: var(--ink); clip-path: polygon(0 0, 100% 0, 58% 100%, 0 100%); }
-.tool-glyph-framer i:first-child { top: 0.42rem; }
-.tool-glyph-framer i:last-child { top: 1rem; transform: rotate(180deg); }
-
-.tool-glyph-gsap { color: #315846; font-size: 1rem; }
 
 .mind-cosmos {
   position: absolute;
@@ -1118,12 +1236,18 @@ a:focus-visible > .link-icon {
   margin: 1.25rem 0 0;
   overflow: hidden;
   border: 0.65rem solid #efe8dc;
-  background: #d7cfc1;
+  background:
+    linear-gradient(155deg, rgba(216, 74, 50, 0.12), transparent 36%),
+    #eee8dd;
   box-shadow: 0.6rem 0.75rem 0 rgba(59, 55, 47, 0.13);
   transform: rotate(1.6deg);
 }
 
-.postcard-portrait img { object-fit: cover; }
+.postcard-portrait img {
+  object-fit: contain;
+  object-position: center 56%;
+  padding: 1rem 0.45rem 2.6rem;
+}
 
 .postcard-portrait::after {
   position: absolute;
@@ -3626,6 +3750,23 @@ a:focus-visible > .link-icon {
   .site-mark > span:first-child { width: 2.1rem; height: 2.1rem; }
   .top-nav { gap: 0.16rem; padding: 0.22rem; font-size: 0.62rem; letter-spacing: 0.04em; }
   .top-nav a { min-height: 2.2rem; padding: 0 0.62rem; }
+  .floating-contact {
+    right: 0.7rem;
+    bottom: 0.7rem;
+    min-height: 3.25rem;
+    padding: 0.22rem;
+  }
+  .floating-contact-links a {
+    width: 2.7rem;
+    min-height: 2.7rem;
+    padding: 0;
+  }
+  .floating-contact-links a span { display: none; }
+  .floating-contact-trigger {
+    min-width: 6.4rem;
+    min-height: 2.7rem;
+    padding: 0 0.72rem;
+  }
   .mind-hero { min-height: auto; padding: 6.7rem 1rem 4.5rem; }
   .mind-hero::before { background-size: auto, 100% 5rem; }
   .mind-hero-meta { grid-template-columns: 1fr auto; gap: 1rem; }
@@ -3644,6 +3785,14 @@ a:focus-visible > .link-icon {
   .mind-hero-actions > .label { max-width: 11rem; }
   .mind-hero-visual { position: relative; grid-row: 2; aspect-ratio: 4 / 5; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
   .mind-hero-base { object-position: 69% center; }
+  .golden-ratio-detail {
+    z-index: 2;
+    top: 29rem;
+    bottom: auto;
+    left: -1rem;
+    width: 88%;
+    opacity: 0.42;
+  }
   .mind-cosmos { top: 25%; left: 50%; width: 37%; height: 21%; }
   .mind-zone-layer { position: relative; display: grid; grid-row: 3; inset: auto; margin-top: 1.5rem; }
   .mind-zone,

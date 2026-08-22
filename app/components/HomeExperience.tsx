@@ -2,6 +2,19 @@
 
 import Image from "next/image";
 import { CSSProperties, useLayoutEffect, useRef, useState } from "react";
+import ArrowDown from "lucide-react/icons/arrow-down";
+import ArrowUpRight from "lucide-react/icons/arrow-up-right";
+import BriefcaseBusiness from "lucide-react/icons/briefcase-business";
+import Figma from "lucide-react/icons/figma";
+import Framer from "lucide-react/icons/framer";
+import Instagram from "lucide-react/icons/instagram";
+import Linkedin from "lucide-react/icons/linkedin";
+import Mail from "lucide-react/icons/mail";
+import MessageCircle from "lucide-react/icons/message-circle";
+import MessageCircleMore from "lucide-react/icons/message-circle-more";
+import Sparkles from "lucide-react/icons/sparkles";
+import UserRound from "lucide-react/icons/user-round";
+import Workflow from "lucide-react/icons/workflow";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -492,6 +505,7 @@ export function HomeExperience() {
   const [activeProject, setActiveProject] = useState(0);
   const [activeMindZone, setActiveMindZone] = useState<string | null>(null);
   const [activeNav, setActiveNav] = useState("");
+  const [contactOpen, setContactOpen] = useState(false);
 
   useLayoutEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -570,10 +584,9 @@ export function HomeExperience() {
           "-=0.65",
         )
         .from(
-          ".mind-hero-base",
+          ".mind-hero-visual",
           {
             clipPath: "inset(0 0 100% 0)",
-            scale: 1.035,
             duration: 1.3,
           },
           "-=1.05",
@@ -1064,7 +1077,7 @@ export function HomeExperience() {
         transformOrigin: "66% 34%",
         duration: sourceIsActive ? 0.95 : 0.62,
         ease: sourceIsActive ? "power3.inOut" : "power3.out",
-        overwrite: true,
+        overwrite: "auto",
       });
 
       gsap.to(".mind-cosmos", {
@@ -1095,12 +1108,37 @@ export function HomeExperience() {
           <span className="site-mark-copy">Abdelrahman<br />Digital designer</span>
         </a>
         <nav className="top-nav" aria-label="Portfolio tabs">
-          <a href="#werk" aria-current={activeNav === "werk" ? "location" : undefined}><span className="link-icon" aria-hidden="true">▰</span><span>Werk</span></a>
-          <a href="#over" aria-current={activeNav === "over" ? "location" : undefined}><span className="link-icon" aria-hidden="true">◉</span><span>Over</span></a>
-          <a href="#aanpak" aria-current={activeNav === "aanpak" ? "location" : undefined}><span className="link-icon" aria-hidden="true">✦</span><span>Aanpak</span></a>
-          <a href="#contact" aria-current={activeNav === "contact" ? "location" : undefined}><span className="link-icon" aria-hidden="true">✉</span><span>Contact</span></a>
+          <a href="#werk" aria-current={activeNav === "werk" ? "location" : undefined}><span className="link-icon" aria-hidden="true"><BriefcaseBusiness /></span><span>Werk</span></a>
+          <a href="#over" aria-current={activeNav === "over" ? "location" : undefined}><span className="link-icon" aria-hidden="true"><UserRound /></span><span>Over</span></a>
+          <a href="#aanpak" aria-current={activeNav === "aanpak" ? "location" : undefined}><span className="link-icon" aria-hidden="true"><Workflow /></span><span>Aanpak</span></a>
         </nav>
       </header>
+
+      <aside className={`floating-contact${contactOpen ? " is-open" : ""}`} aria-label="Direct contact">
+        <div className="floating-contact-links">
+          <a href="https://www.linkedin.com/in/abdelrahman-ahmed-30896964/" target="_blank" rel="noreferrer" aria-label="Neem contact op via LinkedIn">
+            <Linkedin aria-hidden="true" />
+            <span>LinkedIn</span>
+          </a>
+          <a href="mailto:abdel@muminstudio.com" aria-label="Stuur Abdelrahman een e-mail">
+            <Mail aria-hidden="true" />
+            <span>Mail</span>
+          </a>
+          <a href="https://wa.me/31634158194" target="_blank" rel="noreferrer" aria-label="Neem contact op via WhatsApp">
+            <MessageCircle aria-hidden="true" />
+            <span>WhatsApp</span>
+          </a>
+        </div>
+        <button
+          type="button"
+          className="floating-contact-trigger"
+          aria-expanded={contactOpen}
+          onClick={() => setContactOpen((open) => !open)}
+        >
+          <MessageCircleMore aria-hidden="true" />
+          <span>Contact</span>
+        </button>
+      </aside>
 
       <section
         className="mind-hero"
@@ -1133,6 +1171,15 @@ export function HomeExperience() {
               </div>
             </div>
 
+            <div className="golden-ratio-detail" aria-hidden="true">
+              <Image
+                src="/about/golden-ratio-detail.webp"
+                alt=""
+                fill
+                sizes="42vw"
+              />
+            </div>
+
             <div className="mind-hero-copy">
               <p className="mind-hero-kicker label">Een kijkje in mijn hoofd</p>
               <h1 id="hero-title" aria-label="Ik ontwerp met alles wat ik onderweg leer.">
@@ -1146,7 +1193,7 @@ export function HomeExperience() {
                 verbeelding en richting in mijn werk samenkomen.
               </p>
               <div className="mind-hero-actions">
-                <a href="#werk">Bekijk mijn werk <span aria-hidden="true">↓</span></a>
+                <a href="#werk"><span>Bekijk mijn werk</span><ArrowDown aria-hidden="true" /></a>
                 <span className="label">Hover, focus of tik op een gebied</span>
               </div>
             </div>
@@ -1178,24 +1225,18 @@ export function HomeExperience() {
                       <span className="mind-annotation-detail">{zone.detail}</span>
 
                       {zone.id === "direction" && (
-                        <span className="mind-tools" aria-label="Tools: Figma, Framer, AI en GSAP">
+                        <span className="mind-tools" aria-label="Tools: Figma, Framer en AI">
                           <span className="mind-tool">
-                            <span className="tool-glyph tool-glyph-figma" aria-hidden="true">
-                              <i /><i /><i /><i /><i />
-                            </span>
+                            <span className="tool-glyph" aria-hidden="true"><Figma /></span>
                             <span>Figma</span>
                           </span>
                           <span className="mind-tool">
-                            <span className="tool-glyph tool-glyph-framer" aria-hidden="true"><i /><i /></span>
+                            <span className="tool-glyph" aria-hidden="true"><Framer /></span>
                             <span>Framer</span>
                           </span>
                           <span className="mind-tool">
-                            <span className="tool-glyph tool-glyph-ai" aria-hidden="true">AI</span>
+                            <span className="tool-glyph" aria-hidden="true"><Sparkles /></span>
                             <span>AI</span>
-                          </span>
-                          <span className="mind-tool">
-                            <span className="tool-glyph tool-glyph-gsap" aria-hidden="true">↗</span>
-                            <span>GSAP</span>
                           </span>
                         </span>
                       )}
@@ -1286,7 +1327,7 @@ export function HomeExperience() {
                   <p>{project.summary}</p>
                   {project.href ? (
                     <a className="text-link" href={project.href}>
-                      <span className="link-icon" aria-hidden="true">↗</span><span>Bekijk de case</span>
+                      <span className="link-icon" aria-hidden="true"><ArrowUpRight /></span><span>Bekijk de case</span>
                     </a>
                   ) : (
                     <span className="text-link text-link-muted">Concept preview</span>
@@ -1450,11 +1491,10 @@ export function HomeExperience() {
 
           <figure className="postcard-portrait">
             <Image
-              src="/about/web/portrait-studio.webp"
-              alt="Abdelrahman in zijn ontwerpstudio"
+              src="/about/postcard-studio-cutout.webp"
+              alt="Getekend portret van Abdelrahman aan zijn ontwerpdesk"
               fill
               sizes="(max-width: 720px) 72vw, 28vw"
-              style={{ objectPosition: "center 34%" }}
             />
             <figcaption>Design is a dialogue</figcaption>
           </figure>
@@ -1462,13 +1502,13 @@ export function HomeExperience() {
           <p className="postcard-side-type" aria-hidden="true">YOU BRING THE QUESTION · WE FIND THE DIRECTION</p>
 
           <a className="postcard-cta" href="mailto:abdel@muminstudio.com">
-            <span className="link-icon" aria-hidden="true">↗</span><span>Vertel me waar je aan werkt</span>
+            <span className="link-icon" aria-hidden="true"><Mail /></span><span>Vertel me waar je aan werkt</span>
           </a>
 
           <div className="postcard-links" aria-label="Contactkanalen">
-            <a href="mailto:abdel@muminstudio.com"><span className="link-icon" aria-hidden="true">✉</span><span>Email</span></a>
-            <a href="https://instagram.com/themuminstudio" target="_blank" rel="noreferrer"><span className="link-icon" aria-hidden="true">◎</span><span>Instagram</span></a>
-            <a href="https://wa.me/31634158194" target="_blank" rel="noreferrer"><span className="link-icon" aria-hidden="true">↗</span><span>WhatsApp</span></a>
+            <a href="mailto:abdel@muminstudio.com"><span className="link-icon" aria-hidden="true"><Mail /></span><span>Email</span></a>
+            <a href="https://instagram.com/themuminstudio" target="_blank" rel="noreferrer"><span className="link-icon" aria-hidden="true"><Instagram /></span><span>Instagram</span></a>
+            <a href="https://wa.me/31634158194" target="_blank" rel="noreferrer"><span className="link-icon" aria-hidden="true"><MessageCircle /></span><span>WhatsApp</span></a>
           </div>
 
           <div className="postcard-stamp" aria-hidden="true">
