@@ -438,46 +438,51 @@ const workingMethod = [
   },
 ] as const;
 
-const brainZones = [
+const mindZones = [
   {
     id: "curiosity",
     number: "01",
     label: "Nieuwsgierigheid",
     title: "De echte vraag vinden",
-    body: "Ik blijf vragen tot aannames plaatsmaken voor een kern die we samen begrijpen.",
-    color: "#d9553f",
+    detail:
+      "Ik blijf vragen tot aannames plaatsmaken voor een kern die we samen begrijpen.",
+    color: "#d8644a",
   },
   {
     id: "connections",
     number: "02",
     label: "Verbindingen",
     title: "Context bij elkaar brengen",
-    body: "Mens, cultuur, business en techniek worden één verhaal in plaats van losse eisen.",
-    color: "#e2bd58",
+    detail:
+      "Mens, cultuur, business en techniek worden één verhaal in plaats van losse eisen.",
+    color: "#d7a84e",
   },
   {
     id: "structure",
     number: "03",
     label: "Structuur",
     title: "Complexiteit zonder ruis",
-    body: "Ik vertaal scherpe inzichten naar systemen die helder, toegankelijk en verantwoordelijk werken.",
-    color: "#83a68c",
+    detail:
+      "Scherpe inzichten worden systemen die helder, toegankelijk en verantwoordelijk werken.",
+    color: "#879a75",
   },
   {
     id: "source",
     number: "04",
     label: "Unlimited source",
     title: "Voorbij het logische antwoord",
-    body: "Hier begint niets met een component. Eerst opent de ruimte voor onverwachte ideeën.",
-    color: "#2d2852",
+    detail:
+      "Hier begint niets met een component. Eerst ontstaat ruimte voor het onverwachte idee.",
+    color: "#314668",
   },
   {
     id: "direction",
     number: "05",
     label: "Richting geven",
     title: "Van gedachte naar realiteit",
-    body: "Tools versnellen mijn uitvoering. Selectie, richting en verantwoordelijkheid blijven mensenwerk.",
-    color: "#cb704b",
+    detail:
+      "Tools versnellen de uitvoering. Selectie, richting en verantwoordelijkheid blijven mensenwerk.",
+    color: "#6682a1",
   },
 ] as const;
 
@@ -485,7 +490,7 @@ export function HomeExperience() {
   const root = useRef<HTMLElement>(null);
   const showcase = useRef<HTMLElement>(null);
   const [activeProject, setActiveProject] = useState(0);
-  const [activeBrainZone, setActiveBrainZone] = useState<string>("source");
+  const [activeMindZone, setActiveMindZone] = useState<string | null>(null);
   const [activeNav, setActiveNav] = useState("");
 
   useLayoutEffect(() => {
@@ -560,37 +565,46 @@ export function HomeExperience() {
           "-=0.35",
         )
         .from(
-          ".mind-hero-kicker, .mind-hero-lede, .mind-hero-actions, .hero-cover-meta span, .mind-hero-footer",
+          ".mind-hero-kicker, .mind-hero-lede, .mind-hero-actions, .mind-hero-meta span, .mind-hero-scroll",
           { opacity: 0, y: 22, duration: 0.8, stagger: 0.1 },
           "-=0.65",
         )
-        .from(".mind-portrait", { opacity: 0, scale: 0.94, rotation: 1.4, duration: 1.05 }, "-=0.9")
-        .from(".mind-cut", { scaleY: 0, transformOrigin: "top", duration: 0.82 }, "-=0.72")
-        .from(".brain-map", { opacity: 0, scale: 0.82, rotation: -3, duration: 0.9 }, "-=0.72")
-        .from(".brain-zone", { opacity: 0, scale: 0.32, duration: 0.52, stagger: 0.065 }, "-=0.52")
-        .from(".mind-annotation", { opacity: 0, x: -16, duration: 0.55, stagger: 0.07 }, "-=0.45");
+        .from(
+          ".mind-hero-base",
+          {
+            clipPath: "inset(0 0 100% 0)",
+            scale: 1.035,
+            duration: 1.3,
+          },
+          "-=1.05",
+        )
+        .from(
+          ".mind-annotation",
+          { opacity: 0, y: 14, duration: 0.72, stagger: 0.07 },
+          "-=0.78",
+        );
 
-      gsap.to(".hero-copy", {
+      gsap.to(".mind-hero-content", {
         opacity: 0.14,
         yPercent: -13,
         scale: 0.945,
         transformOrigin: "center top",
         ease: "none",
         scrollTrigger: {
-          trigger: ".hero",
+          trigger: ".mind-hero",
           start: "58% center",
           end: "bottom top",
           scrub: true,
         },
       });
 
-      gsap.to(".mind-stage", {
-        yPercent: -7,
+      gsap.to(".mind-hero-visual", {
+        yPercent: -6,
         scale: 0.975,
         opacity: 0.28,
         ease: "none",
         scrollTrigger: {
-          trigger: ".hero",
+          trigger: ".mind-hero",
           start: "top top",
           end: "bottom top",
           scrub: true,
@@ -1040,6 +1054,32 @@ export function HomeExperience() {
     };
   }, []);
 
+  useLayoutEffect(() => {
+    const context = gsap.context(() => {
+      const sourceIsActive = activeMindZone === "source";
+
+      gsap.to(".mind-hero-base", {
+        scale: sourceIsActive ? 1.028 : 1,
+        xPercent: sourceIsActive ? -0.7 : 0,
+        transformOrigin: "66% 34%",
+        duration: sourceIsActive ? 0.95 : 0.62,
+        ease: sourceIsActive ? "power3.inOut" : "power3.out",
+        overwrite: true,
+      });
+
+      gsap.to(".mind-cosmos", {
+        autoAlpha: sourceIsActive ? 1 : 0,
+        scale: sourceIsActive ? 1.16 : 0.76,
+        rotation: sourceIsActive ? 7 : 0,
+        duration: sourceIsActive ? 1.05 : 0.5,
+        ease: sourceIsActive ? "power3.inOut" : "power2.out",
+        overwrite: true,
+      });
+    }, root);
+
+    return () => context.revert();
+  }, [activeMindZone]);
+
   const manifesto =
     "Mooie plaatjes bouwen is makkelijk. Iets ontwerpen dat écht werkt, vergt nieuwsgierigheid en een scherpe dialoog. Ik wacht tot het kwartje valt. Pas als we de kern begrijpen, begin ik met ontwerpen.";
 
@@ -1062,94 +1102,112 @@ export function HomeExperience() {
         </nav>
       </header>
 
-      <section className="hero" id="top" data-nav-theme="light" aria-labelledby="hero-title">
-        <div className="hero-copy">
-          <div className="hero-cover-meta label" aria-label="Portfolio metadata">
+      <section
+        className="mind-hero"
+        id="top"
+        data-nav-theme="light"
+        data-active-zone={activeMindZone ?? "idle"}
+        aria-labelledby="hero-title"
+      >
+        <div className="mind-hero-content">
+          <div className="mind-hero-meta label" aria-label="Portfolio metadata">
             <span>Portfolio / 2026</span>
-            <span>Issue 01 · Digital products</span>
+            <span>Een kaart van hoe ik ontwerp</span>
             <span>Strategy / UX / Direction</span>
           </div>
-          <div className="mind-hero-layout">
+
+          <div className="mind-hero-canvas">
+            <div className="mind-hero-visual">
+              <Image
+                className="mind-hero-base"
+                src="/about/mind-hero-base.webp"
+                alt="Zijprofiel van Abdelrahman met een geïllustreerde kaart van zijn ontwerpdenken"
+                fill
+                priority
+                sizes="100vw"
+              />
+
+              <div className="mind-cosmos" aria-hidden="true">
+                <span />
+                <span />
+              </div>
+            </div>
+
             <div className="mind-hero-copy">
-              <p className="mind-hero-kicker label">Een kaart van hoe ik ontwerp</p>
+              <p className="mind-hero-kicker label">Een kijkje in mijn hoofd</p>
               <h1 id="hero-title" aria-label="Ik ontwerp met alles wat ik onderweg leer.">
-                <span className="mind-title-line"><span>Ik ontwerp met</span></span>
-                <span className="mind-title-line mind-title-indent"><span>alles wat ik</span></span>
+                <span className="mind-title-line"><span>Ik ontwerp</span></span>
+                <span className="mind-title-line"><span>met alles</span></span>
+                <span className="mind-title-line"><span>wat ik</span></span>
                 <span className="mind-title-line"><span>onderweg <em>leer.</em></span></span>
               </h1>
               <p className="mind-hero-lede">
-                Een kijkje in mijn hoofd. Niet medisch accuraat — wel precies hoe
-                onderzoek, verbeelding, structuur en richting in mijn werk samenkomen.
+                Niet medisch accuraat—wel precies hoe nieuwsgierigheid, structuur,
+                verbeelding en richting in mijn werk samenkomen.
               </p>
               <div className="mind-hero-actions">
-                <a className="text-link" href="#werk"><span className="link-icon" aria-hidden="true">↗</span><span>Bekijk mijn werk</span></a>
-                <span className="mind-interaction-hint label">Hover, focus of tik op een gedachte</span>
+                <a href="#werk">Bekijk mijn werk <span aria-hidden="true">↓</span></a>
+                <span className="label">Hover, focus of tik op een gebied</span>
               </div>
             </div>
 
-            <div className="mind-stage" data-active={activeBrainZone}>
-              <figure className="mind-portrait">
-                <Image
-                  src="/about/hero-profile.webp"
-                  alt="Zijprofiel van Abdelrahman met een interactieve kaart van zijn ontwerpdenken"
-                  fill
-                  priority
-                  sizes="(max-width: 720px) 100vw, 58vw"
-                />
-                <div className="mind-cut" aria-hidden="true"><span /></div>
-                <div className="brain-map" role="group" aria-label="Interactieve kaart van mijn ontwerpdenken">
-                  {brainZones.map((zone) => (
-                    <button
-                      key={zone.id}
-                      type="button"
-                      className={`brain-zone brain-zone-${zone.id} ${activeBrainZone === zone.id ? "is-active" : ""}`}
-                      style={{ "--zone-color": zone.color } as CSSProperties}
-                      aria-label={`${zone.label}: ${zone.title}`}
-                      aria-pressed={activeBrainZone === zone.id}
-                      onMouseEnter={() => setActiveBrainZone(zone.id)}
-                      onFocus={() => setActiveBrainZone(zone.id)}
-                      onClick={() => setActiveBrainZone(zone.id)}
-                    >
-                      <span>{zone.number}</span>
-                      {zone.id === "source" ? <i className="cosmos-core" aria-hidden="true" /> : null}
-                    </button>
-                  ))}
-                  <span className="brain-sketch brain-sketch-a" aria-hidden="true" />
-                  <span className="brain-sketch brain-sketch-b" aria-hidden="true" />
-                  <span className="brain-sketch brain-sketch-c" aria-hidden="true" />
-                </div>
-              </figure>
+            <div className="mind-zone-layer" role="group" aria-label="Interactieve kaart van mijn ontwerpdenken">
+              {mindZones.map((zone) => {
+                const isActive = activeMindZone === zone.id;
 
-              <div className="mind-annotations" aria-live="polite">
-                {brainZones.map((zone) => (
-                  <article
+                return (
+                  <button
                     key={zone.id}
-                    className={`mind-annotation mind-annotation-${zone.id} ${activeBrainZone === zone.id ? "is-active" : ""}`}
+                    type="button"
+                    className={`mind-zone mind-zone-${zone.id}${isActive ? " is-active" : ""}`}
                     style={{ "--zone-color": zone.color } as CSSProperties}
-                    aria-hidden={activeBrainZone !== zone.id}
+                    aria-pressed={isActive}
+                    aria-label={`${zone.number} ${zone.label}: ${zone.title}. ${zone.detail}`}
+                    onMouseEnter={() => setActiveMindZone(zone.id)}
+                    onMouseLeave={() => setActiveMindZone((current) => current === zone.id ? null : current)}
+                    onFocus={() => setActiveMindZone(zone.id)}
+                    onBlur={() => setActiveMindZone((current) => current === zone.id ? null : current)}
+                    onClick={() => setActiveMindZone((current) => current === zone.id ? null : zone.id)}
                   >
-                    <span>{zone.number} / {zone.label}</span>
-                    <strong>{zone.title}</strong>
-                    <p>{zone.body}</p>
-                  </article>
-                ))}
-              </div>
+                    <span className="mind-zone-surface" aria-hidden="true" />
+                    <span className={`mind-annotation mind-annotation-${zone.id}`}>
+                      <span className="mind-annotation-kicker label">
+                        {zone.number} / {zone.label}
+                      </span>
+                      <strong>{zone.title}</strong>
+                      <span className="mind-annotation-detail">{zone.detail}</span>
 
-              <div className={`tool-orbit ${activeBrainZone === "direction" ? "is-active" : ""}`} role="group" aria-label="Tools die ik gebruik">
-                <span className="tool-badge tool-figma" role="img" aria-label="Figma" title="Figma"><i /><i /><i /><i /><i /><b>Figma</b></span>
-                <span className="tool-badge tool-framer" role="img" aria-label="Framer" title="Framer"><i>F</i><b>Framer</b></span>
-                <span className="tool-badge tool-ai" role="img" aria-label="AI-assisted workflow" title="AI-assisted workflow"><i>✦</i><b>AI</b></span>
-                <span className="tool-badge tool-gsap" role="img" aria-label="GSAP" title="GSAP"><i>G</i><b>GSAP</b></span>
-              </div>
-
-              <p className="mind-disclaimer label">A map of practice — not anatomy</p>
+                      {zone.id === "direction" && (
+                        <span className="mind-tools" aria-label="Tools: Figma, Framer, AI en GSAP">
+                          <span className="mind-tool">
+                            <span className="tool-glyph tool-glyph-figma" aria-hidden="true">
+                              <i /><i /><i /><i /><i />
+                            </span>
+                            <span>Figma</span>
+                          </span>
+                          <span className="mind-tool">
+                            <span className="tool-glyph tool-glyph-framer" aria-hidden="true"><i /><i /></span>
+                            <span>Framer</span>
+                          </span>
+                          <span className="mind-tool">
+                            <span className="tool-glyph tool-glyph-ai" aria-hidden="true">AI</span>
+                            <span>AI</span>
+                          </span>
+                          <span className="mind-tool">
+                            <span className="tool-glyph tool-glyph-gsap" aria-hidden="true">↗</span>
+                            <span>GSAP</span>
+                          </span>
+                        </span>
+                      )}
+                    </span>
+                  </button>
+                );
+              })}
             </div>
-          </div>
 
-          <div className="mind-hero-footer label">
-            <span>Senior digital designer · Strategisch sparringpartner</span>
-            <span>{projectCount} cases · menselijk, helder en zonder ruis</span>
-            <a href="#houding"><span aria-hidden="true">↓</span> Scroll om te ontdekken</a>
+            <p className="mind-hero-scroll label">
+              <span aria-hidden="true">↓</span> Scroll om verder te kijken
+            </p>
           </div>
         </div>
       </section>

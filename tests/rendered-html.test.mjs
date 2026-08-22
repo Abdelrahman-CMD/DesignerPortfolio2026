@@ -31,13 +31,14 @@ test("server-renders the complete portfolio homepage", async () => {
   const html = await response.text();
   assert.match(html, /Abdelrahman — Senior Digital Designer/);
   assert.match(html, /Ik ontwerp met alles wat ik onderweg leer/);
-  assert.match(html, /class="mind-stage"/);
-  assert.equal((html.match(/class="brain-zone brain-zone-/g) ?? []).length, 5);
-  assert.match(html, /class="tool-orbit /);
-  assert.match(html, /hero-profile\.webp/);
+  assert.match(html, /class="mind-hero-canvas"/);
+  assert.match(html, /mind-hero-base\.webp/);
+  assert.equal((html.match(/class="mind-zone mind-zone-/g) ?? []).length, 5);
+  assert.match(html, /class="mind-cosmos"/);
+  assert.match(html, /Tools: Figma, Framer, AI en GSAP/);
   assert.doesNotMatch(html, /hero-project-letter|hero-rule/);
   assert.match(html, /class="contact-postcard"/);
-  assert.equal((html.match(/class="link-icon"/g) ?? []).length, 16);
+  assert.equal((html.match(/class="link-icon"/g) ?? []).length, 15);
   assert.match(html, /class="method-horizontal"/);
   assert.equal((html.match(/class="project-entry /g) ?? []).length, 7);
   assert.match(html, /href="\/cases\/oppas-by-chaima"/);
@@ -69,6 +70,7 @@ test("uses bounded raster assets on the homepage and case pages", async () => {
   assert.match(homeSource, /className="story-photo-mosaic"/);
   assert.doesNotMatch(homeSource, /story-photo-piece/);
   assert.match(homeSource, /\/projects\/home\/tareeqi\.webp/);
+  assert.match(homeSource, /\/about\/mind-hero-base\.webp/);
   assert.match(homeSource, /\/about\/web\/fatherhood\.webp/);
   assert.doesNotMatch(homeSource, /image: "\/projects\/(tareeqi|ayn|guidance|bayn)-overview\.jpg"/);
   assert.match(caseData, /\/projects\/case-shots\/ayn-detail\.webp/);
