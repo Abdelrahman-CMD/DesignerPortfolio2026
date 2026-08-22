@@ -20,28 +20,28 @@ export async function generateMetadata(): Promise<Metadata> {
       template: "%s — Abdelrahman",
     },
     description:
-      "Digital design, UX/UI en strategie voor betekenisvolle producten en merken.",
+      "Ik ontwerp met alles wat ik onderweg leer — digital design, UX/UI en strategie voor betekenisvolle producten en merken.",
     openGraph: {
-      title: "Ontwerpen voor impact, niet voor de spotlights.",
+      title: "Ik ontwerp met alles wat ik onderweg leer.",
       description:
-        "Digital design waar strakke structuur en out-of-the-box denken samenkomen.",
+        "Een kijkje in het ontwerpdenken van Abdelrahman: onderzoek, verbeelding, structuur en richting.",
       type: "website",
       locale: "nl_NL",
       images: [
         {
-          url: `${origin}/og.png`,
+          url: `${origin}/og-mind-v2.png`,
           width: 1730,
           height: 909,
-          alt: "Ontwerpen voor impact, niet voor de spotlights.",
+          alt: "Ik ontwerp met alles wat ik onderweg leer — Abdelrahman, Senior Digital Designer",
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: "Ontwerpen voor impact, niet voor de spotlights.",
+      title: "Ik ontwerp met alles wat ik onderweg leer.",
       description:
-        "Digital design waar strakke structuur en out-of-the-box denken samenkomen.",
-      images: [`${origin}/og.png`],
+        "Een kijkje in het ontwerpdenken van Abdelrahman: onderzoek, verbeelding, structuur en richting.",
+      images: [`${origin}/og-mind-v2.png`],
     },
   };
 }

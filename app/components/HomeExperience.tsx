@@ -438,11 +438,54 @@ const workingMethod = [
   },
 ] as const;
 
+const brainZones = [
+  {
+    id: "curiosity",
+    number: "01",
+    label: "Nieuwsgierigheid",
+    title: "De echte vraag vinden",
+    body: "Ik blijf vragen tot aannames plaatsmaken voor een kern die we samen begrijpen.",
+    color: "#d9553f",
+  },
+  {
+    id: "connections",
+    number: "02",
+    label: "Verbindingen",
+    title: "Context bij elkaar brengen",
+    body: "Mens, cultuur, business en techniek worden één verhaal in plaats van losse eisen.",
+    color: "#e2bd58",
+  },
+  {
+    id: "structure",
+    number: "03",
+    label: "Structuur",
+    title: "Complexiteit zonder ruis",
+    body: "Ik vertaal scherpe inzichten naar systemen die helder, toegankelijk en verantwoordelijk werken.",
+    color: "#83a68c",
+  },
+  {
+    id: "source",
+    number: "04",
+    label: "Unlimited source",
+    title: "Voorbij het logische antwoord",
+    body: "Hier begint niets met een component. Eerst opent de ruimte voor onverwachte ideeën.",
+    color: "#2d2852",
+  },
+  {
+    id: "direction",
+    number: "05",
+    label: "Richting geven",
+    title: "Van gedachte naar realiteit",
+    body: "Tools versnellen mijn uitvoering. Selectie, richting en verantwoordelijkheid blijven mensenwerk.",
+    color: "#cb704b",
+  },
+] as const;
+
 export function HomeExperience() {
   const root = useRef<HTMLElement>(null);
   const showcase = useRef<HTMLElement>(null);
   const [activeProject, setActiveProject] = useState(0);
-  const [activeHeroProject, setActiveHeroProject] = useState(0);
+  const [activeBrainZone, setActiveBrainZone] = useState<string>("source");
   const [activeNav, setActiveNav] = useState("");
 
   useLayoutEffect(() => {
@@ -512,17 +555,20 @@ export function HomeExperience() {
           duration: 0.7,
         })
         .from(
-          ".hero-line > span",
+          ".mind-title-line > span",
           { yPercent: 115, duration: 1.25, stagger: 0.1 },
           "-=0.35",
         )
         .from(
-          ".hero-intro, .hero-index, .hero-note, .hero-cover-meta span, .scroll-note",
+          ".mind-hero-kicker, .mind-hero-lede, .mind-hero-actions, .hero-cover-meta span, .mind-hero-footer",
           { opacity: 0, y: 22, duration: 0.8, stagger: 0.1 },
           "-=0.65",
         )
-        .from(".hero-project-index", { opacity: 0, x: 22, duration: 0.85 }, "-=0.7")
-        .from(".hero-case-preview", { opacity: 0, scale: 0.88, rotation: 6, duration: 1.05 }, "-=0.9");
+        .from(".mind-portrait", { opacity: 0, scale: 0.94, rotation: 1.4, duration: 1.05 }, "-=0.9")
+        .from(".mind-cut", { scaleY: 0, transformOrigin: "top", duration: 0.82 }, "-=0.72")
+        .from(".brain-map", { opacity: 0, scale: 0.82, rotation: -3, duration: 0.9 }, "-=0.72")
+        .from(".brain-zone", { opacity: 0, scale: 0.32, duration: 0.52, stagger: 0.065 }, "-=0.52")
+        .from(".mind-annotation", { opacity: 0, x: -16, duration: 0.55, stagger: 0.07 }, "-=0.45");
 
       gsap.to(".hero-copy", {
         opacity: 0.14,
@@ -538,10 +584,10 @@ export function HomeExperience() {
         },
       });
 
-      gsap.to(".hero-case-preview", {
-        yPercent: -8,
-        scale: 0.96,
-        opacity: 0.2,
+      gsap.to(".mind-stage", {
+        yPercent: -7,
+        scale: 0.975,
+        opacity: 0.28,
         ease: "none",
         scrollTrigger: {
           trigger: ".hero",
@@ -997,8 +1043,6 @@ export function HomeExperience() {
   const manifesto =
     "Mooie plaatjes bouwen is makkelijk. Iets ontwerpen dat écht werkt, vergt nieuwsgierigheid en een scherpe dialoog. Ik wacht tot het kwartje valt. Pas als we de kern begrijpen, begin ik met ontwerpen.";
 
-  const heroProject = projects[activeHeroProject];
-
   return (
     <main ref={root} className="site-shell">
       <a className="skip-link" href="#werk">
@@ -1025,76 +1069,87 @@ export function HomeExperience() {
             <span>Issue 01 · Digital products</span>
             <span>Strategy / UX / Direction</span>
           </div>
-          <p className="hero-index label">Een portfolio over ontwerp dat ertoe doet</p>
-          <h1 id="hero-title" aria-label="Ontwerpen voor impact, voorbij de spotlights. Alles zonder ruis.">
-            <span className="hero-line"><span>Ontwerpen voor <em>impact,</em></span></span>
-            <span className="hero-line hero-line-indent"><span>voorbij de spotlights.</span></span>
-            <span className="hero-line hero-line-quiet"><span>Alles zonder ruis.</span></span>
-          </h1>
-          <aside className="hero-project-index" aria-label="Kies een case-preview">
-            <div className="hero-project-index-head label">
-              <span>Case index</span>
-              <span>Hover / focus</span>
+          <div className="mind-hero-layout">
+            <div className="mind-hero-copy">
+              <p className="mind-hero-kicker label">Een kaart van hoe ik ontwerp</p>
+              <h1 id="hero-title" aria-label="Ik ontwerp met alles wat ik onderweg leer.">
+                <span className="mind-title-line"><span>Ik ontwerp met</span></span>
+                <span className="mind-title-line mind-title-indent"><span>alles wat ik</span></span>
+                <span className="mind-title-line"><span>onderweg <em>leer.</em></span></span>
+              </h1>
+              <p className="mind-hero-lede">
+                Een kijkje in mijn hoofd. Niet medisch accuraat — wel precies hoe
+                onderzoek, verbeelding, structuur en richting in mijn werk samenkomen.
+              </p>
+              <div className="mind-hero-actions">
+                <a className="text-link" href="#werk"><span className="link-icon" aria-hidden="true">↗</span><span>Bekijk mijn werk</span></a>
+                <span className="mind-interaction-hint label">Hover, focus of tik op een gedachte</span>
+              </div>
             </div>
-            <div className="hero-project-index-list">
-              {projects.map((project, index) => (
-                <button
-                  key={project.slug}
-                  type="button"
-                  className={activeHeroProject === index ? "is-active" : undefined}
-                  aria-label={`Toon ${project.name} in de hero-preview`}
-                  aria-pressed={activeHeroProject === index}
-                  onMouseEnter={() => setActiveHeroProject(index)}
-                  onFocus={() => setActiveHeroProject(index)}
-                  onClick={() => setActiveHeroProject(index)}
-                >
-                  <span>{project.number}</span>
-                  <span>{project.name}</span>
-                </button>
-              ))}
-            </div>
-          </aside>
-          <aside
-            className="hero-case-preview"
-            style={{
-              "--preview-bg": heroProject.bg,
-              "--preview-ink": heroProject.ink,
-            } as CSSProperties}
-            aria-live="polite"
-          >
-            <a href={heroProject.href} aria-label={`Open de case ${heroProject.name}`}>
-              <figure>
-                <div className="hero-preview-media">
-                  <Image
-                    key={heroProject.slug}
-                    src={heroProject.image}
-                    alt={`Preview van ${heroProject.name}`}
-                    fill
-                    priority={activeHeroProject === 0}
-                    sizes="(max-width: 720px) 46vw, 18vw"
-                    style={{ objectPosition: heroProject.imagePosition }}
-                  />
+
+            <div className="mind-stage" data-active={activeBrainZone}>
+              <figure className="mind-portrait">
+                <Image
+                  src="/about/hero-profile.webp"
+                  alt="Zijprofiel van Abdelrahman met een interactieve kaart van zijn ontwerpdenken"
+                  fill
+                  priority
+                  sizes="(max-width: 720px) 100vw, 58vw"
+                />
+                <div className="mind-cut" aria-hidden="true"><span /></div>
+                <div className="brain-map" role="group" aria-label="Interactieve kaart van mijn ontwerpdenken">
+                  {brainZones.map((zone) => (
+                    <button
+                      key={zone.id}
+                      type="button"
+                      className={`brain-zone brain-zone-${zone.id} ${activeBrainZone === zone.id ? "is-active" : ""}`}
+                      style={{ "--zone-color": zone.color } as CSSProperties}
+                      aria-label={`${zone.label}: ${zone.title}`}
+                      aria-pressed={activeBrainZone === zone.id}
+                      onMouseEnter={() => setActiveBrainZone(zone.id)}
+                      onFocus={() => setActiveBrainZone(zone.id)}
+                      onClick={() => setActiveBrainZone(zone.id)}
+                    >
+                      <span>{zone.number}</span>
+                      {zone.id === "source" ? <i className="cosmos-core" aria-hidden="true" /> : null}
+                    </button>
+                  ))}
+                  <span className="brain-sketch brain-sketch-a" aria-hidden="true" />
+                  <span className="brain-sketch brain-sketch-b" aria-hidden="true" />
+                  <span className="brain-sketch brain-sketch-c" aria-hidden="true" />
                 </div>
-                <figcaption>
-                  <span>{heroProject.number} / {projectCount}</span>
-                  <strong>{heroProject.name}</strong>
-                  <span>Bekijk case ↗</span>
-                </figcaption>
               </figure>
-            </a>
-          </aside>
-          <div className="hero-bottom">
-            <aside className="hero-note">
-              <span>design is a dialogue</span>
-              <p>{projectCount} cases over vertrouwen, richting en menselijke waarde.</p>
-            </aside>
-            <p className="hero-intro">
-              Ik ben een digital designer en strategisch sparringpartner. Ik bouw
-              digitale producten waar strakke structuur en out-of-the-box denken
-              samenkomen. Geen loze esthetiek, maar design dat menselijke waarde
-              toevoegt.
-            </p>
-            <p className="scroll-note label"><span aria-hidden="true">↓</span> Scroll om te ontdekken</p>
+
+              <div className="mind-annotations" aria-live="polite">
+                {brainZones.map((zone) => (
+                  <article
+                    key={zone.id}
+                    className={`mind-annotation mind-annotation-${zone.id} ${activeBrainZone === zone.id ? "is-active" : ""}`}
+                    style={{ "--zone-color": zone.color } as CSSProperties}
+                    aria-hidden={activeBrainZone !== zone.id}
+                  >
+                    <span>{zone.number} / {zone.label}</span>
+                    <strong>{zone.title}</strong>
+                    <p>{zone.body}</p>
+                  </article>
+                ))}
+              </div>
+
+              <div className={`tool-orbit ${activeBrainZone === "direction" ? "is-active" : ""}`} role="group" aria-label="Tools die ik gebruik">
+                <span className="tool-badge tool-figma" role="img" aria-label="Figma" title="Figma"><i /><i /><i /><i /><i /><b>Figma</b></span>
+                <span className="tool-badge tool-framer" role="img" aria-label="Framer" title="Framer"><i>F</i><b>Framer</b></span>
+                <span className="tool-badge tool-ai" role="img" aria-label="AI-assisted workflow" title="AI-assisted workflow"><i>✦</i><b>AI</b></span>
+                <span className="tool-badge tool-gsap" role="img" aria-label="GSAP" title="GSAP"><i>G</i><b>GSAP</b></span>
+              </div>
+
+              <p className="mind-disclaimer label">A map of practice — not anatomy</p>
+            </div>
+          </div>
+
+          <div className="mind-hero-footer label">
+            <span>Senior digital designer · Strategisch sparringpartner</span>
+            <span>{projectCount} cases · menselijk, helder en zonder ruis</span>
+            <a href="#houding"><span aria-hidden="true">↓</span> Scroll om te ontdekken</a>
           </div>
         </div>
       </section>
