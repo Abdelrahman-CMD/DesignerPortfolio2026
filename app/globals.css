@@ -440,6 +440,12 @@ a:focus-visible > .link-icon svg * {
   overflow: hidden;
 }
 
+.mind-hero-photo-slide {
+  position: absolute;
+  inset: 0;
+  will-change: transform, opacity;
+}
+
 .golden-ratio-detail {
   position: absolute;
   z-index: 2;
@@ -460,6 +466,7 @@ a:focus-visible > .link-icon svg * {
 .mind-hero-base {
   object-fit: cover;
   object-position: center;
+  filter: saturate(0.76) contrast(0.98);
   will-change: transform;
 }
 
@@ -582,22 +589,49 @@ a:focus-visible > .link-icon svg * {
 .mind-zone-surface {
   position: absolute;
   inset: 0;
-  border: 1px solid transparent;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--zone-color) 18%, transparent);
   border-radius: 47% 53% 45% 55% / 52% 46% 54% 48%;
-  background: radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--zone-color) 62%, transparent), transparent 72%);
+  background: radial-gradient(circle at 48% 46%, color-mix(in srgb, var(--zone-color) 34%, transparent), transparent 72%);
   box-shadow: 0 0 0 transparent;
+  opacity: 0.14;
+  transform: scale(0.98);
+  transition: opacity 0.5s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.45s ease, box-shadow 0.6s ease;
+}
+
+.mind-zone-surface::after {
+  position: absolute;
+  inset: -28%;
+  border-radius: inherit;
+  background: radial-gradient(circle at 38% 40%, color-mix(in srgb, var(--zone-color) 62%, #fff) 0 6%, transparent 36%);
+  content: "";
   opacity: 0;
-  transform: scale(0.83);
-  transition: opacity 0.42s ease, transform 0.62s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.5s ease;
+  transform: translate3d(-8%, 8%, 0) scale(0.8);
+  transition: opacity 0.45s ease, transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .mind-zone:hover .mind-zone-surface,
 .mind-zone:focus-visible .mind-zone-surface,
 .mind-zone.is-active .mind-zone-surface {
-  border-color: color-mix(in srgb, var(--zone-color) 70%, var(--ink));
-  box-shadow: 0 0 2.5rem color-mix(in srgb, var(--zone-color) 48%, transparent);
-  opacity: 0.32;
-  transform: scale(1.08);
+  border-color: color-mix(in srgb, var(--zone-color) 78%, #fff);
+  box-shadow:
+    0 0 1.4rem color-mix(in srgb, var(--zone-color) 54%, transparent),
+    inset 0 0 1.1rem color-mix(in srgb, var(--zone-color) 34%, transparent);
+  opacity: 0.5;
+  transform: scale(1.035);
+  animation: brain-region-breathe 2.4s ease-in-out infinite alternate;
+}
+
+.mind-zone:hover .mind-zone-surface::after,
+.mind-zone:focus-visible .mind-zone-surface::after,
+.mind-zone.is-active .mind-zone-surface::after {
+  opacity: 0.48;
+  transform: translate3d(10%, -5%, 0) scale(1.08);
+}
+
+@keyframes brain-region-breathe {
+  from { filter: saturate(1) brightness(0.98); }
+  to { filter: saturate(1.2) brightness(1.11); }
 }
 
 .mind-zone:focus-visible { outline: none; }
@@ -618,12 +652,20 @@ a:focus-visible > .link-icon svg * {
 
 .mind-annotation::after {
   position: absolute;
-  height: 1px;
-  background: currentColor;
+  height: clamp(1.2rem, 2.8vw, 3rem);
+  border-top: 1.5px solid var(--zone-color);
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
   content: "";
-  opacity: 0.78;
+  clip-path: inset(0 100% 0 0);
+  opacity: 0;
   transform-origin: inherit;
-  transition: width 0.55s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.35s ease;
+  transition: clip-path 0.72s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.32s ease;
+}
+
+.mind-annotation-connections::after,
+.mind-annotation-source::after,
+.mind-annotation-direction::after {
+  clip-path: inset(0 0 0 100%);
 }
 
 .mind-annotation::before {
@@ -631,34 +673,39 @@ a:focus-visible > .link-icon svg * {
   width: 0.42rem;
   height: 0.42rem;
   border-radius: 50%;
-  background: currentColor;
+  background: var(--zone-color);
+  box-shadow: 0 0 0.8rem color-mix(in srgb, var(--zone-color) 60%, transparent);
   content: "";
-  opacity: 0.75;
-  transition: background 0.35s ease, transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  opacity: 0;
+  transform: scale(0);
+  transition: opacity 0.3s ease 0.38s, transform 0.45s cubic-bezier(0.22, 1, 0.36, 1) 0.38s;
 }
 
 .mind-annotation-curiosity { top: -47%; left: -147%; }
-.mind-annotation-curiosity::after { top: 75%; left: 100%; width: 8vw; transform: rotate(15deg); transform-origin: left; }
+.mind-annotation-curiosity::after { top: 75%; left: 100%; width: 8vw; transform: rotate(10deg); transform-origin: left top; }
 .mind-annotation-curiosity::before { top: calc(75% + 1.9vw); left: calc(100% + 7.75vw); }
 
 .mind-annotation-connections { top: -36%; left: 115%; }
-.mind-annotation-connections::after { top: 86%; right: 100%; width: 7.2vw; transform: rotate(-24deg); transform-origin: right; }
+.mind-annotation-connections::after { top: 86%; right: 100%; width: 7.2vw; transform: rotate(-20deg); transform-origin: right top; }
 .mind-annotation-connections::before { top: calc(86% + 2.75vw); right: calc(100% + 6.85vw); }
 
 .mind-annotation-structure { top: 65%; right: 130%; }
-.mind-annotation-structure::after { top: 32%; left: 100%; width: 8.2vw; transform: rotate(-11deg); transform-origin: left; }
+.mind-annotation-structure::after { top: 32%; left: 100%; width: 8.2vw; transform: rotate(-8deg); transform-origin: left top; }
 .mind-annotation-structure::before { top: calc(32% - 1.5vw); left: calc(100% + 7.9vw); }
 
 .mind-annotation-source { top: 49%; left: 117%; }
-.mind-annotation-source::after { top: 20%; right: 100%; width: 7.8vw; transform: rotate(9deg); transform-origin: right; }
+.mind-annotation-source::after { top: 20%; right: 100%; width: 7.8vw; transform: rotate(7deg); transform-origin: right top; }
 .mind-annotation-source::before { top: calc(20% - 1.15vw); right: calc(100% + 7.5vw); }
 
 .mind-annotation-direction { top: 64%; left: 128%; width: clamp(12rem, 18vw, 18rem); }
-.mind-annotation-direction::after { top: 13%; right: 100%; width: 9.6vw; transform: rotate(18deg); transform-origin: right; }
+.mind-annotation-direction::after { top: 13%; right: 100%; width: 9.6vw; transform: rotate(15deg); transform-origin: right top; }
 .mind-annotation-direction::before { top: calc(13% - 3vw); right: calc(100% + 9.3vw); }
 
 .mind-annotation-kicker {
   color: var(--ink);
+  opacity: 0;
+  transform: translateY(0.35rem);
+  transition: opacity 0.3s ease, transform 0.48s cubic-bezier(0.22, 1, 0.36, 1);
   white-space: nowrap;
 }
 
@@ -668,6 +715,24 @@ a:focus-visible > .link-icon svg * {
   font-size: clamp(1.15rem, 1.45vw, 1.65rem);
   font-weight: 400;
   line-height: 1;
+}
+
+.mind-written-word {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.mind-written-word:not(:last-child) { margin-right: 0.24em; }
+
+.mind-written-char {
+  display: inline-block;
+  filter: blur(2px);
+  opacity: 0;
+  transform: translate3d(-0.14em, 0.22em, 0) rotate(-3deg);
+  transition:
+    opacity 0.24s ease var(--erase-delay),
+    filter 0.28s ease var(--erase-delay),
+    transform 0.38s cubic-bezier(0.22, 1, 0.36, 1) var(--erase-delay);
 }
 
 .mind-annotation-detail {
@@ -691,10 +756,33 @@ a:focus-visible > .link-icon svg * {
   transform: translateY(0);
 }
 
+.mind-zone:hover .mind-annotation-kicker,
+.mind-zone:focus-visible .mind-annotation-kicker,
+.mind-zone.is-active .mind-annotation-kicker {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.mind-zone:hover .mind-written-char,
+.mind-zone:focus-visible .mind-written-char,
+.mind-zone.is-active .mind-written-char {
+  filter: blur(0);
+  opacity: 1;
+  transform: translate3d(0, 0, 0) rotate(0);
+  transition-delay: var(--char-delay);
+}
+
+.mind-zone:hover .mind-annotation::after,
+.mind-zone:focus-visible .mind-annotation::after,
+.mind-zone.is-active .mind-annotation::after {
+  clip-path: inset(0 0 0 0);
+  opacity: 0.84;
+}
+
 .mind-zone:hover .mind-annotation::before,
 .mind-zone:focus-visible .mind-annotation::before,
 .mind-zone.is-active .mind-annotation::before {
-  background: var(--zone-color);
+  opacity: 1;
   transform: scale(1.45);
 }
 
@@ -702,7 +790,8 @@ a:focus-visible > .link-icon svg * {
   display: flex;
   gap: 0.5rem;
   margin-top: 0.75rem;
-  opacity: 0.58;
+  opacity: 0;
+  transform: translateY(-0.25rem);
   transition: opacity 0.35s ease, transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -710,7 +799,7 @@ a:focus-visible > .link-icon svg * {
 .mind-zone-direction:focus-visible .mind-tools,
 .mind-zone-direction.is-active .mind-tools {
   opacity: 1;
-  transform: translateY(0.2rem);
+  transform: translateY(0);
 }
 
 .mind-tool {
@@ -834,7 +923,32 @@ a:focus-visible > .link-icon svg * {
 }
 
 .manifesto-word {
-  display: inline;
+  position: relative;
+  display: inline-block;
+  isolation: isolate;
+  margin-right: 0.18em;
+}
+
+.manifesto-word-text {
+  position: relative;
+  z-index: 2;
+}
+
+.manifesto-marker-stroke {
+  position: absolute;
+  z-index: 1;
+  right: -0.08em;
+  bottom: 0.06em;
+  left: -0.08em;
+  height: 0.28em;
+  border-radius: 0.1em 0.04em 0.12em 0.03em;
+  background:
+    linear-gradient(94deg, rgba(224, 108, 49, 0.72), rgba(245, 154, 72, 0.58) 68%, rgba(216, 74, 50, 0.67)),
+    repeating-linear-gradient(0deg, transparent 0 3px, rgba(255, 239, 207, 0.22) 3px 4px);
+  clip-path: inset(0 100% 0 0);
+  opacity: 0.78;
+  transform: rotate(-1.5deg);
+  transform-origin: left center;
 }
 
 .manifesto-aside {
@@ -1205,14 +1319,17 @@ a:focus-visible > .link-icon svg * {
 .contact h2 {
   margin: 0;
   font-family: var(--serif);
-  font-size: clamp(4rem, 7.6vw, 8.4rem);
+  font-size: clamp(3.9rem, 5.45vw, 6.4rem);
   font-weight: 400;
   letter-spacing: -0.065em;
   line-height: 0.75;
 }
 
 .contact h2 span,
-.contact h2 em { display: block; }
+.contact h2 em {
+  display: block;
+  white-space: nowrap;
+}
 
 .contact h2 em {
   padding-left: 2.2vw;
@@ -3829,7 +3946,14 @@ a:focus-visible > .link-icon svg * {
   }
   .mind-annotation::before,
   .mind-annotation::after { display: none; }
+  .mind-annotation-kicker { opacity: 1; transform: none; }
   .mind-annotation strong { font-size: 1.35rem; }
+  .mind-written-char {
+    filter: none;
+    opacity: 1;
+    transform: none;
+    transition-delay: 0s;
+  }
   .mind-annotation-detail { max-width: 28rem; font-size: 0.78rem; }
   .mind-tools { flex-wrap: wrap; }
   .mind-hero-scroll { position: relative; right: auto; bottom: auto; grid-row: 4; justify-self: end; margin-top: 2rem; }
@@ -3878,7 +4002,7 @@ a:focus-visible > .link-icon svg * {
   }
   .postcard-copy { grid-column: 1 / -1; grid-row: 2; padding: 0; }
   .postcard-copy > .label { margin-bottom: 3rem; }
-  .contact h2 { font-size: 17vw; }
+  .contact h2 { font-size: clamp(3.1rem, 14vw, 4.8rem); }
   .postcard-copy > p:last-child { width: 88%; margin: 2.75rem 0 0 12%; }
   .postcard-portrait {
     width: 86%;

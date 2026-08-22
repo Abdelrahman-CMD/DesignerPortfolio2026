@@ -32,8 +32,10 @@ test("server-renders the complete portfolio homepage", async () => {
   assert.match(html, /Abdelrahman — Senior Digital Designer/);
   assert.match(html, /Ik ontwerp met alles wat ik onderweg leer/);
   assert.match(html, /class="mind-hero-canvas"/);
+  assert.match(html, /class="mind-hero-photo-slide"/);
   assert.match(html, /mind-hero-base\.webp/);
   assert.equal((html.match(/class="mind-zone mind-zone-/g) ?? []).length, 5);
+  assert.equal((html.match(/class="manifesto-marker-stroke"/g) ?? []).length, 3);
   assert.match(html, /class="mind-cosmos"/);
   assert.match(html, /Tools: Figma, Framer en AI/);
   assert.doesNotMatch(html, /hero-project-letter|hero-rule/);
@@ -72,6 +74,8 @@ test("uses bounded raster assets on the homepage and case pages", async () => {
   assert.doesNotMatch(homeSource, /story-photo-piece/);
   assert.match(homeSource, /\/projects\/home\/tareeqi\.webp/);
   assert.match(homeSource, /\/about\/mind-hero-base\.webp/);
+  assert.match(homeSource, /xPercent: 112/);
+  assert.match(homeSource, /manifestoMarkerWords = new Set\(\["écht", "kwartje", "kern"\]\)/);
   assert.match(homeSource, /\/about\/web\/fatherhood\.webp/);
   assert.doesNotMatch(homeSource, /image: "\/projects\/(tareeqi|ayn|guidance|bayn)-overview\.jpg"/);
   assert.match(caseData, /\/projects\/case-shots\/ayn-detail\.webp/);
@@ -81,4 +85,6 @@ test("uses bounded raster assets on the homepage and case pages", async () => {
   assert.doesNotMatch(tareeqiSource, /from "next\/link"/);
   assert.doesNotMatch(css, /backdrop-filter:\s*blur/i);
   assert.doesNotMatch(css, /prefers-reduced-motion:\s*reduce/i);
+  assert.match(css, /border-top: 1\.5px solid var\(--zone-color\)/);
+  assert.match(css, /white-space: nowrap/);
 });

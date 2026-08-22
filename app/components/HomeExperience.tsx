@@ -121,6 +121,8 @@ const projects = [
 
 const projectCount = String(projects.length).padStart(2, "0");
 
+const manifestoMarkerWords = new Set(["écht", "kwartje", "kern"]);
+
 const personalStory = [
   {
     step: "01",
@@ -584,17 +586,24 @@ export function HomeExperience() {
           "-=0.65",
         )
         .from(
-          ".mind-hero-visual",
+          ".mind-hero-photo-slide",
           {
-            clipPath: "inset(0 0 100% 0)",
-            duration: 1.3,
+            xPercent: 112,
+            opacity: 0.12,
+            duration: 2.35,
+            ease: "power2.inOut",
           },
-          "-=1.05",
+          "-=1.2",
         )
         .from(
-          ".mind-annotation",
-          { opacity: 0, y: 14, duration: 0.72, stagger: 0.07 },
-          "-=0.78",
+          ".golden-ratio-detail",
+          { opacity: 0, x: -28, duration: 0.9, ease: "power2.out" },
+          "-=0.7",
+        )
+        .from(
+          ".mind-zone",
+          { autoAlpha: 0, scale: 0.93, duration: 0.72, stagger: 0.09, ease: "power2.out" },
+          "-=0.58",
         );
 
       gsap.to(".mind-hero-content", {
@@ -635,6 +644,22 @@ export function HomeExperience() {
           end: "bottom 62%",
           scrub: 0.65,
         },
+      });
+
+      gsap.utils.toArray<HTMLElement>(".manifesto-marker").forEach((word) => {
+        const stroke = word.querySelector<HTMLElement>(".manifesto-marker-stroke");
+        if (!stroke) return;
+
+        gsap.fromTo(stroke, { clipPath: "inset(0 100% 0 0)" }, {
+          clipPath: "inset(0 0% 0 0)",
+          ease: "power2.inOut",
+          scrollTrigger: {
+            trigger: word,
+            start: "top 76%",
+            end: "bottom 61%",
+            scrub: 0.45,
+          },
+        });
       });
 
       gsap.utils.toArray<HTMLElement>(".project-entry").forEach((entry, index) => {
@@ -1156,18 +1181,20 @@ export function HomeExperience() {
 
           <div className="mind-hero-canvas">
             <div className="mind-hero-visual">
-              <Image
-                className="mind-hero-base"
-                src="/about/mind-hero-base.webp"
-                alt="Zijprofiel van Abdelrahman met een geïllustreerde kaart van zijn ontwerpdenken"
-                fill
-                priority
-                sizes="100vw"
-              />
+              <div className="mind-hero-photo-slide">
+                <Image
+                  className="mind-hero-base"
+                  src="/about/mind-hero-base.webp"
+                  alt="Zijprofiel van Abdelrahman met een geïllustreerde kaart van zijn ontwerpdenken"
+                  fill
+                  priority
+                  sizes="100vw"
+                />
 
-              <div className="mind-cosmos" aria-hidden="true">
-                <span />
-                <span />
+                <div className="mind-cosmos" aria-hidden="true">
+                  <span />
+                  <span />
+                </div>
               </div>
             </div>
 
@@ -1210,18 +1237,49 @@ export function HomeExperience() {
                     style={{ "--zone-color": zone.color } as CSSProperties}
                     aria-pressed={isActive}
                     aria-label={`${zone.number} ${zone.label}: ${zone.title}. ${zone.detail}`}
-                    onMouseEnter={() => setActiveMindZone(zone.id)}
-                    onMouseLeave={() => setActiveMindZone((current) => current === zone.id ? null : current)}
-                    onFocus={() => setActiveMindZone(zone.id)}
-                    onBlur={() => setActiveMindZone((current) => current === zone.id ? null : current)}
-                    onClick={() => setActiveMindZone((current) => current === zone.id ? null : zone.id)}
+                    onMouseEnter={() => {
+                      if (window.matchMedia("(hover: hover)").matches) setActiveMindZone(zone.id);
+                    }}
+                    onMouseLeave={() => {
+                      if (window.matchMedia("(hover: hover)").matches) setActiveMindZone(null);
+                    }}
+                    onFocus={(event) => {
+                      if (event.currentTarget.matches(":focus-visible")) setActiveMindZone(zone.id);
+                    }}
+                    onBlur={() => setActiveMindZone(null)}
+                    onClick={() => {
+                      if (window.matchMedia("(hover: none)").matches) {
+                        setActiveMindZone((current) => current === zone.id ? null : zone.id);
+                      }
+                    }}
                   >
                     <span className="mind-zone-surface" aria-hidden="true" />
                     <span className={`mind-annotation mind-annotation-${zone.id}`}>
                       <span className="mind-annotation-kicker label">
                         {zone.number} / {zone.label}
                       </span>
-                      <strong>{zone.title}</strong>
+                      <strong aria-label={zone.title} style={{ "--char-count": zone.title.length } as CSSProperties}>
+                        {zone.title.split(" ").map((word, wordIndex, words) => {
+                          const charOffset = words.slice(0, wordIndex).reduce((total, current) => total + current.length + 1, 0);
+
+                          return (
+                            <span className="mind-written-word" aria-hidden="true" key={`${zone.id}-${word}-${wordIndex}`}>
+                              {[...word].map((character, characterIndex) => (
+                                <span
+                                  className="mind-written-char"
+                                  style={{
+                                    "--char-delay": `${(charOffset + characterIndex) * 24}ms`,
+                                    "--erase-delay": `${(zone.title.length - charOffset - characterIndex) * 12}ms`,
+                                  } as CSSProperties}
+                                  key={`${character}-${characterIndex}`}
+                                >
+                                  {character}
+                                </span>
+                              ))}
+                            </span>
+                          );
+                        })}
+                      </strong>
                       <span className="mind-annotation-detail">{zone.detail}</span>
 
                       {zone.id === "direction" && (
@@ -1256,9 +1314,21 @@ export function HomeExperience() {
       <section className="manifesto" id="houding" data-nav-theme="light" aria-labelledby="manifesto-label">
         <p className="section-kicker" id="manifesto-label"><span>01</span> Mijn houding</p>
         <p className="manifesto-copy">
-          {manifesto.split(" ").map((word, index) => (
-            <span className="manifesto-word" key={`${word}-${index}`}>{word}{" "}</span>
-          ))}
+          {manifesto.split(" ").map((word, index) => {
+            const normalizedWord = word.toLocaleLowerCase("nl-NL").replace(/[^\p{L}]/gu, "");
+            const isMarkerWord = manifestoMarkerWords.has(normalizedWord);
+
+            return (
+              <span
+                className={`manifesto-word${isMarkerWord ? " manifesto-marker" : ""}`}
+                key={`${word}-${index}`}
+              >
+                <span className="manifesto-word-text">{word}</span>
+                {isMarkerWord && <span className="manifesto-marker-stroke" aria-hidden="true" />}
+                {" "}
+              </span>
+            );
+          })}
         </p>
         <aside className="manifesto-aside">
           <span className="label">Dualiteit als methode</span>
