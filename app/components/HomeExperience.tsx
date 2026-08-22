@@ -521,8 +521,8 @@ export function HomeExperience() {
           { opacity: 0, y: 22, duration: 0.8, stagger: 0.1 },
           "-=0.65",
         )
-        .from(".hero-rule span", { scaleX: 0, transformOrigin: "left", duration: 1 }, "-=0.7")
-        .from(".hero-case-preview", { opacity: 0, scale: 0.88, rotation: 6, duration: 1.05 }, "-=1");
+        .from(".hero-project-index", { opacity: 0, x: 22, duration: 0.85 }, "-=0.7")
+        .from(".hero-case-preview", { opacity: 0, scale: 0.88, rotation: 6, duration: 1.05 }, "-=0.9");
 
       gsap.to(".hero-copy", {
         opacity: 0.14,
@@ -962,28 +962,26 @@ export function HomeExperience() {
         scrollTrigger: { trigger: ".method-stack", start: "top 75%" },
       });
 
-      gsap.from(".footer-cta-line > span", {
-        yPercent: 110,
-        duration: 1,
-        stagger: 0.12,
+      gsap.from(".contact-postcard", {
+        opacity: 0,
+        y: 82,
+        scale: 0.955,
+        rotation: -1.8,
+        duration: 1.15,
         ease: "power4.out",
-        scrollTrigger: { trigger: ".contact", start: "top 70%" },
+        scrollTrigger: { trigger: ".contact", start: "top 72%" },
       });
 
-      gsap.fromTo(".contact-issue", {
-        scale: 0.72,
-        rotation: -6,
-        opacity: 0.12,
-      }, {
-        scale: 1,
-        rotation: 0,
-        opacity: 0.82,
-        ease: "none",
+      gsap.from(".postcard-copy > *, .postcard-portrait, .postcard-brand, .postcard-stamp, .postcard-links, .postcard-cta", {
+        opacity: 0,
+        y: 26,
+        rotation: (index) => (index % 2 === 0 ? -1.2 : 1.2),
+        duration: 0.8,
+        stagger: 0.07,
+        ease: "power3.out",
         scrollTrigger: {
-          trigger: ".contact",
-          start: "top bottom",
-          end: "58% 58%",
-          scrub: true,
+          trigger: ".contact-postcard",
+          start: "top 66%",
         },
       });
     }, root);
@@ -1000,26 +998,6 @@ export function HomeExperience() {
     "Mooie plaatjes bouwen is makkelijk. Iets ontwerpen dat écht werkt, vergt nieuwsgierigheid en een scherpe dialoog. Ik wacht tot het kwartje valt. Pas als we de kern begrijpen, begin ik met ontwerpen.";
 
   const heroProject = projects[activeHeroProject];
-  const projectLetter = (letter: string, projectIndex: number) => {
-    const project = projects[projectIndex];
-    return (
-      <button
-        type="button"
-        className={`hero-project-letter ${activeHeroProject === projectIndex ? "is-active" : ""}`}
-        style={{
-          "--letter-bg": project.bg,
-          "--letter-ink": project.ink,
-        } as CSSProperties}
-        aria-label={`Toon ${project.name} in de hero-preview`}
-        aria-pressed={activeHeroProject === projectIndex}
-        onMouseEnter={() => setActiveHeroProject(projectIndex)}
-        onFocus={() => setActiveHeroProject(projectIndex)}
-        onClick={() => setActiveHeroProject(projectIndex)}
-      >
-        {letter}
-      </button>
-    );
-  };
 
   return (
     <main ref={root} className="site-shell">
@@ -1033,10 +1011,10 @@ export function HomeExperience() {
           <span className="site-mark-copy">Abdelrahman<br />Digital designer</span>
         </a>
         <nav className="top-nav" aria-label="Portfolio tabs">
-          <a href="#werk" aria-current={activeNav === "werk" ? "location" : undefined}>Werk</a>
-          <a href="#over" aria-current={activeNav === "over" ? "location" : undefined}>Over</a>
-          <a href="#aanpak" aria-current={activeNav === "aanpak" ? "location" : undefined}>Aanpak</a>
-          <a href="#contact" aria-current={activeNav === "contact" ? "location" : undefined}>Contact</a>
+          <a href="#werk" aria-current={activeNav === "werk" ? "location" : undefined}><span className="link-icon" aria-hidden="true">▰</span><span>Werk</span></a>
+          <a href="#over" aria-current={activeNav === "over" ? "location" : undefined}><span className="link-icon" aria-hidden="true">◉</span><span>Over</span></a>
+          <a href="#aanpak" aria-current={activeNav === "aanpak" ? "location" : undefined}><span className="link-icon" aria-hidden="true">✦</span><span>Aanpak</span></a>
+          <a href="#contact" aria-current={activeNav === "contact" ? "location" : undefined}><span className="link-icon" aria-hidden="true">✉</span><span>Contact</span></a>
         </nav>
       </header>
 
@@ -1049,10 +1027,33 @@ export function HomeExperience() {
           </div>
           <p className="hero-index label">Een portfolio over ontwerp dat ertoe doet</p>
           <h1 id="hero-title" aria-label="Ontwerpen voor impact, voorbij de spotlights. Alles zonder ruis.">
-            <span className="hero-line"><span>{projectLetter("O", 6)}n{projectLetter("t", 0)}werpen voor <em className="hero-mark">imp{projectLetter("a", 1)}ct,</em></span></span>
-            <span className="hero-line hero-line-indent"><span>voor{projectLetter("b", 3)}ij de spotli{projectLetter("g", 2)}{projectLetter("h", 4)}ts.</span></span>
-            <span className="hero-line hero-line-quiet"><span>{projectLetter("A", 5)}lles zonder ruis.</span></span>
+            <span className="hero-line"><span>Ontwerpen voor <em>impact,</em></span></span>
+            <span className="hero-line hero-line-indent"><span>voorbij de spotlights.</span></span>
+            <span className="hero-line hero-line-quiet"><span>Alles zonder ruis.</span></span>
           </h1>
+          <aside className="hero-project-index" aria-label="Kies een case-preview">
+            <div className="hero-project-index-head label">
+              <span>Case index</span>
+              <span>Hover / focus</span>
+            </div>
+            <div className="hero-project-index-list">
+              {projects.map((project, index) => (
+                <button
+                  key={project.slug}
+                  type="button"
+                  className={activeHeroProject === index ? "is-active" : undefined}
+                  aria-label={`Toon ${project.name} in de hero-preview`}
+                  aria-pressed={activeHeroProject === index}
+                  onMouseEnter={() => setActiveHeroProject(index)}
+                  onFocus={() => setActiveHeroProject(index)}
+                  onClick={() => setActiveHeroProject(index)}
+                >
+                  <span>{project.number}</span>
+                  <span>{project.name}</span>
+                </button>
+              ))}
+            </div>
+          </aside>
           <aside
             className="hero-case-preview"
             style={{
@@ -1095,7 +1096,6 @@ export function HomeExperience() {
             </p>
             <p className="scroll-note label"><span aria-hidden="true">↓</span> Scroll om te ontdekken</p>
           </div>
-          <div className="hero-rule" aria-hidden="true"><span /></div>
         </div>
       </section>
 
@@ -1173,7 +1173,7 @@ export function HomeExperience() {
                   <p>{project.summary}</p>
                   {project.href ? (
                     <a className="text-link" href={project.href}>
-                      Bekijk de case <span aria-hidden="true">↗</span>
+                      <span className="link-icon" aria-hidden="true">↗</span><span>Bekijk de case</span>
                     </a>
                   ) : (
                     <span className="text-link text-link-muted">Concept preview</span>
@@ -1322,40 +1322,50 @@ export function HomeExperience() {
         </div>
       </section>
 
-      <footer className="contact" id="contact" data-nav-theme="dark" data-nav-key="contact">
-        <div className="contact-cover-meta label">
-          <span>Back cover / contact</span>
-          <span>Abdelrahman · Digital direction</span>
-          <span>06 / 06</span>
-        </div>
-        <div className="contact-heading-grid">
-          <span className="contact-issue" aria-hidden="true">06</span>
-          <div>
-            <p className="section-kicker section-kicker-light"><span>06</span> Een goed gesprek begint hier</p>
-            <h2>
-              <span className="footer-cta-line"><span>Klaar om te sparren?</span></span>
-              <span className="footer-cta-line footer-cta-indent"><span>Laten we het kwartje</span></span>
-              <span className="footer-cta-line"><span>samen laten vallen.</span></span>
-            </h2>
+      <footer className="contact" id="contact" data-nav-theme="light" data-nav-key="contact">
+        <article className="contact-postcard">
+          <div className="postcard-brand">
+            <span className="postcard-monogram">A</span>
+            <p>Abdelrahman<br />Senior digital designer</p>
           </div>
-        </div>
-        <aside className="contact-note">
-          <span>you bring the question</span>
-          <p>Ik breng nieuwsgierigheid, structuur en een richting die we samen kunnen toetsen.</p>
-        </aside>
-        <a className="contact-button" href="mailto:abdel@muminstudio.com">
-          <span>Vertel me waar je aan werkt</span>
-          <span aria-hidden="true">↗</span>
-        </a>
-        <div className="footer-meta">
-          <p>Abdelrahman<br />Senior Digital Designer<br />Nederland</p>
-          <div className="footer-links">
-            <a href="mailto:abdel@muminstudio.com">Email</a>
-            <a href="https://instagram.com/themuminstudio" target="_blank" rel="noreferrer">Instagram</a>
-            <a href="https://wa.me/31634158194" target="_blank" rel="noreferrer">WhatsApp</a>
+
+          <div className="postcard-copy">
+            <p className="label">Postcard / Amsterdam — 2026</p>
+            <h2><span>Klaar om</span><em>te sparren?</em></h2>
+            <p>Jij brengt de vraag. Ik breng nieuwsgierigheid, structuur en een richting die we samen kunnen toetsen.</p>
           </div>
-          <p className="footer-credit">© 2026<br />Built with intention</p>
-        </div>
+
+          <figure className="postcard-portrait">
+            <Image
+              src="/about/web/portrait-studio.webp"
+              alt="Abdelrahman in zijn ontwerpstudio"
+              fill
+              sizes="(max-width: 720px) 72vw, 28vw"
+              style={{ objectPosition: "center 34%" }}
+            />
+            <figcaption>Design is a dialogue</figcaption>
+          </figure>
+
+          <p className="postcard-side-type" aria-hidden="true">YOU BRING THE QUESTION · WE FIND THE DIRECTION</p>
+
+          <a className="postcard-cta" href="mailto:abdel@muminstudio.com">
+            <span className="link-icon" aria-hidden="true">↗</span><span>Vertel me waar je aan werkt</span>
+          </a>
+
+          <div className="postcard-links" aria-label="Contactkanalen">
+            <a href="mailto:abdel@muminstudio.com"><span className="link-icon" aria-hidden="true">✉</span><span>Email</span></a>
+            <a href="https://instagram.com/themuminstudio" target="_blank" rel="noreferrer"><span className="link-icon" aria-hidden="true">◎</span><span>Instagram</span></a>
+            <a href="https://wa.me/31634158194" target="_blank" rel="noreferrer"><span className="link-icon" aria-hidden="true">↗</span><span>WhatsApp</span></a>
+          </div>
+
+          <div className="postcard-stamp" aria-hidden="true">
+            <span>A</span>
+            <small>AMS<br />2026</small>
+          </div>
+
+          <p className="postcard-fineprint">© 2026 · Built with intention · Nederland</p>
+        </article>
+        <p className="contact-ground-note label">Een goed gesprek begint met een goede vraag.</p>
       </footer>
     </main>
   );

@@ -32,6 +32,10 @@ test("server-renders the complete portfolio homepage", async () => {
   assert.match(html, /Abdelrahman — Senior Digital Designer/);
   assert.match(html, /Ontwerpen voor impact, voorbij de spotlights/);
   assert.match(html, /class="hero-case-preview"/);
+  assert.match(html, /class="hero-project-index"/);
+  assert.doesNotMatch(html, /hero-project-letter|hero-rule/);
+  assert.match(html, /class="contact-postcard"/);
+  assert.equal((html.match(/class="link-icon"/g) ?? []).length, 15);
   assert.match(html, /class="method-horizontal"/);
   assert.equal((html.match(/class="project-entry /g) ?? []).length, 7);
   assert.match(html, /href="\/cases\/oppas-by-chaima"/);
