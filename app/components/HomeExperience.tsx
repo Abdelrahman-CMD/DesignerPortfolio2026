@@ -7,7 +7,6 @@ import ArrowUpRight from "lucide-react/icons/arrow-up-right";
 import BriefcaseBusiness from "lucide-react/icons/briefcase-business";
 import Figma from "lucide-react/icons/figma";
 import Framer from "lucide-react/icons/framer";
-import Instagram from "lucide-react/icons/instagram";
 import Linkedin from "lucide-react/icons/linkedin";
 import Mail from "lucide-react/icons/mail";
 import MessageCircle from "lucide-react/icons/message-circle";
@@ -127,8 +126,8 @@ const personalStory = [
   {
     step: "01",
     kicker: "Wie ik ben",
-    title: "Nieuwsgierig van nature. Strategisch uit overtuiging.",
-    body: "Ik ben Abdelrahman, senior digital designer en strategisch sparringpartner. Ik gebruik design om complexe vragen terug te brengen tot iets dat mensen begrijpen, vertrouwen en willen gebruiken.",
+    title: "Ik breek het ijs. Niet de basis.",
+    body: "Ik ben Abdelrahman. Sociaal genoeg om snel aan tafel te komen, scherp genoeg om niet overal ja op te zeggen. Een goede klik geeft ruimte voor eerlijke vragen — precies waar het werk sterker van wordt.",
     image: "/about/web/portrait-studio.webp",
     alt: "Abdelrahman in zijn ontwerpstudio",
     position: "center 35%",
@@ -140,8 +139,8 @@ const personalStory = [
   {
     step: "02",
     kicker: "Wat ik doe",
-    title: "Eerst de dialoog. Dan de richting. Daarna pas pixels.",
-    body: "Mijn beste werk ontstaat niet uit een briefing die meteen dichtgetimmerd is. Ik vraag door, leg aannames op tafel en wacht tot het kwartje valt. Daar, tussen structuur en vrije verbeelding, begint het echte ontwerp.",
+    title: "Eerst begrijpen wat er schuurt. Dan pas een scherm.",
+    body: "We leggen aannames, gedrag en doelen naast elkaar. Ik zoek het moment waarop losse informatie één duidelijke richting krijgt. Vanaf daar ontwerp ik websites die logisch reageren op echte keuzes.",
     image: "/about/web/designing.webp",
     alt: "Abdelrahman werkt aan een digitaal ontwerp achter zijn bureau",
     position: "center",
@@ -153,8 +152,8 @@ const personalStory = [
   {
     step: "03",
     kicker: "Hoe ik blijf groeien",
-    title: "Kennis is geen zijpad. Het is onderdeel van mijn vak.",
-    body: "Ik blijf lezen, onderzoeken en bouwen. Van designpsychologie en strategie tot techniek en cultuur: nieuwe kennis scherpt mijn blik en voorkomt dat ik steeds hetzelfde antwoord op een nieuwe vraag geef.",
+    title: "Wat ik vandaag leer, verandert morgen mijn ontwerp.",
+    body: "Ik lees, observeer en experimenteer met strategie, psychologie, techniek, cultuur en AI. Niet om iedere trend te volgen, maar om per vraag een rijker antwoord te kunnen geven.",
     image: "/about/web/learning.webp",
     alt: "Abdelrahman leest The Heart of Design",
     position: "center",
@@ -166,8 +165,8 @@ const personalStory = [
   {
     step: "04",
     kicker: "En buiten het scherm",
-    title: "Oh ja — ik ben natuurlijk ook papa.",
-    body: "Vaderschap maakt mijn kijk op verantwoordelijkheid heel concreet. Het herinnert me eraan voor wie we uiteindelijk ontwerpen: echte mensen, met weinig tijd, veel context en een leven dat nooit netjes in een user flow past.",
+    title: "Papa zijn is mijn scherpste gebruikerstest.",
+    body: "Een kind accepteert geen ingewikkelde uitleg voor iets dat simpel moet zijn. Vaderschap houdt mijn werk menselijk: aandacht is schaars, context verandert continu en verantwoordelijkheid laat zich niet wegstylen.",
     image: "/about/web/fatherhood.webp",
     alt: "Abdelrahman als vader bij de kinderwagen",
     position: "center 35%",
@@ -422,32 +421,32 @@ const workingMethod = [
   {
     number: "01",
     phase: "Sparren",
-    title: "Richting ontstaat in de dialoog.",
-    body: "Aan tafel met de klant maak ik aannames zichtbaar. We bepalen niet alleen wat er gebouwd moet worden, maar vooral welke verandering het werk moet veroorzaken.",
+    title: "De klik is geen bijzaak.",
+    body: "Een goed gesprek laat snel zien of we elkaar begrijpen én durven tegenspreken. We maken aannames zichtbaar en bepalen welke verandering de website werkelijk moet veroorzaken.",
     tools: "Client sessions · Workshops · Direction",
     annotation: "Begin met de vraag — niet met de deliverable.",
   },
   {
     number: "02",
     phase: "Verdiepen",
-    title: "Desk, field en AI brengen het probleem dichtbij.",
-    body: "Ik combineer deskresearch met gesprekken en observaties uit de echte context. AI helpt patronen sneller toetsen en nieuwe vragen formuleren — het oordeel en de richting blijven menselijk.",
+    title: "De context beslist mee.",
+    body: "Deskresearch, gesprekken en observaties brengen de vraag dichtbij. AI helpt patronen sneller toetsen en nieuwe vragen formuleren; het oordeel en de richting blijven menselijk.",
     tools: "Desk research · Field research · AI",
     annotation: "AI versnelt het zoeken. Het oordeel blijft menselijk.",
   },
   {
     number: "03",
     phase: "Vormgeven",
-    title: "Van inzicht naar een voelbaar product.",
-    body: "In Figma krijgt de ervaring structuur. In Framer of code wordt ze tastbaar, beweeglijk en testbaar. AI versnelt varianten en uitvoering, zonder de ontwerpintentie over te nemen.",
+    title: "Maak het vroeg genoeg echt.",
+    body: "In Figma krijgt de ervaring structuur. In Framer of code wordt ze tastbaar en testbaar. AI versnelt varianten en uitvoering, zonder de ontwerpintentie over te nemen.",
     tools: "Figma · Framer · AI-assisted build",
     annotation: "Maak het vroeg voelbaar. Dan wordt feedback concreet.",
   },
   {
     number: "04",
     phase: "Koers houden",
-    title: "Check-ins maken van uitvoering een gedeelde regie.",
-    body: "Tijdens iedere fase kijken we samen: klopt de richting nog, begrijpen gebruikers dit en draagt iedere keuze bij aan het doel? Zo dirigeer ik het proces én blijft de klant onderdeel van het ontwerp.",
+    title: "Koers houden is ook ontwerpen.",
+    body: "Tijdens iedere fase kijken we samen: klopt de richting nog, begrijpen gebruikers dit en draagt iedere keuze bij aan het doel? Zo blijft de klant onderdeel van iedere ontwerpbeslissing.",
     tools: "Prototype reviews · Check-ins · Iteration",
     annotation: "Check in. Stel bij. Houd samen koers.",
   },
@@ -596,14 +595,9 @@ export function HomeExperience() {
           "-=1.2",
         )
         .from(
-          ".golden-ratio-detail",
-          { opacity: 0, x: -28, duration: 0.9, ease: "power2.out" },
-          "-=0.7",
-        )
-        .from(
           ".mind-zone",
           { autoAlpha: 0, scale: 0.93, duration: 0.72, stagger: 0.09, ease: "power2.out" },
-          "-=0.58",
+          "-=0.42",
         );
 
       gsap.to(".mind-hero-content", {
@@ -661,6 +655,38 @@ export function HomeExperience() {
           },
         });
       });
+
+      const quarterWord = root.current?.querySelector<HTMLElement>('[data-marker-word="kwartje"]');
+      const quarter = root.current?.querySelector<HTMLElement>(".manifesto-coin");
+      const dropQuarter = () => {
+        if (!quarter) return;
+
+        gsap.killTweensOf(quarter);
+        gsap.fromTo(quarter, {
+          autoAlpha: 0,
+          y: -120,
+          x: -28,
+          rotation: -35,
+        }, {
+          autoAlpha: 1,
+          y: () => window.innerHeight + 170,
+          x: 86,
+          rotation: 760,
+          duration: 2.25,
+          ease: "power2.in",
+          overwrite: true,
+          onComplete: () => gsap.set(quarter, { autoAlpha: 0 }),
+        });
+      };
+
+      if (quarterWord && quarter) {
+        ScrollTrigger.create({
+          trigger: quarterWord,
+          start: "top 70%",
+          onEnter: dropQuarter,
+          onEnterBack: dropQuarter,
+        });
+      }
 
       gsap.utils.toArray<HTMLElement>(".project-entry").forEach((entry, index) => {
         const background = entry.dataset.bg ?? projects[index].bg;
@@ -1119,7 +1145,12 @@ export function HomeExperience() {
   }, [activeMindZone]);
 
   const manifesto =
-    "Mooie plaatjes bouwen is makkelijk. Iets ontwerpen dat écht werkt, vergt nieuwsgierigheid en een scherpe dialoog. Ik wacht tot het kwartje valt. Pas als we de kern begrijpen, begin ik met ontwerpen.";
+    "Een website hoeft niet harder te roepen. Ze moet écht duidelijk maken waarom iemand blijft. Daarom stel ik vragen tot de ruis verdwijnt. Wanneer het kwartje valt, bouwen we verder op een kern die ook morgen nog klopt.";
+
+  const openContact = () => {
+    setContactOpen(true);
+    document.getElementById("contact")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   return (
     <main ref={root} className="site-shell">
@@ -1140,25 +1171,23 @@ export function HomeExperience() {
       </header>
 
       <aside className={`floating-contact${contactOpen ? " is-open" : ""}`} aria-label="Direct contact">
-        <div className="floating-contact-links">
+        <div className="floating-contact-links" id="floating-contact-links" aria-hidden={!contactOpen}>
           <a href="https://www.linkedin.com/in/abdelrahman-ahmed-30896964/" target="_blank" rel="noreferrer" aria-label="Neem contact op via LinkedIn">
             <Linkedin aria-hidden="true" />
-            <span>LinkedIn</span>
           </a>
-          <a href="mailto:abdel@muminstudio.com" aria-label="Stuur Abdelrahman een e-mail">
+          <a href="mailto:dhr_abdelrahman@outlook.com" aria-label="Stuur Abdelrahman een e-mail">
             <Mail aria-hidden="true" />
-            <span>Mail</span>
           </a>
-          <a href="https://wa.me/31634158194" target="_blank" rel="noreferrer" aria-label="Neem contact op via WhatsApp">
+          <a href="https://wa.me/31621572124" target="_blank" rel="noreferrer" aria-label="Neem contact op via WhatsApp">
             <MessageCircle aria-hidden="true" />
-            <span>WhatsApp</span>
           </a>
         </div>
         <button
           type="button"
           className="floating-contact-trigger"
           aria-expanded={contactOpen}
-          onClick={() => setContactOpen((open) => !open)}
+          aria-controls="floating-contact-links"
+          onClick={openContact}
         >
           <MessageCircleMore aria-hidden="true" />
           <span>Contact</span>
@@ -1184,17 +1213,15 @@ export function HomeExperience() {
               <div className="mind-hero-photo-slide">
                 <Image
                   className="mind-hero-base"
-                  src="/about/mind-hero-base.webp"
+                  src="/about/mind-hero-cutout-v3.webp"
                   alt="Zijprofiel van Abdelrahman met een geïllustreerde kaart van zijn ontwerpdenken"
                   fill
                   priority
                   sizes="100vw"
+                  style={{ objectFit: "contain", objectPosition: "right bottom" }}
                 />
 
-                <div className="mind-cosmos" aria-hidden="true">
-                  <span />
-                  <span />
-                </div>
+                <div className="mind-cosmos" aria-hidden="true" />
               </div>
             </div>
 
@@ -1208,7 +1235,7 @@ export function HomeExperience() {
             </div>
 
             <div className="mind-hero-copy">
-              <p className="mind-hero-kicker label">Een kijkje in mijn hoofd</p>
+              <p className="mind-hero-kicker label">Geen vaste formule. Wel een stevig vertrekpunt.</p>
               <h1 id="hero-title" aria-label="Ik ontwerp met alles wat ik onderweg leer.">
                 <span className="mind-title-line"><span>Ik ontwerp</span></span>
                 <span className="mind-title-line"><span>met alles</span></span>
@@ -1216,12 +1243,11 @@ export function HomeExperience() {
                 <span className="mind-title-line"><span>onderweg <em>leer.</em></span></span>
               </h1>
               <p className="mind-hero-lede">
-                Niet medisch accuraat—wel precies hoe nieuwsgierigheid, structuur,
-                verbeelding en richting in mijn werk samenkomen.
+                Wat ik leer verandert mijn blik. Wat ik belangrijk vind blijft staan:
+                een helder fundament, scherpe keuzes en websites die mensen zonder omwegen begrijpen.
               </p>
               <div className="mind-hero-actions">
-                <a href="#werk"><span>Bekijk mijn werk</span><ArrowDown aria-hidden="true" /></a>
-                <span className="label">Hover, focus of tik op een gebied</span>
+                <a href="#werk"><span>Bekijk hoe dat werkt</span><ArrowDown aria-hidden="true" /></a>
               </div>
             </div>
 
@@ -1321,6 +1347,7 @@ export function HomeExperience() {
             return (
               <span
                 className={`manifesto-word${isMarkerWord ? " manifesto-marker" : ""}`}
+                data-marker-word={isMarkerWord ? normalizedWord : undefined}
                 key={`${word}-${index}`}
               >
                 <span className="manifesto-word-text">{word}</span>
@@ -1330,6 +1357,7 @@ export function HomeExperience() {
             );
           })}
         </p>
+        <span className="manifesto-coin" aria-hidden="true"><strong>25</strong><small>cent</small></span>
         <aside className="manifesto-aside">
           <span className="label">Dualiteit als methode</span>
           <p>Vrij denken.<br />Verantwoord bouwen.</p>
@@ -1350,6 +1378,10 @@ export function HomeExperience() {
       >
         <div className="showcase-sticky">
           <p className="section-kicker"><span>02</span> Selected work</p>
+          <p className="showcase-intro">
+            Zeven websites. Sommige voor klanten, andere om een idee verder te brengen
+            dan een briefing toestaat. Het verschil zit in de context — niet in de aandacht.
+          </p>
           <div className="showcase-title-wrap">
             <p className="label">Case {projects[activeProject].number} / {projectCount}</p>
             <h2 id="work-title" aria-live="polite">{projects[activeProject].name}</h2>
@@ -1412,11 +1444,11 @@ export function HomeExperience() {
       <section className="principle" data-nav-theme="light" aria-label="Ontwerpprincipe">
         <p className="section-kicker"><span>03</span> De balans</p>
         <div className="principle-grid">
-          <p className="principle-big">Vorm volgt <em>begrip.</em></p>
+          <p className="principle-big">Fundament vóór <em>effect.</em></p>
           <p>
-            Structuur geeft richting. Verbeelding maakt nieuwe ruimte. Mijn werk
-            ontstaat precies tussen die twee in — op het moment dat strategie en
-            menselijk gedrag elkaar echt begrijpen.
+            Ik wissel van gereedschap, tempo en route zodra de vraag daarom vraagt.
+            Helderheid, toegankelijkheid en intentie blijven staan. Daar toets ik
+            iedere vondst aan.
           </p>
         </div>
       </section>
@@ -1425,10 +1457,10 @@ export function HomeExperience() {
         <div className="about-story-heading">
           <p className="section-kicker"><span>04</span> De mens achter het werk</p>
           <h2 id="about-title">
-            <span>Ik ontwerp met alles</span>
-            <span>wat ik onderweg leer.</span>
+            <span>Een klik voel je snel.</span>
+            <span>Goed werk bouw je samen.</span>
           </h2>
-          <p>Geen rechte carrièrelijn, maar een route van vragen stellen, maken, lezen, opnieuw kijken — en thuiskomen.</p>
+          <p>Ik maak makkelijk contact, maar zeg ook eerlijk wanneer een samenwerking niet klopt. Als er vertrouwen is, mag het gesprek scherp worden. Dan komen de vragen op tafel die een website beter maken.</p>
         </div>
 
         <div className="story-route">
@@ -1494,7 +1526,7 @@ export function HomeExperience() {
             <span className="method-title-line method-title-indent"><span>Het proces dirigeren.</span></span>
           </h2>
           <div className="method-intro-copy">
-            <p>Mijn stack is geen gereedschapskist die het gesprek vervangt. Ze helpt om sneller van vraag naar inzicht en van inzicht naar een werkend product te bewegen.</p>
+            <p>Ik pas de route aan zodra onderzoek daar aanleiding toe geeft. De volgorde blijft helder: samen scherpstellen, bewijs zoeken, tastbaar maken en tussendoor beslissen of we nog hetzelfde probleem oplossen.</p>
             <span className="label">Strategy → Research → Design → Direction</span>
           </div>
         </div>
@@ -1555,8 +1587,8 @@ export function HomeExperience() {
 
           <div className="postcard-copy">
             <p className="label">Postcard / Amsterdam — 2026</p>
-            <h2><span>Klaar om</span><em>te sparren?</em></h2>
-            <p>Jij brengt de vraag. Ik breng nieuwsgierigheid, structuur en een richting die we samen kunnen toetsen.</p>
+            <h2><span>Even kijken</span><em>of het klikt?</em></h2>
+            <p>Geen pitch nodig. Vertel wat er speelt; ik stel de vragen. Geeft het gesprek energie, dan plannen we koffie.</p>
           </div>
 
           <figure className="postcard-portrait">
@@ -1569,16 +1601,16 @@ export function HomeExperience() {
             <figcaption>Design is a dialogue</figcaption>
           </figure>
 
-          <p className="postcard-side-type" aria-hidden="true">YOU BRING THE QUESTION · WE FIND THE DIRECTION</p>
+          <p className="postcard-side-type" aria-hidden="true">BRING THE QUESTION · TEST THE CLICK</p>
 
-          <a className="postcard-cta" href="mailto:abdel@muminstudio.com">
-            <span className="link-icon" aria-hidden="true"><Mail /></span><span>Vertel me waar je aan werkt</span>
+          <a className="postcard-cta" href="mailto:dhr_abdelrahman@outlook.com">
+            <span className="link-icon" aria-hidden="true"><Mail /></span><span>Leg je vraag op tafel</span>
           </a>
 
           <div className="postcard-links" aria-label="Contactkanalen">
-            <a href="mailto:abdel@muminstudio.com"><span className="link-icon" aria-hidden="true"><Mail /></span><span>Email</span></a>
-            <a href="https://instagram.com/themuminstudio" target="_blank" rel="noreferrer"><span className="link-icon" aria-hidden="true"><Instagram /></span><span>Instagram</span></a>
-            <a href="https://wa.me/31634158194" target="_blank" rel="noreferrer"><span className="link-icon" aria-hidden="true"><MessageCircle /></span><span>WhatsApp</span></a>
+            <a href="mailto:dhr_abdelrahman@outlook.com"><span className="link-icon" aria-hidden="true"><Mail /></span><span>Email</span></a>
+            <a href="https://www.linkedin.com/in/abdelrahman-ahmed-30896964/" target="_blank" rel="noreferrer"><span className="link-icon" aria-hidden="true"><Linkedin /></span><span>LinkedIn</span></a>
+            <a href="https://wa.me/31621572124" target="_blank" rel="noreferrer"><span className="link-icon" aria-hidden="true"><MessageCircle /></span><span>WhatsApp</span></a>
           </div>
 
           <div className="postcard-stamp" aria-hidden="true">
@@ -1588,7 +1620,7 @@ export function HomeExperience() {
 
           <p className="postcard-fineprint">© 2026 · Built with intention · Nederland</p>
         </article>
-        <p className="contact-ground-note label">Een goed gesprek begint met een goede vraag.</p>
+        <p className="contact-ground-note label">Geen verkooppraat. Wel een goed gesprek.</p>
       </footer>
     </main>
   );

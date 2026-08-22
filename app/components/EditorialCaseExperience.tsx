@@ -169,7 +169,7 @@ export function EditorialCaseExperience({ project }: { project: EditorialCase })
       <nav className="ec-nav" aria-label="Case navigatie">
         <a href="/#werk" className="case-back"><span aria-hidden="true">←</span> Alle cases</a>
         <a href="/" className="case-brand">Abdelrahman / Digital designer</a>
-        <a href="mailto:abdel@muminstudio.com">Start een gesprek</a>
+        <a href="mailto:dhr_abdelrahman@outlook.com">Start een gesprek</a>
       </nav>
 
       <header className="ec-hero">

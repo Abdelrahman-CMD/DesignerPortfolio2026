@@ -20,11 +20,11 @@ export async function generateMetadata(): Promise<Metadata> {
       template: "%s — Abdelrahman",
     },
     description:
-      "Ik ontwerp met alles wat ik onderweg leer — digital design, UX/UI en strategie voor betekenisvolle producten en merken.",
+      "Senior digital designer voor websites met een stevig fundament, een beweeglijke aanpak en ruimte voor een eerlijk gesprek.",
     openGraph: {
       title: "Ik ontwerp met alles wat ik onderweg leer.",
       description:
-        "Een kijkje in het ontwerpdenken van Abdelrahman: nieuwsgierigheid, structuur, verbeelding en richting.",
+        "Websites ontstaan niet uit een vaste formule. Ontdek hoe Abdelrahman leert, richting kiest en samen bouwt.",
       type: "website",
       locale: "nl_NL",
       images: [
@@ -40,7 +40,7 @@ export async function generateMetadata(): Promise<Metadata> {
       card: "summary_large_image",
       title: "Ik ontwerp met alles wat ik onderweg leer.",
       description:
-        "Een kijkje in het ontwerpdenken van Abdelrahman: nieuwsgierigheid, structuur, verbeelding en richting.",
+        "Websites ontstaan niet uit een vaste formule. Ontdek hoe Abdelrahman leert, richting kiest en samen bouwt.",
       images: [`${origin}/og-mind-hero.jpg`],
     },
   };

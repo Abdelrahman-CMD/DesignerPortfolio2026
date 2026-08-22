@@ -270,38 +270,42 @@ a:focus-visible > .link-icon svg * {
   right: clamp(0.8rem, 2vw, 1.5rem);
   bottom: clamp(0.8rem, 2vw, 1.5rem);
   display: flex;
-  min-height: 3.55rem;
+  min-width: 7.65rem;
+  min-height: 3.6rem;
+  flex-direction: column;
   align-items: center;
   gap: 0.25rem;
-  padding: 0.28rem;
-  overflow: clip;
+  padding: 0.32rem;
   border: 1px solid rgba(41, 38, 34, 0.24);
-  border-radius: 999px;
+  border-radius: 2rem;
   background: rgba(248, 245, 239, 0.96);
   box-shadow: 0 0.75rem 2.25rem rgba(31, 28, 25, 0.18);
   color: #292622;
+  transition: border-radius 0.35s ease, box-shadow 0.35s ease;
 }
 
 .floating-contact-links {
   display: grid;
-  max-width: 0;
-  grid-template-columns: repeat(3, max-content);
-  gap: 0.2rem;
+  max-height: 0;
+  grid-template-columns: 1fr;
+  gap: 0.32rem;
   overflow: hidden;
   opacity: 0;
-  transform: translateX(1rem);
+  transform: translateY(0.9rem) scale(0.92);
+  visibility: hidden;
   transition:
-    max-width 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    max-height 0.52s cubic-bezier(0.22, 1, 0.36, 1),
     opacity 0.26s ease,
-    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    transform 0.48s cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0s linear 0.35s;
 }
 
-.floating-contact:hover .floating-contact-links,
-.floating-contact:focus-within .floating-contact-links,
 .floating-contact.is-open .floating-contact-links {
-  max-width: 24rem;
+  max-height: 12rem;
   opacity: 1;
-  transform: translateX(0);
+  transform: translateY(0) scale(1);
+  visibility: visible;
+  transition-delay: 0s;
 }
 
 .floating-contact-links a,
@@ -325,10 +329,19 @@ a:focus-visible > .link-icon svg * {
   transition: background 0.26s ease, color 0.26s ease, transform 0.26s ease;
 }
 
+.floating-contact-links a {
+  width: 2.95rem;
+  min-height: 2.95rem;
+  padding: 0;
+  border: 1px solid rgba(41, 38, 34, 0.16);
+  background: rgba(255, 252, 246, 0.84);
+}
+
 .floating-contact-links a:hover,
 .floating-contact-links a:focus-visible {
   background: #deddd9;
-  transform: translateY(-1px);
+  color: #1f1d1a;
+  transform: scale(1.06);
 }
 
 .floating-contact-links svg,
@@ -340,7 +353,9 @@ a:focus-visible > .link-icon svg * {
 }
 
 .floating-contact-trigger {
+  width: 7rem;
   min-width: 7rem;
+  padding-inline: 1rem;
   background: #292622;
   color: #faf6ee;
 }
@@ -381,7 +396,7 @@ a:focus-visible > .link-icon svg * {
   min-height: 112svh;
   overflow: clip;
   padding: 7.2rem 3.1vw 3rem;
-  background: var(--paper);
+  background: #f0ede6;
 }
 
 .mind-hero::before {
@@ -418,24 +433,18 @@ a:focus-visible > .link-icon svg * {
   aspect-ratio: 1672 / 941;
   isolation: isolate;
   margin-top: 1rem;
+  background: #f0ede6;
 }
 
 .mind-hero-canvas::after {
-  position: absolute;
-  z-index: 2;
-  inset: 0;
-  background: radial-gradient(circle at 67% 34%, transparent 0 10%, rgba(19, 17, 25, 0.08) 31%, transparent 64%);
-  content: "";
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.75s ease;
+  display: none;
 }
 
 .mind-hero[data-active-zone="source"] .mind-hero-canvas::after { opacity: 1; }
 
 .mind-hero-visual {
   position: absolute;
-  z-index: 1;
+  z-index: 2;
   inset: 0;
   overflow: hidden;
 }
@@ -448,7 +457,7 @@ a:focus-visible > .link-icon svg * {
 
 .golden-ratio-detail {
   position: absolute;
-  z-index: 2;
+  z-index: 1;
   bottom: -0.5%;
   left: -1.25%;
   width: 43%;
@@ -464,9 +473,8 @@ a:focus-visible > .link-icon svg * {
 }
 
 .mind-hero-base {
-  object-fit: cover;
-  object-position: center;
-  filter: saturate(0.76) contrast(0.98);
+  object-fit: contain;
+  object-position: right bottom;
   will-change: transform;
 }
 
@@ -489,7 +497,7 @@ a:focus-visible > .link-icon svg * {
   font-size: clamp(4.1rem, 5.75vw, 7.35rem);
   font-weight: 400;
   letter-spacing: -0.062em;
-  line-height: 0.84;
+  line-height: 0.88;
 }
 
 .mind-hero h1 em {
@@ -501,7 +509,7 @@ a:focus-visible > .link-icon svg * {
 .case-title-line {
   display: block;
   overflow: hidden;
-  padding: 0 0 0.07em;
+  padding: 0 0 0.18em;
 }
 
 .mind-title-line > span,
@@ -521,7 +529,7 @@ a:focus-visible > .link-icon svg * {
 .mind-hero-actions {
   display: flex;
   align-items: center;
-  gap: 1rem 1.4rem;
+  gap: 1rem;
   margin: 1.5rem 0 0 7%;
 }
 
@@ -589,36 +597,23 @@ a:focus-visible > .link-icon svg * {
 .mind-zone-surface {
   position: absolute;
   inset: 0;
-  overflow: hidden;
-  border: 1px solid color-mix(in srgb, var(--zone-color) 18%, transparent);
+  border: 0;
   border-radius: 47% 53% 45% 55% / 52% 46% 54% 48%;
-  background: radial-gradient(circle at 48% 46%, color-mix(in srgb, var(--zone-color) 34%, transparent), transparent 72%);
-  box-shadow: 0 0 0 transparent;
-  opacity: 0.14;
-  transform: scale(0.98);
-  transition: opacity 0.5s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.45s ease, box-shadow 0.6s ease;
+  background: radial-gradient(ellipse at 50% 48%, color-mix(in srgb, var(--zone-color) 66%, transparent) 0, color-mix(in srgb, var(--zone-color) 24%, transparent) 42%, transparent 76%);
+  opacity: 0;
+  transform: scale(0.94);
+  transition: opacity 0.5s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .mind-zone-surface::after {
-  position: absolute;
-  inset: -28%;
-  border-radius: inherit;
-  background: radial-gradient(circle at 38% 40%, color-mix(in srgb, var(--zone-color) 62%, #fff) 0 6%, transparent 36%);
-  content: "";
-  opacity: 0;
-  transform: translate3d(-8%, 8%, 0) scale(0.8);
-  transition: opacity 0.45s ease, transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+  display: none;
 }
 
 .mind-zone:hover .mind-zone-surface,
 .mind-zone:focus-visible .mind-zone-surface,
 .mind-zone.is-active .mind-zone-surface {
-  border-color: color-mix(in srgb, var(--zone-color) 78%, #fff);
-  box-shadow:
-    0 0 1.4rem color-mix(in srgb, var(--zone-color) 54%, transparent),
-    inset 0 0 1.1rem color-mix(in srgb, var(--zone-color) 34%, transparent);
-  opacity: 0.5;
-  transform: scale(1.035);
+  opacity: 0.52;
+  transform: scale(1.055);
   animation: brain-region-breathe 2.4s ease-in-out infinite alternate;
 }
 
@@ -637,8 +632,7 @@ a:focus-visible > .link-icon svg * {
 .mind-zone:focus-visible { outline: none; }
 
 .mind-zone:focus-visible .mind-zone-surface {
-  outline: 3px solid #fffdf7;
-  outline-offset: 3px;
+  opacity: 0.62;
 }
 
 .mind-annotation {
@@ -843,32 +837,12 @@ a:focus-visible > .link-icon svg * {
   background:
     radial-gradient(circle at 72% 22%, #fff 0 1px, transparent 1.6px),
     radial-gradient(circle at 32% 76%, #fff 0 1px, transparent 1.7px),
-    radial-gradient(circle at 48% 46%, rgba(126, 178, 255, 0.95) 0 2%, rgba(54, 76, 136, 0.56) 12%, transparent 34%),
-    repeating-radial-gradient(circle at 50% 50%, transparent 0 7%, rgba(166, 197, 255, 0.13) 8% 9%, transparent 10% 15%);
-  filter: drop-shadow(0 0 1.4rem rgba(74, 111, 190, 0.55));
+    radial-gradient(ellipse at 48% 46%, rgba(126, 178, 255, 0.76) 0 3%, rgba(54, 76, 136, 0.42) 18%, transparent 62%);
+  filter: drop-shadow(0 0 1rem rgba(74, 111, 190, 0.46));
   opacity: 0;
   pointer-events: none;
   transform: scale(0.76);
   transform-origin: center;
-}
-
-.mind-cosmos span {
-  position: absolute;
-  inset: 13%;
-  border: 1px solid rgba(210, 225, 255, 0.38);
-  border-radius: 50%;
-  animation: cosmic-orbit 9s linear infinite;
-}
-
-.mind-cosmos span:last-child {
-  inset: 25%;
-  border-color: rgba(255, 255, 255, 0.48);
-  animation-direction: reverse;
-  animation-duration: 6s;
-}
-
-@keyframes cosmic-orbit {
-  to { transform: rotate(360deg) scale(1.08); }
 }
 
 .mind-hero-scroll {
@@ -951,6 +925,46 @@ a:focus-visible > .link-icon svg * {
   transform-origin: left center;
 }
 
+.manifesto-coin {
+  position: fixed;
+  z-index: 78;
+  top: 0;
+  left: 72vw;
+  display: grid;
+  width: clamp(3.7rem, 5vw, 5.2rem);
+  aspect-ratio: 1;
+  place-content: center;
+  border: 3px ridge #b9b8b3;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 28%, rgba(255, 255, 255, 0.92), transparent 17%),
+    repeating-conic-gradient(from 8deg, rgba(76, 76, 72, 0.08) 0 4deg, transparent 4deg 9deg),
+    radial-gradient(circle, #efeee9 0 48%, #c3c2bd 72%, #f7f6f1 100%);
+  box-shadow:
+    inset 0 0 0 0.2rem rgba(99, 98, 93, 0.2),
+    inset 0.25rem 0.35rem 0.7rem rgba(255, 255, 255, 0.65),
+    0 0.75rem 1.4rem rgba(45, 42, 38, 0.22);
+  color: #66655f;
+  font-family: var(--serif);
+  line-height: 0.78;
+  text-align: center;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.manifesto-coin::before {
+  position: absolute;
+  inset: 0.4rem;
+  border: 1px solid rgba(91, 90, 84, 0.48);
+  border-radius: 50%;
+  content: "";
+}
+
+.manifesto-coin strong,
+.manifesto-coin small { position: relative; z-index: 1; display: block; }
+.manifesto-coin strong { font-size: clamp(1.45rem, 2vw, 2.05rem); font-weight: 600; letter-spacing: -0.08em; }
+.manifesto-coin small { margin-top: 0.2rem; font-family: var(--sans); font-size: 0.46rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+
 .manifesto-aside {
   align-self: end;
   margin-bottom: 8vh;
@@ -978,6 +992,14 @@ a:focus-visible > .link-icon svg * {
   flex-direction: column;
   justify-content: space-between;
   padding: 9vh 3vw 6vh;
+}
+
+.showcase-intro {
+  max-width: 19rem;
+  margin: 0;
+  color: color-mix(in srgb, currentColor 76%, transparent);
+  font-size: clamp(0.75rem, 0.86vw, 0.9rem);
+  line-height: 1.65;
 }
 
 .showcase-progress {
@@ -1322,7 +1344,7 @@ a:focus-visible > .link-icon svg * {
   font-size: clamp(3.9rem, 5.45vw, 6.4rem);
   font-weight: 400;
   letter-spacing: -0.065em;
-  line-height: 0.75;
+  line-height: 0.84;
 }
 
 .contact h2 span,
@@ -2305,7 +2327,7 @@ a:focus-visible > .link-icon svg * {
   font-size: clamp(4.4rem, 8.4vw, 10rem);
   font-weight: 400;
   letter-spacing: -0.035em;
-  line-height: 0.78;
+  line-height: 0.9;
   text-transform: uppercase;
   transform: rotate(-1.2deg);
 }
@@ -2598,11 +2620,12 @@ a:focus-visible > .link-icon svg * {
   font-size: clamp(3.4rem, 5.7vw, 6.6rem);
   font-weight: 400;
   letter-spacing: -0.025em;
-  line-height: 0.78;
+  line-height: 0.9;
 }
 
 .story-heading-word {
   display: inline-block;
+  margin-right: 0.22em;
 }
 
 .story-stop-copy > p:last-child {
@@ -2699,12 +2722,13 @@ a:focus-visible > .link-icon svg * {
   font-size: clamp(4rem, 8.3vw, 9.5rem);
   font-weight: 400;
   letter-spacing: -0.058em;
-  line-height: 0.84;
+  line-height: 0.9;
 }
 
 .method-title-line {
   display: block;
   overflow: hidden;
+  padding: 0.05em 0 0.18em;
 }
 
 .method-title-line > span {
@@ -3901,9 +3925,9 @@ a:focus-visible > .link-icon svg * {
   .mind-hero-actions { flex-wrap: wrap; margin: 1.4rem 0 0 12%; }
   .mind-hero-actions > .label { max-width: 11rem; }
   .mind-hero-visual { position: relative; grid-row: 2; aspect-ratio: 4 / 5; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-  .mind-hero-base { object-position: 69% center; }
+  .mind-hero-base { object-fit: contain; object-position: right bottom; }
   .golden-ratio-detail {
-    z-index: 2;
+    z-index: 0;
     top: 29rem;
     bottom: auto;
     left: -1rem;
@@ -3959,10 +3983,12 @@ a:focus-visible > .link-icon svg * {
   .mind-hero-scroll { position: relative; right: auto; bottom: auto; grid-row: 4; justify-self: end; margin-top: 2rem; }
   .manifesto { display: block; min-height: 110vh; padding: 11vh 1rem; }
   .manifesto-copy { margin-top: 18vh; font-size: clamp(2.5rem, 11vw, 4rem); }
+  .manifesto-coin { left: 68vw; }
   .manifesto-aside { margin: 12vh 0 0 55%; }
   .showcase { display: block; }
   .showcase-sticky { z-index: 5; display: grid; height: auto; grid-template-columns: 1fr 1fr; align-items: end; padding: 1rem; border-bottom: 1px solid rgba(20,20,20,0.16); background: inherit; backdrop-filter: none; }
   .showcase-sticky > .section-kicker { display: none; }
+  .showcase-intro { display: none; }
   .showcase-title-wrap h2 { max-width: none; font-size: 2.6rem; }
   .project-dots { justify-content: flex-end; padding-bottom: 0.35rem; }
   .project-entry { min-height: auto; padding: 8vh 1rem 13vh; border-left: 0; }
