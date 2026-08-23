@@ -36,7 +36,8 @@ test("server-renders the complete portfolio homepage", async () => {
   assert.match(html, /mind-hero-cutout-v3\.webp/);
   assert.equal((html.match(/class="mind-zone mind-zone-/g) ?? []).length, 5);
   assert.equal((html.match(/class="manifesto-marker-stroke"/g) ?? []).length, 3);
-  assert.match(html, /class="mind-cosmos"/);
+  assert.match(html, /class="mind-art-layer"/);
+  assert.doesNotMatch(html, /mind-zone-motif/);
   assert.match(html, /Tools: Figma, Framer en AI/);
   assert.doesNotMatch(html, /hero-project-letter|hero-rule/);
   assert.match(html, /class="contact-postcard"/);
@@ -89,6 +90,7 @@ test("uses bounded raster assets on the homepage and case pages", async () => {
   assert.doesNotMatch(tareeqiSource, /from "next\/link"/);
   assert.doesNotMatch(css, /backdrop-filter:\s*blur/i);
   assert.doesNotMatch(css, /prefers-reduced-motion:\s*reduce/i);
-  assert.match(css, /border-top: 1\.5px solid var\(--zone-color\)/);
+  assert.match(css, /\.mind-connector path/);
+  assert.match(css, /stroke: var\(--zone-color\)/);
   assert.match(css, /white-space: nowrap/);
 });

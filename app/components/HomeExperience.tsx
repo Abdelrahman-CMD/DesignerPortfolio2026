@@ -10,7 +10,7 @@ import Framer from "lucide-react/icons/framer";
 import Linkedin from "lucide-react/icons/linkedin";
 import Mail from "lucide-react/icons/mail";
 import MessageCircle from "lucide-react/icons/message-circle";
-import MessageCircleMore from "lucide-react/icons/message-circle-more";
+import Share2 from "lucide-react/icons/share-2";
 import Sparkles from "lucide-react/icons/sparkles";
 import UserRound from "lucide-react/icons/user-round";
 import Workflow from "lucide-react/icons/workflow";
@@ -461,6 +461,9 @@ const mindZones = [
     detail:
       "Ik blijf vragen tot aannames plaatsmaken voor een kern die we samen begrijpen.",
     color: "#d8644a",
+    connector: "M 47 27 C 53 25, 60 16, 67 12",
+    dotX: 67,
+    dotY: 12,
   },
   {
     id: "connections",
@@ -470,6 +473,9 @@ const mindZones = [
     detail:
       "Mens, cultuur, business en techniek worden één verhaal in plaats van losse eisen.",
     color: "#d7a84e",
+    connector: "M 90 27 C 87 23, 83 17, 78 14",
+    dotX: 78,
+    dotY: 14,
   },
   {
     id: "structure",
@@ -479,6 +485,9 @@ const mindZones = [
     detail:
       "Scherpe inzichten worden systemen die helder, toegankelijk en verantwoordelijk werken.",
     color: "#879a75",
+    connector: "M 48 55 C 54 51, 59 40, 65 33",
+    dotX: 65,
+    dotY: 33,
   },
   {
     id: "source",
@@ -488,6 +497,9 @@ const mindZones = [
     detail:
       "Hier begint niets met een component. Eerst ontstaat ruimte voor het onverwachte idee.",
     color: "#314668",
+    connector: "M 90 49 C 87 45, 83 38, 78 32",
+    dotX: 78,
+    dotY: 32,
   },
   {
     id: "direction",
@@ -497,6 +509,9 @@ const mindZones = [
     detail:
       "Tools versnellen de uitvoering. Selectie, richting en verantwoordelijkheid blijven mensenwerk.",
     color: "#6682a1",
+    connector: "M 90 71 C 85 65, 80 56, 75 48",
+    dotX: 75,
+    dotY: 48,
   },
 ] as const;
 
@@ -702,16 +717,20 @@ export function HomeExperience() {
             autoAlpha: 1,
             y: startY,
             x: -42,
+            z: 80,
             rotationX: -24,
             rotationY: -620,
             rotationZ: -18,
+            transformPerspective: 900,
+            transformOrigin: "50% 50%",
           }, {
-            y: -7,
+            y: 4,
             x: 0,
-            rotationX: 24,
-            rotationY: 680,
-            rotationZ: 9,
-            duration: 1.62,
+            z: 0,
+            rotationX: 18,
+            rotationY: 720,
+            rotationZ: 8,
+            duration: 1.7,
             ease: "power2.in",
           })
           .to(quarterShadow, {
@@ -722,29 +741,53 @@ export function HomeExperience() {
             ease: "power2.out",
           }, "-=0.16")
           .to(quarter, {
-            y: -72,
-            rotationX: 46,
-            rotationY: 860,
-            rotationZ: -17,
-            duration: 0.34,
+            y: -74,
+            z: 46,
+            rotationX: 48,
+            rotationY: 910,
+            rotationZ: -16,
+            duration: 0.38,
             ease: "power3.out",
           })
           .to(quarter, {
-            y: 0,
-            rotationX: 74,
-            rotationY: 1010,
-            rotationZ: 11,
-            duration: 0.43,
+            y: 19,
+            z: 0,
+            rotationX: 64,
+            rotationY: 1060,
+            rotationZ: 10,
+            duration: 0.48,
             ease: "power2.in",
           })
           .to(quarter, {
-            y: 32,
-            rotationX: 82,
-            rotationY: 1060,
-            rotationZ: -5,
-            duration: 0.55,
-            ease: "elastic.out(1, 0.34)",
-          });
+            y: 20,
+            rotationX: 72,
+            rotationY: 1110,
+            rotationZ: -4,
+            duration: 0.34,
+            ease: "power2.out",
+          })
+          .to(quarter, {
+            y: 20,
+            rotationX: 67,
+            rotationY: 1132,
+            rotationZ: 2,
+            duration: 0.28,
+            ease: "sine.inOut",
+          })
+          .to(quarter, {
+            y: 20,
+            rotationX: 69,
+            rotationY: 1140,
+            rotationZ: 0,
+            duration: 0.36,
+            ease: "power3.out",
+          })
+          .to(quarterShadow, {
+            opacity: 0.3,
+            scaleX: 0.92,
+            scaleY: 0.78,
+            duration: 0.36,
+          }, "<");
       };
 
       if (quarterWord && quarterScene && quarter) {
@@ -1188,23 +1231,39 @@ export function HomeExperience() {
 
   useLayoutEffect(() => {
     const context = gsap.context(() => {
-      const sourceIsActive = activeMindZone === "source";
+      const fragments = gsap.utils.toArray<HTMLElement>(".mind-art-image");
+      gsap.killTweensOf(fragments);
+      gsap.set(fragments, { autoAlpha: 0, xPercent: 0, yPercent: 0, scale: 1, rotation: 0 });
 
-      gsap.to(".mind-hero-base", {
-        scale: sourceIsActive ? 1.028 : 1,
-        xPercent: sourceIsActive ? -0.7 : 0,
-        transformOrigin: "66% 34%",
-        duration: sourceIsActive ? 0.95 : 0.62,
-        ease: sourceIsActive ? "power3.inOut" : "power3.out",
-        overwrite: "auto",
-      });
+      if (!activeMindZone) return;
 
-      gsap.to(".mind-cosmos", {
-        autoAlpha: sourceIsActive ? 1 : 0,
-        scale: sourceIsActive ? 1.16 : 0.76,
-        rotation: sourceIsActive ? 7 : 0,
-        duration: sourceIsActive ? 1.05 : 0.5,
-        ease: sourceIsActive ? "power3.inOut" : "power2.out",
+      const target = `.mind-art-fragment-${activeMindZone} .mind-art-image`;
+      const motion = ({
+        curiosity: { xPercent: 0.18, yPercent: -0.16, scale: 1.01, rotation: 0.28, duration: 1.05, origin: "67% 12%" },
+        connections: { xPercent: 0, yPercent: -0.1, scale: 1.006, rotation: 0.1, duration: 1.25, origin: "78% 14%" },
+        structure: { xPercent: 0.06, yPercent: -0.24, scale: 1.005, rotation: -0.06, duration: 1.1, origin: "65% 33%" },
+        source: { xPercent: 0, yPercent: -0.06, scale: 1.01, rotation: 0.24, duration: 1.75, origin: "78% 32%" },
+        direction: { xPercent: 0.04, yPercent: -0.12, scale: 1.006, rotation: -0.4, duration: 1.25, origin: "75% 48%" },
+      } as Record<string, { xPercent: number; yPercent: number; scale: number; rotation: number; duration: number; origin: string }>)[activeMindZone];
+      if (!motion) return;
+
+      gsap.fromTo(target, {
+        autoAlpha: 0.72,
+        xPercent: 0,
+        yPercent: 0,
+        scale: 1,
+        rotation: 0,
+        transformOrigin: motion.origin,
+      }, {
+        autoAlpha: 0.94,
+        xPercent: motion.xPercent,
+        yPercent: motion.yPercent,
+        scale: motion.scale,
+        rotation: motion.rotation,
+        duration: motion.duration,
+        ease: "sine.inOut",
+        repeat: -1,
+        yoyo: true,
         overwrite: true,
       });
     }, root);
@@ -1275,7 +1334,20 @@ export function HomeExperience() {
           aria-label="Open contactmogelijkheden"
           onClick={activateContact}
         >
-          <MessageCircleMore aria-hidden="true" />
+          <span className="contact-arch" aria-hidden="true">
+            {[..."CONTACT"].map((letter, index) => (
+              <span
+                style={{
+                  "--letter-angle": `${-60 + (index * 20)}deg`,
+                  "--letter-counter-angle": `${60 - (index * 20)}deg`,
+                } as CSSProperties}
+                key={`${letter}-${index}`}
+              >
+                {letter}
+              </span>
+            ))}
+          </span>
+          <Share2 className="contact-share-icon" aria-hidden="true" />
         </button>
       </aside>
 
@@ -1305,8 +1377,18 @@ export function HomeExperience() {
                   sizes="100vw"
                   style={{ objectFit: "contain", objectPosition: "right bottom" }}
                 />
-
-                <div className="mind-cosmos" aria-hidden="true" />
+                <div className="mind-art-layer" aria-hidden="true">
+                  <span className={`mind-art-fragment mind-art-fragment-${activeMindZone ?? "idle"}`}>
+                    <Image
+                      className="mind-art-image"
+                      src="/about/mind-hero-cutout-v3.webp"
+                      alt=""
+                      fill
+                      sizes="100vw"
+                      style={{ objectFit: "contain", objectPosition: "right bottom" }}
+                    />
+                  </span>
+                </div>
               </div>
             </div>
 
@@ -1365,8 +1447,42 @@ export function HomeExperience() {
                     }}
                   >
                     <span className="mind-zone-surface" aria-hidden="true" />
-                    <span className="mind-zone-motif" aria-hidden="true"><i /><i /><i /></span>
-                    <span className={`mind-annotation mind-annotation-${zone.id}`}>
+                    <span className="mind-zone-mobile-copy">
+                      <span className="mind-zone-mobile-kicker label">{zone.number} / {zone.label}</span>
+                      <strong>{zone.title}</strong>
+                      <span>{zone.detail}</span>
+                    </span>
+                  </button>
+                );
+              })}
+
+              <svg className="mind-connector-map" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                {mindZones.map((zone) => {
+                  const isActive = activeMindZone === zone.id;
+
+                  return (
+                    <g
+                      className={`mind-connector mind-connector-${zone.id}${isActive ? " is-active" : ""}`}
+                      style={{ "--zone-color": zone.color } as CSSProperties}
+                      key={`connector-${zone.id}`}
+                    >
+                      <path pathLength="1" d={zone.connector} />
+                      <circle cx={zone.dotX} cy={zone.dotY} r="0.45" />
+                    </g>
+                  );
+                })}
+              </svg>
+
+              {mindZones.map((zone) => {
+                const isActive = activeMindZone === zone.id;
+
+                return (
+                  <span
+                    className={`mind-annotation-panel mind-annotation-panel-${zone.id}${isActive ? " is-active" : ""}`}
+                    style={{ "--zone-color": zone.color } as CSSProperties}
+                    aria-hidden={!isActive}
+                    key={`annotation-${zone.id}`}
+                  >
                       <span className="mind-annotation-kicker label">
                         {zone.number} / {zone.label}
                       </span>
@@ -1410,8 +1526,7 @@ export function HomeExperience() {
                           </span>
                         </span>
                       )}
-                    </span>
-                  </button>
+                  </span>
                 );
               })}
             </div>
@@ -1446,7 +1561,13 @@ export function HomeExperience() {
         <span className="manifesto-ground" aria-hidden="true" />
         <span className="manifesto-coin-scene" aria-hidden="true">
           <span className="manifesto-coin-shadow" />
-          <span className="manifesto-coin"><strong>25</strong><small>cent</small></span>
+          <span className="manifesto-coin">
+            {Array.from({ length: 13 }, (_, index) => (
+              <i className="manifesto-coin-edge" style={{ transform: `translateZ(${index - 6}px)` }} key={index} />
+            ))}
+            <span className="manifesto-coin-face manifesto-coin-front"><strong>25</strong><small>cent</small></span>
+            <span className="manifesto-coin-face manifesto-coin-back"><strong>A</strong><small>kwartje</small></span>
+          </span>
         </span>
         <aside className="manifesto-aside">
           <span className="label">Dualiteit als methode</span>
