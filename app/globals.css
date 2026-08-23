@@ -270,7 +270,8 @@ a:focus-visible > .link-icon svg * {
   right: clamp(0.8rem, 2vw, 1.5rem);
   bottom: clamp(0.8rem, 2vw, 1.5rem);
   display: flex;
-  min-width: 7.65rem;
+  width: 3.6rem;
+  min-width: 3.6rem;
   min-height: 3.6rem;
   flex-direction: column;
   align-items: center;
@@ -281,7 +282,7 @@ a:focus-visible > .link-icon svg * {
   background: rgba(248, 245, 239, 0.96);
   box-shadow: 0 0.75rem 2.25rem rgba(31, 28, 25, 0.18);
   color: #292622;
-  transition: border-radius 0.35s ease, box-shadow 0.35s ease;
+  transition: width 0.4s ease, border-radius 0.35s ease, box-shadow 0.35s ease;
 }
 
 .floating-contact-links {
@@ -300,7 +301,9 @@ a:focus-visible > .link-icon svg * {
     visibility 0s linear 0.35s;
 }
 
-.floating-contact.is-open .floating-contact-links {
+.floating-contact.is-open .floating-contact-links,
+.floating-contact:hover .floating-contact-links,
+.floating-contact:focus-within .floating-contact-links {
   max-height: 12rem;
   opacity: 1;
   transform: translateY(0) scale(1);
@@ -353,9 +356,9 @@ a:focus-visible > .link-icon svg * {
 }
 
 .floating-contact-trigger {
-  width: 7rem;
-  min-width: 7rem;
-  padding-inline: 1rem;
+  width: 2.95rem;
+  min-width: 2.95rem;
+  padding: 0;
   background: #292622;
   color: #faf6ee;
 }
@@ -462,7 +465,7 @@ a:focus-visible > .link-icon svg * {
   left: -1.25%;
   width: 43%;
   aspect-ratio: 690 / 296;
-  opacity: 0.74;
+  opacity: 0.1;
   pointer-events: none;
   mix-blend-mode: multiply;
   mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 0.7) 14%, #000 28%);
@@ -473,9 +476,10 @@ a:focus-visible > .link-icon svg * {
 }
 
 .mind-hero-base {
+  filter: saturate(0.68) contrast(0.94) brightness(0.97);
   object-fit: contain;
   object-position: right bottom;
-  will-change: transform;
+  will-change: transform, filter;
 }
 
 .mind-hero-copy {
@@ -586,13 +590,14 @@ a:focus-visible > .link-icon svg * {
   font: inherit;
   text-align: left;
   cursor: pointer;
+  pointer-events: none;
 }
 
-.mind-zone-curiosity { top: 13.4%; left: 51.6%; width: 12.2%; height: 17.5%; }
-.mind-zone-connections { top: 13.2%; left: 62%; width: 14.2%; height: 18.5%; }
-.mind-zone-structure { top: 27.5%; left: 52.2%; width: 10.5%; height: 20.5%; }
-.mind-zone-source { top: 25.2%; left: 60.4%; width: 16.7%; height: 20.7%; }
-.mind-zone-direction { top: 44%; left: 61.4%; width: 13.4%; height: 19.3%; }
+.mind-zone-curiosity { top: 6.4%; left: 56.1%; width: 13.1%; height: 19.6%; }
+.mind-zone-connections { top: 6.2%; left: 67.1%; width: 16.2%; height: 22.4%; }
+.mind-zone-structure { top: 22.8%; left: 56.4%; width: 12.7%; height: 21.3%; }
+.mind-zone-source { top: 19.8%; left: 64.8%; width: 18.2%; height: 24.1%; }
+.mind-zone-direction { top: 38.5%; left: 66.1%; width: 15.1%; height: 22.4%; }
 
 .mind-zone-surface {
   position: absolute;
@@ -603,7 +608,14 @@ a:focus-visible > .link-icon svg * {
   opacity: 0;
   transform: scale(0.94);
   transition: opacity 0.5s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: auto;
 }
+
+.mind-zone-curiosity .mind-zone-surface { clip-path: polygon(8% 2%, 83% 0, 100% 25%, 94% 70%, 70% 100%, 7% 91%, 0 32%); }
+.mind-zone-connections .mind-zone-surface { clip-path: polygon(9% 0, 95% 3%, 100% 73%, 76% 100%, 13% 88%, 0 27%); }
+.mind-zone-structure .mind-zone-surface { clip-path: polygon(5% 4%, 82% 0, 100% 42%, 85% 100%, 15% 96%, 0 67%); }
+.mind-zone-source .mind-zone-surface { clip-path: polygon(8% 8%, 68% 0, 100% 31%, 92% 77%, 62% 100%, 8% 89%, 0 40%); }
+.mind-zone-direction .mind-zone-surface { clip-path: polygon(10% 1%, 92% 3%, 100% 50%, 81% 100%, 15% 94%, 0 50%); }
 
 .mind-zone-surface::after {
   display: none;
@@ -612,8 +624,8 @@ a:focus-visible > .link-icon svg * {
 .mind-zone:hover .mind-zone-surface,
 .mind-zone:focus-visible .mind-zone-surface,
 .mind-zone.is-active .mind-zone-surface {
-  opacity: 0.52;
-  transform: scale(1.055);
+  opacity: 0.34;
+  transform: scale(1.025);
   animation: brain-region-breathe 2.4s ease-in-out infinite alternate;
 }
 
@@ -627,6 +639,171 @@ a:focus-visible > .link-icon svg * {
 @keyframes brain-region-breathe {
   from { filter: saturate(1) brightness(0.98); }
   to { filter: saturate(1.2) brightness(1.11); }
+}
+
+.mind-zone-motif {
+  position: absolute;
+  z-index: 2;
+  display: block;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.42s ease;
+}
+
+.mind-zone:hover .mind-zone-motif,
+.mind-zone:focus-visible .mind-zone-motif,
+.mind-zone.is-active .mind-zone-motif { opacity: 0.68; }
+
+.mind-zone-curiosity .mind-zone-motif {
+  top: 14%;
+  right: 12%;
+  width: 34%;
+  aspect-ratio: 1;
+  border: 1.5px solid rgba(78, 38, 27, 0.76);
+  border-radius: 50%;
+  transform: rotate(-10deg);
+}
+
+.mind-zone-curiosity .mind-zone-motif::after {
+  position: absolute;
+  top: 82%;
+  left: 78%;
+  width: 58%;
+  height: 2px;
+  border-radius: 999px;
+  background: rgba(78, 38, 27, 0.78);
+  content: "";
+  transform: rotate(46deg);
+  transform-origin: left center;
+}
+
+.mind-zone-curiosity:hover .mind-zone-motif,
+.mind-zone-curiosity:focus-visible .mind-zone-motif,
+.mind-zone-curiosity.is-active .mind-zone-motif { animation: curiosity-search 1.8s ease-in-out infinite alternate; }
+
+.mind-zone-connections .mind-zone-motif {
+  inset: 15% 12%;
+  background:
+    radial-gradient(circle at 12% 26%, #5c431c 0 3px, transparent 3.5px),
+    radial-gradient(circle at 48% 14%, #5c431c 0 3px, transparent 3.5px),
+    radial-gradient(circle at 82% 32%, #5c431c 0 3px, transparent 3.5px),
+    radial-gradient(circle at 34% 72%, #5c431c 0 3px, transparent 3.5px),
+    radial-gradient(circle at 72% 78%, #5c431c 0 3px, transparent 3.5px);
+  filter: drop-shadow(0 0 0.35rem rgba(92, 67, 28, 0.34));
+}
+
+.mind-zone-connections .mind-zone-motif::before,
+.mind-zone-connections .mind-zone-motif::after {
+  position: absolute;
+  inset: 22% 12%;
+  border-top: 1px solid rgba(92, 67, 28, 0.62);
+  border-bottom: 1px solid rgba(92, 67, 28, 0.45);
+  content: "";
+  transform: rotate(18deg);
+}
+
+.mind-zone-connections .mind-zone-motif::after { transform: rotate(-24deg) scaleX(0.86); }
+
+.mind-zone-connections:hover .mind-zone-motif,
+.mind-zone-connections:focus-visible .mind-zone-motif,
+.mind-zone-connections.is-active .mind-zone-motif { animation: connections-pulse 1.65s ease-in-out infinite alternate; }
+
+.mind-zone-structure .mind-zone-motif {
+  right: 18%;
+  bottom: 19%;
+  width: 40%;
+  height: 44%;
+  border: 1px solid rgba(54, 64, 43, 0.72);
+  box-shadow: -0.42rem 0.42rem 0 rgba(54, 64, 43, 0.18), 0.38rem -0.38rem 0 rgba(54, 64, 43, 0.14);
+}
+
+.mind-zone-structure .mind-zone-motif::before,
+.mind-zone-structure .mind-zone-motif::after {
+  position: absolute;
+  border: 1px solid rgba(54, 64, 43, 0.62);
+  content: "";
+}
+
+.mind-zone-structure .mind-zone-motif::before { inset: -32% 18% 68%; }
+.mind-zone-structure .mind-zone-motif::after { inset: 34% -34% -2% 62%; }
+
+.mind-zone-structure:hover .mind-zone-motif,
+.mind-zone-structure:focus-visible .mind-zone-motif,
+.mind-zone-structure.is-active .mind-zone-motif { animation: structure-lift 1.55s ease-in-out infinite alternate; }
+
+.mind-zone-source .mind-zone-motif {
+  inset: 12%;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(218, 229, 255, 0.78) 0 2%, rgba(104, 138, 204, 0.45) 5%, transparent 18%),
+    radial-gradient(circle at 28% 30%, #fff 0 1px, transparent 1.5px),
+    radial-gradient(circle at 76% 68%, #fff 0 1px, transparent 1.5px);
+  filter: drop-shadow(0 0 0.7rem rgba(89, 124, 194, 0.48));
+}
+
+.mind-zone-source:hover .mind-zone-motif,
+.mind-zone-source:focus-visible .mind-zone-motif,
+.mind-zone-source.is-active .mind-zone-motif { animation: source-drift 2.6s linear infinite; }
+
+.mind-zone-direction .mind-zone-motif {
+  top: 18%;
+  left: 15%;
+  width: 36%;
+  aspect-ratio: 1;
+  border: 1px solid rgba(39, 59, 79, 0.72);
+  border-radius: 50%;
+}
+
+.mind-zone-direction .mind-zone-motif::before,
+.mind-zone-direction .mind-zone-motif::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  content: "";
+  transform: translate(-50%, -50%);
+}
+
+.mind-zone-direction .mind-zone-motif::before {
+  width: 1px;
+  height: 130%;
+  background: rgba(39, 59, 79, 0.62);
+  box-shadow: 0 0 0 0 rgba(39, 59, 79, 0.62);
+}
+
+.mind-zone-direction .mind-zone-motif::after {
+  width: 0;
+  height: 0;
+  border-right: 0.24rem solid transparent;
+  border-bottom: 0.7rem solid rgba(39, 59, 79, 0.82);
+  border-left: 0.24rem solid transparent;
+}
+
+.mind-zone-direction:hover .mind-zone-motif,
+.mind-zone-direction:focus-visible .mind-zone-motif,
+.mind-zone-direction.is-active .mind-zone-motif { animation: direction-compass 2.2s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate; }
+
+@keyframes curiosity-search {
+  from { transform: translate3d(-4%, 3%, 0) rotate(-14deg) scale(0.94); }
+  to { transform: translate3d(8%, -5%, 0) rotate(-3deg) scale(1.08); }
+}
+
+@keyframes connections-pulse {
+  from { filter: drop-shadow(0 0 0 rgba(92, 67, 28, 0)); transform: scale(0.96); }
+  to { filter: drop-shadow(0 0 0.45rem rgba(92, 67, 28, 0.5)); transform: scale(1.055); }
+}
+
+@keyframes structure-lift {
+  from { transform: translate3d(0, 5%, 0) skewY(0deg); }
+  to { transform: translate3d(0, -6%, 0) skewY(-2deg); }
+}
+
+@keyframes source-drift {
+  to { transform: rotate(360deg) scale(1.08); }
+}
+
+@keyframes direction-compass {
+  from { transform: rotate(-10deg) scale(0.96); }
+  to { transform: rotate(16deg) scale(1.04); }
 }
 
 .mind-zone:focus-visible { outline: none; }
@@ -675,25 +852,25 @@ a:focus-visible > .link-icon svg * {
   transition: opacity 0.3s ease 0.38s, transform 0.45s cubic-bezier(0.22, 1, 0.36, 1) 0.38s;
 }
 
-.mind-annotation-curiosity { top: -47%; left: -147%; }
-.mind-annotation-curiosity::after { top: 75%; left: 100%; width: 8vw; transform: rotate(10deg); transform-origin: left top; }
-.mind-annotation-curiosity::before { top: calc(75% + 1.9vw); left: calc(100% + 7.75vw); }
+.mind-annotation-curiosity { top: -58%; right: 132%; }
+.mind-annotation-curiosity::after { top: 76%; left: 100%; width: 9.5vw; transform: rotate(12deg); transform-origin: left top; }
+.mind-annotation-curiosity::before { top: calc(76% + 2.25vw); left: calc(100% + 9.2vw); }
 
-.mind-annotation-connections { top: -36%; left: 115%; }
-.mind-annotation-connections::after { top: 86%; right: 100%; width: 7.2vw; transform: rotate(-20deg); transform-origin: right top; }
-.mind-annotation-connections::before { top: calc(86% + 2.75vw); right: calc(100% + 6.85vw); }
+.mind-annotation-connections { top: -45%; left: 128%; width: clamp(9rem, 13vw, 13rem); }
+.mind-annotation-connections::after { top: 88%; right: 100%; width: 8.3vw; transform: rotate(-17deg); transform-origin: right top; }
+.mind-annotation-connections::before { top: calc(88% + 2.05vw); right: calc(100% + 8vw); }
 
-.mind-annotation-structure { top: 65%; right: 130%; }
-.mind-annotation-structure::after { top: 32%; left: 100%; width: 8.2vw; transform: rotate(-8deg); transform-origin: left top; }
-.mind-annotation-structure::before { top: calc(32% - 1.5vw); left: calc(100% + 7.9vw); }
+.mind-annotation-structure { top: 54%; right: 142%; }
+.mind-annotation-structure::after { top: 34%; left: 100%; width: 9.2vw; transform: rotate(-10deg); transform-origin: left top; }
+.mind-annotation-structure::before { top: calc(34% - 1.7vw); left: calc(100% + 8.9vw); }
 
-.mind-annotation-source { top: 49%; left: 117%; }
-.mind-annotation-source::after { top: 20%; right: 100%; width: 7.8vw; transform: rotate(7deg); transform-origin: right top; }
-.mind-annotation-source::before { top: calc(20% - 1.15vw); right: calc(100% + 7.5vw); }
+.mind-annotation-source { top: 49%; left: 121%; width: clamp(9rem, 13vw, 13rem); }
+.mind-annotation-source::after { top: 20%; right: 100%; width: 7.6vw; transform: rotate(8deg); transform-origin: right top; }
+.mind-annotation-source::before { top: calc(20% - 1.15vw); right: calc(100% + 7.3vw); }
 
-.mind-annotation-direction { top: 64%; left: 128%; width: clamp(12rem, 18vw, 18rem); }
-.mind-annotation-direction::after { top: 13%; right: 100%; width: 9.6vw; transform: rotate(15deg); transform-origin: right top; }
-.mind-annotation-direction::before { top: calc(13% - 3vw); right: calc(100% + 9.3vw); }
+.mind-annotation-direction { top: 62%; left: 126%; width: clamp(10rem, 14vw, 14rem); }
+.mind-annotation-direction::after { top: 13%; right: 100%; width: 8.4vw; transform: rotate(15deg); transform-origin: right top; }
+.mind-annotation-direction::before { top: calc(13% - 2.6vw); right: calc(100% + 8.1vw); }
 
 .mind-annotation-kicker {
   color: var(--ink);
@@ -829,10 +1006,10 @@ a:focus-visible > .link-icon svg * {
 .mind-cosmos {
   position: absolute;
   z-index: 3;
-  top: 25.2%;
-  left: 60.5%;
-  width: 16.7%;
-  height: 20.8%;
+  top: 19.8%;
+  left: 64.8%;
+  width: 18.2%;
+  height: 24.1%;
   clip-path: polygon(7% 10%, 42% 0, 76% 8%, 100% 27%, 94% 72%, 68% 100%, 30% 93%, 0 66%);
   background:
     radial-gradient(circle at 72% 22%, #fff 0 1px, transparent 1.6px),
@@ -925,16 +1102,50 @@ a:focus-visible > .link-icon svg * {
   transform-origin: left center;
 }
 
-.manifesto-coin {
-  position: fixed;
-  z-index: 78;
-  top: 0;
-  left: 72vw;
-  display: grid;
+.manifesto-ground {
+  position: absolute;
+  z-index: 2;
+  right: 4vw;
+  bottom: 0;
+  left: 4vw;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(73, 66, 57, 0.28) 12%, rgba(73, 66, 57, 0.28) 88%, transparent);
+  pointer-events: none;
+}
+
+.manifesto-coin-scene {
+  position: absolute;
+  z-index: 12;
+  bottom: 0.75rem;
+  left: 72%;
   width: clamp(3.7rem, 5vw, 5.2rem);
   aspect-ratio: 1;
+  opacity: 0;
+  perspective: 720px;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.manifesto-coin-shadow {
+  position: absolute;
+  right: -12%;
+  bottom: -0.54rem;
+  left: -12%;
+  height: 0.7rem;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(45, 42, 38, 0.42), transparent 70%);
+  filter: blur(2px);
+  opacity: 0;
+  transform-origin: center;
+}
+
+.manifesto-coin {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  display: grid;
   place-content: center;
-  border: 3px ridge #b9b8b3;
+  border: 4px ridge #aaa9a4;
   border-radius: 50%;
   background:
     radial-gradient(circle at 35% 28%, rgba(255, 255, 255, 0.92), transparent 17%),
@@ -943,13 +1154,16 @@ a:focus-visible > .link-icon svg * {
   box-shadow:
     inset 0 0 0 0.2rem rgba(99, 98, 93, 0.2),
     inset 0.25rem 0.35rem 0.7rem rgba(255, 255, 255, 0.65),
+    0.2rem 0 0 #8f8e89,
+    0.32rem 0.08rem 0 #73726e,
     0 0.75rem 1.4rem rgba(45, 42, 38, 0.22);
   color: #66655f;
   font-family: var(--serif);
   line-height: 0.78;
   text-align: center;
-  visibility: hidden;
-  pointer-events: none;
+  transform-style: preserve-3d;
+  backface-visibility: visible;
+  will-change: transform;
 }
 
 .manifesto-coin::before {
@@ -958,6 +1172,15 @@ a:focus-visible > .link-icon svg * {
   border: 1px solid rgba(91, 90, 84, 0.48);
   border-radius: 50%;
   content: "";
+}
+
+.manifesto-coin::after {
+  position: absolute;
+  inset: 0.08rem;
+  border: 1px dashed rgba(94, 93, 88, 0.32);
+  border-radius: 50%;
+  content: "";
+  transform: translateZ(2px);
 }
 
 .manifesto-coin strong,
@@ -1283,13 +1506,18 @@ a:focus-visible > .link-icon svg * {
   display: grid;
   width: min(92vw, 84rem);
   min-height: min(74vh, 48rem);
-  grid-template-columns: 0.72fr 1.25fr 0.95fr 0.16fr;
+  grid-template-columns: 0.55fr 1.12fr 1.08fr;
   grid-template-rows: auto 1fr auto;
-  gap: clamp(1.25rem, 2.5vw, 2.75rem);
+  gap: clamp(1.1rem, 2vw, 2.2rem);
   padding: clamp(1.5rem, 3vw, 3.25rem);
   border: 1px solid rgba(55, 52, 46, 0.28);
   background:
-    linear-gradient(90deg, transparent 0 calc(31% - 1px), rgba(54, 51, 45, 0.09) calc(31% - 1px) 31%, transparent 31%),
+    linear-gradient(90deg,
+      transparent 0 calc(20% - 1px),
+      rgba(54, 51, 45, 0.1) calc(20% - 1px) 20%,
+      transparent 20% calc(61% - 1px),
+      rgba(54, 51, 45, 0.1) calc(61% - 1px) 61%,
+      transparent 61%),
     #f8f3e9;
   box-shadow:
     1.1rem 1.35rem 0 rgba(48, 51, 40, 0.13),
@@ -1330,7 +1558,8 @@ a:focus-visible > .link-icon svg * {
   grid-column: 2;
   grid-row: 1 / 3;
   align-self: center;
-  padding-left: 1vw;
+  padding-left: 0;
+  transform: translateX(-0.75rem);
 }
 
 .postcard-copy > .label {
@@ -1360,8 +1589,8 @@ a:focus-visible > .link-icon svg * {
 }
 
 .postcard-copy > p:last-child {
-  width: min(24rem, 90%);
-  margin: 7vh 0 0 15%;
+  width: min(25rem, 94%);
+  margin: 5.5vh 0 0;
   color: #4e4a43;
   font-size: 0.86rem;
   line-height: 1.7;
@@ -1371,8 +1600,8 @@ a:focus-visible > .link-icon svg * {
   position: relative;
   grid-column: 3;
   grid-row: 1 / 3;
-  min-height: 29rem;
-  margin: 1.25rem 0 0;
+  min-height: 31rem;
+  margin: 0.35rem 0 0;
   overflow: hidden;
   border: 0.65rem solid #efe8dc;
   background:
@@ -1412,16 +1641,7 @@ a:focus-visible > .link-icon svg * {
 }
 
 .postcard-side-type {
-  align-self: center;
-  grid-column: 4;
-  grid-row: 1 / 3;
-  margin: 0;
-  font-size: clamp(0.8rem, 1.15vw, 1.05rem);
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  line-height: 1.25;
-  text-transform: uppercase;
-  writing-mode: vertical-rl;
+  display: none;
 }
 
 .postcard-cta {
@@ -1452,7 +1672,7 @@ a:focus-visible > .link-icon svg * {
 
 .postcard-links {
   display: flex;
-  grid-column: 3 / 5;
+  grid-column: 3;
   grid-row: 3;
   align-items: center;
   justify-content: flex-end;
@@ -1483,7 +1703,7 @@ a:focus-visible > .link-icon svg * {
 .postcard-stamp {
   position: absolute;
   top: 2.1rem;
-  right: 5.2rem;
+  right: 3.1rem;
   display: grid;
   width: 4.5rem;
   aspect-ratio: 1;
@@ -3876,7 +4096,7 @@ a:focus-visible > .link-icon svg * {
   .design-system-heading > p:last-child, .gallery-heading > p:last-child { grid-column: 2; }
   .palette { grid-template-columns: 1fr 1fr; }
   .contact-postcard {
-    grid-template-columns: 0.55fr 1.2fr 0.9fr 0.14fr;
+    grid-template-columns: 0.5fr 1.15fr 1fr;
     gap: 1.5rem;
   }
   .postcard-brand p { display: none; }
@@ -3894,6 +4114,8 @@ a:focus-visible > .link-icon svg * {
   .floating-contact {
     right: 0.7rem;
     bottom: 0.7rem;
+    width: 3.15rem;
+    min-width: 3.15rem;
     min-height: 3.25rem;
     padding: 0.22rem;
   }
@@ -3904,9 +4126,10 @@ a:focus-visible > .link-icon svg * {
   }
   .floating-contact-links a span { display: none; }
   .floating-contact-trigger {
-    min-width: 6.4rem;
+    width: 2.7rem;
+    min-width: 2.7rem;
     min-height: 2.7rem;
-    padding: 0 0.72rem;
+    padding: 0;
   }
   .mind-hero { min-height: auto; padding: 6.7rem 1rem 4.5rem; }
   .mind-hero::before { background-size: auto, 100% 5rem; }
@@ -3932,7 +4155,7 @@ a:focus-visible > .link-icon svg * {
     bottom: auto;
     left: -1rem;
     width: 88%;
-    opacity: 0.42;
+    opacity: 0.1;
   }
   .mind-cosmos { top: 25%; left: 50%; width: 37%; height: 21%; }
   .mind-zone-layer { position: relative; display: grid; grid-row: 3; inset: auto; margin-top: 1.5rem; }
@@ -3951,9 +4174,11 @@ a:focus-visible > .link-icon svg * {
     height: auto;
     min-height: 5.4rem;
     border-top: 1px solid var(--line);
+    pointer-events: auto;
   }
   .mind-zone:last-child { border-bottom: 1px solid var(--line); }
-  .mind-zone-surface { inset: 0.35rem 0; border-radius: 0.3rem; }
+  .mind-zone-surface { inset: 0.35rem 0; border-radius: 0.3rem; clip-path: none; pointer-events: none; }
+  .mind-zone-motif { display: none; }
   .mind-annotation,
   .mind-annotation-curiosity,
   .mind-annotation-connections,
@@ -3983,7 +4208,7 @@ a:focus-visible > .link-icon svg * {
   .mind-hero-scroll { position: relative; right: auto; bottom: auto; grid-row: 4; justify-self: end; margin-top: 2rem; }
   .manifesto { display: block; min-height: 110vh; padding: 11vh 1rem; }
   .manifesto-copy { margin-top: 18vh; font-size: clamp(2.5rem, 11vw, 4rem); }
-  .manifesto-coin { left: 68vw; }
+  .manifesto-coin-scene { left: 68%; }
   .manifesto-aside { margin: 12vh 0 0 55%; }
   .showcase { display: block; }
   .showcase-sticky { z-index: 5; display: grid; height: auto; grid-template-columns: 1fr 1fr; align-items: end; padding: 1rem; border-bottom: 1px solid rgba(20,20,20,0.16); background: inherit; backdrop-filter: none; }
@@ -4026,7 +4251,7 @@ a:focus-visible > .link-icon svg * {
     grid-row: 1;
     justify-self: end;
   }
-  .postcard-copy { grid-column: 1 / -1; grid-row: 2; padding: 0; }
+  .postcard-copy { grid-column: 1 / -1; grid-row: 2; padding: 0; transform: none; }
   .postcard-copy > .label { margin-bottom: 3rem; }
   .contact h2 { font-size: clamp(3.1rem, 14vw, 4.8rem); }
   .postcard-copy > p:last-child { width: 88%; margin: 2.75rem 0 0 12%; }

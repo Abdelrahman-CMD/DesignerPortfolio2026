@@ -569,35 +569,60 @@ export function HomeExperience() {
 
       const intro = gsap.timeline({ defaults: { ease: "power4.out" } });
       intro
-        .from(".site-mark, .top-nav", {
-          opacity: 0,
-          y: -14,
-          duration: 0.7,
+        .from(".site-header", {
+          autoAlpha: 0,
+          y: -22,
+          duration: 0.82,
         })
         .from(
-          ".mind-title-line > span",
-          { yPercent: 115, duration: 1.25, stagger: 0.1 },
-          "-=0.35",
+          ".mind-hero-meta span",
+          { autoAlpha: 0, y: 14, duration: 0.62, stagger: 0.12 },
+          ">+=0.42",
         )
         .from(
-          ".mind-hero-kicker, .mind-hero-lede, .mind-hero-actions, .mind-hero-meta span, .mind-hero-scroll",
-          { opacity: 0, y: 22, duration: 0.8, stagger: 0.1 },
-          "-=0.65",
+          ".mind-hero-canvas",
+          { clipPath: "inset(0 0 100% 0)", duration: 0.92, ease: "power3.inOut" },
+          ">+=0.22",
+        )
+        .from(
+          ".mind-hero-kicker",
+          { autoAlpha: 0, y: 18, duration: 0.62 },
+          ">+=0.24",
+        )
+        .from(
+          ".mind-title-line > span",
+          { yPercent: 118, duration: 0.9, stagger: 0.16 },
+          ">+=0.12",
+        )
+        .from(
+          ".mind-hero-lede",
+          { autoAlpha: 0, y: 22, duration: 0.7 },
+          ">+=0.16",
+        )
+        .from(
+          ".mind-hero-actions",
+          { autoAlpha: 0, y: 18, duration: 0.62 },
+          ">+=0.1",
         )
         .from(
           ".mind-hero-photo-slide",
           {
-            xPercent: 112,
-            opacity: 0.12,
-            duration: 2.35,
-            ease: "power2.inOut",
+            xPercent: 118,
+            opacity: 0.06,
+            duration: 2.65,
+            ease: "power3.inOut",
           },
-          "-=1.2",
+          ">+=0.3",
         )
         .from(
           ".mind-zone",
-          { autoAlpha: 0, scale: 0.93, duration: 0.72, stagger: 0.09, ease: "power2.out" },
-          "-=0.42",
+          { autoAlpha: 0, scale: 0.96, duration: 0.65, stagger: 0.08, ease: "power2.out" },
+          "-=0.35",
+        )
+        .from(
+          ".mind-hero-scroll",
+          { autoAlpha: 0, y: 14, duration: 0.55 },
+          "-=0.28",
         );
 
       gsap.to(".mind-hero-content", {
@@ -657,34 +682,77 @@ export function HomeExperience() {
       });
 
       const quarterWord = root.current?.querySelector<HTMLElement>('[data-marker-word="kwartje"]');
+      const quarterScene = root.current?.querySelector<HTMLElement>(".manifesto-coin-scene");
       const quarter = root.current?.querySelector<HTMLElement>(".manifesto-coin");
+      const quarterShadow = root.current?.querySelector<HTMLElement>(".manifesto-coin-shadow");
+      let quarterDropped = false;
       const dropQuarter = () => {
-        if (!quarter) return;
+        if (!quarterScene || !quarter || !quarterShadow || quarterDropped) return;
+        quarterDropped = true;
 
         gsap.killTweensOf(quarter);
-        gsap.fromTo(quarter, {
-          autoAlpha: 0,
-          y: -120,
-          x: -28,
-          rotation: -35,
-        }, {
-          autoAlpha: 1,
-          y: () => window.innerHeight + 170,
-          x: 86,
-          rotation: 760,
-          duration: 2.25,
-          ease: "power2.in",
-          overwrite: true,
-          onComplete: () => gsap.set(quarter, { autoAlpha: 0 }),
-        });
+        const sceneTop = quarterScene.getBoundingClientRect().top;
+        const startY = -sceneTop - quarter.offsetHeight - 48;
+
+        gsap.set(quarterScene, { autoAlpha: 1 });
+        gsap.set(quarterShadow, { opacity: 0, scaleX: 0.18, scaleY: 0.42 });
+
+        gsap.timeline()
+          .fromTo(quarter, {
+            autoAlpha: 1,
+            y: startY,
+            x: -42,
+            rotationX: -24,
+            rotationY: -620,
+            rotationZ: -18,
+          }, {
+            y: -7,
+            x: 0,
+            rotationX: 24,
+            rotationY: 680,
+            rotationZ: 9,
+            duration: 1.62,
+            ease: "power2.in",
+          })
+          .to(quarterShadow, {
+            opacity: 0.34,
+            scaleX: 1,
+            scaleY: 1,
+            duration: 0.16,
+            ease: "power2.out",
+          }, "-=0.16")
+          .to(quarter, {
+            y: -72,
+            rotationX: 46,
+            rotationY: 860,
+            rotationZ: -17,
+            duration: 0.34,
+            ease: "power3.out",
+          })
+          .to(quarter, {
+            y: 0,
+            rotationX: 74,
+            rotationY: 1010,
+            rotationZ: 11,
+            duration: 0.43,
+            ease: "power2.in",
+          })
+          .to(quarter, {
+            y: 32,
+            rotationX: 82,
+            rotationY: 1060,
+            rotationZ: -5,
+            duration: 0.55,
+            ease: "elastic.out(1, 0.34)",
+          });
       };
 
-      if (quarterWord && quarter) {
+      if (quarterWord && quarterScene && quarter) {
         ScrollTrigger.create({
           trigger: quarterWord,
           start: "top 70%",
           onEnter: dropQuarter,
-          onEnterBack: dropQuarter,
+          once: true,
         });
       }
 
@@ -1147,8 +1215,12 @@ export function HomeExperience() {
   const manifesto =
     "Een website hoeft niet harder te roepen. Ze moet écht duidelijk maken waarom iemand blijft. Daarom stel ik vragen tot de ruis verdwijnt. Wanneer het kwartje valt, bouwen we verder op een kern die ook morgen nog klopt.";
 
-  const openContact = () => {
-    setContactOpen(true);
+  const activateContact = () => {
+    if (window.matchMedia("(hover: none)").matches) {
+      setContactOpen((current) => !current);
+      return;
+    }
+
     document.getElementById("contact")?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
@@ -1170,7 +1242,20 @@ export function HomeExperience() {
         </nav>
       </header>
 
-      <aside className={`floating-contact${contactOpen ? " is-open" : ""}`} aria-label="Direct contact">
+      <aside
+        className={`floating-contact${contactOpen ? " is-open" : ""}`}
+        aria-label="Direct contact"
+        onMouseEnter={() => {
+          if (window.matchMedia("(hover: hover)").matches) setContactOpen(true);
+        }}
+        onMouseLeave={() => {
+          if (window.matchMedia("(hover: hover)").matches) setContactOpen(false);
+        }}
+        onFocusCapture={() => setContactOpen(true)}
+        onBlurCapture={(event) => {
+          if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setContactOpen(false);
+        }}
+      >
         <div className="floating-contact-links" id="floating-contact-links" aria-hidden={!contactOpen}>
           <a href="https://www.linkedin.com/in/abdelrahman-ahmed-30896964/" target="_blank" rel="noreferrer" aria-label="Neem contact op via LinkedIn">
             <Linkedin aria-hidden="true" />
@@ -1187,10 +1272,10 @@ export function HomeExperience() {
           className="floating-contact-trigger"
           aria-expanded={contactOpen}
           aria-controls="floating-contact-links"
-          onClick={openContact}
+          aria-label="Open contactmogelijkheden"
+          onClick={activateContact}
         >
           <MessageCircleMore aria-hidden="true" />
-          <span>Contact</span>
         </button>
       </aside>
 
@@ -1280,6 +1365,7 @@ export function HomeExperience() {
                     }}
                   >
                     <span className="mind-zone-surface" aria-hidden="true" />
+                    <span className="mind-zone-motif" aria-hidden="true"><i /><i /><i /></span>
                     <span className={`mind-annotation mind-annotation-${zone.id}`}>
                       <span className="mind-annotation-kicker label">
                         {zone.number} / {zone.label}
@@ -1357,7 +1443,11 @@ export function HomeExperience() {
             );
           })}
         </p>
-        <span className="manifesto-coin" aria-hidden="true"><strong>25</strong><small>cent</small></span>
+        <span className="manifesto-ground" aria-hidden="true" />
+        <span className="manifesto-coin-scene" aria-hidden="true">
+          <span className="manifesto-coin-shadow" />
+          <span className="manifesto-coin"><strong>25</strong><small>cent</small></span>
+        </span>
         <aside className="manifesto-aside">
           <span className="label">Dualiteit als methode</span>
           <p>Vrij denken.<br />Verantwoord bouwen.</p>
