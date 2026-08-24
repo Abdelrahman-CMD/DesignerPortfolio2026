@@ -79,7 +79,7 @@ test("uses bounded raster assets on the homepage and case pages", async () => {
   assert.doesNotMatch(homeSource, /story-photo-piece/);
   assert.match(homeSource, /\/projects\/home\/tareeqi\.webp/);
   assert.match(homeSource, /\/about\/mind-hero-cutout-v3\.webp/);
-  assert.match(homeSource, /xPercent: 118/);
+  assert.match(homeSource, /xPercent: 104/);
   assert.match(homeSource, /manifestoMarkerWords = new Set\(\["écht", "kwartje", "kern"\]\)/);
   assert.match(homeSource, /\/about\/web\/fatherhood\.webp/);
   assert.doesNotMatch(homeSource, /image: "\/projects\/(tareeqi|ayn|guidance|bayn)-overview\.jpg"/);
@@ -90,9 +90,11 @@ test("uses bounded raster assets on the homepage and case pages", async () => {
   assert.doesNotMatch(tareeqiSource, /from "next\/link"/);
   assert.doesNotMatch(css, /backdrop-filter:\s*blur/i);
   assert.doesNotMatch(css, /prefers-reduced-motion:\s*reduce/i);
-  assert.match(css, /\.mind-connector path/);
-  assert.match(css, /stroke: color-mix\(in srgb, var\(--zone-color\) 58%, #f7efe5\)/);
-  assert.match(homeSource, /heroCtaRingCopy = "DRIE KLANTEN · VIER OPLOSSINGEN · ZEVEN CASES · "/);
+  assert.match(css, /\.mind-brush-stroke-base/);
+  assert.match(css, /stroke: color-mix\(in srgb, var\(--zone-color\) 57%, #f7efe5\)/);
+  assert.match(homeSource, /heroCtaRingCopy = "ONTDEK CASES · ONTDEK CASES · "/);
+  assert.match(homeSource, /Zie wat ervan kwam/);
+  assert.doesNotMatch(homeSource, /<circle cx=\{zone\.dotX\}/);
   assert.doesNotMatch(homeSource, /Scroll om verder te kijken/);
   assert.match(css, /white-space: nowrap/);
 });

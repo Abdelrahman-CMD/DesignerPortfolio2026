@@ -132,7 +132,7 @@ const projects = [
 ] as const;
 
 const projectCount = String(projects.length).padStart(2, "0");
-const heroCtaRingCopy = "DRIE KLANTEN · VIER OPLOSSINGEN · ZEVEN CASES · ";
+const heroCtaRingCopy = "ONTDEK CASES · ONTDEK CASES · ";
 
 const manifestoMarkerWords = new Set(["écht", "kwartje", "kern"]);
 
@@ -475,9 +475,7 @@ const mindZones = [
     detail:
       "Ik blijf vragen tot aannames plaatsmaken voor een kern die we samen begrijpen.",
     color: "#d8644a",
-    connector: "M 47 27 C 53 25, 60 16, 67 12",
-    dotX: 67,
-    dotY: 12,
+    connector: "M 67 12 C 60 16, 53 25, 47 27",
   },
   {
     id: "connections",
@@ -487,9 +485,7 @@ const mindZones = [
     detail:
       "Mens, cultuur, business en techniek worden één verhaal in plaats van losse eisen.",
     color: "#d7a84e",
-    connector: "M 90 27 C 87 23, 83 17, 78 14",
-    dotX: 78,
-    dotY: 14,
+    connector: "M 78 14 C 83 17, 87 23, 90 27",
   },
   {
     id: "structure",
@@ -499,9 +495,7 @@ const mindZones = [
     detail:
       "Scherpe inzichten worden systemen die helder, toegankelijk en verantwoordelijk werken.",
     color: "#879a75",
-    connector: "M 48 55 C 54 51, 59 40, 65 33",
-    dotX: 65,
-    dotY: 33,
+    connector: "M 65 33 C 59 40, 54 51, 48 55",
   },
   {
     id: "source",
@@ -511,9 +505,7 @@ const mindZones = [
     detail:
       "Hier begint niets met een component. Eerst ontstaat ruimte voor het onverwachte idee.",
     color: "#314668",
-    connector: "M 90 49 C 87 45, 83 38, 78 32",
-    dotX: 78,
-    dotY: 32,
+    connector: "M 78 32 C 83 38, 87 45, 90 49",
   },
   {
     id: "direction",
@@ -523,9 +515,7 @@ const mindZones = [
     detail:
       "Tools versnellen de uitvoering. Selectie, richting en verantwoordelijkheid blijven mensenwerk.",
     color: "#6682a1",
-    connector: "M 90 71 C 85 65, 80 56, 75 48",
-    dotX: 75,
-    dotY: 48,
+    connector: "M 75 48 C 80 56, 85 65, 90 71",
   },
 ] as const;
 
@@ -601,53 +591,48 @@ export function HomeExperience() {
       intro
         .from(".site-header", {
           autoAlpha: 0,
-          y: -22,
-          duration: 0.82,
+          y: -16,
+          duration: 0.46,
         })
         .from(
           ".mind-hero-meta span",
-          { autoAlpha: 0, y: 14, duration: 0.62, stagger: 0.12 },
-          ">+=0.42",
-        )
-        .from(
-          ".mind-hero-canvas",
-          { clipPath: "inset(0 0 100% 0)", duration: 0.92, ease: "power3.inOut" },
-          ">+=0.22",
-        )
-        .from(
-          ".mind-hero-kicker",
-          { autoAlpha: 0, y: 18, duration: 0.62 },
-          ">+=0.24",
-        )
-        .from(
-          ".mind-title-line > span",
-          { yPercent: 118, duration: 0.9, stagger: 0.16 },
+          { autoAlpha: 0, y: 10, duration: 0.38, stagger: 0.07 },
           ">+=0.12",
         )
         .from(
+          ".mind-hero-canvas",
+          { clipPath: "inset(0 0 100% 0)", duration: 0.48, ease: "power3.inOut" },
+          "-=0.08",
+        )
+        .from(
+          ".mind-hero-kicker",
+          { autoAlpha: 0, y: 12, duration: 0.36 },
+          ">-=0.06",
+        )
+        .from(
+          ".mind-title-line > span",
+          { yPercent: 112, duration: 0.56, stagger: 0.08 },
+          ">-=0.04",
+        )
+        .from(
           ".mind-hero-lede",
-          { autoAlpha: 0, y: 22, duration: 0.7 },
-          ">+=0.16",
+          { autoAlpha: 0, y: 15, duration: 0.4 },
+          ">-=0.04",
         )
         .from(
           ".mind-hero-actions",
-          { autoAlpha: 0, y: 18, duration: 0.62 },
-          ">+=0.1",
+          { autoAlpha: 0, y: 12, duration: 0.36 },
+          ">-=0.06",
         )
         .from(
           ".mind-hero-photo-slide",
           {
-            xPercent: 118,
-            opacity: 0.06,
-            duration: 2.65,
+            xPercent: 104,
+            opacity: 0.12,
+            duration: 1.22,
             ease: "power3.inOut",
           },
-          ">+=0.3",
-        )
-        .from(
-          ".mind-zone",
-          { autoAlpha: 0, scale: 0.96, duration: 0.65, stagger: 0.08, ease: "power2.out" },
-          "-=0.35",
+          ">+=0.08",
         );
 
       const heroCtaStage = root.current?.querySelector<HTMLElement>(".hero-cta-stage");
@@ -655,26 +640,32 @@ export function HomeExperience() {
       const heroCtaRing = root.current?.querySelector<HTMLElement>(".editorial-text-ring");
 
       if (heroCtaStage && heroCta && heroCtaRing) {
-        const moveX = gsap.quickTo(heroCta, "x", { duration: 0.46, ease: "power3.out" });
-        const moveY = gsap.quickTo(heroCta, "y", { duration: 0.46, ease: "power3.out" });
+        const moveX = gsap.quickTo(heroCta, "x", { duration: 0.34, ease: "power3.out" });
+        const moveY = gsap.quickTo(heroCta, "y", { duration: 0.34, ease: "power3.out" });
         let pointerX = -1000;
         let pointerY = -1000;
         let pointerFrame = 0;
         let isNear = false;
         let hasFocus = false;
+        const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
 
         gsap.to(heroCtaRing, {
           rotation: 360,
-          duration: 24,
+          duration: 11,
           repeat: -1,
           ease: "none",
           transformOrigin: "50% 50%",
         });
 
-        const setEngaged = (engaged: boolean) => {
-          if (engaged === isNear) return;
-          isNear = engaged;
-          heroCta.classList.toggle("is-engaged", engaged);
+        const setEngaged = (engaged: boolean, capturePointer = false) => {
+          if (engaged !== isNear) {
+            isNear = engaged;
+            heroCta.classList.toggle("is-engaged", engaged);
+          }
+          document.documentElement.classList.toggle(
+            "hero-cta-cursor-captured",
+            engaged && capturePointer && finePointer.matches && !hasFocus,
+          );
         };
 
         const resetMagnet = () => {
@@ -685,13 +676,14 @@ export function HomeExperience() {
 
         const renderPointer = () => {
           pointerFrame = 0;
-          const rect = heroCta.getBoundingClientRect();
+          if (!finePointer.matches || hasFocus) return;
+          const rect = heroCtaStage.getBoundingClientRect();
           const centerX = rect.left + rect.width / 2;
           const centerY = rect.top + rect.height / 2;
           const deltaX = pointerX - centerX;
           const deltaY = pointerY - centerY;
           const distance = Math.hypot(deltaX, deltaY);
-          const reach = Math.max(rect.width, rect.height) / 2 + 96;
+          const reach = Math.max(rect.width, rect.height) / 2 + 118;
 
           if (distance >= reach) {
             resetMagnet();
@@ -699,9 +691,11 @@ export function HomeExperience() {
           }
 
           const proximity = 1 - (distance / reach);
-          moveX(deltaX * 0.18 * proximity);
-          moveY(deltaY * 0.18 * proximity);
-          setEngaged(true);
+          const smoothPull = proximity * proximity * (3 - (2 * proximity));
+          const follow = Math.min(0.97, smoothPull * 1.12);
+          moveX(deltaX * follow);
+          moveY(deltaY * follow);
+          setEngaged(true, proximity > 0.52);
         };
 
         const handlePointerMove = (event: PointerEvent) => {
@@ -713,6 +707,8 @@ export function HomeExperience() {
 
         const handleFocus = () => {
           hasFocus = true;
+          moveX(0);
+          moveY(0);
           setEngaged(true);
         };
 
@@ -744,6 +740,7 @@ export function HomeExperience() {
           heroCta.removeEventListener("focus", handleFocus);
           heroCta.removeEventListener("blur", handleBlur);
           if (pointerFrame) window.cancelAnimationFrame(pointerFrame);
+          document.documentElement.classList.remove("hero-cta-cursor-captured");
         };
       }
 
@@ -1526,9 +1523,10 @@ export function HomeExperience() {
                   <a
                     className="hero-cta-container"
                     href="#werk"
-                    aria-label="Bekijk zeven cases: drie klantenprojecten en vier concept solutions"
+                    aria-label="Ontdek de zeven cases"
                   >
-                    <span className="editorial-text-ring-scale" aria-hidden="true">
+                    <span className="hero-cta-shape" aria-hidden="true">
+                      <span className="hero-cta-pill-copy">Zie wat ervan kwam</span>
                       <span className="editorial-text-ring">
                         {[...heroCtaRingCopy].map((character, index, characters) => (
                           <span
@@ -1541,15 +1539,7 @@ export function HomeExperience() {
                           </span>
                         ))}
                       </span>
-                    </span>
-                    <span className="hero-cta-core" aria-hidden="true">
-                      <span className="hero-cta-label-mask">
-                        <span className="hero-cta-label-track">
-                          <span>01 — Open het werk</span>
-                          <span>Zie waar het kwartje viel</span>
-                        </span>
-                      </span>
-                      <span className="hero-cta-underline"><span /></span>
+                      <span className="hero-cta-orbit-core">↘</span>
                     </span>
                   </a>
                 </div>
@@ -1597,8 +1587,8 @@ export function HomeExperience() {
               <svg className="mind-connector-map" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
                 <defs>
                   <filter id="mind-brush-texture" x="-12%" y="-12%" width="124%" height="124%" colorInterpolationFilters="sRGB">
-                    <feTurbulence type="fractalNoise" baseFrequency="0.018 0.085" numOctaves="1" seed="7" result="paperNoise" />
-                    <feDisplacementMap in="SourceGraphic" in2="paperNoise" scale="0.58" xChannelSelector="R" yChannelSelector="G" />
+                    <feTurbulence type="fractalNoise" baseFrequency="0.026 0.12" numOctaves="2" seed="7" result="paperNoise" />
+                    <feDisplacementMap in="SourceGraphic" in2="paperNoise" scale="1.15" xChannelSelector="R" yChannelSelector="G" />
                   </filter>
                 </defs>
                 {mindZones.map((zone) => {
@@ -1610,8 +1600,8 @@ export function HomeExperience() {
                       style={{ "--zone-color": zone.color } as CSSProperties}
                       key={`connector-${zone.id}`}
                     >
-                      <path pathLength="1" d={zone.connector} />
-                      <circle cx={zone.dotX} cy={zone.dotY} r="0.45" />
+                      <path className="mind-brush-stroke mind-brush-stroke-base" pathLength="1" d={zone.connector} />
+                      <path className="mind-brush-stroke mind-brush-stroke-grain" pathLength="1" d={zone.connector} />
                     </g>
                   );
                 })}
