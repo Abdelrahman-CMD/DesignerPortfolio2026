@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { CSSProperties, useLayoutEffect, useRef, useState } from "react";
-import ArrowDown from "lucide-react/icons/arrow-down";
 import ArrowUpRight from "lucide-react/icons/arrow-up-right";
 import BriefcaseBusiness from "lucide-react/icons/briefcase-business";
 import Figma from "lucide-react/icons/figma";
@@ -133,6 +132,7 @@ const projects = [
 ] as const;
 
 const projectCount = String(projects.length).padStart(2, "0");
+const heroCtaRingCopy = "DRIE KLANTEN · VIER OPLOSSINGEN · ZEVEN CASES · ";
 
 const manifestoMarkerWords = new Set(["écht", "kwartje", "kern"]);
 
@@ -543,6 +543,7 @@ export function HomeExperience() {
     let cleanupStoryRoute = () => {};
     let cleanupStoryMosaics = () => {};
     let cleanupHeader = () => {};
+    let cleanupHeroCta = () => {};
 
     const context = gsap.context(() => {
       const header = root.current?.querySelector<HTMLElement>(".site-header");
@@ -647,12 +648,104 @@ export function HomeExperience() {
           ".mind-zone",
           { autoAlpha: 0, scale: 0.96, duration: 0.65, stagger: 0.08, ease: "power2.out" },
           "-=0.35",
-        )
-        .from(
-          ".mind-hero-scroll",
-          { autoAlpha: 0, y: 14, duration: 0.55 },
-          "-=0.28",
         );
+
+      const heroCtaStage = root.current?.querySelector<HTMLElement>(".hero-cta-stage");
+      const heroCta = root.current?.querySelector<HTMLElement>(".hero-cta-container");
+      const heroCtaRing = root.current?.querySelector<HTMLElement>(".editorial-text-ring");
+
+      if (heroCtaStage && heroCta && heroCtaRing) {
+        const moveX = gsap.quickTo(heroCta, "x", { duration: 0.46, ease: "power3.out" });
+        const moveY = gsap.quickTo(heroCta, "y", { duration: 0.46, ease: "power3.out" });
+        let pointerX = -1000;
+        let pointerY = -1000;
+        let pointerFrame = 0;
+        let isNear = false;
+        let hasFocus = false;
+
+        gsap.to(heroCtaRing, {
+          rotation: 360,
+          duration: 24,
+          repeat: -1,
+          ease: "none",
+          transformOrigin: "50% 50%",
+        });
+
+        const setEngaged = (engaged: boolean) => {
+          if (engaged === isNear) return;
+          isNear = engaged;
+          heroCta.classList.toggle("is-engaged", engaged);
+        };
+
+        const resetMagnet = () => {
+          moveX(0);
+          moveY(0);
+          if (!hasFocus) setEngaged(false);
+        };
+
+        const renderPointer = () => {
+          pointerFrame = 0;
+          const rect = heroCta.getBoundingClientRect();
+          const centerX = rect.left + rect.width / 2;
+          const centerY = rect.top + rect.height / 2;
+          const deltaX = pointerX - centerX;
+          const deltaY = pointerY - centerY;
+          const distance = Math.hypot(deltaX, deltaY);
+          const reach = Math.max(rect.width, rect.height) / 2 + 96;
+
+          if (distance >= reach) {
+            resetMagnet();
+            return;
+          }
+
+          const proximity = 1 - (distance / reach);
+          moveX(deltaX * 0.18 * proximity);
+          moveY(deltaY * 0.18 * proximity);
+          setEngaged(true);
+        };
+
+        const handlePointerMove = (event: PointerEvent) => {
+          if (event.pointerType && event.pointerType !== "mouse" && event.pointerType !== "pen") return;
+          pointerX = event.clientX;
+          pointerY = event.clientY;
+          if (!pointerFrame) pointerFrame = window.requestAnimationFrame(renderPointer);
+        };
+
+        const handleFocus = () => {
+          hasFocus = true;
+          setEngaged(true);
+        };
+
+        const handleBlur = () => {
+          hasFocus = false;
+          resetMagnet();
+        };
+
+        window.addEventListener("pointermove", handlePointerMove, { passive: true });
+        window.addEventListener("blur", resetMagnet);
+        heroCta.addEventListener("focus", handleFocus);
+        heroCta.addEventListener("blur", handleBlur);
+
+        gsap.to(heroCtaStage, {
+          autoAlpha: 0,
+          y: -34,
+          ease: "none",
+          scrollTrigger: {
+            trigger: ".mind-hero",
+            start: "top top",
+            end: "35% top",
+            scrub: true,
+          },
+        });
+
+        cleanupHeroCta = () => {
+          window.removeEventListener("pointermove", handlePointerMove);
+          window.removeEventListener("blur", resetMagnet);
+          heroCta.removeEventListener("focus", handleFocus);
+          heroCta.removeEventListener("blur", handleBlur);
+          if (pointerFrame) window.cancelAnimationFrame(pointerFrame);
+        };
+      }
 
       gsap.to(".mind-hero-content", {
         opacity: 0.14,
@@ -1239,6 +1332,7 @@ export function HomeExperience() {
       cleanupStoryRoute();
       cleanupStoryMosaics();
       cleanupHeader();
+      cleanupHeroCta();
       context.revert();
     };
   }, []);
@@ -1428,7 +1522,37 @@ export function HomeExperience() {
                 een helder fundament, scherpe keuzes en websites die mensen zonder omwegen begrijpen.
               </p>
               <div className="mind-hero-actions">
-                <a href="#werk"><span>Bekijk hoe dat werkt</span><ArrowDown aria-hidden="true" /></a>
+                <div className="hero-cta-stage">
+                  <a
+                    className="hero-cta-container"
+                    href="#werk"
+                    aria-label="Bekijk zeven cases: drie klantenprojecten en vier concept solutions"
+                  >
+                    <span className="editorial-text-ring-scale" aria-hidden="true">
+                      <span className="editorial-text-ring">
+                        {[...heroCtaRingCopy].map((character, index, characters) => (
+                          <span
+                            style={{
+                              "--ring-angle": `${(index / characters.length) * 360}deg`,
+                            } as CSSProperties}
+                            key={`${character}-${index}`}
+                          >
+                            {character === " " ? "\u00a0" : character}
+                          </span>
+                        ))}
+                      </span>
+                    </span>
+                    <span className="hero-cta-core" aria-hidden="true">
+                      <span className="hero-cta-label-mask">
+                        <span className="hero-cta-label-track">
+                          <span>01 — Open het werk</span>
+                          <span>Zie waar het kwartje viel</span>
+                        </span>
+                      </span>
+                      <span className="hero-cta-underline"><span /></span>
+                    </span>
+                  </a>
+                </div>
               </div>
             </div>
 
@@ -1471,6 +1595,12 @@ export function HomeExperience() {
               })}
 
               <svg className="mind-connector-map" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                <defs>
+                  <filter id="mind-brush-texture" x="-12%" y="-12%" width="124%" height="124%" colorInterpolationFilters="sRGB">
+                    <feTurbulence type="fractalNoise" baseFrequency="0.018 0.085" numOctaves="1" seed="7" result="paperNoise" />
+                    <feDisplacementMap in="SourceGraphic" in2="paperNoise" scale="0.58" xChannelSelector="R" yChannelSelector="G" />
+                  </filter>
+                </defs>
                 {mindZones.map((zone) => {
                   const isActive = activeMindZone === zone.id;
 
@@ -1545,9 +1675,6 @@ export function HomeExperience() {
               })}
             </div>
 
-            <p className="mind-hero-scroll label">
-              <span aria-hidden="true">↓</span> Scroll om verder te kijken
-            </p>
           </div>
         </div>
       </section>

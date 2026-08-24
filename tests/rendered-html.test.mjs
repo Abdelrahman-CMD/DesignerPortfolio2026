@@ -91,6 +91,8 @@ test("uses bounded raster assets on the homepage and case pages", async () => {
   assert.doesNotMatch(css, /backdrop-filter:\s*blur/i);
   assert.doesNotMatch(css, /prefers-reduced-motion:\s*reduce/i);
   assert.match(css, /\.mind-connector path/);
-  assert.match(css, /stroke: var\(--zone-color\)/);
+  assert.match(css, /stroke: color-mix\(in srgb, var\(--zone-color\) 58%, #f7efe5\)/);
+  assert.match(homeSource, /heroCtaRingCopy = "DRIE KLANTEN · VIER OPLOSSINGEN · ZEVEN CASES · "/);
+  assert.doesNotMatch(homeSource, /Scroll om verder te kijken/);
   assert.match(css, /white-space: nowrap/);
 });
