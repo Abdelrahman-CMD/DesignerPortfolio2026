@@ -1,35 +1,98 @@
 "use client";
-/* eslint-disable @next/next/no-html-link-for-pages -- Native document navigation avoids a vinext RSC link interception failure. */
+/* eslint-disable @next/next/no-html-link-for-pages -- Native navigation keeps the case independent from the client router. */
 
 import Image from "next/image";
-import { useLayoutEffect, useRef, useState } from "react";
+import { CSSProperties, useLayoutEffect, useRef } from "react";
+import Accessibility from "lucide-react/icons/accessibility";
+import ArrowLeft from "lucide-react/icons/arrow-left";
+import ArrowUpRight from "lucide-react/icons/arrow-up-right";
+import Compass from "lucide-react/icons/compass";
+import MapPinned from "lucide-react/icons/map-pinned";
+import Search from "lucide-react/icons/search";
+import ShieldCheck from "lucide-react/icons/shield-check";
+import UsersRound from "lucide-react/icons/users-round";
+import WifiOff from "lucide-react/icons/wifi-off";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-const routeModes = {
-  reflection: {
-    label: "Reflectie",
-    title: "Een stille ochtend dichtbij de Haram",
-    meta: "3 plekken · 42 min · rustig tempo",
+const cards = [
+  {
+    number: "01",
+    eyebrow: "De bevinding",
+    title: "De route is vindbaar. De betekenis ernaast veel minder.",
+    body: "Wie digitaal zoekt rond Mekka en Medina, vindt vooral rituelen, highlights en generieke kaartresultaten. Rustige plekken, lokale boekwinkels en praktische familiekennis blijven versnipperd over mensen, posts en toevallige tips.",
+    note: "Dat is geen gebrek aan plekken. Het is een gebrek aan context.",
+    image: "/projects/tareeqi-2026/phones.webp",
+    imageAlt: "Tareeqi op twee smartphones met de kaart en het verhaal achter het concept",
+    tone: "cream",
   },
-  family: {
-    label: "Familie",
-    title: "Ruimte voor kinderen en ouderen",
-    meta: "4 plekken · 68 min · rolstoelvriendelijk",
+  {
+    number: "02",
+    eyebrow: "De marktkans",
+    title: "Een discovery-laag tussen de generieke kaart en lokale kennis.",
+    body: "Het gat zit tussen ‘waar is iets?’ en ‘waarom past deze plek bij mij, vandaag?’. Tareeqi ordent lokale aanwijzingen op intentie, gezelschap en tempo — precies de context die een gewone kaart niet kent.",
+    note: "Niet nóg een reisgids. Een contextuele routegenoot.",
+    image: "/projects/tareeqi-2026/laptop-detail.webp",
+    imageAlt: "Tareeqi interactieve kaart in een laptopmockup",
+    tone: "sand",
   },
-  culture: {
-    label: "Lokale cultuur",
-    title: "Boeken, dadels en verhalen van de stad",
-    meta: "5 plekken · 91 min · lokaal samengesteld",
+  {
+    number: "03",
+    eyebrow: "De oplossingsrichting",
+    title: "Van zoeken naar gericht ontdekken.",
+    body: "De interactieve kaart combineert lokale favorieten met filters als rustig, kindvriendelijk en verborgen parel. Een gebruiker start niet bij een lange lijst, maar bij de ervaring die op dat moment nodig is.",
+    note: "Minder opties tegelijk. Meer relevantie per keuze.",
+    image: "/projects/tareeqi-2026/tablets.webp",
+    imageAlt: "Tareeqi tabletinterfaces met lokale plekken, filters en categorieën",
+    tone: "sage",
   },
-} as const;
+  {
+    number: "04",
+    eyebrow: "Vertrouwen vóór verrassing",
+    title: "Vrij ontdekken vraagt om verantwoord ontwerpen.",
+    body: "Offline routes, leesbare informatie, familie- en oudervriendelijke filters en een duidelijke herkomst van tips maken ontdekking bruikbaar in drukte. De community voegt kennis toe; het systeem moet die kennis controleerbaar houden.",
+    note: "Inclusie is hier geen extra filter, maar productlogica.",
+    image: "/projects/tareeqi-2026/map-desktop.webp",
+    imageAlt: "Volledige desktopweergave van de Tareeqi interactieve kaart",
+    tone: "chocolate",
+  },
+  {
+    number: "05",
+    eyebrow: "Het ontwerpsysteem",
+    title: "Culturele warmte, zonder visuele ruis.",
+    body: "Een redactionele serif geeft verhalen gewicht. De interface blijft bewust sober met Inter en Work Sans, ruime kaders en een crème basis. Bruin verankert vertrouwen; groen markeert ontdekking en voortgang.",
+    note: "De plek mag spreken. De interface hoeft niet te roepen.",
+    image: "/projects/tareeqi-2026/story-desktop.webp",
+    imageAlt: "Tareeqi verhaalpagina met editorial typografie en projectcontext",
+    tone: "ink",
+  },
+  {
+    number: "06",
+    eyebrow: "Wat nog bewezen moet worden",
+    title: "Een sterk concept is een toetsbare hypothese, geen verzonnen succesverhaal.",
+    body: "Tareeqi is een zelf geïnitieerde oplossingsrichting, geen gelanceerd product. De volgende stap is toetsen of lokale curatie sneller tot passende plekken leidt, offline zekerheid stress verlaagt en communitybijdragen betrouwbaar te beheren zijn.",
+    note: "Het ontwerp maakt de kans zichtbaar. Onderzoek moet de waarde bewijzen.",
+    image: "/projects/tareeqi-2026/hero-laptops.webp",
+    imageAlt: "Twee Tareeqi desktopmockups als samenhangend productconcept",
+    tone: "green",
+  },
+] as const;
 
-type RouteMode = keyof typeof routeModes;
+const proofFrames = [
+  { label: "Landing / desktop v1", src: "/projects/tareeqi-2026/landing-desktop-v1.webp" },
+  { label: "Landing / desktop v2", src: "/projects/tareeqi-2026/landing-desktop.webp" },
+  { label: "Discovery map / desktop", src: "/projects/tareeqi-2026/map-desktop.webp" },
+  { label: "Story / desktop", src: "/projects/tareeqi-2026/story-desktop.webp" },
+  { label: "Landing / tablet", src: "/projects/tareeqi-2026/landing-tablet.webp" },
+  { label: "Discovery map / tablet", src: "/projects/tareeqi-2026/map-tablet.webp" },
+  { label: "Story / tablet", src: "/projects/tareeqi-2026/story-tablet.webp" },
+  { label: "Landing / mobile", src: "/projects/tareeqi-2026/landing-mobile.webp" },
+  { label: "Discovery map / mobile", src: "/projects/tareeqi-2026/map-mobile.webp" },
+  { label: "Story / mobile", src: "/projects/tareeqi-2026/story-mobile.webp" },
+] as const;
 
 export function CaseExperience() {
   const root = useRef<HTMLElement>(null);
-  const [routeMode, setRouteMode] = useState<RouteMode>("reflection");
-  const [offline, setOffline] = useState(true);
 
   useLayoutEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -37,319 +100,242 @@ export function CaseExperience() {
     const context = gsap.context(() => {
       const intro = gsap.timeline({ defaults: { ease: "power4.out" } });
       intro
-        .from(".case-nav", { opacity: 0, y: -16, duration: 0.65 })
-        .from(".case-title-line > span", {
+        .from(".tc-nav", { opacity: 0, y: -18, duration: 0.55 })
+        .from(".tc-hero-kicker", { opacity: 0, y: 16, duration: 0.45 }, "+=0.08")
+        .from(".tc-title-line > span", { yPercent: 112, duration: 0.85, stagger: 0.08 }, "-=0.12")
+        .from(".tc-hero-summary, .tc-hero-meta", { opacity: 0, y: 24, duration: 0.6, stagger: 0.08 }, "-=0.42")
+        .from(".tc-hero-media", { opacity: 0, xPercent: 16, scale: 0.97, duration: 1.15 }, "-=0.42");
+
+      gsap.to(".tc-hero-media img", {
+        yPercent: -7,
+        ease: "none",
+        scrollTrigger: { trigger: ".tc-hero", start: "top top", end: "bottom top", scrub: true },
+      });
+
+      const cardElements = gsap.utils.toArray<HTMLElement>(".tc-card");
+      const shells = gsap.utils.toArray<HTMLElement>(".tc-card-shell");
+
+      cardElements.forEach((card, index) => {
+        const shell = shells[index];
+        const nextShell = shells[index + 1];
+        const revealLines = card.querySelectorAll(".tc-mask > span");
+        const media = card.querySelector(".tc-card-media");
+
+        gsap.from(revealLines, {
           yPercent: 115,
-          duration: 1.15,
-          stagger: 0.1,
-        }, "-=0.3")
-        .from(".case-lede, .case-meta", {
+          duration: 0.9,
+          stagger: 0.07,
+          ease: "power4.out",
+          scrollTrigger: { trigger: shell, start: "top 72%", toggleActions: "play none none reverse" },
+        });
+
+        if (media) {
+          gsap.from(media, {
+            opacity: 0,
+            y: 42,
+            scale: 0.985,
+            duration: 0.9,
+            ease: "power3.out",
+            scrollTrigger: { trigger: shell, start: "top 70%", toggleActions: "play none none reverse" },
+          });
+        }
+
+        if (nextShell) {
+          gsap.to(card, {
+            scale: 0.95,
+            filter: "brightness(0.86)",
+            ease: "none",
+            scrollTrigger: {
+              trigger: nextShell,
+              start: "top bottom",
+              end: "top 10%",
+              scrub: true,
+              invalidateOnRefresh: true,
+            },
+          });
+          const dim = card.querySelector(".tc-card-dim");
+          if (dim) {
+            gsap.to(dim, {
+              opacity: 0.06,
+              ease: "none",
+              scrollTrigger: {
+                trigger: nextShell,
+                start: "top bottom",
+                end: "top 10%",
+                scrub: true,
+                invalidateOnRefresh: true,
+              },
+            });
+          }
+        }
+      });
+
+      gsap.utils.toArray<HTMLElement>(".tc-proof-frame").forEach((frame, index) => {
+        gsap.from(frame, {
           opacity: 0,
-          y: 20,
+          y: 38,
+          rotate: index % 2 === 0 ? -0.6 : 0.6,
           duration: 0.75,
-          stagger: 0.08,
-        }, "-=0.55")
-        .from(".case-device", {
-          opacity: 0,
-          y: 80,
-          rotate: 1.5,
-          duration: 1.1,
-        }, "-=0.75");
-
-      gsap.to(".case-device", {
-        yPercent: -18,
-        rotate: -1,
-        ease: "none",
-        scrollTrigger: {
-          trigger: ".case-hero",
-          start: "top top",
-          end: "bottom top",
-          scrub: true,
-        },
-      });
-
-      gsap.to(".case-hero-map", {
-        yPercent: 12,
-        scale: 1.05,
-        ease: "none",
-        scrollTrigger: {
-          trigger: ".case-hero",
-          start: "top top",
-          end: "bottom top",
-          scrub: true,
-        },
-      });
-
-      gsap.utils.toArray<HTMLElement>(".reveal-up").forEach((element) => {
-        gsap.from(element, {
-          opacity: 0,
-          y: 55,
-          duration: 0.95,
           ease: "power3.out",
-          scrollTrigger: { trigger: element, start: "top 84%" },
+          scrollTrigger: { trigger: frame, start: "top 88%" },
         });
       });
 
-      gsap.from(".insight-line", {
-        scaleX: 0,
-        transformOrigin: "left center",
-        duration: 1.15,
-        ease: "power3.inOut",
-        scrollTrigger: { trigger: ".insight-quote", start: "top 72%" },
-      });
-
-      gsap.from(".palette-chip", {
-        y: 36,
-        opacity: 0,
-        stagger: 0.1,
-        duration: 0.75,
-        ease: "power3.out",
-        scrollTrigger: { trigger: ".design-system", start: "top 70%" },
+      gsap.utils.toArray<HTMLVideoElement>(".tc-card video").forEach((video) => {
+        ScrollTrigger.create({
+          trigger: video.closest(".tc-card") ?? video,
+          start: "top 70%",
+          end: "bottom 30%",
+          onEnter: () => void video.play(),
+          onEnterBack: () => void video.play(),
+          onLeave: () => video.pause(),
+          onLeaveBack: () => video.pause(),
+        });
       });
     }, root);
 
     return () => context.revert();
   }, []);
 
-  const activeRoute = routeModes[routeMode];
-
   return (
-    <main ref={root} className="case-page">
-      <a className="skip-link" href="#case-content">Ga naar de case</a>
+    <main ref={root} className="tc-page">
+      <a className="skip-link" href="#tareeqi-content">Ga naar de case</a>
 
-      <nav className="case-nav" aria-label="Case navigatie">
-        <a href="/#werk" className="case-back"><span aria-hidden="true">←</span> Alle cases</a>
-        <a href="/" className="case-brand">Abdelrahman / Digital designer</a>
-        <a href="mailto:dhr_abdelrahman@outlook.com">Start een gesprek</a>
+      <nav className="tc-nav" aria-label="Case navigatie">
+        <a href="/#werk"><ArrowLeft aria-hidden="true" /> Alle cases</a>
+        <a className="tc-nav-brand" href="/">Abdelrahman / Digital designer</a>
+        <span>01 / 07</span>
       </nav>
 
-      <header className="case-hero">
-        <div className="case-hero-map" aria-hidden="true">
-          <span className="map-road map-road-one" />
-          <span className="map-road map-road-two" />
-          <span className="map-road map-road-three" />
-          <i className="map-pin pin-one" /><i className="map-pin pin-two" />
-          <i className="map-pin pin-three" /><i className="map-pin pin-four" />
-          <span className="map-city city-medina">AL MADINAH</span>
-          <span className="map-city city-mecca">MAKKAH</span>
-        </div>
-        <div className="case-hero-copy">
-          <p className="section-kicker"><span>Case 01</span> Visionary concept</p>
+      <header className="tc-hero">
+        <div className="tc-hero-copy">
+          <p className="tc-hero-kicker">Case 01 · Concept Solution</p>
           <h1>
-            <span className="case-title-line"><span>Tareeqi</span></span>
+            <span className="tc-title-line"><span>Tareeqi</span></span>
+            <span className="tc-title-line tc-title-small"><span>De route was duidelijk.</span></span>
+            <span className="tc-title-line tc-title-small"><span>Wat ernaast lag, niet.</span></span>
           </h1>
-          <p className="case-lede">Navigating Mecca &amp; Medina<br />beyond the obvious.</p>
-          <dl className="case-meta">
-            <div><dt>Rol</dt><dd>Concept &amp; Strategy<br />UX/UI Design</dd></div>
-            <div><dt>Focus</dt><dd>Discovery<br />Accessibility</dd></div>
-            <div><dt>Jaar</dt><dd>2025</dd></div>
+          <p className="tc-hero-summary">
+            Ik zag een gat tussen generieke navigatie en de lokale kennis die een reis
+            betekenis geeft. Tareeqi is mijn ontworpen antwoord: een contextuele
+            discovery-laag voor Mekka en Medina.
+          </p>
+          <dl className="tc-hero-meta">
+            <div><dt>Vertrekpunt</dt><dd>Zelf geïnitieerde bevinding</dd></div>
+            <div><dt>Mijn rol</dt><dd>Research · Strategy · UX/UI</dd></div>
+            <div><dt>Status</dt><dd>Toetsbare oplossingsrichting</dd></div>
           </dl>
         </div>
-        <div className="case-device" aria-label="Tareeqi interface in een browservenster">
-          <div className="browser-bar"><i /><i /><i /><span>tareeqi.app</span></div>
-          <div className="browser-image">
-            <Image
-              src="/projects/home/tareeqi.webp"
-              alt="Tareeqi concept gepresenteerd op twee laptops"
-              fill
-              priority
-              sizes="(max-width: 720px) 92vw, 52vw"
-            />
-          </div>
-        </div>
+        <figure className="tc-hero-media">
+          <Image
+            src="/projects/tareeqi-2026/hero-laptops.webp"
+            alt="Tareeqi websiteconcept op twee laptops"
+            fill
+            priority
+            sizes="(max-width: 760px) 100vw, 58vw"
+          />
+          <figcaption>Responsive concept / Mecca &amp; Medina</figcaption>
+        </figure>
       </header>
 
-      <div id="case-content">
-        <section className="case-intro reveal-up">
-          <p className="section-kicker"><span>01</span> Context</p>
-          <div className="case-intro-grid">
-            <h2>De reis eindigt niet bij de rituelen.</h2>
-            <div>
-              <p className="case-intro-lead">
-                Miljoenen pelgrims bezoeken Mekka en Medina, maar bewegen langs
-                dezelfde bekende routes. De rustige moskee, het boekwinkeltje van
-                een lokale geleerde of dat ene dak met uitzicht blijft vaak buiten
-                beeld.
-              </p>
-              <p>
-                Tareeqi is een digitale reisgenoot: een community-gedreven kaart met
-                betekenisvolle plekken, betrouwbare context en routes die passen bij
-                het tempo en de intentie van de bezoeker.
-              </p>
-            </div>
-          </div>
-        </section>
+      <section className="tc-premise" id="tareeqi-content" aria-labelledby="tc-premise-title">
+        <p>Probleemvinding vóór productvorming</p>
+        <h2 id="tc-premise-title">Ik begon niet met een scherm. Ik begon met wat de bestaande kaarten niet konden vertellen.</h2>
+        <div className="tc-premise-notes">
+          <span><Search aria-hidden="true" /> Generieke zoekresultaten</span>
+          <span><UsersRound aria-hidden="true" /> Verspreide lokale kennis</span>
+          <span><Compass aria-hidden="true" /> Geen route op intentie</span>
+        </div>
+      </section>
 
-        <section className="insight">
-          <p className="section-kicker section-kicker-light"><span>02</span> Het kwartje</p>
-          <blockquote className="insight-quote reveal-up">
-            <span className="insight-line" aria-hidden="true" />
-            “De echte diepte van een plek staat niet op de kaart. Ze leeft bij de
-            mensen die er elke dag lopen.”
-          </blockquote>
-          <p className="insight-note reveal-up">
-            Dus werd lokale kennis geen extra contentlaag, maar het fundament van
-            het product. Elke route begint bij een menselijke behoefte: rust,
-            reflectie, toegankelijkheid of nieuwsgierigheid.
-          </p>
-        </section>
-
-        <section className="duality" aria-labelledby="duality-title">
-          <div className="duality-heading reveal-up">
-            <p className="section-kicker"><span>03</span> Het concept</p>
-            <h2 id="duality-title">Vrijheid om te ontdekken.<br /><em>Structuur om te vertrouwen.</em></h2>
-          </div>
-
-          <article className="concept-panel freedom-panel reveal-up">
-            <div className="concept-copy">
-              <span className="concept-number">A</span>
-              <p className="label">Freedom / Out-of-the-box</p>
-              <h3>Een route die begint met een gevoel.</h3>
-              <p>
-                Geen klassiek zoekveld met categorieën als vertrekpunt. De Smart
-                Discovery Assistant vertaalt een intentie — kalmte, familie of
-                lokale cultuur — naar een persoonlijke route.
-              </p>
-            </div>
-            <div className="route-demo" aria-label="Interactieve routekeuze">
-              <p className="route-prompt">Waar heb je vandaag behoefte aan?</p>
-              <div className="route-options" role="group" aria-label="Kies een route">
-                {(Object.keys(routeModes) as RouteMode[]).map((mode) => (
-                  <button
-                    type="button"
-                    key={mode}
-                    className={routeMode === mode ? "is-active" : ""}
-                    onClick={() => setRouteMode(mode)}
-                    aria-pressed={routeMode === mode}
-                  >
-                    {routeModes[mode].label}
-                  </button>
-                ))}
+      <section className="tc-deck" aria-label="Tareeqi oplossingsverhaal in zes kaarten">
+        {cards.map((card, index) => (
+          <article
+            className={`tc-card-shell tc-tone-${card.tone}`}
+            id={`chapter-${card.number}`}
+            key={card.number}
+            style={{ "--tc-index": index + 1 } as CSSProperties}
+          >
+            <div className="tc-card">
+              <span className="tc-card-dim" aria-hidden="true" />
+              <div className="tc-card-copy">
+                <div className="tc-card-index"><span>{card.number}</span><span>06</span></div>
+                <p className="tc-mask tc-card-eyebrow"><span>{card.eyebrow}</span></p>
+                <h2 className="tc-mask"><span>{card.title}</span></h2>
+                <p className="tc-mask tc-card-body"><span>{card.body}</span></p>
+                <p className="tc-mask tc-card-note"><span>{card.note}</span></p>
+                {index === 2 && (
+                  <div className="tc-feature-row" aria-label="Ontdekkingsfuncties">
+                    <span><MapPinned aria-hidden="true" /> Contextuele kaart</span>
+                    <span><Search aria-hidden="true" /> Intentiefilters</span>
+                    <span><UsersRound aria-hidden="true" /> Lokale curatie</span>
+                  </div>
+                )}
+                {index === 3 && (
+                  <div className="tc-feature-row" aria-label="Toegankelijkheidsfuncties">
+                    <span><WifiOff aria-hidden="true" /> Offline</span>
+                    <span><Accessibility aria-hidden="true" /> Familie &amp; ouderen</span>
+                    <span><ShieldCheck aria-hidden="true" /> Herkomst zichtbaar</span>
+                  </div>
+                )}
+                {index === 4 && (
+                  <div className="tc-system" aria-label="Tareeqi typografie en kleuren">
+                    <div><strong>Aa</strong><span>Canela / display</span></div>
+                    <div><strong>Aa</strong><span>Inter / interface</span></div>
+                    <div className="tc-swatches" aria-label="Kleurenpalet">
+                      <i title="#F9F6F0" /><i title="#EEF3ED" /><i title="#5D3A20" /><i title="#2D2A26" />
+                    </div>
+                  </div>
+                )}
+                {index === 5 && (
+                  <ul className="tc-validation-list">
+                    <li>Past de route echt beter bij het moment?</li>
+                    <li>Verlaagt offline zekerheid de mentale belasting?</li>
+                    <li>Blijft communitykennis betrouwbaar en actueel?</li>
+                  </ul>
+                )}
               </div>
-              <div className="route-map" aria-hidden="true">
-                <span className="route-line" />
-                <i className="route-node node-a" /><i className="route-node node-b" />
-                <i className="route-node node-c" /><i className="route-node node-d" />
-              </div>
-              <div className="route-result" aria-live="polite">
-                <span className="label">Voorgestelde route</span>
-                <strong>{activeRoute.title}</strong>
-                <small>{activeRoute.meta}</small>
-              </div>
+              <figure className="tc-card-media">
+                <Image src={card.image} alt={card.imageAlt} fill sizes="(max-width: 760px) 92vw, 54vw" />
+                {index === 4 && (
+                  <Image className="tc-card-logo" src="/projects/tareeqi-2026/logo.webp" alt="Tareeqi logo" width={270} height={100} />
+                )}
+              </figure>
             </div>
           </article>
+        ))}
+      </section>
 
-          <article className="concept-panel responsibility-panel reveal-up">
-            <div className="concept-copy">
-              <span className="concept-number">B</span>
-              <p className="label">Responsibility / UX structure</p>
-              <h3>Vrij bewegen, ook als de verbinding wegvalt.</h3>
-              <p>
-                Betrouwbaarheid betekent hier: geen stress in drukte, routes voor
-                ouderen en gezinnen, en essentiële informatie die vooraf op het
-                toestel staat.
-              </p>
-              <ul className="responsibility-list">
-                <li><span>01</span> Elder-friendly routing</li>
-                <li><span>02</span> Prayer &amp; rest stops</li>
-                <li><span>03</span> Arabic + English</li>
-              </ul>
-            </div>
-            <div className={`offline-card ${offline ? "is-offline" : ""}`}>
-              <div className="offline-top">
-                <span className="label">Tareeqi / Map status</span>
-                <button
-                  type="button"
-                  onClick={() => setOffline((value) => !value)}
-                  aria-pressed={offline}
-                >
-                  <span /> {offline ? "Offline ready" : "Online"}
-                </button>
+      <section className="tc-proof" aria-labelledby="tc-proof-title">
+        <div className="tc-proof-heading">
+          <p>Responsive bewijs / geen eindeloze walkthrough</p>
+          <h2 id="tc-proof-title">Eén systeem.<br />Drie formaten.<br /><em>Tien echte schermen.</em></h2>
+          <p>De volledige exports blijven beschikbaar, maar worden hier als een compacte redactionele contact sheet getoond. Zo is de breedte van het concept snel te beoordelen.</p>
+        </div>
+        <div className="tc-proof-grid">
+          {proofFrames.map((frame) => (
+            <figure className="tc-proof-frame" key={frame.label}>
+              <div className="tc-proof-media">
+                <Image src={frame.src} alt={`${frame.label} van Tareeqi`} fill sizes="(max-width: 760px) 86vw, 29vw" />
               </div>
-              <div className="offline-map" aria-hidden="true">
-                <span className="offline-road road-a" /><span className="offline-road road-b" />
-                <i className="offline-pin op-one" /><i className="offline-pin op-two" />
-                <i className="offline-pin op-three" />
-                <span className="offline-person">●</span>
-              </div>
-              <div className="download-state">
-                <span><i style={{ width: offline ? "100%" : "46%" }} /></span>
-                <p>{offline ? "Route opgeslagen · 12.4 MB" : "Route synchroniseren"}</p>
-              </div>
-            </div>
-          </article>
-        </section>
+              <figcaption>{frame.label}</figcaption>
+            </figure>
+          ))}
+        </div>
+      </section>
 
-        <section className="design-system">
-          <div className="design-system-heading reveal-up">
-            <p className="section-kicker"><span>04</span> Design system</p>
-            <h2>Warm als de plek.<br />Helder als de route.</h2>
-            <p>
-              Canela geeft culturele diepte aan de grote statements. Inter houdt de
-              kaart, filters en route-informatie rustig en scanbaar.
-            </p>
-          </div>
-          <div className="type-specimen reveal-up">
-            <div className="type-serif"><span>Aa</span><p>Canela Text<br /><small>Headlines / editorial moments</small></p></div>
-            <div className="type-sans"><span>Aa</span><p>Inter<br /><small>Interface / wayfinding / body</small></p></div>
-          </div>
-          <div className="palette" aria-label="Tareeqi kleurenpalet">
-            <div className="palette-chip color-chocolate"><span>Dark Chocolate</span><small>#2D2A26</small></div>
-            <div className="palette-chip color-nude"><span>Dark Nude</span><small>#B9A392</small></div>
-            <div className="palette-chip color-cream"><span>Light Cream</span><small>#F9F6F0</small></div>
-            <div className="palette-chip color-green"><span>Discovery Green</span><small>#6C9F5E</small></div>
-          </div>
-        </section>
+      <section className="tc-contribution">
+        <p>Mijn bijdrage</p>
+        <div>
+          <h2>Niet aantonen dat ik een interface kan maken. Aantonen dat ik een onbenutte vraag kan vinden en vertalen naar een toetsbaar systeem.</h2>
+          <p>De waarde van Tareeqi zit voor mij in de verbinding tussen observatie, positionering en uitvoering. Ik heb de kans afgebakend, de kernfuncties geprioriteerd, het responsive systeem ontworpen en zichtbaar gemaakt welke aannames nog validatie nodig hebben.</p>
+        </div>
+      </section>
 
-        <section className="case-gallery">
-          <div className="gallery-heading reveal-up">
-            <p className="section-kicker"><span>05</span> In context</p>
-            <h2>Show, don’t tell.</h2>
-            <p>Van de eerste stadskeuze tot een lokaal samengestelde route: de interface blijft op de achtergrond en laat de plek spreken.</p>
-          </div>
-          <figure className="case-gallery-image reveal-up">
-            <div className="case-gallery-media">
-              <Image
-                src="/projects/case-shots/tareeqi-map.webp"
-                alt="Tareeqi kaartinterface met filters en lokale plekken"
-                fill
-                sizes="92vw"
-              />
-            </div>
-            <figcaption><span>Map discovery</span><span>Desktop experience / Mecca</span></figcaption>
-          </figure>
-        </section>
-
-        <section className="impact">
-          <p className="section-kicker section-kicker-light"><span>06</span> De bijdrage</p>
-          <div className="impact-grid reveal-up">
-            <h2>Een route naar meer dan een bestemming.</h2>
-            <div>
-              <p>
-                Tareeqi overbrugt de kloof tussen de wens om dieper te reizen en de
-                praktische realiteit van drukke steden, beperkte verbinding en
-                uiteenlopende mobiliteit.
-              </p>
-              <p>
-                Als concept laat het zien hoe een kaartplatform tegelijk meer lokaal,
-                inclusiever en persoonlijker kan zijn — zonder de gebruiker te
-                overladen. De mogelijke impact zit niet in méér plekken afvinken,
-                maar in betekenisvollere momenten vinden.
-              </p>
-            </div>
-          </div>
-          <dl className="impact-stats reveal-up">
-            <div><dt>1,200+</dt><dd>unieke plekken in het concept</dd></div>
-            <div><dt>2</dt><dd>talen vanaf de basis</dd></div>
-            <div><dt>1</dt><dd>community als kompas</dd></div>
-          </dl>
-        </section>
-      </div>
-
-      <footer className="case-footer">
-        <p className="section-kicker"><span>Next</span> Volgende case</p>
-        <a href="/cases/ayn-al-hikmah"><span>Ayn Al-Hikmah</span><span aria-hidden="true">↗</span></a>
-        <div><span>Abdelrahman / Digital designer</span><span>© 2026</span></div>
+      <footer className="tc-footer">
+        <p>Volgende case / Concept Solution</p>
+        <a href="/cases/ayn-al-hikmah"><span>Ayn Al-Hikmah</span><ArrowUpRight aria-hidden="true" /></a>
+        <div><span>Abdelrahman / Senior digital designer</span><span>© 2026</span></div>
       </footer>
     </main>
   );

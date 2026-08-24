@@ -14,7 +14,7 @@ export async function generateMetadata({
     return {
       title: "Tareeqi — Case study",
       description:
-        "Tareeqi helpt pelgrims de verborgen plekken van Mekka en Medina te ontdekken - lokaal samengesteld, toegankelijk en offline beschikbaar.",
+        "Een zelf geïnitieerde case over het gat tussen generieke navigatie en lokale kennis in Mekka en Medina — vertaald naar een toetsbare digitale oplossingsrichting.",
     };
   }
 

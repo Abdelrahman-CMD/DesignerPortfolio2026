@@ -26,6 +26,8 @@ const projects = [
     summary:
       "Een lokaal gevoed kaartplatform dat pelgrims voorbij de bekende routes brengt — met rust, context en toegankelijkheid als kompas.",
     services: "Strategy · UX/UI · Product concept",
+    category: "Concept Solution",
+    browserLabel: "self-initiated.solution",
     bg: "#eadfd3",
     ink: "#332a24",
     image: "/projects/home/tareeqi.webp",
@@ -40,6 +42,8 @@ const projects = [
     summary:
       "Een boekhandel en leeromgeving die boeken, geleerden en de structuur van studeren uit de Haramain dichterbij brengt.",
     services: "Strategy · E-commerce · Learning UX",
+    category: "Concept Solution",
+    browserLabel: "self-initiated.solution",
     bg: "#f2cf82",
     ink: "#401818",
     image: "/projects/home/ayn.webp",
@@ -54,6 +58,8 @@ const projects = [
     summary:
       "Een conversiegerichte reiservaring waarin elke keuze — van pakketfilter tot reflectie — het vertrouwen van de pelgrim versterkt.",
     services: "Conversion strategy · UX/UI · Web design",
+    category: "Concept Solution",
+    browserLabel: "self-initiated.solution",
     bg: "#ff9e43",
     ink: "#28231f",
     image: "/projects/home/guidance.webp",
@@ -68,6 +74,8 @@ const projects = [
     summary:
       "Een betrouwbaar signaalplatform dat expats en migranten vroegtijdig context geeft over regels, routes en het dagelijks leven.",
     services: "Editorial strategy · UX/UI · Platform concept",
+    category: "Concept Solution",
+    browserLabel: "self-initiated.solution",
     bg: "#cbd9cc",
     ink: "#123f37",
     image: "/projects/home/bayn.webp",
@@ -82,6 +90,8 @@ const projects = [
     summary:
       "Een warme Framer-website voor een zelfstandige behandelpraktijk, waarin uitleg, vertrouwen en laagdrempelig boeken samenkomen.",
     services: "Strategy · UX/UI · Framer design & build",
+    category: "Client Work",
+    browserLabel: "client.project",
     bg: "#dae5dd",
     ink: "#0b4a20",
     image: "/projects/home/hijaman-cups.webp",
@@ -96,6 +106,8 @@ const projects = [
     summary:
       "Een directe, conversiegerichte Framer-website voor een detacheringsbureau dat snelheid koppelt aan persoonlijke aandacht.",
     services: "Positioning · UX/UI · Framer design & build",
+    category: "Client Work",
+    browserLabel: "client.project",
     bg: "#1c2a3a",
     ink: "#f9fafb",
     image: "/projects/home/atotz.webp",
@@ -110,6 +122,8 @@ const projects = [
     summary:
       "Een warme website voor een pedagogisch opgeleide oppas, waarin thuisritme, duidelijke afspraken en oudervertrouwen samenkomen.",
     services: "Positioning · UX/UI · Web design & build",
+    category: "Client Work",
+    browserLabel: "client.project",
     bg: "#f0e2ce",
     ink: "#342d27",
     image: "/projects/live/oppas-site-desktop.png",
@@ -1590,8 +1604,8 @@ export function HomeExperience() {
         <div className="showcase-sticky">
           <p className="section-kicker"><span>02</span> Selected work</p>
           <p className="showcase-intro">
-            Zeven websites. Sommige voor klanten, andere om een idee verder te brengen
-            dan een briefing toestaat. Het verschil zit in de context — niet in de aandacht.
+            Drie websites gebouwd met klanten. Vier oplossingsrichtingen geboren uit
+            een gat dat ik zelf zag. Anders van oorsprong, gelijk in aandacht.
           </p>
           <div className="showcase-title-wrap">
             <p className="label">Case {projects[activeProject].number} / {projectCount}</p>
@@ -1614,14 +1628,14 @@ export function HomeExperience() {
               style={{ color: project.ink, backgroundColor: project.bg }}
             >
               <div className="project-meta label">
-                <span>{project.number} / {projectCount}</span>
+                <span>{project.number} / {projectCount} · {project.category}</span>
                 <span>{project.services}</span>
               </div>
               <div className="project-visual">
                 <span className="project-watermark" aria-hidden="true">{project.name}</span>
                 <div className="browser-frame">
                   <div className="browser-bar" aria-hidden="true">
-                    <i /><i /><i /><span>{project.slug}.concept</span>
+                    <i /><i /><i /><span>{project.browserLabel}</span>
                   </div>
                   <div className="browser-image">
                     <Image
