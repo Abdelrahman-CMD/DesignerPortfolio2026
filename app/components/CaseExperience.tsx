@@ -14,6 +14,24 @@ import UsersRound from "lucide-react/icons/users-round";
 import WifiOff from "lucide-react/icons/wifi-off";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { CaseStyleGuide, type CaseStyleGuideData } from "./CaseStyleGuide";
+
+const tareeqiStyleGuide: CaseStyleGuideData = {
+  project: "Tareeqi",
+  logo: "/projects/tareeqi-2026/logo.webp",
+  logoAlt: "Tareeqi logo",
+  displayFont: "Canela Text",
+  displayUse: "Headlines / verhalen",
+  interfaceFont: "Inter + Work Sans",
+  interfaceUse: "Interface / navigatie",
+  variant: "tareeqi",
+  colors: [
+    { name: "Light cream", value: "#F9F6F0", ink: "#2D2A26" },
+    { name: "Dark nude", value: "#EEF3ED", ink: "#2D2A26" },
+    { name: "Brown", value: "#5D3A20", ink: "#FFF9EE" },
+    { name: "Dark chocolate", value: "#2D2A26", ink: "#FFF9EE" },
+  ],
+};
 
 const cards = [
   {
@@ -65,6 +83,7 @@ const cards = [
     image: "/projects/tareeqi-2026/story-desktop.webp",
     imageAlt: "Tareeqi verhaalpagina met editorial typografie en projectcontext",
     tone: "ink",
+    styleGuide: true,
   },
   {
     number: "06",
@@ -279,13 +298,7 @@ export function CaseExperience() {
                   </div>
                 )}
                 {index === 4 && (
-                  <div className="tc-system" aria-label="Tareeqi typografie en kleuren">
-                    <div><strong>Aa</strong><span>Canela / display</span></div>
-                    <div><strong>Aa</strong><span>Inter / interface</span></div>
-                    <div className="tc-swatches" aria-label="Kleurenpalet">
-                      <i title="#F9F6F0" /><i title="#EEF3ED" /><i title="#5D3A20" /><i title="#2D2A26" />
-                    </div>
-                  </div>
+                  <p className="tc-system-caption">Canela draagt het verhaal. Inter en Work Sans houden de bediening stil en precies.</p>
                 )}
                 {index === 5 && (
                   <ul className="tc-validation-list">
@@ -295,10 +308,11 @@ export function CaseExperience() {
                   </ul>
                 )}
               </div>
-              <figure className="tc-card-media">
-                <Image src={card.image} alt={card.imageAlt} fill sizes="(max-width: 760px) 92vw, 54vw" />
-                {index === 4 && (
-                  <Image className="tc-card-logo" src="/projects/tareeqi-2026/logo.webp" alt="Tareeqi logo" width={270} height={100} />
+              <figure className={`tc-card-media${"styleGuide" in card ? " tc-style-card-media" : ""}`}>
+                {"styleGuide" in card ? (
+                  <CaseStyleGuide data={tareeqiStyleGuide} />
+                ) : (
+                  <Image src={card.image} alt={card.imageAlt} fill sizes="(max-width: 760px) 92vw, 54vw" />
                 )}
               </figure>
             </div>

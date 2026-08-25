@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 /* eslint-disable @next/next/no-html-link-for-pages -- Keep the fallback route independent from the client router. */
 import { CaseExperience } from "../../components/CaseExperience";
+import { GuidanceTravelExperience } from "../../components/GuidanceTravelExperience";
 import { EditorialCaseExperience } from "../../components/EditorialCaseExperience";
 import { editorialCases } from "../../data/caseContent";
 
@@ -15,6 +16,13 @@ export async function generateMetadata({
       title: "Tareeqi — Case study",
       description:
         "Een zelf geïnitieerde case over het gat tussen generieke navigatie en lokale kennis in Mekka en Medina — vertaald naar een toetsbare digitale oplossingsrichting.",
+    };
+  }
+  if (slug === "guidance-travel") {
+    return {
+      title: "Guidance Travel — Case study",
+      description:
+        "Een zelf geïnitieerde case over het vertalen van persoonlijke Hajj- en Umrahbegeleiding naar een rustige, toetsbare digitale beslisroute.",
     };
   }
 
@@ -40,6 +48,10 @@ export default async function CasePage({
 
   if (slug === "tareeqi") {
     return <CaseExperience />;
+  }
+
+  if (slug === "guidance-travel") {
+    return <GuidanceTravelExperience />;
   }
 
   const project = editorialCases[slug];

@@ -55,20 +55,27 @@ test("server-renders the complete portfolio homepage", async () => {
 });
 
 test("uses bounded raster assets on the homepage and case pages", async () => {
-  const [homeSource, editorialSource, tareeqiSource, caseData, css, caseResponse, oppasResponse] = await Promise.all([
+  const [homeSource, editorialSource, tareeqiSource, guidanceSource, caseData, css, caseResponse, tareeqiResponse, oppasResponse] = await Promise.all([
     readFile(new URL("../app/components/HomeExperience.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/components/EditorialCaseExperience.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/components/CaseExperience.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/components/GuidanceTravelExperience.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/data/caseContent.ts", import.meta.url), "utf8"),
     readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
     render("/cases/guidance-travel"),
+    render("/cases/tareeqi"),
     render("/cases/oppas-by-chaima"),
   ]);
 
   assert.equal(caseResponse.status, 200);
   const caseHtml = await caseResponse.text();
   assert.match(caseHtml, /Guidance Travel/);
-  assert.match(caseHtml, /case-shots%2Fguidance-overview\.webp/);
+  assert.match(caseHtml, /guidance-2026%2Fhero-laptops\.webp/);
+  assert.match(caseHtml, /tc-style-board-guidance/);
+
+  assert.equal(tareeqiResponse.status, 200);
+  const tareeqiHtml = await tareeqiResponse.text();
+  assert.match(tareeqiHtml, /tc-style-board-tareeqi/);
 
   assert.equal(oppasResponse.status, 200);
   const oppasHtml = await oppasResponse.text();
@@ -88,6 +95,10 @@ test("uses bounded raster assets on the homepage and case pages", async () => {
   assert.doesNotMatch(homeSource, /from "next\/link"/);
   assert.doesNotMatch(editorialSource, /from "next\/link"/);
   assert.doesNotMatch(tareeqiSource, /from "next\/link"/);
+  assert.doesNotMatch(guidanceSource, /from "next\/link"/);
+  assert.match(guidanceSource, /guidance-2026\/landing-desktop\.webp/);
+  assert.match(guidanceSource, /styleGuide: true/);
+  assert.match(tareeqiSource, /styleGuide: true/);
   assert.doesNotMatch(css, /backdrop-filter:\s*blur/i);
   assert.doesNotMatch(css, /prefers-reduced-motion:\s*reduce/i);
   assert.doesNotMatch(css, /\.mind-brush-stroke-base/);
