@@ -1353,39 +1353,34 @@ export function HomeExperience() {
 
   useLayoutEffect(() => {
     const context = gsap.context(() => {
-      const fragments = gsap.utils.toArray<HTMLElement>(".mind-art-image");
-      gsap.killTweensOf(fragments);
-      gsap.set(fragments, { autoAlpha: 0, xPercent: 0, yPercent: 0, scale: 1, rotation: 0 });
+      const colorLayer = root.current?.querySelector<HTMLElement>(".mind-brain-color");
+      if (!colorLayer) return;
+
+      gsap.killTweensOf(colorLayer);
+      gsap.set(colorLayer, { autoAlpha: 0, scale: 1, rotation: 0 });
 
       if (!activeMindZone) return;
 
-      const target = `.mind-art-fragment-${activeMindZone} .mind-art-image`;
       const motion = ({
-        curiosity: { xPercent: 0.18, yPercent: -0.16, scale: 1.01, rotation: 0.28, duration: 1.05, origin: "67% 12%" },
-        connections: { xPercent: 0, yPercent: -0.1, scale: 1.006, rotation: 0.1, duration: 1.25, origin: "78% 14%" },
-        structure: { xPercent: 0.06, yPercent: -0.24, scale: 1.005, rotation: -0.06, duration: 1.1, origin: "65% 33%" },
-        source: { xPercent: 0, yPercent: -0.06, scale: 1.01, rotation: 0.24, duration: 1.75, origin: "78% 32%" },
-        direction: { xPercent: 0.04, yPercent: -0.12, scale: 1.006, rotation: -0.4, duration: 1.25, origin: "75% 48%" },
-      } as Record<string, { xPercent: number; yPercent: number; scale: number; rotation: number; duration: number; origin: string }>)[activeMindZone];
+        curiosity: { scale: 1.008, rotation: -0.08, origin: "32% 22%" },
+        connections: { scale: 1.009, rotation: 0.08, origin: "78% 20%" },
+        structure: { scale: 1.006, rotation: -0.04, origin: "48% 54%" },
+        source: { scale: 1.01, rotation: 0.08, origin: "92% 55%" },
+        direction: { scale: 1.008, rotation: -0.08, origin: "70% 78%" },
+      } as Record<string, { scale: number; rotation: number; origin: string }>)[activeMindZone];
       if (!motion) return;
 
-      gsap.fromTo(target, {
-        autoAlpha: 0.72,
-        xPercent: 0,
-        yPercent: 0,
-        scale: 1,
+      gsap.fromTo(colorLayer, {
+        autoAlpha: 0.08,
+        scale: 0.995,
         rotation: 0,
-        transformOrigin: motion.origin,
       }, {
-        autoAlpha: 0.94,
-        xPercent: motion.xPercent,
-        yPercent: motion.yPercent,
+        autoAlpha: 1,
         scale: motion.scale,
         rotation: motion.rotation,
-        duration: motion.duration,
-        ease: "sine.inOut",
-        repeat: -1,
-        yoyo: true,
+        transformOrigin: motion.origin,
+        duration: 0.46,
+        ease: "power2.out",
         overwrite: true,
       });
     }, root);
@@ -1492,22 +1487,31 @@ export function HomeExperience() {
               <div className="mind-hero-photo-slide">
                 <Image
                   className="mind-hero-base"
-                  src="/about/mind-hero-cutout-v3.webp"
-                  alt="Zijprofiel van Abdelrahman met een geïllustreerde kaart van zijn ontwerpdenken"
+                  src="/about/hero-profile.webp"
+                  alt="Zijprofiel van Abdelrahman met een interactieve kaart van zijn ontwerpdenken"
                   fill
                   priority
                   sizes="100vw"
                   style={{ objectFit: "contain", objectPosition: "right bottom" }}
                 />
-                <div className="mind-art-layer" aria-hidden="true">
-                  <span className={`mind-art-fragment mind-art-fragment-${activeMindZone ?? "idle"}`}>
+                <div className="mind-brain-assembly" aria-hidden="true">
+                  <Image
+                    className="mind-brain-lumi"
+                    src="/about/brain-lumi.svg"
+                    alt=""
+                    fill
+                    priority
+                    unoptimized
+                    sizes="30vw"
+                  />
+                  <span className={`mind-brain-color-region mind-brain-color-region-${activeMindZone ?? "idle"}`}>
                     <Image
-                      className="mind-art-image"
-                      src="/about/mind-hero-cutout-v3.webp"
+                      className="mind-brain-color"
+                      src="/about/brain-color.svg"
                       alt=""
                       fill
-                      sizes="100vw"
-                      style={{ objectFit: "contain", objectPosition: "right bottom" }}
+                      unoptimized
+                      sizes="30vw"
                     />
                   </span>
                 </div>

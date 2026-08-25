@@ -33,10 +33,12 @@ test("server-renders the complete portfolio homepage", async () => {
   assert.match(html, /Ik ontwerp met alles wat ik onderweg leer/);
   assert.match(html, /class="mind-hero-canvas"/);
   assert.match(html, /class="mind-hero-photo-slide"/);
-  assert.match(html, /mind-hero-cutout-v3\.webp/);
+  assert.match(html, /hero-profile\.webp/);
+  assert.match(html, /brain-lumi\.svg/);
+  assert.match(html, /brain-color\.svg/);
   assert.equal((html.match(/class="mind-zone mind-zone-/g) ?? []).length, 5);
   assert.equal((html.match(/class="manifesto-marker-stroke"/g) ?? []).length, 3);
-  assert.match(html, /class="mind-art-layer"/);
+  assert.match(html, /class="mind-brain-assembly"/);
   assert.doesNotMatch(html, /mind-zone-motif/);
   assert.match(html, /Tools: Figma, Framer en AI/);
   assert.doesNotMatch(html, /hero-project-letter|hero-rule/);
@@ -85,7 +87,9 @@ test("uses bounded raster assets on the homepage and case pages", async () => {
   assert.match(homeSource, /className="story-photo-mosaic"/);
   assert.doesNotMatch(homeSource, /story-photo-piece/);
   assert.match(homeSource, /\/projects\/home\/tareeqi\.webp/);
-  assert.match(homeSource, /\/about\/mind-hero-cutout-v3\.webp/);
+  assert.match(homeSource, /\/about\/hero-profile\.webp/);
+  assert.match(homeSource, /\/about\/brain-lumi\.svg/);
+  assert.match(homeSource, /\/about\/brain-color\.svg/);
   assert.match(homeSource, /xPercent: 104/);
   assert.match(homeSource, /manifestoMarkerWords = new Set\(\["écht", "kwartje", "kern"\]\)/);
   assert.match(homeSource, /\/about\/web\/fatherhood\.webp/);
