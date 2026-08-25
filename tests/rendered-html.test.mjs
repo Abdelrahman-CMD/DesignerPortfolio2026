@@ -90,10 +90,10 @@ test("uses bounded raster assets on the homepage and case pages", async () => {
   assert.doesNotMatch(tareeqiSource, /from "next\/link"/);
   assert.doesNotMatch(css, /backdrop-filter:\s*blur/i);
   assert.doesNotMatch(css, /prefers-reduced-motion:\s*reduce/i);
-  assert.match(css, /\.mind-brush-stroke-base/);
-  assert.match(css, /stroke: color-mix\(in srgb, var\(--zone-color\) 57%, #f7efe5\)/);
-  assert.match(homeSource, /heroCtaRingCopy = "ONTDEK CASES · ONTDEK CASES · "/);
-  assert.match(homeSource, /Zie wat ervan kwam/);
+  assert.doesNotMatch(css, /\.mind-brush-stroke-base/);
+  assert.doesNotMatch(homeSource, /mind-connector-map/);
+  assert.match(homeSource, /heroCtaIdleRingCopy = "ZIE DE GEVOLGEN · ZIE DE GEVOLGEN · "/);
+  assert.match(homeSource, /heroCtaActiveRingCopy = "ONTDEK DE CASES · ONTDEK DE CASES · "/);
   assert.doesNotMatch(homeSource, /<circle cx=\{zone\.dotX\}/);
   assert.doesNotMatch(homeSource, /Scroll om verder te kijken/);
   assert.match(css, /white-space: nowrap/);

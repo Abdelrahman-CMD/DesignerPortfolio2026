@@ -132,7 +132,8 @@ const projects = [
 ] as const;
 
 const projectCount = String(projects.length).padStart(2, "0");
-const heroCtaRingCopy = "ONTDEK CASES · ONTDEK CASES · ";
+const heroCtaIdleRingCopy = "ZIE DE GEVOLGEN · ZIE DE GEVOLGEN · ";
+const heroCtaActiveRingCopy = "ONTDEK DE CASES · ONTDEK DE CASES · ";
 
 const manifestoMarkerWords = new Set(["écht", "kwartje", "kern"]);
 
@@ -475,7 +476,6 @@ const mindZones = [
     detail:
       "Ik blijf vragen tot aannames plaatsmaken voor een kern die we samen begrijpen.",
     color: "#d8644a",
-    connector: "M 67 12 C 60 16, 53 25, 47 27",
   },
   {
     id: "connections",
@@ -485,7 +485,6 @@ const mindZones = [
     detail:
       "Mens, cultuur, business en techniek worden één verhaal in plaats van losse eisen.",
     color: "#d7a84e",
-    connector: "M 78 14 C 83 17, 87 23, 90 27",
   },
   {
     id: "structure",
@@ -495,7 +494,6 @@ const mindZones = [
     detail:
       "Scherpe inzichten worden systemen die helder, toegankelijk en verantwoordelijk werken.",
     color: "#879a75",
-    connector: "M 65 33 C 59 40, 54 51, 48 55",
   },
   {
     id: "source",
@@ -505,7 +503,6 @@ const mindZones = [
     detail:
       "Hier begint niets met een component. Eerst ontstaat ruimte voor het onverwachte idee.",
     color: "#314668",
-    connector: "M 78 32 C 83 38, 87 45, 90 49",
   },
   {
     id: "direction",
@@ -515,7 +512,6 @@ const mindZones = [
     detail:
       "Tools versnellen de uitvoering. Selectie, richting en verantwoordelijkheid blijven mensenwerk.",
     color: "#6682a1",
-    connector: "M 75 48 C 80 56, 85 65, 90 71",
   },
 ] as const;
 
@@ -637,9 +633,9 @@ export function HomeExperience() {
 
       const heroCtaStage = root.current?.querySelector<HTMLElement>(".hero-cta-stage");
       const heroCta = root.current?.querySelector<HTMLElement>(".hero-cta-container");
-      const heroCtaRing = root.current?.querySelector<HTMLElement>(".editorial-text-ring");
+      const heroCtaRings = root.current?.querySelectorAll<HTMLElement>(".editorial-text-ring");
 
-      if (heroCtaStage && heroCta && heroCtaRing) {
+      if (heroCtaStage && heroCta && heroCtaRings?.length) {
         const moveX = gsap.quickTo(heroCta, "x", { duration: 0.34, ease: "power3.out" });
         const moveY = gsap.quickTo(heroCta, "y", { duration: 0.34, ease: "power3.out" });
         let pointerX = -1000;
@@ -649,7 +645,7 @@ export function HomeExperience() {
         let hasFocus = false;
         const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
 
-        gsap.to(heroCtaRing, {
+        gsap.to(heroCtaRings, {
           rotation: 360,
           duration: 11,
           repeat: -1,
@@ -1530,40 +1526,51 @@ export function HomeExperience() {
             <div className="mind-hero-copy">
               <p className="mind-hero-kicker label">Geen vaste formule. Wel een stevig vertrekpunt.</p>
               <h1 id="hero-title" aria-label="Ik ontwerp met alles wat ik onderweg leer.">
-                <span className="mind-title-line"><span>Ik ontwerp</span></span>
-                <span className="mind-title-line"><span>met alles</span></span>
-                <span className="mind-title-line"><span>wat ik</span></span>
+                <span className="mind-title-line"><span>Ik ontwerp met</span></span>
+                <span className="mind-title-line"><span>alles wat ik</span></span>
                 <span className="mind-title-line"><span>onderweg <em>leer.</em></span></span>
               </h1>
               <p className="mind-hero-lede">
                 Wat ik leer verandert mijn blik. Wat ik belangrijk vind blijft staan:
                 een helder fundament, scherpe keuzes en websites die mensen zonder omwegen begrijpen.
               </p>
-              <div className="mind-hero-actions">
-                <div className="hero-cta-stage">
-                  <a
-                    className="hero-cta-container"
-                    href="#werk"
-                    aria-label="Ontdek de zeven cases"
-                  >
-                    <span className="hero-cta-shape" aria-hidden="true">
-                      <span className="hero-cta-pill-copy">Zie wat ervan kwam</span>
-                      <span className="editorial-text-ring">
-                        {[...heroCtaRingCopy].map((character, index, characters) => (
-                          <span
-                            style={{
-                              "--ring-angle": `${(index / characters.length) * 360}deg`,
-                            } as CSSProperties}
-                            key={`${character}-${index}`}
-                          >
-                            {character === " " ? "\u00a0" : character}
-                          </span>
-                        ))}
-                      </span>
-                      <span className="hero-cta-orbit-core">↘</span>
+            </div>
+
+            <div className="mind-hero-actions">
+              <div className="hero-cta-stage">
+                <a
+                  className="hero-cta-container"
+                  href="#werk"
+                  aria-label="Zie de gevolgen en ontdek de zeven cases"
+                >
+                  <span className="hero-cta-shape" aria-hidden="true">
+                    <span className="editorial-text-ring hero-cta-ring-idle">
+                      {[...heroCtaIdleRingCopy].map((character, index, characters) => (
+                        <span
+                          style={{
+                            "--ring-angle": `${(index / characters.length) * 360}deg`,
+                          } as CSSProperties}
+                          key={`idle-${character}-${index}`}
+                        >
+                          {character === " " ? "\u00a0" : character}
+                        </span>
+                      ))}
                     </span>
-                  </a>
-                </div>
+                    <span className="editorial-text-ring hero-cta-ring-active">
+                      {[...heroCtaActiveRingCopy].map((character, index, characters) => (
+                        <span
+                          style={{
+                            "--ring-angle": `${(index / characters.length) * 360}deg`,
+                          } as CSSProperties}
+                          key={`active-${character}-${index}`}
+                        >
+                          {character === " " ? "\u00a0" : character}
+                        </span>
+                      ))}
+                    </span>
+                    <span className="hero-cta-orbit-core">↘</span>
+                  </span>
+                </a>
               </div>
             </div>
 
@@ -1604,29 +1611,6 @@ export function HomeExperience() {
                   </button>
                 );
               })}
-
-              <svg className="mind-connector-map" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-                <defs>
-                  <filter id="mind-brush-texture" x="-12%" y="-12%" width="124%" height="124%" colorInterpolationFilters="sRGB">
-                    <feTurbulence type="fractalNoise" baseFrequency="0.026 0.12" numOctaves="2" seed="7" result="paperNoise" />
-                    <feDisplacementMap in="SourceGraphic" in2="paperNoise" scale="1.15" xChannelSelector="R" yChannelSelector="G" />
-                  </filter>
-                </defs>
-                {mindZones.map((zone) => {
-                  const isActive = activeMindZone === zone.id;
-
-                  return (
-                    <g
-                      className={`mind-connector mind-connector-${zone.id}${isActive ? " is-active" : ""}`}
-                      style={{ "--zone-color": zone.color } as CSSProperties}
-                      key={`connector-${zone.id}`}
-                    >
-                      <path className="mind-brush-stroke mind-brush-stroke-base" pathLength="1" d={zone.connector} />
-                      <path className="mind-brush-stroke mind-brush-stroke-grain" pathLength="1" d={zone.connector} />
-                    </g>
-                  );
-                })}
-              </svg>
 
               {mindZones.map((zone) => {
                 const isActive = activeMindZone === zone.id;
