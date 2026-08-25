@@ -801,40 +801,52 @@ export function HomeExperience() {
       });
 
       const quarterWord = root.current?.querySelector<HTMLElement>('[data-marker-word="kwartje"]');
+      const manifestoSection = root.current?.querySelector<HTMLElement>(".manifesto");
       const quarterScene = root.current?.querySelector<HTMLElement>(".manifesto-coin-scene");
       const quarter = root.current?.querySelector<HTMLElement>(".manifesto-coin");
       const quarterShadow = root.current?.querySelector<HTMLElement>(".manifesto-coin-shadow");
-      let quarterDropped = false;
-      const dropQuarter = () => {
-        if (!quarterScene || !quarter || !quarterShadow || quarterDropped) return;
-        quarterDropped = true;
+      if (quarterWord && manifestoSection && quarterScene && quarter && quarterShadow) {
+        const positionQuarter = () => {
+          const sectionBounds = manifestoSection.getBoundingClientRect();
+          const wordBounds = quarterWord.getBoundingClientRect();
+          const sceneSize = quarterScene.offsetWidth;
 
-        gsap.killTweensOf(quarter);
-        const sceneTop = quarterScene.getBoundingClientRect().top;
-        const startY = -sceneTop - quarter.offsetHeight - 48;
+          gsap.set(quarterScene, {
+            left: wordBounds.left - sectionBounds.left + (wordBounds.width / 2) - (sceneSize / 2),
+            top: wordBounds.bottom - sectionBounds.top - (sceneSize / 2),
+          });
+        };
 
-        gsap.set(quarterScene, { autoAlpha: 1 });
-        gsap.set(quarterShadow, { opacity: 0, scaleX: 0.18, scaleY: 0.42 });
+        positionQuarter();
 
-        gsap.timeline()
+        const quarterTimeline = gsap.timeline({
+          paused: true,
+          repeat: -1,
+          repeatDelay: 1.4,
+          repeatRefresh: true,
+        });
+
+        quarterTimeline
+          .set(quarterScene, { autoAlpha: 1 })
+          .set(quarterShadow, { opacity: 0, scaleX: 0.18, scaleY: 0.42 })
           .fromTo(quarter, {
             autoAlpha: 1,
-            y: startY,
-            x: -42,
-            z: 80,
-            rotationX: -24,
-            rotationY: -620,
-            rotationZ: -18,
+            y: () => -quarterScene.getBoundingClientRect().top - quarter.offsetHeight - 32,
+            x: -32,
+            z: 72,
+            rotationX: -18,
+            rotationY: -540,
+            rotationZ: -14,
             transformPerspective: 900,
             transformOrigin: "50% 50%",
           }, {
-            y: 4,
+            y: 0,
             x: 0,
             z: 0,
             rotationX: 18,
-            rotationY: 720,
+            rotationY: 1080,
             rotationZ: 8,
-            duration: 1.7,
+            duration: 1.9,
             ease: "power2.in",
           })
           .to(quarterShadow, {
@@ -845,61 +857,70 @@ export function HomeExperience() {
             ease: "power2.out",
           }, "-=0.16")
           .to(quarter, {
-            y: -74,
-            z: 46,
-            rotationX: 48,
-            rotationY: 910,
-            rotationZ: -16,
-            duration: 0.38,
+            y: -56,
+            z: 38,
+            rotationX: 28,
+            rotationY: 1260,
+            rotationZ: -12,
+            duration: 0.34,
             ease: "power3.out",
           })
           .to(quarter, {
-            y: 19,
+            y: 0,
             z: 0,
-            rotationX: 64,
-            rotationY: 1060,
-            rotationZ: 10,
-            duration: 0.48,
+            rotationX: 16,
+            rotationY: 1440,
+            rotationZ: 6,
+            duration: 0.42,
             ease: "power2.in",
           })
           .to(quarter, {
-            y: 20,
-            rotationX: 72,
-            rotationY: 1110,
-            rotationZ: -4,
-            duration: 0.34,
-            ease: "power2.out",
-          })
-          .to(quarter, {
-            y: 20,
-            rotationX: 67,
-            rotationY: 1132,
+            rotationY: 1800,
             rotationZ: 2,
-            duration: 0.28,
-            ease: "sine.inOut",
+            duration: 0.62,
+            ease: "power1.out",
           })
           .to(quarter, {
-            y: 20,
-            rotationX: 69,
-            rotationY: 1140,
+            y: 1,
+            rotationX: 80,
+            rotationY: 1872,
+            rotationZ: -3,
+            duration: 0.62,
+            ease: "power2.inOut",
+          })
+          .to(quarter, {
+            y: 2,
+            rotationX: 76,
+            rotationY: 1890,
             rotationZ: 0,
-            duration: 0.36,
+            duration: 0.34,
             ease: "power3.out",
           })
           .to(quarterShadow, {
-            opacity: 0.3,
-            scaleX: 0.92,
-            scaleY: 0.78,
-            duration: 0.36,
+            opacity: 0.28,
+            scaleX: 1.08,
+            scaleY: 0.62,
+            duration: 0.34,
           }, "<");
-      };
 
-      if (quarterWord && quarterScene && quarter) {
         ScrollTrigger.create({
-          trigger: quarterWord,
-          start: "top 70%",
-          onEnter: dropQuarter,
-          once: true,
+          trigger: manifestoSection,
+          start: "top 62%",
+          end: "bottom 22%",
+          onRefresh: positionQuarter,
+          onEnter: () => {
+            positionQuarter();
+            quarterTimeline.restart();
+          },
+          onEnterBack: () => {
+            positionQuarter();
+            quarterTimeline.restart();
+          },
+          onLeave: () => quarterTimeline.pause(),
+          onLeaveBack: () => {
+            quarterTimeline.pause(0);
+            gsap.set(quarterScene, { autoAlpha: 0 });
+          },
         });
       }
 
@@ -1689,7 +1710,6 @@ export function HomeExperience() {
             );
           })}
         </p>
-        <span className="manifesto-ground" aria-hidden="true" />
         <span className="manifesto-coin-scene" aria-hidden="true">
           <span className="manifesto-coin-shadow" />
           <span className="manifesto-coin">
