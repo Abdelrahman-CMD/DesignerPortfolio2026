@@ -911,9 +911,9 @@ a:focus-visible > .link-icon svg * {
   position: absolute;
   right: 0;
   bottom: 0;
-  width: min(100cqw, calc(100cqh * 1.1905));
+  width: min(100cqw, calc(100cqh * 1.6314));
   max-height: 100cqh;
-  aspect-ratio: 1600 / 1344;
+  aspect-ratio: 1602 / 982;
   will-change: transform, opacity;
 }
 
@@ -935,32 +935,30 @@ a:focus-visible > .link-icon svg * {
 }
 
 .mind-hero-base {
+  z-index: 3;
   filter: saturate(0.78) contrast(0.98) brightness(1.01);
   object-fit: contain;
   object-position: right bottom;
   will-change: transform, filter;
 }
 
-.mind-brain-assembly {
+.mind-brain-stage {
   position: absolute;
-  z-index: 3;
-  top: 7.07%;
-  left: 38.75%;
-  width: 33.125%;
-  aspect-ratio: 860 / 763;
-  filter: drop-shadow(0 0.22rem 0.34rem rgba(31, 29, 26, 0.08));
+  z-index: 2;
+  inset: 0;
+  filter: drop-shadow(0 0.2rem 0.32rem rgba(31, 29, 26, 0.07));
   mix-blend-mode: multiply;
   pointer-events: none;
 }
 
-.mind-brain-assembly img {
+.mind-brain-stage img {
   object-fit: contain;
-  object-position: center;
+  object-position: right bottom;
 }
 
 .mind-brain-lumi {
-  filter: grayscale(1) saturate(0) contrast(1.22) brightness(1.3);
-  opacity: 0.76;
+  filter: contrast(1.12) brightness(1.1);
+  opacity: 0.84;
 }
 
 .mind-brain-zone {
@@ -973,23 +971,11 @@ a:focus-visible > .link-icon svg * {
 .mind-brain-zone.is-active { opacity: 1; }
 
 .mind-portrait-foreground {
-  position: absolute;
   z-index: 4;
-  inset: 0;
-  pointer-events: none;
-}
-
-.mind-portrait-foreground img {
+  filter: saturate(0.78) contrast(0.98) brightness(1.01);
   object-fit: contain;
   object-position: right bottom;
-}
-
-.mind-portrait-foreground-glasses {
-  clip-path: polygon(33.5% 21.5%, 61% 21.5%, 61% 31.4%, 39% 31.4%, 39% 43.5%, 33.5% 43.5%);
-}
-
-.mind-portrait-foreground-ear {
-  clip-path: ellipse(6.9% 11.5% at 55.4% 35.5%);
+  pointer-events: none;
 }
 
 .mind-hero[data-active-zone="curiosity"] { --active-zone-color: #d9c39a; }
@@ -1230,17 +1216,9 @@ html.hero-cta-cursor-captured a { cursor: none !important; }
   z-index: 5;
   right: 0;
   bottom: 0;
-  width: min(100cqw, calc(100cqh * 1.1905));
+  width: min(100cqw, calc(100cqh * 1.6314));
   max-height: 100cqh;
-  aspect-ratio: 1600 / 1344;
-}
-
-@media (min-width: 721px) and (max-width: 1100px) {
-  .mind-hero-photo-slide,
-  .mind-zone-layer {
-    width: min(72cqw, calc(100cqh * 1.1905));
-  }
-
+  aspect-ratio: 1602 / 982;
 }
 
 .mind-zone {
@@ -1256,11 +1234,11 @@ html.hero-cta-cursor-captured a { cursor: none !important; }
   pointer-events: none;
 }
 
-.mind-zone-curiosity { top: 7.1%; left: 38.8%; width: 22.5%; height: 17.5%; }
-.mind-zone-connections { top: 7.1%; left: 58%; width: 13.9%; height: 17.5%; }
-.mind-zone-structure { top: 19.3%; left: 44.7%; width: 21.2%; height: 12.3%; }
-.mind-zone-source { top: 19.3%; left: 65.3%; width: 6.6%; height: 12.3%; }
-.mind-zone-direction { top: 29.8%; left: 54.7%; width: 14.6%; height: 12.3%; }
+.mind-zone-curiosity { top: 5.5%; left: 55%; width: 15.5%; height: 21%; }
+.mind-zone-connections { top: 5%; left: 69%; width: 17%; height: 22%; }
+.mind-zone-structure { top: 23%; left: 56%; width: 17%; height: 20%; }
+.mind-zone-source { top: 22%; left: 77%; width: 9%; height: 21%; }
+.mind-zone-direction { top: 39%; left: 70%; width: 15%; height: 17%; }
 
 .mind-zone-surface {
   position: absolute;
@@ -1335,9 +1313,9 @@ html.hero-cta-cursor-captured a { cursor: none !important; }
   transform-origin: left center;
 }
 
-.mind-annotation-panel-curiosity { top: 3%; left: 8%; }
+.mind-annotation-panel-curiosity { top: 66%; left: 5%; }
 .mind-annotation-panel-connections { top: 43%; right: -1%; }
-.mind-annotation-panel-structure { top: 46%; left: 0; }
+.mind-annotation-panel-structure { top: 66%; left: 5%; }
 .mind-annotation-panel-source { top: 37%; right: -1%; }
 .mind-annotation-panel-direction { top: 61%; right: 7%; }
 
@@ -4572,6 +4550,7 @@ html.hero-cta-cursor-captured a { cursor: none !important; }
     bottom: auto;
     left: auto;
     z-index: 6;
+    grid-column: 1;
     grid-row: 2;
     align-self: end;
     justify-self: center;
@@ -4579,9 +4558,11 @@ html.hero-cta-cursor-captured a { cursor: none !important; }
     transform: none;
   }
   .hero-cta-stage { --hero-cta-circle-size: 5.75rem; }
-  .mind-hero-visual { position: relative; grid-row: 2; aspect-ratio: 4 / 5; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-  .mind-hero-photo-slide { right: 0; width: 148.81%; height: 100%; max-height: none; aspect-ratio: 1600 / 1344; }
-  .mind-hero-base { object-fit: contain !important; object-position: right bottom !important; }
+  .mind-hero-visual { position: relative; width: 100%; grid-column: 1; grid-row: 2; aspect-ratio: 4 / 5; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .mind-hero-photo-slide { right: 0; width: 148%; height: 100%; max-height: none; aspect-ratio: auto; }
+  .mind-hero-base,
+  .mind-brain-stage img,
+  .mind-portrait-foreground { object-fit: contain !important; object-position: right bottom !important; }
   .golden-ratio-detail {
     z-index: 0;
     top: 29rem;

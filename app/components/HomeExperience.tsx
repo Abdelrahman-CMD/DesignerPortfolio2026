@@ -1487,50 +1487,41 @@ export function HomeExperience() {
               <div className="mind-hero-photo-slide">
                 <Image
                   className="mind-hero-base"
-                  src="/about/hero-profile-cutout-v2.webp"
+                  src="/about/hero-profile-window-v1.webp"
                   alt="Zijprofiel van Abdelrahman met een interactieve kaart van zijn ontwerpdenken"
                   fill
                   priority
                   sizes="100vw"
                   style={{ objectFit: "contain", objectPosition: "right bottom" }}
                 />
-                <div className="mind-brain-assembly" aria-hidden="true">
+                <div className="mind-brain-stage" aria-hidden="true">
                   <Image
                     className="mind-brain-lumi"
-                    src="/about/brain-lumi.svg"
+                    src="/about/brain-stage-lumi.png"
                     alt=""
                     fill
                     priority
-                    unoptimized
-                    sizes="30vw"
+                    sizes="100vw"
                   />
                   {mindZones.map((zone) => (
                     <Image
                       className={`mind-brain-zone mind-brain-zone-${zone.id}${activeMindZone === zone.id ? " is-active" : ""}`}
-                      src={`/about/brain-zone-${zone.id}.png`}
+                      src={`/about/brain-stage-zone-${zone.id}.png`}
                       alt=""
                       fill
-                      sizes="30vw"
+                      sizes="100vw"
                       key={`brain-zone-${zone.id}`}
                     />
                   ))}
                 </div>
-                <span className="mind-portrait-foreground mind-portrait-foreground-glasses" aria-hidden="true">
-                  <Image
-                    src="/about/hero-profile-cutout-v2.webp"
-                    alt=""
-                    fill
-                    sizes="100vw"
-                  />
-                </span>
-                <span className="mind-portrait-foreground mind-portrait-foreground-ear" aria-hidden="true">
-                  <Image
-                    src="/about/hero-profile-cutout-v2.webp"
-                    alt=""
-                    fill
-                    sizes="100vw"
-                  />
-                </span>
+                <Image
+                  className="mind-portrait-foreground"
+                  src="/about/hero-profile-foreground-v1.webp"
+                  alt=""
+                  fill
+                  sizes="100vw"
+                  aria-hidden="true"
+                />
               </div>
             </div>
 
