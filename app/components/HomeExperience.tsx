@@ -797,126 +797,47 @@ export function HomeExperience() {
       });
 
       const quarterWord = root.current?.querySelector<HTMLElement>('[data-marker-word="kwartje"]');
-      const manifestoSection = root.current?.querySelector<HTMLElement>(".manifesto");
-      const quarterScene = root.current?.querySelector<HTMLElement>(".manifesto-coin-scene");
-      const quarter = root.current?.querySelector<HTMLElement>(".manifesto-coin");
-      const quarterShadow = root.current?.querySelector<HTMLElement>(".manifesto-coin-shadow");
-      if (quarterWord && manifestoSection && quarterScene && quarter && quarterShadow) {
-        const positionQuarter = () => {
-          const sectionBounds = manifestoSection.getBoundingClientRect();
-          const wordBounds = quarterWord.getBoundingClientRect();
-          const sceneSize = quarterScene.offsetWidth;
-
-          gsap.set(quarterScene, {
-            left: wordBounds.left - sectionBounds.left + (wordBounds.width / 2) - (sceneSize / 2),
-            top: wordBounds.bottom - sectionBounds.top - (sceneSize / 2),
-          });
-        };
-
-        positionQuarter();
-
-        const quarterTimeline = gsap.timeline({
-          paused: true,
-          repeat: -1,
-          repeatDelay: 1.4,
-          repeatRefresh: true,
-        });
+      const quarter = quarterWord?.querySelector<HTMLElement>(".manifesto-quarter-roll");
+      if (quarterWord && quarter) {
+        const quarterTimeline = gsap.timeline({ paused: true });
 
         quarterTimeline
-          .set(quarterScene, { autoAlpha: 1 })
-          .set(quarterShadow, { opacity: 0, scaleX: 0.18, scaleY: 0.42 })
-          .fromTo(quarter, {
-            autoAlpha: 1,
-            y: () => -quarterScene.getBoundingClientRect().top - quarter.offsetHeight - 32,
-            x: -32,
-            z: 72,
-            rotationX: -18,
-            rotationY: -540,
-            rotationZ: -14,
-            transformPerspective: 900,
+          .set(quarter, {
+            autoAlpha: 0,
+            x: () => -quarter.offsetWidth * 0.82,
+            yPercent: -50,
+            rotation: -24,
+            scale: 0.82,
             transformOrigin: "50% 50%",
-          }, {
-            y: 0,
-            x: 0,
-            z: 0,
-            rotationX: 18,
-            rotationY: 1080,
-            rotationZ: 8,
-            duration: 1.9,
-            ease: "power2.in",
           })
-          .to(quarterShadow, {
-            opacity: 0.34,
-            scaleX: 1,
-            scaleY: 1,
-            duration: 0.16,
+          .to(quarter, {
+            delay: 0.18,
+            autoAlpha: 0.28,
+            x: () => quarterWord.offsetWidth * 0.18,
+            rotation: 54,
+            duration: 0.18,
             ease: "power2.out",
-          }, "-=0.16")
-          .to(quarter, {
-            y: -56,
-            z: 38,
-            rotationX: 28,
-            rotationY: 1260,
-            rotationZ: -12,
-            duration: 0.34,
-            ease: "power3.out",
           })
           .to(quarter, {
-            y: 0,
-            z: 0,
-            rotationX: 16,
-            rotationY: 1440,
-            rotationZ: 6,
-            duration: 0.42,
+            x: () => quarterWord.offsetWidth - (quarter.offsetWidth * 0.62),
+            rotation: 334,
+            duration: 0.72,
+            ease: "none",
+          })
+          .to(quarter, {
+            autoAlpha: 0,
+            x: () => quarterWord.offsetWidth - (quarter.offsetWidth * 0.12),
+            rotation: 402,
+            scale: 0.26,
+            duration: 0.24,
             ease: "power2.in",
-          })
-          .to(quarter, {
-            rotationY: 1800,
-            rotationZ: 2,
-            duration: 0.62,
-            ease: "power1.out",
-          })
-          .to(quarter, {
-            y: 1,
-            rotationX: 80,
-            rotationY: 1872,
-            rotationZ: -3,
-            duration: 0.62,
-            ease: "power2.inOut",
-          })
-          .to(quarter, {
-            y: 2,
-            rotationX: 76,
-            rotationY: 1890,
-            rotationZ: 0,
-            duration: 0.34,
-            ease: "power3.out",
-          })
-          .to(quarterShadow, {
-            opacity: 0.28,
-            scaleX: 1.08,
-            scaleY: 0.62,
-            duration: 0.34,
-          }, "<");
+          });
 
         ScrollTrigger.create({
-          trigger: manifestoSection,
-          start: "top 62%",
-          end: "bottom 22%",
-          onRefresh: positionQuarter,
-          onEnter: () => {
-            positionQuarter();
-            quarterTimeline.restart();
-          },
-          onEnterBack: () => {
-            positionQuarter();
-            quarterTimeline.restart();
-          },
-          onLeave: () => quarterTimeline.pause(),
-          onLeaveBack: () => {
-            quarterTimeline.pause(0);
-            gsap.set(quarterScene, { autoAlpha: 0 });
-          },
+          trigger: quarterWord,
+          start: "bottom 61%",
+          onEnter: () => quarterTimeline.restart(),
+          onLeaveBack: () => quarterTimeline.pause(0),
         });
       }
 
@@ -1653,21 +1574,16 @@ export function HomeExperience() {
               >
                 <span className="manifesto-word-text">{word}</span>
                 {isMarkerWord && <span className="manifesto-marker-stroke" aria-hidden="true" />}
+                {normalizedWord === "kwartje" && (
+                  <span className="manifesto-quarter-roll" aria-hidden="true">
+                    <span className="manifesto-quarter-sketch"><strong>25</strong><small>cent</small></span>
+                  </span>
+                )}
                 {" "}
               </span>
             );
           })}
         </p>
-        <span className="manifesto-coin-scene" aria-hidden="true">
-          <span className="manifesto-coin-shadow" />
-          <span className="manifesto-coin">
-            {Array.from({ length: 13 }, (_, index) => (
-              <i className="manifesto-coin-edge" style={{ transform: `translateZ(${index - 6}px)` }} key={index} />
-            ))}
-            <span className="manifesto-coin-face manifesto-coin-front"><strong>25</strong><small>cent</small></span>
-            <span className="manifesto-coin-face manifesto-coin-back"><strong>A</strong><small>kwartje</small></span>
-          </span>
-        </span>
         <aside className="manifesto-aside">
           <span className="label">Dualiteit als methode</span>
           <p>Vrij denken.<br />Verantwoord bouwen.</p>

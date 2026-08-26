@@ -44,7 +44,8 @@ test("server-renders the complete portfolio homepage", async () => {
   assert.doesNotMatch(html, /hero-project-letter|hero-rule/);
   assert.match(html, /class="contact-postcard"/);
   assert.match(html, /class="floating-contact"/);
-  assert.match(html, /class="manifesto-coin"/);
+  assert.match(html, /class="manifesto-quarter-roll"/);
+  assert.doesNotMatch(html, /manifesto-coin|manifesto-coin-edge|manifesto-coin-shadow/);
   assert.match(html, /mailto:dhr_abdelrahman@outlook\.com/);
   assert.match(html, /https:\/\/wa\.me\/31621572124/);
   assert.doesNotMatch(html, /instagram/i);
@@ -90,7 +91,7 @@ test("uses bounded raster assets on the homepage and case pages", async () => {
   assert.match(homeSource, /\/about\/hero-abdel-profile\.png/);
   assert.match(homeSource, /\/about\/brain-default\.svg/);
   assert.match(css, /\/about\/brain-hover\.svg/);
-  assert.match(css, /\/about\/brain-head-clip\.png/);
+  assert.doesNotMatch(css, /brain-head-clip|manifesto-coin-scene/);
   assert.equal((css.match(/--brain-region-mask:/g) ?? []).length, 5);
   assert.match(css, /color: var\(--zone-color\)/);
   assert.doesNotMatch(homeSource, /brain-stage-zone-/);
