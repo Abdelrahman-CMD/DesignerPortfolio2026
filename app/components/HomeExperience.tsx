@@ -1351,43 +1351,6 @@ export function HomeExperience() {
     };
   }, []);
 
-  useLayoutEffect(() => {
-    const context = gsap.context(() => {
-      const colorLayer = root.current?.querySelector<HTMLElement>(".mind-brain-zone.is-active");
-      if (!colorLayer) return;
-
-      gsap.killTweensOf(colorLayer);
-      gsap.set(colorLayer, { autoAlpha: 0, scale: 1, rotation: 0 });
-
-      if (!activeMindZone) return;
-
-      const motion = ({
-        curiosity: { scale: 1.008, rotation: -0.08, origin: "32% 22%" },
-        connections: { scale: 1.009, rotation: 0.08, origin: "78% 20%" },
-        structure: { scale: 1.006, rotation: -0.04, origin: "48% 54%" },
-        source: { scale: 1.01, rotation: 0.08, origin: "92% 55%" },
-        direction: { scale: 1.008, rotation: -0.08, origin: "70% 78%" },
-      } as Record<string, { scale: number; rotation: number; origin: string }>)[activeMindZone];
-      if (!motion) return;
-
-      gsap.fromTo(colorLayer, {
-        autoAlpha: 0.08,
-        scale: 0.995,
-        rotation: 0,
-      }, {
-        autoAlpha: 1,
-        scale: motion.scale,
-        rotation: motion.rotation,
-        transformOrigin: motion.origin,
-        duration: 0.46,
-        ease: "power2.out",
-        overwrite: true,
-      });
-    }, root);
-
-    return () => context.revert();
-  }, [activeMindZone]);
-
   const manifesto =
     "Een website hoeft niet harder te roepen. Ze moet écht duidelijk maken waarom iemand blijft. Daarom stel ik vragen tot de ruis verdwijnt. Wanneer het kwartje valt, bouwen we verder op een kern die ook morgen nog klopt.";
 
@@ -1487,41 +1450,34 @@ export function HomeExperience() {
               <div className="mind-hero-photo-slide">
                 <Image
                   className="mind-hero-base"
-                  src="/about/hero-profile-window-v1.webp"
+                  src="/about/hero-abdel-profile.png"
                   alt="Zijprofiel van Abdelrahman met een interactieve kaart van zijn ontwerpdenken"
                   fill
                   priority
-                  sizes="100vw"
+                  quality={90}
+                  sizes="(max-width: 720px) 82vw, 34vw"
                   style={{ objectFit: "contain", objectPosition: "right bottom" }}
                 />
                 <div className="mind-brain-stage" aria-hidden="true">
                   <Image
-                    className="mind-brain-lumi"
-                    src="/about/brain-stage-lumi.png"
+                    className="mind-brain-state mind-brain-default"
+                    src="/about/brain-default.png"
                     alt=""
                     fill
                     priority
-                    sizes="100vw"
+                    unoptimized
+                    sizes="(max-width: 720px) 42vw, 18vw"
                   />
-                  {mindZones.map((zone) => (
-                    <Image
-                      className={`mind-brain-zone mind-brain-zone-${zone.id}${activeMindZone === zone.id ? " is-active" : ""}`}
-                      src={`/about/brain-stage-zone-${zone.id}.png`}
-                      alt=""
-                      fill
-                      sizes="100vw"
-                      key={`brain-zone-${zone.id}`}
-                    />
-                  ))}
+                  <Image
+                    className="mind-brain-state mind-brain-hover"
+                    src="/about/brain-hover.png"
+                    alt=""
+                    fill
+                    priority
+                    unoptimized
+                    sizes="(max-width: 720px) 42vw, 18vw"
+                  />
                 </div>
-                <Image
-                  className="mind-portrait-foreground"
-                  src="/about/hero-profile-foreground-v1.webp"
-                  alt=""
-                  fill
-                  sizes="100vw"
-                  aria-hidden="true"
-                />
               </div>
             </div>
 
