@@ -10,8 +10,8 @@ if (!source || !outputDirectory) {
 const regions = [
   { id: "curiosity", hue: 40 },
   { id: "connections", hue: 332 },
-  { id: "structure", hue: 135 },
-  { id: "source", hue: 235 },
+  { id: "source", hue: 135 },
+  { id: "structure", hue: 235 },
   { id: "direction", hue: 2 },
 ];
 

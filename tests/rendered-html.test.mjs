@@ -90,7 +90,9 @@ test("uses bounded raster assets on the homepage and case pages", async () => {
   assert.match(homeSource, /\/about\/hero-abdel-profile\.png/);
   assert.match(homeSource, /\/about\/brain-default\.svg/);
   assert.match(css, /\/about\/brain-hover\.svg/);
+  assert.match(css, /\/about\/brain-head-clip\.png/);
   assert.equal((css.match(/--brain-region-mask:/g) ?? []).length, 5);
+  assert.match(css, /color: var\(--zone-color\)/);
   assert.doesNotMatch(homeSource, /brain-stage-zone-/);
   assert.doesNotMatch(homeSource, /mind-portrait-foreground/);
   assert.doesNotMatch(homeSource, /\/about\/hero-profile-cutout-v2\.webp/);

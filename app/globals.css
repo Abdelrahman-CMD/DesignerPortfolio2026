@@ -841,6 +841,7 @@ a:focus-visible > .link-icon svg * {
 }
 
 .mind-hero {
+  --brain-shift-x: 2.6365%;
   position: relative;
   height: 100svh;
   min-height: 100svh;
@@ -958,10 +959,18 @@ a:focus-visible > .link-icon svg * {
   position: absolute;
   z-index: 2;
   top: 2.3745%;
-  left: 12.7119%;
+  left: calc(12.7119% + var(--brain-shift-x));
   width: 49.1525%;
   aspect-ratio: 261 / 233;
   pointer-events: none;
+  -webkit-mask-image: url("/about/brain-head-clip.png");
+  mask-image: url("/about/brain-head-clip.png");
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
 }
 
 .mind-brain-stage img {
@@ -1245,11 +1254,11 @@ html.hero-cta-cursor-captured a { cursor: none !important; }
   pointer-events: none;
 }
 
-.mind-zone-curiosity { top: 2.4%; left: 12.7%; width: 30.6%; height: 17%; }
-.mind-zone-connections { top: 2.4%; left: 41%; width: 20.9%; height: 15.3%; }
-.mind-zone-structure { top: 12.6%; left: 21.2%; width: 32%; height: 11.5%; }
-.mind-zone-source { top: 14.2%; left: 54.1%; width: 7.8%; height: 10.2%; }
-.mind-zone-direction { top: 22.7%; left: 44.3%; width: 14.2%; height: 6.2%; }
+.mind-zone-curiosity { top: 2.4%; left: calc(12.7% + var(--brain-shift-x)); width: 30.6%; height: 17%; }
+.mind-zone-connections { top: 2.4%; left: calc(41% + var(--brain-shift-x)); width: 20.9%; height: 15.3%; }
+.mind-zone-source { top: 12.6%; left: calc(21.2% + var(--brain-shift-x)); width: 32%; height: 11.5%; }
+.mind-zone-structure { top: 14.2%; left: calc(54.1% + var(--brain-shift-x)); width: 7.8%; height: 10.2%; }
+.mind-zone-direction { top: 22.7%; left: calc(44.3% + var(--brain-shift-x)); width: 14.2%; height: 6.2%; }
 
 .mind-zone-surface {
   position: absolute;
@@ -1263,8 +1272,8 @@ html.hero-cta-cursor-captured a { cursor: none !important; }
 
 .mind-zone-curiosity .mind-zone-surface { clip-path: polygon(8% 2%, 83% 0, 100% 25%, 94% 70%, 70% 100%, 7% 91%, 0 32%); }
 .mind-zone-connections .mind-zone-surface { clip-path: polygon(9% 0, 95% 3%, 100% 73%, 76% 100%, 13% 88%, 0 27%); }
-.mind-zone-structure .mind-zone-surface { clip-path: polygon(5% 4%, 82% 0, 100% 42%, 85% 100%, 15% 96%, 0 67%); }
-.mind-zone-source .mind-zone-surface { clip-path: polygon(8% 8%, 68% 0, 100% 31%, 92% 77%, 62% 100%, 8% 89%, 0 40%); }
+.mind-zone-source .mind-zone-surface { clip-path: polygon(5% 4%, 82% 0, 100% 42%, 85% 100%, 15% 96%, 0 67%); }
+.mind-zone-structure .mind-zone-surface { clip-path: polygon(8% 8%, 68% 0, 100% 31%, 92% 77%, 62% 100%, 8% 89%, 0 40%); }
 .mind-zone-direction .mind-zone-surface { clip-path: polygon(10% 1%, 92% 3%, 100% 50%, 81% 100%, 15% 94%, 0 50%); }
 
 .mind-zone-surface::after {
@@ -1352,6 +1361,7 @@ html.hero-cta-cursor-captured a { cursor: none !important; }
 
 .mind-annotation-panel strong {
   margin-top: var(--space-1);
+  color: var(--zone-color);
   font-family: var(--hand);
   font-size: clamp(1.25rem, 1.5vw, 1.72rem);
   font-weight: 400;

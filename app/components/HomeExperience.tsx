@@ -474,8 +474,8 @@ const mindZones = [
     label: "Nieuwsgierigheid",
     title: "De echte vraag vinden",
     detail:
-      "Ik blijf vragen tot aannames plaatsmaken voor een kern die we samen begrijpen.",
-    color: "#c5a36b",
+      "Aandacht, afweging en vooruitdenken brengen aannames terug tot de vraag die er echt toe doet.",
+    color: "#d4ae62",
   },
   {
     id: "connections",
@@ -483,26 +483,26 @@ const mindZones = [
     label: "Verbindingen",
     title: "Context bij elkaar brengen",
     detail:
-      "Mens, cultuur, business en techniek worden één verhaal in plaats van losse eisen.",
-    color: "#c875a0",
-  },
-  {
-    id: "structure",
-    number: "03",
-    label: "Structuur",
-    title: "Complexiteit zonder ruis",
-    detail:
-      "Scherpe inzichten worden systemen die helder, toegankelijk en verantwoordelijk werken.",
-    color: "#6f9f7e",
+      "Losse signalen, perspectieven en ruimtelijke context worden één samenhangend beeld.",
+    color: "#b83225",
   },
   {
     id: "source",
-    number: "04",
+    number: "03",
     label: "Unlimited source",
-    title: "Voorbij het logische antwoord",
+    title: "Herinnering als springplank",
     detail:
-      "Hier begint niets met een component. Eerst ontstaat ruimte voor het onverwachte idee.",
-    color: "#7278a5",
+      "Ervaring, taal en associaties vormen de bron waaruit onverwachte ideeën kunnen ontstaan.",
+    color: "#6c9f5e",
+  },
+  {
+    id: "structure",
+    number: "04",
+    label: "Structuur",
+    title: "Patronen zichtbaar maken",
+    detail:
+      "Visuele informatie wordt herkend, geordend en vertaald naar een ontwerp zonder ruis.",
+    color: "#546c75",
   },
   {
     id: "direction",
@@ -510,8 +510,8 @@ const mindZones = [
     label: "Richting geven",
     title: "Van gedachte naar realiteit",
     detail:
-      "Tools versnellen de uitvoering. Selectie, richting en verantwoordelijkheid blijven mensenwerk.",
-    color: "#ad6f6b",
+      "Intentie wordt verfijnd tot ritme, timing en een uitvoering die precies op haar doel landt.",
+    color: "#a26852",
   },
 ] as const;
 
