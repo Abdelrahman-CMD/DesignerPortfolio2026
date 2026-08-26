@@ -1235,6 +1235,14 @@ html.hero-cta-cursor-captured a { cursor: none !important; }
   aspect-ratio: 1600 / 1344;
 }
 
+@media (min-width: 721px) and (max-width: 1100px) {
+  .mind-hero-photo-slide,
+  .mind-zone-layer {
+    width: min(72cqw, calc(100cqh * 1.1905));
+  }
+
+}
+
 .mind-zone {
   position: absolute;
   margin: 0;
@@ -1332,6 +1340,17 @@ html.hero-cta-cursor-captured a { cursor: none !important; }
 .mind-annotation-panel-structure { top: 46%; left: 0; }
 .mind-annotation-panel-source { top: 37%; right: -1%; }
 .mind-annotation-panel-direction { top: 61%; right: 7%; }
+
+@media (min-width: 721px) and (max-width: 1100px) {
+  .mind-annotation-panel-curiosity,
+  .mind-annotation-panel-structure {
+    right: -1%;
+    left: auto;
+  }
+
+  .mind-annotation-panel-curiosity { top: 3%; }
+  .mind-annotation-panel-structure { top: 46%; }
+}
 
 .mind-annotation-kicker {
   color: var(--ink);
