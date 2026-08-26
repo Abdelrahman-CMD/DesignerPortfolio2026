@@ -1353,7 +1353,7 @@ export function HomeExperience() {
 
   useLayoutEffect(() => {
     const context = gsap.context(() => {
-      const colorLayer = root.current?.querySelector<HTMLElement>(".mind-brain-color");
+      const colorLayer = root.current?.querySelector<HTMLElement>(".mind-brain-zone.is-active");
       if (!colorLayer) return;
 
       gsap.killTweensOf(colorLayer);
@@ -1487,7 +1487,7 @@ export function HomeExperience() {
               <div className="mind-hero-photo-slide">
                 <Image
                   className="mind-hero-base"
-                  src="/about/hero-profile.webp"
+                  src="/about/hero-profile-cutout-v2.webp"
                   alt="Zijprofiel van Abdelrahman met een interactieve kaart van zijn ontwerpdenken"
                   fill
                   priority
@@ -1504,17 +1504,33 @@ export function HomeExperience() {
                     unoptimized
                     sizes="30vw"
                   />
-                  <span className={`mind-brain-color-region mind-brain-color-region-${activeMindZone ?? "idle"}`}>
+                  {mindZones.map((zone) => (
                     <Image
-                      className="mind-brain-color"
-                      src="/about/brain-color.svg"
+                      className={`mind-brain-zone mind-brain-zone-${zone.id}${activeMindZone === zone.id ? " is-active" : ""}`}
+                      src={`/about/brain-zone-${zone.id}.png`}
                       alt=""
                       fill
-                      unoptimized
                       sizes="30vw"
+                      key={`brain-zone-${zone.id}`}
                     />
-                  </span>
+                  ))}
                 </div>
+                <span className="mind-portrait-foreground mind-portrait-foreground-glasses" aria-hidden="true">
+                  <Image
+                    src="/about/hero-profile-cutout-v2.webp"
+                    alt=""
+                    fill
+                    sizes="100vw"
+                  />
+                </span>
+                <span className="mind-portrait-foreground mind-portrait-foreground-ear" aria-hidden="true">
+                  <Image
+                    src="/about/hero-profile-cutout-v2.webp"
+                    alt=""
+                    fill
+                    sizes="100vw"
+                  />
+                </span>
               </div>
             </div>
 

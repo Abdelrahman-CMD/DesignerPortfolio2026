@@ -911,9 +911,9 @@ a:focus-visible > .link-icon svg * {
   position: absolute;
   right: 0;
   bottom: 0;
-  width: min(100cqw, calc(100cqh * 1.6314));
+  width: min(100cqw, calc(100cqh * 1.1905));
   max-height: 100cqh;
-  aspect-ratio: 1602 / 982;
+  aspect-ratio: 1600 / 1344;
   will-change: transform, opacity;
 }
 
@@ -935,23 +935,20 @@ a:focus-visible > .link-icon svg * {
 }
 
 .mind-hero-base {
-  filter: saturate(0.72) contrast(0.96) brightness(0.985);
-  mix-blend-mode: multiply;
+  filter: saturate(0.78) contrast(0.98) brightness(1.01);
   object-fit: contain;
   object-position: right bottom;
-  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 88%, rgba(0, 0, 0, 0.82) 94%, transparent 100%);
-  mask-image: linear-gradient(to bottom, #000 0%, #000 88%, rgba(0, 0, 0, 0.82) 94%, transparent 100%);
   will-change: transform, filter;
 }
 
 .mind-brain-assembly {
   position: absolute;
   z-index: 3;
-  top: 2.8%;
-  left: 54.5%;
-  width: 28.5%;
+  top: 7.07%;
+  left: 38.75%;
+  width: 33.125%;
   aspect-ratio: 860 / 763;
-  filter: drop-shadow(0 0.35rem 0.55rem rgba(31, 29, 26, 0.1));
+  filter: drop-shadow(0 0.22rem 0.34rem rgba(31, 29, 26, 0.08));
   mix-blend-mode: multiply;
   pointer-events: none;
 }
@@ -962,32 +959,38 @@ a:focus-visible > .link-icon svg * {
 }
 
 .mind-brain-lumi {
-  filter: grayscale(1) saturate(0) contrast(1.16) brightness(1.22);
-  opacity: 0.8;
+  filter: grayscale(1) saturate(0) contrast(1.22) brightness(1.3);
+  opacity: 0.76;
 }
 
-.mind-brain-color-region {
+.mind-brain-zone {
+  filter: saturate(1.07) contrast(1.035) brightness(1.04);
+  opacity: 0;
+  transition: opacity 0.32s ease;
+  will-change: opacity, transform, filter;
+}
+
+.mind-brain-zone.is-active { opacity: 1; }
+
+.mind-portrait-foreground {
   position: absolute;
+  z-index: 4;
   inset: 0;
-  overflow: hidden;
-  opacity: 0;
-  transition: opacity 0.34s ease;
+  pointer-events: none;
 }
 
-.mind-brain-color {
-  filter: saturate(1.12) contrast(1.06) brightness(1.04) drop-shadow(0 0 0.9rem color-mix(in srgb, var(--active-zone-color, #d7a84e) 25%, transparent));
-  opacity: 0;
-  will-change: opacity, transform;
+.mind-portrait-foreground img {
+  object-fit: contain;
+  object-position: right bottom;
 }
 
-.mind-brain-color-region-idle { clip-path: inset(50%); }
-.mind-brain-color-region-curiosity { clip-path: polygon(0 0, 72% 0, 73% 18%, 66% 35%, 52% 45%, 24% 47%, 0 41%); }
-.mind-brain-color-region-connections { clip-path: polygon(66% 0, 100% 0, 100% 52%, 86% 56%, 71% 45%, 57% 34%); }
-.mind-brain-color-region-structure { clip-path: polygon(12% 34%, 77% 34%, 91% 51%, 80% 72%, 58% 78%, 21% 72%, 9% 55%); }
-.mind-brain-color-region-source { clip-path: polygon(86% 35%, 100% 38%, 100% 73%, 88% 76%, 79% 62%); }
-.mind-brain-color-region-direction { clip-path: polygon(52% 66%, 94% 65%, 92% 84%, 77% 94%, 67% 88%, 65% 100%, 54% 100%); }
+.mind-portrait-foreground-glasses {
+  clip-path: polygon(33.5% 21.5%, 61% 21.5%, 61% 31.4%, 39% 31.4%, 39% 43.5%, 33.5% 43.5%);
+}
 
-.mind-brain-color-region:not(.mind-brain-color-region-idle) { opacity: 1; }
+.mind-portrait-foreground-ear {
+  clip-path: ellipse(6.9% 11.5% at 55.4% 35.5%);
+}
 
 .mind-hero[data-active-zone="curiosity"] { --active-zone-color: #d9c39a; }
 .mind-hero[data-active-zone="connections"] { --active-zone-color: #c985b6; }
@@ -1227,9 +1230,9 @@ html.hero-cta-cursor-captured a { cursor: none !important; }
   z-index: 5;
   right: 0;
   bottom: 0;
-  width: min(100cqw, calc(100cqh * 1.6314));
+  width: min(100cqw, calc(100cqh * 1.1905));
   max-height: 100cqh;
-  aspect-ratio: 1602 / 982;
+  aspect-ratio: 1600 / 1344;
 }
 
 .mind-zone {
@@ -1245,11 +1248,11 @@ html.hero-cta-cursor-captured a { cursor: none !important; }
   pointer-events: none;
 }
 
-.mind-zone-curiosity { top: 3.8%; left: 55%; width: 19%; height: 18.5%; }
-.mind-zone-connections { top: 3.5%; left: 71%; width: 12%; height: 22%; }
-.mind-zone-structure { top: 17%; left: 57%; width: 22%; height: 19%; }
-.mind-zone-source { top: 18%; left: 78%; width: 6%; height: 17%; }
-.mind-zone-direction { top: 31%; left: 68%; width: 13%; height: 13%; }
+.mind-zone-curiosity { top: 7.1%; left: 38.8%; width: 22.5%; height: 17.5%; }
+.mind-zone-connections { top: 7.1%; left: 58%; width: 13.9%; height: 17.5%; }
+.mind-zone-structure { top: 19.3%; left: 44.7%; width: 21.2%; height: 12.3%; }
+.mind-zone-source { top: 19.3%; left: 65.3%; width: 6.6%; height: 12.3%; }
+.mind-zone-direction { top: 29.8%; left: 54.7%; width: 14.6%; height: 12.3%; }
 
 .mind-zone-surface {
   position: absolute;
@@ -1293,11 +1296,10 @@ html.hero-cta-cursor-captured a { cursor: none !important; }
   display: flex;
   width: clamp(9rem, 12vw, 12rem);
   flex-direction: column;
-  padding: var(--space-2);
-  border: 1px solid color-mix(in srgb, var(--zone-color) 26%, transparent);
-  border-radius: var(--space-1);
-  background: color-mix(in srgb, #f0ede6 91%, transparent);
-  box-shadow: 0 var(--space-1) var(--space-3) rgba(45, 42, 38, 0.08);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
   opacity: 0;
   pointer-events: none;
   transform: translateY(var(--space-1)) scale(0.98);
@@ -1315,11 +1317,21 @@ html.hero-cta-cursor-captured a { cursor: none !important; }
   transition-delay: 0s;
 }
 
-.mind-annotation-panel-curiosity { top: -15%; left: 51%; }
-.mind-annotation-panel-connections { top: -15%; right: 0; }
-.mind-annotation-panel-structure { top: 29%; left: 50%; }
-.mind-annotation-panel-source { top: 28%; right: 0; }
-.mind-annotation-panel-direction { top: 39%; right: 0; }
+.mind-annotation-panel::before {
+  width: 2.75rem;
+  height: 1px;
+  margin-bottom: 0.55rem;
+  background: color-mix(in srgb, var(--zone-color) 72%, var(--ink));
+  content: "";
+  transform: rotate(-6deg);
+  transform-origin: left center;
+}
+
+.mind-annotation-panel-curiosity { top: 3%; left: 8%; }
+.mind-annotation-panel-connections { top: 43%; right: -1%; }
+.mind-annotation-panel-structure { top: 46%; left: 0; }
+.mind-annotation-panel-source { top: 37%; right: -1%; }
+.mind-annotation-panel-direction { top: 61%; right: 7%; }
 
 .mind-annotation-kicker {
   color: var(--ink);
@@ -4468,7 +4480,7 @@ html.hero-cta-cursor-captured a { cursor: none !important; }
   .mind-hero-lede { max-width: 21rem; margin-top: var(--space-2); font-size: 0.78rem; }
   .mind-hero-actions { bottom: var(--space-2); }
   .hero-cta-stage { --hero-cta-circle-size: 5.9rem; }
-  .mind-annotation-panel { width: 9rem; padding: 0.75rem; }
+  .mind-annotation-panel { width: 9rem; padding: 0; }
   .mind-annotation-panel strong { font-size: 1.08rem; }
   .mind-annotation-detail { font-size: 0.62rem; }
   .manifesto { grid-template-columns: 1fr 4fr; }
@@ -4528,7 +4540,7 @@ html.hero-cta-cursor-captured a { cursor: none !important; }
   .mind-hero-meta { grid-template-columns: 1fr auto; gap: 1rem; }
   .mind-hero-meta span:nth-child(2) { display: none; }
   .mind-hero-meta span:last-child { text-align: right; }
-  .mind-hero-canvas { display: grid; min-height: 0; flex: none; margin-top: 0; }
+  .mind-hero-canvas { display: grid; min-height: 0; flex: none; margin-top: 0; container-type: inline-size; }
   .mind-hero-canvas::after { display: none; }
   .mind-hero-copy { position: relative; top: auto; left: auto; grid-row: 1; width: 100%; padding: var(--space-8) 0 var(--space-6); }
   .mind-hero-kicker { margin-bottom: 1.5rem; }
@@ -4549,9 +4561,8 @@ html.hero-cta-cursor-captured a { cursor: none !important; }
   }
   .hero-cta-stage { --hero-cta-circle-size: 5.75rem; }
   .mind-hero-visual { position: relative; grid-row: 2; aspect-ratio: 4 / 5; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-  .mind-hero-photo-slide { width: 100%; height: 100%; max-height: none; aspect-ratio: auto; }
-  .mind-hero-base { object-fit: cover !important; object-position: center bottom !important; }
-  .mind-brain-assembly { top: 3.7%; left: 31.5%; width: 57.5%; }
+  .mind-hero-photo-slide { right: 0; width: 148.81%; height: 100%; max-height: none; aspect-ratio: 1600 / 1344; }
+  .mind-hero-base { object-fit: contain !important; object-position: right bottom !important; }
   .golden-ratio-detail {
     z-index: 0;
     top: 29rem;
