@@ -475,7 +475,7 @@ const mindZones = [
     title: "De echte vraag vinden",
     detail:
       "Ik blijf vragen tot aannames plaatsmaken voor een kern die we samen begrijpen.",
-    color: "#d8644a",
+    color: "#c5a36b",
   },
   {
     id: "connections",
@@ -484,7 +484,7 @@ const mindZones = [
     title: "Context bij elkaar brengen",
     detail:
       "Mens, cultuur, business en techniek worden één verhaal in plaats van losse eisen.",
-    color: "#d7a84e",
+    color: "#c875a0",
   },
   {
     id: "structure",
@@ -493,7 +493,7 @@ const mindZones = [
     title: "Complexiteit zonder ruis",
     detail:
       "Scherpe inzichten worden systemen die helder, toegankelijk en verantwoordelijk werken.",
-    color: "#879a75",
+    color: "#6f9f7e",
   },
   {
     id: "source",
@@ -502,7 +502,7 @@ const mindZones = [
     title: "Voorbij het logische antwoord",
     detail:
       "Hier begint niets met een component. Eerst ontstaat ruimte voor het onverwachte idee.",
-    color: "#314668",
+    color: "#7278a5",
   },
   {
     id: "direction",
@@ -511,7 +511,7 @@ const mindZones = [
     title: "Van gedachte naar realiteit",
     detail:
       "Tools versnellen de uitvoering. Selectie, richting en verantwoordelijkheid blijven mensenwerk.",
-    color: "#6682a1",
+    color: "#ad6f6b",
   },
 ] as const;
 
@@ -1461,22 +1461,19 @@ export function HomeExperience() {
                 <div className="mind-brain-stage" aria-hidden="true">
                   <Image
                     className="mind-brain-state mind-brain-default"
-                    src="/about/brain-default.png"
+                    src="/about/brain-default.svg"
                     alt=""
                     fill
                     priority
                     unoptimized
                     sizes="(max-width: 720px) 42vw, 18vw"
                   />
-                  <Image
-                    className="mind-brain-state mind-brain-hover"
-                    src="/about/brain-hover.png"
-                    alt=""
-                    fill
-                    priority
-                    unoptimized
-                    sizes="(max-width: 720px) 42vw, 18vw"
-                  />
+                  {mindZones.map((zone) => (
+                    <span
+                      className={`mind-brain-region mind-brain-region-${zone.id}${activeMindZone === zone.id ? " is-active" : ""}`}
+                      key={`brain-region-${zone.id}`}
+                    />
+                  ))}
                 </div>
               </div>
             </div>

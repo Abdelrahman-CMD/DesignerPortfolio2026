@@ -34,8 +34,8 @@ test("server-renders the complete portfolio homepage", async () => {
   assert.match(html, /class="mind-hero-canvas"/);
   assert.match(html, /class="mind-hero-photo-slide"/);
   assert.match(html, /hero-abdel-profile\.png/);
-  assert.match(html, /brain-default\.png/);
-  assert.match(html, /brain-hover\.png/);
+  assert.match(html, /brain-default\.svg/);
+  assert.equal((html.match(/class="mind-brain-region /g) ?? []).length, 5);
   assert.equal((html.match(/class="mind-zone mind-zone-/g) ?? []).length, 5);
   assert.equal((html.match(/class="manifesto-marker-stroke"/g) ?? []).length, 3);
   assert.match(html, /class="mind-brain-stage"/);
@@ -88,8 +88,9 @@ test("uses bounded raster assets on the homepage and case pages", async () => {
   assert.doesNotMatch(homeSource, /story-photo-piece/);
   assert.match(homeSource, /\/projects\/home\/tareeqi\.webp/);
   assert.match(homeSource, /\/about\/hero-abdel-profile\.png/);
-  assert.match(homeSource, /\/about\/brain-default\.png/);
-  assert.match(homeSource, /\/about\/brain-hover\.png/);
+  assert.match(homeSource, /\/about\/brain-default\.svg/);
+  assert.match(css, /\/about\/brain-hover\.svg/);
+  assert.equal((css.match(/--brain-region-mask:/g) ?? []).length, 5);
   assert.doesNotMatch(homeSource, /brain-stage-zone-/);
   assert.doesNotMatch(homeSource, /mind-portrait-foreground/);
   assert.doesNotMatch(homeSource, /\/about\/hero-profile-cutout-v2\.webp/);

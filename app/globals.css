@@ -960,7 +960,7 @@ a:focus-visible > .link-icon svg * {
   top: 2.3745%;
   left: 12.7119%;
   width: 49.1525%;
-  aspect-ratio: 1044 / 930;
+  aspect-ratio: 261 / 233;
   pointer-events: none;
 }
 
@@ -969,19 +969,31 @@ a:focus-visible > .link-icon svg * {
   object-position: center;
 }
 
-.mind-brain-state {
-  transition: opacity 0.32s ease;
-  will-change: opacity;
-}
-
 .mind-brain-default { opacity: 1; }
-.mind-brain-hover { opacity: 0; }
 
-.mind-hero:not([data-active-zone="idle"]) .mind-brain-default {
+.mind-brain-region {
+  position: absolute;
+  inset: 0;
+  background: url("/about/brain-hover.svg") center / contain no-repeat;
   opacity: 0;
+  transition: opacity 0.28s ease;
+  will-change: opacity;
+  -webkit-mask-image: var(--brain-region-mask);
+  mask-image: var(--brain-region-mask);
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
 }
 
-.mind-hero:not([data-active-zone="idle"]) .mind-brain-hover { opacity: 1; }
+.mind-brain-region-curiosity { --brain-region-mask: url("/about/brain-mask-curiosity.png"); }
+.mind-brain-region-connections { --brain-region-mask: url("/about/brain-mask-connections.png"); }
+.mind-brain-region-structure { --brain-region-mask: url("/about/brain-mask-structure.png"); }
+.mind-brain-region-source { --brain-region-mask: url("/about/brain-mask-source.png"); }
+.mind-brain-region-direction { --brain-region-mask: url("/about/brain-mask-direction.png"); }
+.mind-brain-region.is-active { opacity: 1; }
 
 .mind-hero-copy {
   position: absolute;
