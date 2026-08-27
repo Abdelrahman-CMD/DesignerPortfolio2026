@@ -139,7 +139,7 @@ test("uses bounded raster assets on the homepage and case pages", async () => {
   assert.doesNotMatch(homeSource, /<circle cx=\{zone\.dotX\}/);
   assert.doesNotMatch(homeSource, /Scroll om verder te kijken/);
   assert.match(css, /white-space: nowrap/);
-  assert.match(css, /\.tc-card-shell \+ \.tc-card-shell \{ margin-top: -50svh; \}/);
+  assert.match(css, /\.tc-card-shell \+ \.tc-card-shell \{ margin-top: -12svh; \}/);
   assert.match(css, /object-position 24s linear/);
   assert.match(css, /\.tc-page-ayn \.tc-card-shell:nth-child\(5\) \.tc-card \{ background: #401818;/);
 });
