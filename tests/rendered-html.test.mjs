@@ -52,6 +52,11 @@ test("server-renders the complete portfolio homepage", async () => {
   assert.equal((html.match(/class="link-icon"/g) ?? []).length, 14);
   assert.match(html, /class="method-horizontal"/);
   assert.equal((html.match(/class="project-entry /g) ?? []).length, 7);
+  assert.match(html, /class="project-grid"/);
+  assert.equal((html.match(/class="project-parallax-media"/g) ?? []).length, 7);
+  assert.match(html, /04<\/strong> Conceptcases/);
+  assert.match(html, /03<\/strong> Klantprojecten/);
+  assert.doesNotMatch(html, /showcase-sticky|showcase-progress/);
   assert.match(html, /href="\/cases\/oppas-by-chaima"/);
   assert.equal((html.match(/class="method-note /g) ?? []).length, 4);
   assert.equal((html.match(/<canvas class="story-photo-mosaic"/g) ?? []).length, 4);

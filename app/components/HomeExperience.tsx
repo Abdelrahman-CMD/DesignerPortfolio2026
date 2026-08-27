@@ -25,8 +25,8 @@ const projects = [
     summary:
       "Een lokaal gevoed kaartplatform dat pelgrims voorbij de bekende routes brengt — met rust, context en toegankelijkheid als kompas.",
     services: "Strategy · UX/UI · Product concept",
-    category: "Concept Solution",
-    browserLabel: "self-initiated.solution",
+    category: "Conceptcase",
+    status: "Zelf geïnitieerd",
     bg: "#eadfd3",
     ink: "#332a24",
     image: "/projects/home/tareeqi.webp",
@@ -41,8 +41,8 @@ const projects = [
     summary:
       "Een boekhandel en leeromgeving die boeken, geleerden en de structuur van studeren uit de Haramain dichterbij brengt.",
     services: "Strategy · E-commerce · Learning UX",
-    category: "Concept Solution",
-    browserLabel: "self-initiated.solution",
+    category: "Conceptcase",
+    status: "Zelf geïnitieerd",
     bg: "#f2cf82",
     ink: "#401818",
     image: "/projects/home/ayn.webp",
@@ -57,8 +57,8 @@ const projects = [
     summary:
       "Een conversiegerichte reiservaring waarin elke keuze — van pakketfilter tot reflectie — het vertrouwen van de pelgrim versterkt.",
     services: "Conversion strategy · UX/UI · Web design",
-    category: "Concept Solution",
-    browserLabel: "self-initiated.solution",
+    category: "Conceptcase",
+    status: "Zelf geïnitieerd",
     bg: "#ff9e43",
     ink: "#28231f",
     image: "/projects/home/guidance.webp",
@@ -73,8 +73,8 @@ const projects = [
     summary:
       "Een betrouwbaar signaalplatform dat expats en migranten vroegtijdig context geeft over regels, routes en het dagelijks leven.",
     services: "Editorial strategy · UX/UI · Platform concept",
-    category: "Concept Solution",
-    browserLabel: "self-initiated.solution",
+    category: "Conceptcase",
+    status: "Zelf geïnitieerd",
     bg: "#cbd9cc",
     ink: "#123f37",
     image: "/projects/home/bayn.webp",
@@ -89,8 +89,8 @@ const projects = [
     summary:
       "Een warme Framer-website voor een zelfstandige behandelpraktijk, waarin uitleg, vertrouwen en laagdrempelig boeken samenkomen.",
     services: "Strategy · UX/UI · Framer design & build",
-    category: "Client Work",
-    browserLabel: "client.project",
+    category: "Klantproject",
+    status: "Live website",
     bg: "#dae5dd",
     ink: "#0b4a20",
     image: "/projects/home/hijaman-cups.webp",
@@ -105,8 +105,8 @@ const projects = [
     summary:
       "Een directe, conversiegerichte Framer-website voor een detacheringsbureau dat snelheid koppelt aan persoonlijke aandacht.",
     services: "Positioning · UX/UI · Framer design & build",
-    category: "Client Work",
-    browserLabel: "client.project",
+    category: "Klantproject",
+    status: "Live website",
     bg: "#1c2a3a",
     ink: "#f9fafb",
     image: "/projects/home/atotz.webp",
@@ -121,8 +121,8 @@ const projects = [
     summary:
       "Een warme website voor een pedagogisch opgeleide oppas, waarin thuisritme, duidelijke afspraken en oudervertrouwen samenkomen.",
     services: "Positioning · UX/UI · Web design & build",
-    category: "Client Work",
-    browserLabel: "client.project",
+    category: "Klantproject",
+    status: "Live website",
     bg: "#f0e2ce",
     ink: "#342d27",
     image: "/projects/live/oppas-site-desktop.png",
@@ -517,8 +517,6 @@ const mindZones = [
 
 export function HomeExperience() {
   const root = useRef<HTMLElement>(null);
-  const showcase = useRef<HTMLElement>(null);
-  const [activeProject, setActiveProject] = useState(0);
   const [activeMindZone, setActiveMindZone] = useState<string | null>(null);
   const [activeNav, setActiveNav] = useState("");
   const [contactOpen, setContactOpen] = useState(false);
@@ -841,78 +839,53 @@ export function HomeExperience() {
         });
       }
 
-      gsap.utils.toArray<HTMLElement>(".project-entry").forEach((entry, index) => {
-        const background = entry.dataset.bg ?? projects[index].bg;
+      gsap.utils.toArray<HTMLElement>(".project-entry").forEach((entry) => {
+        const visual = entry.querySelector<HTMLElement>(".project-visual");
+        const media = entry.querySelector<HTMLElement>(".project-parallax-media");
 
-        ScrollTrigger.create({
-          trigger: entry,
-          start: "top 54%",
-          end: "bottom 46%",
-          onEnter: () => {
-            setActiveProject(index);
-            if (header) header.dataset.theme = projects[index].ink === "#f9fafb" ? "dark" : "light";
-            setActiveNav("werk");
-            gsap.to(showcase.current, {
-              backgroundColor: background,
-              color: projects[index].ink,
-              duration: 0.75,
-              ease: "power2.out",
-            });
-          },
-          onEnterBack: () => {
-            setActiveProject(index);
-            if (header) header.dataset.theme = projects[index].ink === "#f9fafb" ? "dark" : "light";
-            setActiveNav("werk");
-            gsap.to(showcase.current, {
-              backgroundColor: background,
-              color: projects[index].ink,
-              duration: 0.75,
-              ease: "power2.out",
-            });
-          },
-        });
+        if (visual) {
+          gsap.fromTo(visual, {
+            autoAlpha: 0.72,
+            y: 46,
+          }, {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.9,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: entry,
+              start: "top 88%",
+              toggleActions: "play none none reverse",
+            },
+          });
+        }
 
-        gsap.from(entry.querySelector(".project-visual"), {
-          yPercent: 9,
-          scale: 0.965,
-          ease: "none",
+        if (media) {
+          gsap.fromTo(media, {
+            yPercent: -7,
+          }, {
+            yPercent: 7,
+            ease: "none",
+            scrollTrigger: {
+              trigger: entry,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: 0.65,
+            },
+          });
+        }
+
+        gsap.from(entry.querySelector(".project-card-copy"), {
+          autoAlpha: 0,
+          y: 20,
+          duration: 0.65,
+          ease: "power2.out",
           scrollTrigger: {
             trigger: entry,
-            start: "top bottom",
-            end: "center center",
-            scrub: true,
+            start: "top 82%",
+            toggleActions: "play none none reverse",
           },
         });
-
-        const image = entry.querySelector("img");
-        if (image) {
-          gsap.fromTo(
-            image,
-            { yPercent: -4 },
-            {
-              yPercent: 6,
-              ease: "none",
-              scrollTrigger: {
-                trigger: entry,
-                start: "top bottom",
-                end: "bottom top",
-                scrub: true,
-              },
-            },
-          );
-        }
-      });
-
-      gsap.fromTo(".showcase-progress span", { scaleY: 0 }, {
-        scaleY: 1,
-        transformOrigin: "top",
-        ease: "none",
-        scrollTrigger: {
-          trigger: ".project-stream",
-          start: "top 62%",
-          end: "bottom 62%",
-          scrub: true,
-        },
       });
 
       const route = root.current?.querySelector<HTMLElement>(".story-route");
@@ -1593,75 +1566,63 @@ export function HomeExperience() {
       <section
         className="showcase"
         id="werk"
-        data-nav-theme="light"
+        data-nav-theme="dark"
         data-nav-key="werk"
-        ref={showcase}
-        style={{
-          backgroundColor: projects[0].bg,
-          color: projects[0].ink,
-        }}
         aria-labelledby="work-title"
       >
-        <div className="showcase-sticky">
-          <p className="section-kicker"><span>02</span> Selected work</p>
-          <p className="showcase-intro">
-            Drie websites gebouwd met klanten. Vier oplossingsrichtingen geboren uit
-            een gat dat ik zelf zag. Anders van oorsprong, gelijk in aandacht.
-          </p>
-          <div className="showcase-title-wrap">
-            <p className="label">Case {projects[activeProject].number} / {projectCount}</p>
-            <h2 id="work-title" aria-live="polite">{projects[activeProject].name}</h2>
+        <div className="showcase-heading">
+          <p className="section-kicker section-kicker-light"><span>02</span> Cases</p>
+          <div className="showcase-heading-copy">
+            <h2 id="work-title">Selected work</h2>
+            <p>
+              Vier zelf geïnitieerde concepten tonen hoe ik kansen in een niche ontdek
+              en vertaal naar een heldere digitale richting. Drie live klantprojecten
+              laten zien hoe strategie, content en ontwerp in de praktijk samenkomen.
+            </p>
           </div>
-          <div className="project-dots" aria-hidden="true">
-            {projects.map((project, index) => (
-              <span key={project.slug} className={index === activeProject ? "is-active" : ""} />
-            ))}
+          <div className="showcase-index" aria-label="Verdeling van de cases">
+            <span><strong>04</strong> Conceptcases</span>
+            <span><strong>03</strong> Klantprojecten</span>
           </div>
-          <div className="showcase-progress" aria-hidden="true"><span /></div>
         </div>
 
-        <div className="project-stream">
+        <div className="project-grid">
           {projects.map((project) => (
             <article
               className={`project-entry project-${project.slug}`}
-              data-bg={project.bg}
               key={project.slug}
-              style={{ color: project.ink, backgroundColor: project.bg }}
+              style={{
+                "--project-accent": project.bg,
+                "--project-accent-ink": project.ink,
+              } as CSSProperties}
             >
-              <div className="project-meta label">
-                <span>{project.number} / {projectCount} · {project.category}</span>
-                <span>{project.services}</span>
-              </div>
-              <div className="project-visual">
-                <span className="project-watermark" aria-hidden="true">{project.name}</span>
-                <div className="browser-frame">
-                  <div className="browser-bar" aria-hidden="true">
-                    <i /><i /><i /><span>{project.browserLabel}</span>
-                  </div>
-                  <div className="browser-image">
+              <a className="project-card-link" href={project.href} aria-label={`Bekijk de case ${project.name}`}>
+                <div className="project-visual">
+                  <div className="project-parallax-media">
                     <Image
                       src={project.image}
                       alt={`Ontwerpoverzicht van ${project.name}`}
                       fill
-                      sizes="(max-width: 720px) 82vw, 53vw"
+                      sizes="(max-width: 720px) 100vw, 46vw"
                       style={{ objectPosition: project.imagePosition }}
                     />
                   </div>
+                  <span className="project-open" aria-hidden="true"><ArrowUpRight /></span>
                 </div>
-              </div>
-              <div className="project-copy">
-                <h3>{project.title}</h3>
-                <div>
+                <div className="project-card-copy">
+                  <div className="project-meta label">
+                    <span>{project.number} / {projectCount}</span>
+                    <span>{project.category}</span>
+                    <span>{project.status}</span>
+                  </div>
+                  <div className="project-card-title">
+                    <h3>{project.name}</h3>
+                    <span className="link-icon" aria-hidden="true"><ArrowUpRight /></span>
+                  </div>
                   <p>{project.summary}</p>
-                  {project.href ? (
-                    <a className="text-link" href={project.href}>
-                      <span className="link-icon" aria-hidden="true"><ArrowUpRight /></span><span>Bekijk de case</span>
-                    </a>
-                  ) : (
-                    <span className="text-link text-link-muted">Concept preview</span>
-                  )}
+                  <span className="project-services">{project.services}</span>
                 </div>
-              </div>
+              </a>
             </article>
           ))}
         </div>
