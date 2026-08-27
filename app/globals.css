@@ -1581,13 +1581,49 @@ html.hero-cta-cursor-captured a { cursor: none !important; }
 }
 
 .showcase {
+  --showcase-grid-size: clamp(7rem, 10vw, 10rem);
+  --showcase-pointer-x: -20rem;
+  --showcase-pointer-y: -20rem;
   position: relative;
   padding: var(--space-15) var(--page-gutter) var(--space-15);
   overflow: clip;
-  background:
-    radial-gradient(circle at 16% 5%, rgba(244, 81, 54, 0.09), transparent 22rem),
-    #121416;
-  color: #f5f1e9;
+  background: #e8e3d9;
+  color: #2f2b26;
+  isolation: isolate;
+}
+
+.showcase::before,
+.showcase::after {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(43, 39, 34, 0.052) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(43, 39, 34, 0.052) 1px, transparent 1px);
+  background-position: 0 0;
+  background-size: var(--showcase-grid-size) var(--showcase-grid-size);
+  content: "";
+  pointer-events: none;
+}
+
+.showcase::after {
+  background-image:
+    linear-gradient(rgba(255, 253, 248, 0.96) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 253, 248, 0.96) 1px, transparent 1px);
+  opacity: 0;
+  -webkit-mask-image: radial-gradient(circle 10rem at var(--showcase-pointer-x) var(--showcase-pointer-y), #000 0, rgba(0, 0, 0, 0.82) 36%, transparent 72%);
+  mask-image: radial-gradient(circle 10rem at var(--showcase-pointer-x) var(--showcase-pointer-y), #000 0, rgba(0, 0, 0, 0.82) 36%, transparent 72%);
+  transition: opacity 0.24s ease;
+}
+
+.showcase.is-pointer-present::after {
+  opacity: 1;
+}
+
+.showcase-heading,
+.project-grid {
+  position: relative;
+  z-index: 1;
 }
 
 .showcase-heading {
@@ -1596,7 +1632,7 @@ html.hero-cta-cursor-captured a { cursor: none !important; }
   gap: var(--space-6);
   align-items: end;
   padding-bottom: var(--space-12);
-  border-bottom: 1px solid rgba(245, 241, 233, 0.15);
+  border-bottom: 1px solid rgba(47, 43, 38, 0.16);
 }
 
 .showcase-heading-copy h2 {
@@ -1612,7 +1648,7 @@ html.hero-cta-cursor-captured a { cursor: none !important; }
 .showcase-heading-copy p {
   width: min(35rem, 82%);
   margin: var(--space-5) 0 0 auto;
-  color: rgba(245, 241, 233, 0.65);
+  color: #5b554e;
   font-size: clamp(0.82rem, 1vw, 1rem);
   line-height: 1.75;
 }
@@ -1628,8 +1664,8 @@ html.hero-cta-cursor-captured a { cursor: none !important; }
   justify-content: space-between;
   gap: var(--space-2);
   padding-top: var(--space-1);
-  border-top: 1px solid rgba(245, 241, 233, 0.17);
-  color: rgba(245, 241, 233, 0.62);
+  border-top: 1px solid rgba(47, 43, 38, 0.17);
+  color: rgba(47, 43, 38, 0.64);
   font-size: 0.68rem;
   font-weight: 600;
   letter-spacing: 0.09em;
@@ -1637,7 +1673,7 @@ html.hero-cta-cursor-captured a { cursor: none !important; }
 }
 
 .showcase-index strong {
-  color: #f5f1e9;
+  color: #2f2b26;
   font-family: var(--serif);
   font-size: 1.7rem;
   font-weight: 400;
@@ -1678,16 +1714,17 @@ html.hero-cta-cursor-captured a { cursor: none !important; }
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  color: rgba(245, 241, 233, 0.55);
+  color: rgba(47, 43, 38, 0.58);
 }
 
 .project-meta span:first-child { margin-right: auto; }
 
 .project-meta span:nth-child(2) {
   padding: 0.42rem 0.65rem;
-  border: 1px solid color-mix(in srgb, var(--project-accent) 58%, transparent);
+  border: 1px solid color-mix(in srgb, var(--project-accent-ink) 18%, transparent);
   border-radius: 999px;
-  color: color-mix(in srgb, var(--project-accent) 82%, white);
+  background: var(--project-accent);
+  color: var(--project-accent-ink);
 }
 
 .project-visual {
@@ -1696,7 +1733,7 @@ html.hero-cta-cursor-captured a { cursor: none !important; }
   overflow: hidden;
   border-radius: 0.16rem;
   background: var(--project-accent);
-  box-shadow: 0 2rem 6rem rgba(0, 0, 0, 0.18);
+  box-shadow: 0 2rem 5rem rgba(58, 49, 40, 0.14);
   isolation: isolate;
 }
 
@@ -1723,28 +1760,6 @@ html.hero-cta-cursor-captured a { cursor: none !important; }
   transition: filter 0.5s ease, transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.project-open {
-  position: absolute;
-  z-index: 3;
-  right: var(--space-2);
-  bottom: var(--space-2);
-  display: grid;
-  width: 3.8rem;
-  height: 3.8rem;
-  place-items: center;
-  border-radius: 50%;
-  background: rgba(247, 243, 235, 0.92);
-  color: #171819;
-  transform: translateY(0.75rem) scale(0.88);
-  opacity: 0;
-  transition: opacity 0.35s ease, transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.project-open svg {
-  width: 1.15rem;
-  height: 1.15rem;
-}
-
 .project-card-link:hover .project-parallax-media img,
 .project-card-link:focus-visible .project-parallax-media img {
   filter: saturate(1.06) contrast(1.02);
@@ -1756,14 +1771,8 @@ html.hero-cta-cursor-captured a { cursor: none !important; }
   opacity: 0.7;
 }
 
-.project-card-link:hover .project-open,
-.project-card-link:focus-visible .project-open {
-  transform: translateY(0) scale(1);
-  opacity: 1;
-}
-
 .project-card-link:focus-visible {
-  outline: 2px solid #f5f1e9;
+  outline: 2px solid #2f2b26;
   outline-offset: 0.55rem;
 }
 
@@ -1778,7 +1787,7 @@ html.hero-cta-cursor-captured a { cursor: none !important; }
   gap: var(--space-3);
   margin-top: var(--space-2);
   padding-bottom: var(--space-2);
-  border-bottom: 1px solid rgba(245, 241, 233, 0.16);
+  border-bottom: 1px solid rgba(47, 43, 38, 0.17);
 }
 
 .project-card-title h3 {
@@ -1793,8 +1802,8 @@ html.hero-cta-cursor-captured a { cursor: none !important; }
 
 .project-card-title .link-icon {
   flex: 0 0 auto;
-  border-color: rgba(245, 241, 233, 0.24);
-  color: rgba(245, 241, 233, 0.75);
+  border-color: rgba(47, 43, 38, 0.24);
+  color: rgba(47, 43, 38, 0.72);
   transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
 }
 
@@ -1808,7 +1817,7 @@ html.hero-cta-cursor-captured a { cursor: none !important; }
 .project-card-copy > p {
   max-width: 34rem;
   margin: var(--space-2) 0 0;
-  color: rgba(245, 241, 233, 0.67);
+  color: #5b554e;
   font-size: clamp(0.82rem, 0.95vw, 0.95rem);
   line-height: 1.7;
 }
@@ -1816,11 +1825,84 @@ html.hero-cta-cursor-captured a { cursor: none !important; }
 .project-services {
   display: block;
   margin-top: var(--space-2);
-  color: rgba(245, 241, 233, 0.42);
+  color: rgba(47, 43, 38, 0.5);
   font-size: 0.65rem;
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+}
+
+.case-cursor {
+  --case-cursor-bg: #f8f3e9;
+  --case-cursor-ink: #2f2b26;
+  position: fixed;
+  z-index: 120;
+  top: 0;
+  left: 0;
+  display: none;
+  width: 6.55rem;
+  height: 6.55rem;
+  color: var(--case-cursor-ink);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.22s ease, color 0.28s ease;
+  will-change: transform;
+}
+
+.case-cursor-shape {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--case-cursor-ink) 58%, transparent);
+  border-radius: 51% 49% 46% 54% / 48% 55% 45% 52%;
+  background:
+    radial-gradient(circle at 30% 24%, rgba(255, 255, 255, 0.38), transparent 32%),
+    var(--case-cursor-bg);
+  box-shadow: 0 1rem 2.8rem rgba(47, 43, 38, 0.2);
+  transform: scale(0.72);
+  transition: background 0.28s ease, border-color 0.28s ease, transform 0.46s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: hero-cta-symbiote 2.8s ease-in-out infinite;
+}
+
+.case-cursor.is-visible {
+  opacity: 1;
+}
+
+.case-cursor.is-visible .case-cursor-shape {
+  transform: scale(1);
+}
+
+.case-cursor-ring {
+  inset: 0.35rem;
+}
+
+.case-cursor-core {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 2;
+  display: grid;
+  width: 2.15rem;
+  height: 2.15rem;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--case-cursor-ink) 32%, transparent);
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--case-cursor-bg) 72%, white);
+  transform: translate(-50%, -50%);
+}
+
+.case-cursor-core svg {
+  width: 1rem;
+  height: 1rem;
+  stroke-width: 1.8;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .case-cursor { display: block; }
+  .showcase.is-case-hover,
+  .showcase.is-case-hover a { cursor: none !important; }
 }
 
 .text-link {
@@ -4648,7 +4730,6 @@ html.hero-cta-cursor-captured a { cursor: none !important; }
   .project-entry:nth-child(4n + 3),
   .project-entry:nth-child(4n) { width: 100%; margin-top: 0; }
   .project-visual { aspect-ratio: 1.24; }
-  .project-open { width: 3.15rem; height: 3.15rem; transform: none; opacity: 1; }
   .project-meta { gap: 0.55rem; font-size: 0.56rem; letter-spacing: 0.06em; }
   .project-meta span:nth-child(2) { padding: 0.35rem 0.5rem; }
   .project-card-title h3 { font-size: clamp(2.6rem, 13vw, 4.2rem); }

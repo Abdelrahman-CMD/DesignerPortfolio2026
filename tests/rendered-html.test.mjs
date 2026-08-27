@@ -29,7 +29,7 @@ test("server-renders the complete portfolio homepage", async () => {
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
 
   const html = await response.text();
-  assert.match(html, /Abdelrahman — Senior Digital Designer/);
+  assert.match(html, /Abdelrahman — Senior digitaal ontwerper/);
   assert.match(html, /Ik ontwerp met alles wat ik onderweg leer/);
   assert.match(html, /class="mind-hero-canvas"/);
   assert.match(html, /class="mind-hero-photo-slide"/);
@@ -40,7 +40,7 @@ test("server-renders the complete portfolio homepage", async () => {
   assert.equal((html.match(/class="manifesto-marker-stroke"/g) ?? []).length, 3);
   assert.match(html, /class="mind-brain-stage"/);
   assert.doesNotMatch(html, /mind-zone-motif/);
-  assert.match(html, /Tools: Figma, Framer en AI/);
+  assert.match(html, /Gereedschap: Figma, Framer en AI/);
   assert.doesNotMatch(html, /hero-project-letter|hero-rule/);
   assert.match(html, /class="contact-postcard"/);
   assert.match(html, /class="floating-contact"/);
@@ -54,8 +54,11 @@ test("server-renders the complete portfolio homepage", async () => {
   assert.equal((html.match(/class="project-entry /g) ?? []).length, 7);
   assert.match(html, /class="project-grid"/);
   assert.equal((html.match(/class="project-parallax-media"/g) ?? []).length, 7);
-  assert.match(html, /04<\/strong> Conceptcases/);
+  assert.match(html, /04<\/strong> Conceptprojecten/);
   assert.match(html, /03<\/strong> Klantprojecten/);
+  assert.match(html, /class="case-cursor"/);
+  assert.match(html, /Geselecteerd werk/);
+  assert.doesNotMatch(html, /Selected work|project-open|Digital designer|Strategy \/ UX \/ Direction/);
   assert.doesNotMatch(html, /showcase-sticky|showcase-progress/);
   assert.match(html, /href="\/cases\/oppas-by-chaima"/);
   assert.equal((html.match(/class="method-note /g) ?? []).length, 4);
@@ -122,7 +125,8 @@ test("uses bounded raster assets on the homepage and case pages", async () => {
   assert.doesNotMatch(css, /\.mind-brush-stroke-base/);
   assert.doesNotMatch(homeSource, /mind-connector-map/);
   assert.match(homeSource, /heroCtaIdleRingCopy = "ZIE DE GEVOLGEN · ZIE DE GEVOLGEN · "/);
-  assert.match(homeSource, /heroCtaActiveRingCopy = "ONTDEK DE CASES · ONTDEK DE CASES · "/);
+  assert.match(homeSource, /heroCtaActiveRingCopy = "ONTDEK PROJECTEN · ONTDEK PROJECTEN · "/);
+  assert.match(homeSource, /caseCursorRingCopy = "BEKIJK CASE · BEKIJK CASE · "/);
   assert.doesNotMatch(homeSource, /<circle cx=\{zone\.dotX\}/);
   assert.doesNotMatch(homeSource, /Scroll om verder te kijken/);
   assert.match(css, /white-space: nowrap/);

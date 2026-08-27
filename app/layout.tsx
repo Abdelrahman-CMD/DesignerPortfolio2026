@@ -16,7 +16,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     metadataBase: new URL(origin),
     title: {
-      default: "Abdelrahman — Senior Digital Designer",
+      default: "Abdelrahman — Senior digitaal ontwerper",
       template: "%s — Abdelrahman",
     },
     description:
@@ -32,7 +32,7 @@ export async function generateMetadata(): Promise<Metadata> {
           url: `${origin}/og-mind-hero.jpg`,
           width: 1672,
           height: 941,
-          alt: "Ik ontwerp met alles wat ik onderweg leer — Abdelrahman, Senior Digital Designer",
+          alt: "Ik ontwerp met alles wat ik onderweg leer — Abdelrahman, senior digitaal ontwerper",
         },
       ],
     },

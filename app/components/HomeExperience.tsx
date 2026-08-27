@@ -21,11 +21,11 @@ const projects = [
     number: "01",
     slug: "tareeqi",
     name: "Tareeqi",
-    title: "Navigating Mecca & Medina beyond the obvious",
+    title: "Mekka en Medina ontdekken voorbij het voor de hand liggende",
     summary:
       "Een lokaal gevoed kaartplatform dat pelgrims voorbij de bekende routes brengt — met rust, context en toegankelijkheid als kompas.",
-    services: "Strategy · UX/UI · Product concept",
-    category: "Conceptcase",
+    services: "Strategie · UX/UI · Productconcept",
+    category: "Conceptproject",
     status: "Zelf geïnitieerd",
     bg: "#eadfd3",
     ink: "#332a24",
@@ -37,11 +37,11 @@ const projects = [
     number: "02",
     slug: "ayn",
     name: "Ayn Al-Hikmah",
-    title: "Filling the void for knowledge seekers leaving Medina",
+    title: "Het gat vullen voor kenniszoekers die Medina verlaten",
     summary:
       "Een boekhandel en leeromgeving die boeken, geleerden en de structuur van studeren uit de Haramain dichterbij brengt.",
-    services: "Strategy · E-commerce · Learning UX",
-    category: "Conceptcase",
+    services: "Strategie · E-commerce · Leerervaring",
+    category: "Conceptproject",
     status: "Zelf geïnitieerd",
     bg: "#f2cf82",
     ink: "#401818",
@@ -53,11 +53,11 @@ const projects = [
     number: "03",
     slug: "guidance",
     name: "Guidance Travel",
-    title: "Redefining premium travel with Form Follows Function",
+    title: "Een functionele herdefinitie van hoogwaardige reizen",
     summary:
       "Een conversiegerichte reiservaring waarin elke keuze — van pakketfilter tot reflectie — het vertrouwen van de pelgrim versterkt.",
-    services: "Conversion strategy · UX/UI · Web design",
-    category: "Conceptcase",
+    services: "Conversiestrategie · UX/UI · Webontwerp",
+    category: "Conceptproject",
     status: "Zelf geïnitieerd",
     bg: "#ff9e43",
     ink: "#28231f",
@@ -69,11 +69,11 @@ const projects = [
     number: "04",
     slug: "bayn",
     name: "Bayn Signal",
-    title: "Staying ahead of the local pulse with vital insights",
+    title: "Vooruitlopen op lokale veranderingen met bruikbare inzichten",
     summary:
       "Een betrouwbaar signaalplatform dat expats en migranten vroegtijdig context geeft over regels, routes en het dagelijks leven.",
-    services: "Editorial strategy · UX/UI · Platform concept",
-    category: "Conceptcase",
+    services: "Redactionele strategie · UX/UI · Platformconcept",
+    category: "Conceptproject",
     status: "Zelf geïnitieerd",
     bg: "#cbd9cc",
     ink: "#123f37",
@@ -85,12 +85,12 @@ const projects = [
     number: "05",
     slug: "hijaman-cups",
     name: "Hijama’N Cups",
-    title: "Turning traditional care into a calm, clear digital welcome",
+    title: "Traditionele zorg vertalen naar een rustige digitale ontvangst",
     summary:
       "Een warme Framer-website voor een zelfstandige behandelpraktijk, waarin uitleg, vertrouwen en laagdrempelig boeken samenkomen.",
-    services: "Strategy · UX/UI · Framer design & build",
+    services: "Strategie · UX/UI · Framer ontwerp en bouw",
     category: "Klantproject",
-    status: "Live website",
+    status: "Online",
     bg: "#dae5dd",
     ink: "#0b4a20",
     image: "/projects/home/hijaman-cups.webp",
@@ -101,12 +101,12 @@ const projects = [
     number: "06",
     slug: "atotz",
     name: "AtotZ Detachering",
-    title: "Putting the right people in the right place — without the friction",
+    title: "De juiste mensen op de juiste plek, zonder onnodige drempels",
     summary:
       "Een directe, conversiegerichte Framer-website voor een detacheringsbureau dat snelheid koppelt aan persoonlijke aandacht.",
-    services: "Positioning · UX/UI · Framer design & build",
+    services: "Positionering · UX/UI · Framer ontwerp en bouw",
     category: "Klantproject",
-    status: "Live website",
+    status: "Online",
     bg: "#1c2a3a",
     ink: "#f9fafb",
     image: "/projects/home/atotz.webp",
@@ -117,12 +117,12 @@ const projects = [
     number: "07",
     slug: "oppasbychaima",
     name: "Oppas by Chaima",
-    title: "Turning care at home into calm, credible digital trust",
+    title: "Thuiszorg vertalen naar rustig en geloofwaardig digitaal vertrouwen",
     summary:
       "Een warme website voor een pedagogisch opgeleide oppas, waarin thuisritme, duidelijke afspraken en oudervertrouwen samenkomen.",
-    services: "Positioning · UX/UI · Web design & build",
+    services: "Positionering · UX/UI · Webontwerp en bouw",
     category: "Klantproject",
-    status: "Live website",
+    status: "Online",
     bg: "#f0e2ce",
     ink: "#342d27",
     image: "/projects/live/oppas-site-desktop.png",
@@ -133,7 +133,8 @@ const projects = [
 
 const projectCount = String(projects.length).padStart(2, "0");
 const heroCtaIdleRingCopy = "ZIE DE GEVOLGEN · ZIE DE GEVOLGEN · ";
-const heroCtaActiveRingCopy = "ONTDEK DE CASES · ONTDEK DE CASES · ";
+const heroCtaActiveRingCopy = "ONTDEK PROJECTEN · ONTDEK PROJECTEN · ";
+const caseCursorRingCopy = "BEKIJK CASE · BEKIJK CASE · ";
 
 const manifestoMarkerWords = new Set(["écht", "kwartje", "kern"]);
 
@@ -146,8 +147,8 @@ const personalStory = [
     image: "/about/web/portrait-studio.webp",
     alt: "Abdelrahman in zijn ontwerpstudio",
     position: "center 35%",
-    note: "Curiosity over certainty",
-    caption: "Home studio / waar vragen vorm krijgen",
+    note: "Nieuwsgierigheid boven zekerheid",
+    caption: "Thuisstudio / waar vragen vorm krijgen",
     dotX: "55%",
     dotMobileX: "8%",
   },
@@ -159,8 +160,8 @@ const personalStory = [
     image: "/about/web/designing.webp",
     alt: "Abdelrahman werkt aan een digitaal ontwerp achter zijn bureau",
     position: "center",
-    note: "Strategy before screens",
-    caption: "In progress / bouwen, testen, opnieuw kijken",
+    note: "Strategie vóór schermen",
+    caption: "In ontwikkeling / bouwen, testen, opnieuw kijken",
     dotX: "39%",
     dotMobileX: "91%",
   },
@@ -172,8 +173,8 @@ const personalStory = [
     image: "/about/web/learning.webp",
     alt: "Abdelrahman leest The Heart of Design",
     position: "center",
-    note: "Stay a student",
-    caption: "Field notes / kennis houdt mijn blik beweeglijk",
+    note: "Blijf een leerling",
+    caption: "Veldnotities / kennis houdt mijn blik beweeglijk",
     dotX: "63%",
     dotMobileX: "11%",
   },
@@ -185,8 +186,8 @@ const personalStory = [
     image: "/about/web/fatherhood.webp",
     alt: "Abdelrahman als vader bij de kinderwagen",
     position: "center 35%",
-    note: "Design starts at home",
-    caption: "Real life / de belangrijkste rol buiten het scherm",
+    note: "Ontwerp begint thuis",
+    caption: "Dagelijks leven / de belangrijkste rol buiten het scherm",
     dotX: "44%",
     dotMobileX: "88%",
   },
@@ -438,15 +439,15 @@ const workingMethod = [
     phase: "Sparren",
     title: "De klik is geen bijzaak.",
     body: "Een goed gesprek laat snel zien of we elkaar begrijpen én durven tegenspreken. We maken aannames zichtbaar en bepalen welke verandering de website werkelijk moet veroorzaken.",
-    tools: "Client sessions · Workshops · Direction",
-    annotation: "Begin met de vraag — niet met de deliverable.",
+    tools: "Klantsessies · Workshops · Richting",
+    annotation: "Begin met de vraag — niet met het eindproduct.",
   },
   {
     number: "02",
     phase: "Verdiepen",
     title: "De context beslist mee.",
     body: "Deskresearch, gesprekken en observaties brengen de vraag dichtbij. AI helpt patronen sneller toetsen en nieuwe vragen formuleren; het oordeel en de richting blijven menselijk.",
-    tools: "Desk research · Field research · AI",
+    tools: "Deskresearch · Praktijkonderzoek · AI",
     annotation: "AI versnelt het zoeken. Het oordeel blijft menselijk.",
   },
   {
@@ -454,7 +455,7 @@ const workingMethod = [
     phase: "Vormgeven",
     title: "Maak het vroeg genoeg echt.",
     body: "In Figma krijgt de ervaring structuur. In Framer of code wordt ze tastbaar en testbaar. AI versnelt varianten en uitvoering, zonder de ontwerpintentie over te nemen.",
-    tools: "Figma · Framer · AI-assisted build",
+    tools: "Figma · Framer · Bouwen met AI-ondersteuning",
     annotation: "Maak het vroeg voelbaar. Dan wordt feedback concreet.",
   },
   {
@@ -462,8 +463,8 @@ const workingMethod = [
     phase: "Koers houden",
     title: "Koers houden is ook ontwerpen.",
     body: "Tijdens iedere fase kijken we samen: klopt de richting nog, begrijpen gebruikers dit en draagt iedere keuze bij aan het doel? Zo blijft de klant onderdeel van iedere ontwerpbeslissing.",
-    tools: "Prototype reviews · Check-ins · Iteration",
-    annotation: "Check in. Stel bij. Houd samen koers.",
+    tools: "Prototypebeoordeling · Afstemming · Iteratie",
+    annotation: "Stem af. Stel bij. Houd samen koers.",
   },
 ] as const;
 
@@ -528,6 +529,7 @@ export function HomeExperience() {
     let cleanupStoryMosaics = () => {};
     let cleanupHeader = () => {};
     let cleanupHeroCta = () => {};
+    let cleanupCaseCursor = () => {};
 
     const context = gsap.context(() => {
       const header = root.current?.querySelector<HTMLElement>(".site-header");
@@ -888,6 +890,71 @@ export function HomeExperience() {
         });
       });
 
+      const showcaseSection = root.current?.querySelector<HTMLElement>(".showcase");
+      const caseCursor = showcaseSection?.querySelector<HTMLElement>(".case-cursor");
+      const fineCasePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
+
+      if (showcaseSection && caseCursor && fineCasePointer.matches) {
+        const cursorX = gsap.quickTo(caseCursor, "x", { duration: 0.24, ease: "power3.out" });
+        const cursorY = gsap.quickTo(caseCursor, "y", { duration: 0.24, ease: "power3.out" });
+        let activeCard: HTMLElement | null = null;
+        let pointerFrame = 0;
+        let pointerX = -200;
+        let pointerY = -200;
+        let pointerTarget: EventTarget | null = null;
+
+        gsap.set(caseCursor, { xPercent: -50, yPercent: -50 });
+
+        const renderCasePointer = () => {
+          pointerFrame = 0;
+          const sectionRect = showcaseSection.getBoundingClientRect();
+          showcaseSection.style.setProperty("--showcase-pointer-x", `${pointerX - sectionRect.left}px`);
+          showcaseSection.style.setProperty("--showcase-pointer-y", `${pointerY - sectionRect.top}px`);
+          cursorX(pointerX);
+          cursorY(pointerY);
+
+          const target = pointerTarget instanceof Element ? pointerTarget : null;
+          const card = target?.closest<HTMLElement>(".project-card-link") ?? null;
+          const nextCard = card && showcaseSection.contains(card) ? card : null;
+
+          if (nextCard !== activeCard) {
+            activeCard = nextCard;
+            caseCursor.classList.toggle("is-visible", Boolean(activeCard));
+            showcaseSection.classList.toggle("is-case-hover", Boolean(activeCard));
+
+            if (activeCard) {
+              caseCursor.style.setProperty("--case-cursor-bg", activeCard.dataset.cursorBg ?? "#f8f3e9");
+              caseCursor.style.setProperty("--case-cursor-ink", activeCard.dataset.cursorInk ?? "#2f2a25");
+            }
+          }
+        };
+
+        const handleCasePointerMove = (event: PointerEvent) => {
+          pointerX = event.clientX;
+          pointerY = event.clientY;
+          pointerTarget = event.target;
+          showcaseSection.classList.add("is-pointer-present");
+          if (!pointerFrame) pointerFrame = window.requestAnimationFrame(renderCasePointer);
+        };
+
+        const handleCasePointerLeave = () => {
+          activeCard = null;
+          pointerTarget = null;
+          caseCursor.classList.remove("is-visible");
+          showcaseSection.classList.remove("is-pointer-present", "is-case-hover");
+        };
+
+        showcaseSection.addEventListener("pointermove", handleCasePointerMove, { passive: true });
+        showcaseSection.addEventListener("pointerleave", handleCasePointerLeave);
+
+        cleanupCaseCursor = () => {
+          showcaseSection.removeEventListener("pointermove", handleCasePointerMove);
+          showcaseSection.removeEventListener("pointerleave", handleCasePointerLeave);
+          if (pointerFrame) window.cancelAnimationFrame(pointerFrame);
+          showcaseSection.classList.remove("is-pointer-present", "is-case-hover");
+        };
+      }
+
       const route = root.current?.querySelector<HTMLElement>(".story-route");
       const routeSvg = route?.querySelector<SVGSVGElement>(".story-route-svg");
       const basePath = route?.querySelector<SVGPathElement>(".story-route-base");
@@ -1241,6 +1308,7 @@ export function HomeExperience() {
       cleanupStoryMosaics();
       cleanupHeader();
       cleanupHeroCta();
+      cleanupCaseCursor();
       context.revert();
     };
   }, []);
@@ -1266,7 +1334,7 @@ export function HomeExperience() {
       <header className="site-header" data-theme="light" aria-label="Hoofdnavigatie">
         <a className="site-mark" href="#top" aria-label="Naar boven">
           <span>A</span>
-          <span className="site-mark-copy">Abdelrahman<br />Digital designer</span>
+          <span className="site-mark-copy">Abdelrahman<br />Digitaal ontwerper</span>
         </a>
         <nav className="top-nav" aria-label="Portfolio tabs">
           <a href="#werk" aria-current={activeNav === "werk" ? "location" : undefined}><span className="link-icon" aria-hidden="true"><BriefcaseBusiness /></span><span>Werk</span></a>
@@ -1336,7 +1404,7 @@ export function HomeExperience() {
           <div className="mind-hero-meta label" aria-label="Portfolio metadata">
             <span>Portfolio / 2026</span>
             <span>Een kaart van hoe ik ontwerp</span>
-            <span>Strategy / UX / Direction</span>
+            <span>Strategie / UX / Richting</span>
           </div>
 
           <div className="mind-hero-canvas">
@@ -1399,7 +1467,7 @@ export function HomeExperience() {
                 <a
                   className="hero-cta-container"
                   href="#werk"
-                  aria-label="Zie de gevolgen en ontdek de zeven cases"
+                  aria-label="Zie de gevolgen en ontdek de zeven projecten"
                 >
                   <span className="hero-cta-shape" aria-hidden="true">
                     <span className="editorial-text-ring hero-cta-ring-idle">
@@ -1508,7 +1576,7 @@ export function HomeExperience() {
                       <span className="mind-annotation-detail">{zone.detail}</span>
 
                       {zone.id === "direction" && (
-                        <span className="mind-tools" aria-label="Tools: Figma, Framer en AI">
+                        <span className="mind-tools" aria-label="Gereedschap: Figma, Framer en AI">
                           <span className="mind-tool">
                             <span className="tool-glyph" aria-hidden="true"><Figma /></span>
                             <span>Figma</span>
@@ -1566,14 +1634,29 @@ export function HomeExperience() {
       <section
         className="showcase"
         id="werk"
-        data-nav-theme="dark"
+        data-nav-theme="light"
         data-nav-key="werk"
         aria-labelledby="work-title"
       >
+        <div className="case-cursor" aria-hidden="true">
+          <span className="case-cursor-shape">
+            <span className="editorial-text-ring case-cursor-ring">
+              {[...caseCursorRingCopy].map((character, index, characters) => (
+                <span
+                  style={{ "--ring-angle": `${(index / characters.length) * 360}deg` } as CSSProperties}
+                  key={`case-cursor-${character}-${index}`}
+                >
+                  {character === " " ? "\u00a0" : character}
+                </span>
+              ))}
+            </span>
+            <span className="case-cursor-core"><ArrowUpRight /></span>
+          </span>
+        </div>
         <div className="showcase-heading">
-          <p className="section-kicker section-kicker-light"><span>02</span> Cases</p>
+          <p className="section-kicker"><span>02</span> Projecten</p>
           <div className="showcase-heading-copy">
-            <h2 id="work-title">Selected work</h2>
+            <h2 id="work-title">Geselecteerd werk</h2>
             <p>
               Vier zelf geïnitieerde concepten tonen hoe ik kansen in een niche ontdek
               en vertaal naar een heldere digitale richting. Drie live klantprojecten
@@ -1581,7 +1664,7 @@ export function HomeExperience() {
             </p>
           </div>
           <div className="showcase-index" aria-label="Verdeling van de cases">
-            <span><strong>04</strong> Conceptcases</span>
+            <span><strong>04</strong> Conceptprojecten</span>
             <span><strong>03</strong> Klantprojecten</span>
           </div>
         </div>
@@ -1596,7 +1679,13 @@ export function HomeExperience() {
                 "--project-accent-ink": project.ink,
               } as CSSProperties}
             >
-              <a className="project-card-link" href={project.href} aria-label={`Bekijk de case ${project.name}`}>
+              <a
+                className="project-card-link"
+                href={project.href}
+                aria-label={`Bekijk de case ${project.name}`}
+                data-cursor-bg={project.bg}
+                data-cursor-ink={project.ink}
+              >
                 <div className="project-visual">
                   <div className="project-parallax-media">
                     <Image
@@ -1607,7 +1696,6 @@ export function HomeExperience() {
                       style={{ objectPosition: project.imagePosition }}
                     />
                   </div>
-                  <span className="project-open" aria-hidden="true"><ArrowUpRight /></span>
                 </div>
                 <div className="project-card-copy">
                   <div className="project-meta label">
@@ -1714,7 +1802,7 @@ export function HomeExperience() {
           </h2>
           <div className="method-intro-copy">
             <p>Ik pas de route aan zodra onderzoek daar aanleiding toe geeft. De volgorde blijft helder: samen scherpstellen, bewijs zoeken, tastbaar maken en tussendoor beslissen of we nog hetzelfde probleem oplossen.</p>
-            <span className="label">Strategy → Research → Design → Direction</span>
+            <span className="label">Strategie → Onderzoek → Ontwerp → Richting</span>
           </div>
         </div>
 
@@ -1748,20 +1836,20 @@ export function HomeExperience() {
         </div>
 
         <div className="method-stack" aria-label="Mijn ontwerpstack">
-          <p className="label">The working stack</p>
+          <p className="label">Mijn gereedschapskist</p>
           <div>
             {[
               "Strategie",
-              "Desk research",
-              "Field research",
+              "Deskresearch",
+              "Praktijkonderzoek",
               "AI",
               "Figma",
               "Framer",
-              "Prototyping",
-              "Check-ins",
+              "Prototypen",
+              "Afstemming",
             ].map((tool) => <span className="method-stack-chip" key={tool}>{tool}</span>)}
           </div>
-          <p>Tools versnellen. Richting blijft mensenwerk.</p>
+          <p>Gereedschap versnelt. Richting blijft mensenwerk.</p>
         </div>
       </section>
 
@@ -1769,11 +1857,11 @@ export function HomeExperience() {
         <article className="contact-postcard">
           <div className="postcard-brand">
             <span className="postcard-monogram">A</span>
-            <p>Abdelrahman<br />Senior digital designer</p>
+            <p>Abdelrahman<br />Senior digitaal ontwerper</p>
           </div>
 
           <div className="postcard-copy">
-            <p className="label">Postcard / Amsterdam — 2026</p>
+            <p className="label">Ansichtkaart / Amsterdam — 2026</p>
             <h2><span>Even kijken</span><em>of het klikt?</em></h2>
             <p>Geen pitch nodig. Vertel wat er speelt; ik stel de vragen. Geeft het gesprek energie, dan plannen we koffie.</p>
           </div>
@@ -1785,17 +1873,17 @@ export function HomeExperience() {
               fill
               sizes="(max-width: 720px) 72vw, 28vw"
             />
-            <figcaption>Design is a dialogue</figcaption>
+            <figcaption>Ontwerp is een dialoog</figcaption>
           </figure>
 
-          <p className="postcard-side-type" aria-hidden="true">BRING THE QUESTION · TEST THE CLICK</p>
+          <p className="postcard-side-type" aria-hidden="true">BRENG DE VRAAG · TOETS DE KLIK</p>
 
           <a className="postcard-cta" href="mailto:dhr_abdelrahman@outlook.com">
             <span className="link-icon" aria-hidden="true"><Mail /></span><span>Leg je vraag op tafel</span>
           </a>
 
           <div className="postcard-links" aria-label="Contactkanalen">
-            <a href="mailto:dhr_abdelrahman@outlook.com"><span className="link-icon" aria-hidden="true"><Mail /></span><span>Email</span></a>
+            <a href="mailto:dhr_abdelrahman@outlook.com"><span className="link-icon" aria-hidden="true"><Mail /></span><span>E-mail</span></a>
             <a href="https://www.linkedin.com/in/abdelrahman-ahmed-30896964/" target="_blank" rel="noreferrer"><span className="link-icon" aria-hidden="true"><Linkedin /></span><span>LinkedIn</span></a>
             <a href="https://wa.me/31621572124" target="_blank" rel="noreferrer"><span className="link-icon" aria-hidden="true"><MessageCircle /></span><span>WhatsApp</span></a>
           </div>
@@ -1805,7 +1893,7 @@ export function HomeExperience() {
             <small>AMS<br />2026</small>
           </div>
 
-          <p className="postcard-fineprint">© 2026 · Built with intention · Nederland</p>
+          <p className="postcard-fineprint">© 2026 · Met aandacht gebouwd · Nederland</p>
         </article>
         <p className="contact-ground-note label">Geen verkooppraat. Wel een goed gesprek.</p>
       </footer>
