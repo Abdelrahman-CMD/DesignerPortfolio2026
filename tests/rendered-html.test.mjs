@@ -66,15 +66,17 @@ test("server-renders the complete portfolio homepage", async () => {
 });
 
 test("uses bounded raster assets on the homepage and case pages", async () => {
-  const [homeSource, editorialSource, tareeqiSource, guidanceSource, caseData, css, caseResponse, tareeqiResponse, oppasResponse] = await Promise.all([
+  const [homeSource, editorialSource, tareeqiSource, guidanceSource, aynSource, caseData, css, caseResponse, tareeqiResponse, aynResponse, oppasResponse] = await Promise.all([
     readFile(new URL("../app/components/HomeExperience.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/components/EditorialCaseExperience.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/components/CaseExperience.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/components/GuidanceTravelExperience.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/components/AynAlHikmahExperience.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/data/caseContent.ts", import.meta.url), "utf8"),
     readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
     render("/cases/guidance-travel"),
     render("/cases/tareeqi"),
+    render("/cases/ayn-al-hikmah"),
     render("/cases/oppas-by-chaima"),
   ]);
 
@@ -87,6 +89,12 @@ test("uses bounded raster assets on the homepage and case pages", async () => {
   assert.equal(tareeqiResponse.status, 200);
   const tareeqiHtml = await tareeqiResponse.text();
   assert.match(tareeqiHtml, /tc-style-board-tareeqi/);
+
+  assert.equal(aynResponse.status, 200);
+  const aynHtml = await aynResponse.text();
+  assert.match(aynHtml, /Ayn Al-Hikmah/);
+  assert.match(aynHtml, /ayn-2026%2Fhero-laptops\.webp/);
+  assert.match(aynHtml, /tc-style-board-ayn/);
 
   assert.equal(oppasResponse.status, 200);
   const oppasHtml = await oppasResponse.text();
@@ -119,6 +127,7 @@ test("uses bounded raster assets on the homepage and case pages", async () => {
   assert.doesNotMatch(guidanceSource, /from "next\/link"/);
   assert.match(guidanceSource, /guidance-2026\/landing-desktop\.webp/);
   assert.match(guidanceSource, /styleGuide: true/);
+  assert.match(aynSource, /styleGuide: true/);
   assert.match(tareeqiSource, /styleGuide: true/);
   assert.doesNotMatch(css, /backdrop-filter:\s*blur/i);
   assert.doesNotMatch(css, /prefers-reduced-motion:\s*reduce/i);

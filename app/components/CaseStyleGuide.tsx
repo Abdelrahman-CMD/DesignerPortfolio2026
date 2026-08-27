@@ -9,7 +9,7 @@ export type CaseStyleGuideData = {
   interfaceFont: string;
   interfaceUse: string;
   colors: { name: string; value: string; ink: string }[];
-  variant: "tareeqi" | "guidance";
+  variant: "tareeqi" | "guidance" | "ayn";
 };
 
 export function CaseStyleGuide({ data }: { data: CaseStyleGuideData }) {

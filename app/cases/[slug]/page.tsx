@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 /* eslint-disable @next/next/no-html-link-for-pages -- Keep the fallback route independent from the client router. */
 import { CaseExperience } from "../../components/CaseExperience";
 import { GuidanceTravelExperience } from "../../components/GuidanceTravelExperience";
+import { AynAlHikmahExperience } from "../../components/AynAlHikmahExperience";
 import { EditorialCaseExperience } from "../../components/EditorialCaseExperience";
 import { editorialCases } from "../../data/caseContent";
 
@@ -23,6 +24,13 @@ export async function generateMetadata({
       title: "Guidance Travel — Case study",
       description:
         "Een zelf geïnitieerde case over het vertalen van persoonlijke Hajj- en Umrahbegeleiding naar een rustige, toetsbare digitale beslisroute.",
+    };
+  }
+  if (slug === "ayn-al-hikmah") {
+    return {
+      title: "Ayn Al-Hikmah — Case study",
+      description:
+        "Een zelf geïnitieerd platformconcept dat authentieke boeken, betrouwbare geleerden en persoonlijke leerpaden samenbrengt.",
     };
   }
 
@@ -52,6 +60,10 @@ export default async function CasePage({
 
   if (slug === "guidance-travel") {
     return <GuidanceTravelExperience />;
+  }
+
+  if (slug === "ayn-al-hikmah") {
+    return <AynAlHikmahExperience />;
   }
 
   const project = editorialCases[slug];

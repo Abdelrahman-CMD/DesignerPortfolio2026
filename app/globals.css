@@ -49,6 +49,25 @@
   --tc-footer: #ff9e43;
 }
 
+.tc-page-ayn {
+  --tc-paper: #fff3e9;
+  --tc-ink: #401818;
+  --tc-brown: #b66a4d;
+  --tc-deck: #c3b5ab;
+  --tc-contribution: #401818;
+  --tc-contribution-ink: #fff3e9;
+  --tc-footer: #fed496;
+}
+
+.tc-page-ayn .tc-nav,
+.tc-page-ayn .tc-hero-meta div,
+.tc-page-ayn .tc-hero-media figcaption { background: #fff3e9; }
+
+.tc-page-ayn .tc-hero-summary,
+.tc-page-ayn .tc-hero-meta dd { color: #69433a; }
+
+.tc-page-ayn .tc-hero-media { background: #f3e8df; }
+
 .tc-nav {
   position: fixed;
   z-index: 90;
@@ -251,6 +270,11 @@
 .tc-tone-orange { --card-bg: #ff9e43; --card-ink: #1e1e1e; }
 .tc-tone-offwhite { --card-bg: #f1f1f1; --card-ink: #1e1e1e; }
 .tc-tone-black { --card-bg: #1e1e1e; --card-ink: #fff6ee; }
+.tc-tone-ayn-beige { --card-bg: #fff3e9; --card-ink: #401818; }
+.tc-tone-ayn-mango { --card-bg: #fed496; --card-ink: #401818; }
+.tc-tone-ayn-cream { --card-bg: #ffeed5; --card-ink: #401818; }
+.tc-tone-ayn-tan { --card-bg: #c3b5ab; --card-ink: #401818; }
+.tc-tone-ayn-bordeaux { --card-bg: #401818; --card-ink: #fff3e9; }
 
 .tc-card-dim { position: absolute; z-index: 8; inset: 0; background: #000; opacity: 0; pointer-events: none; }
 .tc-card-copy { position: relative; z-index: 3; display: flex; min-width: 0; flex-direction: column; padding: clamp(2rem, 3.2vw, 4rem); }
@@ -290,6 +314,9 @@
 .tc-style-colors span { font-size: 0.58rem; font-weight: 700; }
 .tc-style-board-guidance { background: #fff6ee; color: #1e1e1e; }
 .tc-style-board-guidance .tc-style-type article:first-child strong { font-family: var(--sans); font-weight: 800; }
+.tc-style-board-ayn { background: #fff3e9; color: #401818; }
+.tc-style-board-ayn .tc-style-type article:first-child strong { font-family: "Trebuchet MS", var(--sans); font-weight: 700; }
+.tc-style-board-ayn .tc-style-type article:last-child strong { font-family: Georgia, var(--serif); }
 .tc-validation-list { display: grid; gap: var(--space-1); margin: var(--space-3) 0 0; padding: 0; list-style: none; counter-reset: validation; }
 .tc-validation-list li { display: grid; grid-template-columns: 1.7rem 1fr; align-items: start; font-size: 0.75rem; line-height: 1.4; counter-increment: validation; }
 .tc-validation-list li::before { content: counter(validation, decimal-leading-zero); opacity: 0.65; }
@@ -301,6 +328,7 @@
 .tc-proof-heading h2 em { color: var(--tc-brown); font-weight: 400; }
 .tc-proof-heading > p:last-child { margin: 0; color: #5c554d; font-size: 0.9rem; line-height: 1.6; }
 .tc-proof-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: var(--space-2); margin-top: var(--space-8); }
+.tc-page-ayn .tc-proof-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .tc-proof-frame { min-width: 0; margin: 0; }
 .tc-proof-media { position: relative; aspect-ratio: 3 / 4; overflow: hidden; border: 1px solid rgba(45,42,38,0.16); border-radius: 0.35rem; background: #eee9e1; }
 .tc-proof-media img { object-fit: cover; object-position: top; transition: object-position 8s cubic-bezier(.2,.8,.2,1), transform 0.5s ease; }
@@ -330,6 +358,8 @@
 @media (min-width: 721px) {
   .tc-page-guidance .tc-title-line:first-child { font-size: clamp(4.35rem, 7vw, 8.3rem); }
   .tc-page-guidance .tc-card h2 { font-size: clamp(2.35rem, 3.85vw, 5.05rem); }
+  .tc-page-ayn .tc-title-line:first-child { font-size: clamp(4.2rem, 7vw, 8.35rem); }
+  .tc-page-ayn .tc-card h2 { font-size: clamp(2.2rem, 3.6vw, 4.7rem); }
 }
 
 @media (max-width: 720px) {
@@ -342,6 +372,7 @@
   .tc-hero h1 { margin-top: 1.5rem; }
   .tc-title-line:first-child { font-size: clamp(5.4rem, 27vw, 8rem); }
   .tc-page-guidance .tc-title-line:first-child { font-size: clamp(3.9rem, 19vw, 6.4rem); }
+  .tc-page-ayn .tc-title-line:first-child { font-size: clamp(3.75rem, 18vw, 6.2rem); }
   .tc-title-small { font-size: clamp(2rem, 10.8vw, 3.35rem); line-height: 0.96; }
   .tc-title-small:last-child { padding-left: 0.55em; }
   .tc-hero-summary { margin: var(--space-3) 0 0 10%; font-size: 0.91rem; }
@@ -396,6 +427,8 @@
   .tc-card-shell:last-child .tc-card h2 { font-size: clamp(1.8rem, 8.7vw, 2.7rem); }
   .tc-page-guidance .tc-card h2 { font-size: clamp(1.75rem, 8.25vw, 2.75rem); }
   .tc-page-guidance .tc-card-shell:last-child .tc-card h2 { font-size: clamp(1.55rem, 7.25vw, 2.25rem); }
+  .tc-page-ayn .tc-card h2 { font-size: clamp(1.66rem, 7.5vw, 2.45rem); }
+  .tc-page-ayn .tc-card-shell:last-child .tc-card h2 { font-size: clamp(1.45rem, 6.5vw, 2.05rem); }
   .tc-tone-chocolate .tc-card-media > img:first-child,
   .tc-tone-ink .tc-card-media > img:first-child,
   .tc-tone-black .tc-card-media > img:first-child { object-position: center 12%; }

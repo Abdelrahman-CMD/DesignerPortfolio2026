@@ -212,7 +212,7 @@ export const editorialCases: Record<string, EditorialCase> = {
     accent: "#fed496",
     surface: "#fff3e9",
     dark: "#401818",
-    featured: "/projects/home/ayn.webp",
+    featured: "/projects/ayn-2026/hero-laptops.webp",
     role: "Concept & Strategy · UX/UI Design",
     focus: "E-commerce · Learning · Community",
     year: "2025",
