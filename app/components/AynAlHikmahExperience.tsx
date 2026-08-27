@@ -156,15 +156,15 @@ export function AynAlHikmahExperience() {
         }
         if (nextShell) {
           gsap.to(card, {
-            scale: 0.95,
-            filter: "brightness(0.86)",
+            scale: 0.985,
+            filter: "brightness(0.95)",
             ease: "none",
             scrollTrigger: { trigger: nextShell, start: "top bottom", end: "top 10%", scrub: true, invalidateOnRefresh: true },
           });
           const dim = card.querySelector(".tc-card-dim");
           if (dim) {
             gsap.to(dim, {
-              opacity: 0.06,
+              opacity: 0.025,
               ease: "none",
               scrollTrigger: { trigger: nextShell, start: "top bottom", end: "top 10%", scrub: true, invalidateOnRefresh: true },
             });

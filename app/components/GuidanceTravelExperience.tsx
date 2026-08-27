@@ -114,9 +114,9 @@ export function GuidanceTravelExperience() {
         const media = card.querySelector(".tc-card-media");
         if (media) gsap.from(media, { opacity: 0, y: 42, scale: 0.985, duration: 0.9, ease: "power3.out", scrollTrigger: { trigger: shell, start: "top 70%", toggleActions: "play none none reverse" } });
         if (nextShell) {
-          gsap.to(card, { scale: 0.95, filter: "brightness(0.86)", ease: "none", scrollTrigger: { trigger: nextShell, start: "top bottom", end: "top 10%", scrub: true, invalidateOnRefresh: true } });
+          gsap.to(card, { scale: 0.985, filter: "brightness(0.95)", ease: "none", scrollTrigger: { trigger: nextShell, start: "top bottom", end: "top 10%", scrub: true, invalidateOnRefresh: true } });
           const dim = card.querySelector(".tc-card-dim");
-          if (dim) gsap.to(dim, { opacity: 0.06, ease: "none", scrollTrigger: { trigger: nextShell, start: "top bottom", end: "top 10%", scrub: true, invalidateOnRefresh: true } });
+          if (dim) gsap.to(dim, { opacity: 0.025, ease: "none", scrollTrigger: { trigger: nextShell, start: "top bottom", end: "top 10%", scrub: true, invalidateOnRefresh: true } });
         }
       });
       gsap.utils.toArray<HTMLElement>(".tc-proof-frame").forEach((frame, index) => gsap.from(frame, { opacity: 0, y: 38, rotate: index % 2 === 0 ? -0.6 : 0.6, duration: 0.75, ease: "power3.out", scrollTrigger: { trigger: frame, start: "top 88%" } }));
