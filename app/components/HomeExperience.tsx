@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { CSSProperties, useLayoutEffect, useRef, useState } from "react";
 import ArrowUpRight from "lucide-react/icons/arrow-up-right";
+import Blocks from "lucide-react/icons/blocks";
 import BriefcaseBusiness from "lucide-react/icons/briefcase-business";
 import Figma from "lucide-react/icons/figma";
 import Framer from "lucide-react/icons/framer";
@@ -1340,6 +1341,7 @@ export function HomeExperience() {
           <a href="#werk" aria-current={activeNav === "werk" ? "location" : undefined}><span className="link-icon" aria-hidden="true"><BriefcaseBusiness /></span><span>Werk</span></a>
           <a href="#over" aria-current={activeNav === "over" ? "location" : undefined}><span className="link-icon" aria-hidden="true"><UserRound /></span><span>Over</span></a>
           <a href="#aanpak" aria-current={activeNav === "aanpak" ? "location" : undefined}><span className="link-icon" aria-hidden="true"><Workflow /></span><span>Aanpak</span></a>
+          <a href="/playground"><span className="link-icon" aria-hidden="true"><Blocks /></span><span>Playground</span></a>
         </nav>
       </header>
 

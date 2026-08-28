@@ -49,7 +49,7 @@ test("server-renders the complete portfolio homepage", async () => {
   assert.match(html, /mailto:dhr_abdelrahman@outlook\.com/);
   assert.match(html, /https:\/\/wa\.me\/31621572124/);
   assert.doesNotMatch(html, /instagram/i);
-  assert.equal((html.match(/class="link-icon"/g) ?? []).length, 14);
+  assert.equal((html.match(/class="link-icon"/g) ?? []).length, 15);
   assert.match(html, /class="method-horizontal"/);
   assert.equal((html.match(/class="project-entry /g) ?? []).length, 7);
   assert.match(html, /class="project-grid"/);
@@ -142,4 +142,18 @@ test("uses bounded raster assets on the homepage and case pages", async () => {
   assert.match(css, /\.tc-card-shell \+ \.tc-card-shell \{ margin-top: -12svh; \}/);
   assert.match(css, /object-position 24s linear/);
   assert.match(css, /\.tc-page-ayn \.tc-card-shell:nth-child\(5\) \.tc-card \{ background: #401818;/);
+});
+
+test("server-renders the atmospheric playground route", async () => {
+  const response = await render("/playground");
+  assert.equal(response.status, 200);
+
+  const html = await response.text();
+  assert.match(html, /Een ruimte voor/);
+  assert.match(html, /cases worden/);
+  assert.equal((html.match(/class="pg-card /g) ?? []).length, 8);
+  assert.match(html, /pg-card-round/);
+  assert.match(html, /pg-card-tall/);
+  assert.match(html, /pg-card-wide-two/);
+  assert.match(html, /De ruimte staat\. De inhoud mag groeien\./);
 });
