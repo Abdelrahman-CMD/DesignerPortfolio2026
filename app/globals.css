@@ -1323,6 +1323,11 @@ a:focus-visible > .link-icon svg * {
   will-change: transform;
 }
 
+.hero-cta-touch-copy,
+.mind-touch-explorer {
+  display: none;
+}
+
 .hero-cta-container:focus-visible {
   outline: none;
 }
@@ -4806,15 +4811,107 @@ html.hero-cta-cursor-captured a { cursor: none !important; }
 
 @media (max-width: 980px) {
   .mind-hero { height: 100svh; min-height: 100svh; padding: 6.5rem var(--space-4) var(--space-3); }
-  .mind-hero h1 { font-size: clamp(3.55rem, 7.2vw, 4.75rem); }
-  .mind-hero-copy { top: 14%; width: 46%; }
+  .mind-hero-canvas { overflow: hidden; }
+  .mind-hero h1 { font-size: clamp(3rem, 6.1vw, 4.2rem); line-height: 0.91; }
+  .mind-hero-copy { top: 10%; left: 0; width: 43%; }
   .mind-hero-kicker { margin-bottom: var(--space-2); }
-  .mind-hero-lede { max-width: 21rem; margin-top: var(--space-2); font-size: 0.78rem; }
-  .mind-hero-actions { bottom: var(--space-2); }
-  .hero-cta-stage { --hero-cta-circle-size: 5.9rem; }
-  .mind-annotation-panel { width: 9rem; padding: 0; }
-  .mind-annotation-panel strong { font-size: 1.08rem; }
-  .mind-annotation-detail { font-size: 0.62rem; }
+  .mind-hero-lede { max-width: 20rem; margin: var(--space-2) 0 0 6%; font-size: 0.82rem; }
+  .mind-hero-visual { right: 0; left: auto; width: 55%; }
+  .mind-hero-actions { right: auto; bottom: 0; left: 0; transform: none; }
+  .hero-cta-stage { width: auto; height: auto; }
+  .hero-cta-container {
+    min-width: 10.75rem;
+    min-height: 3.25rem;
+    justify-content: space-between;
+    gap: var(--space-2);
+    padding: 0.35rem 0.5rem 0.35rem 1rem;
+    border: 1px solid color-mix(in srgb, var(--ink) 42%, transparent);
+    border-radius: 999px;
+    background: color-mix(in srgb, #f9f6f0 82%, transparent);
+    box-shadow: 0 0.7rem 1.8rem rgba(46, 40, 34, 0.08);
+    font-size: 0.72rem;
+    font-weight: 720;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .hero-cta-shape { display: none; }
+  .hero-cta-touch-copy { display: contents; }
+  .hero-cta-touch-copy svg {
+    width: 2.4rem;
+    height: 2.4rem;
+    padding: 0.65rem;
+    border-radius: 50%;
+    background: var(--ink);
+    color: #f9f6f0;
+    stroke-width: 1.7;
+  }
+  .hero-cta-container:focus-visible {
+    outline: 2px solid #b83225;
+    outline-offset: 3px;
+  }
+  .mind-zone-layer { display: none; }
+  .mind-touch-explorer {
+    position: absolute;
+    z-index: 10;
+    bottom: 4.75rem;
+    left: 0;
+    display: grid;
+    width: 43%;
+    gap: var(--space-2);
+  }
+  .mind-touch-tabs {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0.35rem;
+  }
+  .mind-touch-tab {
+    display: grid;
+    min-width: 0;
+    min-height: 2.75rem;
+    place-items: center;
+    padding: 0;
+    border: 1px solid color-mix(in srgb, var(--ink) 20%, transparent);
+    border-radius: 999px;
+    background: color-mix(in srgb, #f9f6f0 68%, transparent);
+    color: var(--ink);
+    font: 700 0.64rem/1 var(--sans);
+    cursor: pointer;
+    transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease, transform 0.25s ease;
+  }
+  .mind-touch-tab.is-active {
+    border-color: var(--zone-color);
+    background: var(--zone-color);
+    color: #fffdf8;
+    transform: translateY(-0.12rem);
+  }
+  .mind-touch-tab:focus-visible {
+    outline: 2px solid var(--zone-color);
+    outline-offset: 2px;
+  }
+  .mind-touch-detail {
+    min-height: 8.8rem;
+    padding: 1rem 1.1rem;
+    border: 1px solid color-mix(in srgb, var(--zone-color) 46%, transparent);
+    border-radius: 1rem;
+    background: color-mix(in srgb, #f9f6f0 88%, var(--zone-color) 12%);
+    box-shadow: 0 0.8rem 2rem rgba(46, 40, 34, 0.06);
+  }
+  .mind-touch-kicker { display: block; color: color-mix(in srgb, var(--zone-color) 72%, var(--ink)); }
+  .mind-touch-detail strong {
+    display: block;
+    margin-top: 0.55rem;
+    color: var(--zone-color);
+    font-family: var(--hand);
+    font-size: clamp(1.25rem, 2.5vw, 1.7rem);
+    font-weight: 400;
+    line-height: 1;
+  }
+  .mind-touch-detail p {
+    margin: 0.7rem 0 0;
+    color: #4b4742;
+    font-size: 0.72rem;
+    line-height: 1.48;
+  }
   .manifesto { grid-template-columns: 1fr 4fr; }
   .manifesto-copy { grid-column: 2; }
   .manifesto-aside { grid-column: 2; margin-left: auto; }
@@ -4841,10 +4938,10 @@ html.hero-cta-cursor-captured a { cursor: none !important; }
 @media (max-width: 720px) {
   .site-header { gap: var(--space-1); padding: var(--space-1); }
   .site-mark-copy { display: none; }
-  .site-mark { min-height: 2.4rem; padding: 0.2rem; }
-  .site-mark > span:first-child { width: 2.1rem; height: 2.1rem; }
+  .site-mark { min-height: 2.75rem; padding: 0.2rem; }
+  .site-mark > span:first-child { width: 2.35rem; height: 2.35rem; }
   .top-nav { gap: 0.16rem; padding: 0.22rem; font-size: 0.62rem; letter-spacing: 0.04em; }
-  .top-nav a { min-height: 2.2rem; padding: 0 0.62rem; }
+  .top-nav a { min-height: 2.75rem; padding: 0 0.7rem; }
   .floating-contact {
     right: 0.7rem;
     bottom: 0.7rem;
@@ -4865,7 +4962,11 @@ html.hero-cta-cursor-captured a { cursor: none !important; }
     min-height: 2.85rem;
     padding: 0;
   }
-  .mind-hero { height: auto; min-height: 100svh; padding: 5.5rem var(--space-2) var(--space-4); }
+  .mind-hero {
+    height: auto;
+    min-height: 100svh;
+    padding: 5.5rem max(var(--space-2), env(safe-area-inset-right)) var(--space-4) max(var(--space-2), env(safe-area-inset-left));
+  }
   .mind-hero-content { height: auto; min-height: calc(100svh - 7.5rem); }
   .mind-hero::before { background-size: auto, 100% 5rem; }
   .mind-hero-meta { grid-template-columns: 1fr auto; gap: 1rem; }
@@ -4873,12 +4974,12 @@ html.hero-cta-cursor-captured a { cursor: none !important; }
   .mind-hero-meta span:last-child { text-align: right; }
   .mind-hero-canvas { display: grid; min-height: 0; flex: none; margin-top: 0; container-type: inline-size; }
   .mind-hero-canvas::after { display: none; }
-  .mind-hero-copy { position: relative; top: auto; left: auto; grid-row: 1; width: 100%; padding: var(--space-8) 0 var(--space-6); }
+  .mind-hero-copy { position: relative; top: auto; left: auto; grid-row: 1; width: 100%; padding: var(--space-6) 0 var(--space-4); }
   .mind-hero-kicker { margin-bottom: 1.5rem; }
-  .mind-hero h1 { max-width: 100%; font-size: clamp(3.35rem, 15.5vw, 5.6rem); line-height: 0.88; }
+  .mind-hero h1 { max-width: 100%; font-size: clamp(3.15rem, 14.5vw, 5.3rem); line-height: 0.88; }
   .mind-title-line:nth-child(2) { padding-left: 0; }
   .mind-title-line:nth-child(3) { padding-left: 10%; }
-  .mind-hero-lede { max-width: 24rem; margin: var(--space-3) 0 0 12%; font-size: 0.92rem; }
+  .mind-hero-lede { max-width: 24rem; margin: var(--space-2) 0 0 9%; font-size: 0.88rem; line-height: 1.52; }
   .mind-hero-actions {
     position: relative;
     bottom: auto;
@@ -4886,13 +4987,13 @@ html.hero-cta-cursor-captured a { cursor: none !important; }
     z-index: 6;
     grid-column: 1;
     grid-row: 2;
-    align-self: end;
-    justify-self: center;
-    margin: 0 0 var(--space-3);
+    align-self: start;
+    justify-self: start;
+    margin: 0 0 var(--space-4);
     transform: none;
   }
-  .hero-cta-stage { --hero-cta-circle-size: 5.75rem; }
-  .mind-hero-visual { position: relative; width: 100%; grid-column: 1; grid-row: 2; aspect-ratio: 4 / 5; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .hero-cta-container { min-width: 11.25rem; min-height: 3.35rem; }
+  .mind-hero-visual { position: relative; width: 100%; grid-column: 1; grid-row: 3; aspect-ratio: 4 / 5; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
   .mind-hero-base { object-fit: contain !important; object-position: right bottom !important; }
   .golden-ratio-detail {
     z-index: 0;
@@ -4903,68 +5004,21 @@ html.hero-cta-cursor-captured a { cursor: none !important; }
     opacity: 0.1;
   }
   .mind-annotation-panel { display: none; }
-  .mind-zone-layer {
+  .mind-zone-layer { display: none; }
+  .mind-touch-explorer {
     position: relative;
     display: grid;
     width: 100%;
-    max-height: none;
-    aspect-ratio: auto;
-    grid-row: 3;
+    grid-column: 1;
+    grid-row: 4;
     inset: auto;
-    margin-top: var(--space-3);
+    gap: var(--space-2);
+    margin-top: var(--space-4);
   }
-  .mind-zone,
-  .mind-zone-curiosity,
-  .mind-zone-connections,
-  .mind-zone-structure,
-  .mind-zone-source,
-  .mind-zone-direction {
-    position: relative;
-    top: auto;
-    right: auto;
-    bottom: auto;
-    left: auto;
-    width: 100%;
-    height: auto;
-    min-height: 5.4rem;
-    border-top: 1px solid var(--line);
-    pointer-events: auto;
-  }
-  .mind-zone:last-of-type { border-bottom: 1px solid var(--line); }
-  .mind-zone-surface { inset: 0.35rem 0; border-radius: 0.3rem; clip-path: none; pointer-events: none; }
-  .mind-zone-mobile-copy {
-    position: relative;
-    z-index: 2;
-    display: flex;
-    min-height: 5.4rem;
-    flex-direction: column;
-    justify-content: center;
-    padding: var(--space-2);
-    pointer-events: none;
-  }
-  .mind-zone-mobile-copy strong {
-    margin-top: 0.28rem;
-    font-family: var(--hand);
-    font-size: 1.35rem;
-    font-weight: 400;
-    line-height: 1;
-  }
-  .mind-zone-mobile-copy > span:last-child {
-    max-height: 0;
-    max-width: 28rem;
-    margin-top: 0;
-    overflow: hidden;
-    color: #4b4742;
-    font-size: 0.78rem;
-    line-height: 1.48;
-    opacity: 0;
-    transition: max-height 0.45s ease, margin 0.35s ease, opacity 0.3s ease;
-  }
-  .mind-zone.is-active .mind-zone-mobile-copy > span:last-child {
-    max-height: 4rem;
-    margin-top: var(--space-1);
-    opacity: 1;
-  }
+  .mind-touch-tab { min-height: 3rem; font-size: 0.72rem; }
+  .mind-touch-detail { min-height: 9.6rem; padding: 1.1rem; }
+  .mind-touch-detail strong { font-size: 1.55rem; }
+  .mind-touch-detail p { max-width: 30rem; font-size: 0.79rem; }
   .manifesto { display: block; min-height: 110vh; padding: var(--space-10) var(--space-2); }
   .manifesto-copy { margin-top: var(--space-10); font-size: clamp(2.5rem, 11vw, 4rem); }
   .manifesto-aside { margin: var(--space-12) 0 0 55%; }
@@ -5078,4 +5132,138 @@ html.hero-cta-cursor-captured a { cursor: none !important; }
   .impact-stats > div, .impact-stats > div + div { padding: 1.5rem 0; border-right: 0; border-bottom: 1px solid rgba(249,246,240,0.2); }
   .case-footer { padding: 8vh 1rem 2rem; }
   .case-footer > a { font-size: 13vw; }
+}
+
+@media (hover: none) and (min-width: 981px), (pointer: coarse) and (min-width: 981px) {
+  .mind-zone-layer { display: none; }
+  .mind-touch-explorer {
+    position: absolute;
+    z-index: 10;
+    bottom: var(--space-3);
+    left: 2.6%;
+    display: grid;
+    width: min(34%, 28rem);
+    gap: var(--space-2);
+  }
+  .mind-touch-tabs {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0.4rem;
+  }
+  .mind-touch-tab {
+    display: grid;
+    min-height: 2.75rem;
+    place-items: center;
+    padding: 0;
+    border: 1px solid color-mix(in srgb, var(--ink) 20%, transparent);
+    border-radius: 999px;
+    background: color-mix(in srgb, #f9f6f0 78%, transparent);
+    color: var(--ink);
+    font: 700 0.66rem/1 var(--sans);
+  }
+  .mind-touch-tab.is-active {
+    border-color: var(--zone-color);
+    background: var(--zone-color);
+    color: #fffdf8;
+  }
+  .mind-touch-detail {
+    min-height: 8.5rem;
+    padding: 1rem 1.1rem;
+    border: 1px solid color-mix(in srgb, var(--zone-color) 46%, transparent);
+    border-radius: 1rem;
+    background: color-mix(in srgb, #f9f6f0 90%, var(--zone-color) 10%);
+  }
+  .mind-touch-kicker { display: block; color: color-mix(in srgb, var(--zone-color) 72%, var(--ink)); }
+  .mind-touch-detail strong {
+    display: block;
+    margin-top: 0.5rem;
+    color: var(--zone-color);
+    font-family: var(--hand);
+    font-size: 1.55rem;
+    font-weight: 400;
+    line-height: 1;
+  }
+  .mind-touch-detail p { margin: 0.65rem 0 0; color: #4b4742; font-size: 0.76rem; line-height: 1.48; }
+  .mind-hero-actions { right: var(--space-3); left: auto; transform: none; }
+  .hero-cta-stage { width: auto; height: auto; }
+  .hero-cta-container {
+    min-width: 10.75rem;
+    min-height: 3.25rem;
+    justify-content: space-between;
+    gap: var(--space-2);
+    padding: 0.35rem 0.5rem 0.35rem 1rem;
+    border: 1px solid color-mix(in srgb, var(--ink) 42%, transparent);
+    border-radius: 999px;
+    background: color-mix(in srgb, #f9f6f0 82%, transparent);
+    font-size: 0.72rem;
+    font-weight: 720;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .hero-cta-shape { display: none; }
+  .hero-cta-touch-copy { display: contents; }
+  .hero-cta-touch-copy svg {
+    width: 2.4rem;
+    height: 2.4rem;
+    padding: 0.65rem;
+    border-radius: 50%;
+    background: var(--ink);
+    color: #f9f6f0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .mind-hero *,
+  .mind-hero *::before,
+  .mind-hero *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+  .mind-hero-content,
+  .mind-hero-visual,
+  .mind-hero-photo-slide,
+  .hero-cta-stage,
+  .editorial-text-ring {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+@media (max-width: 370px) {
+  .site-header { padding: 0.5rem; }
+  .top-nav { gap: 0.2rem; padding: 0.22rem; }
+  .top-nav a {
+    width: 2.75rem;
+    min-width: 2.75rem;
+    min-height: 2.75rem;
+    justify-content: center;
+    padding: 0;
+  }
+  .top-nav .link-icon {
+    width: 1rem;
+    margin: 0;
+    opacity: 1;
+    transform: none;
+  }
+  .top-nav .link-icon svg { width: 0.95rem; height: 0.95rem; }
+  .top-nav .link-icon svg * { stroke-dashoffset: 0; transition: none; }
+  .top-nav a > span:last-child {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  .mind-hero { padding-top: 5rem; }
+  .mind-hero-copy { padding: var(--space-4) 0 var(--space-3); }
+  .mind-hero-kicker { margin-bottom: var(--space-2); }
+  .mind-hero h1 { font-size: clamp(2.85rem, 13vw, 3.15rem); line-height: 0.9; }
+  .mind-hero-lede { margin-top: var(--space-1); font-size: 0.8rem; line-height: 1.45; }
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { CSSProperties, useLayoutEffect, useRef, useState } from "react";
+import { CSSProperties, useEffect, useLayoutEffect, useRef, useState } from "react";
 import ArrowUpRight from "lucide-react/icons/arrow-up-right";
 import Blocks from "lucide-react/icons/blocks";
 import BriefcaseBusiness from "lucide-react/icons/briefcase-business";
@@ -522,9 +522,28 @@ export function HomeExperience() {
   const [activeMindZone, setActiveMindZone] = useState<string | null>(null);
   const [activeNav, setActiveNav] = useState("");
   const [contactOpen, setContactOpen] = useState(false);
+  const touchMindZone = mindZones.find((zone) => zone.id === activeMindZone) ?? mindZones[0];
+
+  useEffect(() => {
+    const touchHero = window.matchMedia(
+      "(max-width: 980px), (hover: none), (pointer: coarse)",
+    );
+
+    const syncTouchState = () => {
+      setActiveMindZone((current) => (
+        touchHero.matches ? (current ?? mindZones[0].id) : null
+      ));
+    };
+
+    syncTouchState();
+    touchHero.addEventListener("change", syncTouchState);
+    return () => touchHero.removeEventListener("change", syncTouchState);
+  }, []);
 
   useLayoutEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const supportsHeroParallax = window.matchMedia("(min-width: 721px)").matches;
 
     let cleanupStoryRoute = () => {};
     let cleanupStoryMosaics = () => {};
@@ -584,53 +603,55 @@ export function HomeExperience() {
         if (scrollFrame) window.cancelAnimationFrame(scrollFrame);
       };
 
-      const intro = gsap.timeline({ defaults: { ease: "power4.out" } });
-      intro
-        .from(".site-header", {
-          autoAlpha: 0,
-          y: -16,
-          duration: 0.46,
-        })
-        .from(
-          ".mind-hero-meta span",
-          { autoAlpha: 0, y: 10, duration: 0.38, stagger: 0.07 },
-          ">+=0.12",
-        )
-        .from(
-          ".mind-hero-canvas",
-          { clipPath: "inset(0 0 100% 0)", duration: 0.48, ease: "power3.inOut" },
-          "-=0.08",
-        )
-        .from(
-          ".mind-hero-kicker",
-          { autoAlpha: 0, y: 12, duration: 0.36 },
-          ">-=0.06",
-        )
-        .from(
-          ".mind-title-line > span",
-          { yPercent: 112, duration: 0.56, stagger: 0.08 },
-          ">-=0.04",
-        )
-        .from(
-          ".mind-hero-lede",
-          { autoAlpha: 0, y: 15, duration: 0.4 },
-          ">-=0.04",
-        )
-        .from(
-          ".mind-hero-actions",
-          { autoAlpha: 0, y: 12, duration: 0.36 },
-          ">-=0.06",
-        )
-        .from(
-          ".mind-hero-photo-slide",
-          {
-            xPercent: 104,
-            opacity: 0.12,
-            duration: 1.22,
-            ease: "power3.inOut",
-          },
-          ">+=0.08",
-        );
+      if (!prefersReducedMotion) {
+        const intro = gsap.timeline({ defaults: { ease: "power4.out" } });
+        intro
+          .from(".site-header", {
+            autoAlpha: 0,
+            y: -16,
+            duration: 0.46,
+          })
+          .from(
+            ".mind-hero-meta span",
+            { autoAlpha: 0, y: 10, duration: 0.38, stagger: 0.07 },
+            ">+=0.12",
+          )
+          .from(
+            ".mind-hero-canvas",
+            { clipPath: "inset(0 0 100% 0)", duration: 0.48, ease: "power3.inOut" },
+            "-=0.08",
+          )
+          .from(
+            ".mind-hero-kicker",
+            { autoAlpha: 0, y: 12, duration: 0.36 },
+            ">-=0.06",
+          )
+          .from(
+            ".mind-title-line > span",
+            { yPercent: 112, duration: 0.56, stagger: 0.08 },
+            ">-=0.04",
+          )
+          .from(
+            ".mind-hero-lede",
+            { autoAlpha: 0, y: 15, duration: 0.4 },
+            ">-=0.04",
+          )
+          .from(
+            ".mind-hero-actions",
+            { autoAlpha: 0, y: 12, duration: 0.36 },
+            ">-=0.06",
+          )
+          .from(
+            ".mind-hero-photo-slide",
+            {
+              xPercent: 104,
+              opacity: 0.12,
+              duration: 1.22,
+              ease: "power3.inOut",
+            },
+            ">+=0.08",
+          );
+      }
 
       const heroCtaStage = root.current?.querySelector<HTMLElement>(".hero-cta-stage");
       const heroCta = root.current?.querySelector<HTMLElement>(".hero-cta-container");
@@ -646,13 +667,15 @@ export function HomeExperience() {
         let hasFocus = false;
         const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
 
-        gsap.to(heroCtaRings, {
-          rotation: 360,
-          duration: 11,
-          repeat: -1,
-          ease: "none",
-          transformOrigin: "50% 50%",
-        });
+        if (!prefersReducedMotion) {
+          gsap.to(heroCtaRings, {
+            rotation: 360,
+            duration: 11,
+            repeat: -1,
+            ease: "none",
+            transformOrigin: "50% 50%",
+          });
+        }
 
         const setEngaged = (engaged: boolean, capturePointer = false) => {
           if (engaged !== isNear) {
@@ -719,17 +742,19 @@ export function HomeExperience() {
         heroCta.addEventListener("focus", handleFocus);
         heroCta.addEventListener("blur", handleBlur);
 
-        gsap.to(heroCtaStage, {
-          autoAlpha: 0,
-          y: -34,
-          ease: "none",
-          scrollTrigger: {
-            trigger: ".mind-hero",
-            start: "top top",
-            end: "35% top",
-            scrub: true,
-          },
-        });
+        if (!prefersReducedMotion && supportsHeroParallax) {
+          gsap.to(heroCtaStage, {
+            autoAlpha: 0,
+            y: -34,
+            ease: "none",
+            scrollTrigger: {
+              trigger: ".mind-hero",
+              start: "top top",
+              end: "35% top",
+              scrub: true,
+            },
+          });
+        }
 
         cleanupHeroCta = () => {
           window.removeEventListener("pointermove", handlePointerMove);
@@ -741,32 +766,34 @@ export function HomeExperience() {
         };
       }
 
-      gsap.to(".mind-hero-content", {
-        opacity: 0.14,
-        yPercent: -13,
-        scale: 0.945,
-        transformOrigin: "center top",
-        ease: "none",
-        scrollTrigger: {
-          trigger: ".mind-hero",
-          start: "58% center",
-          end: "bottom top",
-          scrub: true,
-        },
-      });
+      if (!prefersReducedMotion && supportsHeroParallax) {
+        gsap.to(".mind-hero-content", {
+          opacity: 0.14,
+          yPercent: -13,
+          scale: 0.945,
+          transformOrigin: "center top",
+          ease: "none",
+          scrollTrigger: {
+            trigger: ".mind-hero",
+            start: "58% center",
+            end: "bottom top",
+            scrub: true,
+          },
+        });
 
-      gsap.to(".mind-hero-visual", {
-        yPercent: -6,
-        scale: 0.975,
-        opacity: 0.28,
-        ease: "none",
-        scrollTrigger: {
-          trigger: ".mind-hero",
-          start: "top top",
-          end: "bottom top",
-          scrub: true,
-        },
-      });
+        gsap.to(".mind-hero-visual", {
+          yPercent: -6,
+          scale: 0.975,
+          opacity: 0.28,
+          ease: "none",
+          scrollTrigger: {
+            trigger: ".mind-hero",
+            start: "top top",
+            end: "bottom top",
+            scrub: true,
+          },
+        });
+      }
 
       gsap.from(".manifesto-word", {
         opacity: 0.12,
@@ -1498,6 +1525,10 @@ export function HomeExperience() {
                     </span>
                     <span className="hero-cta-orbit-core">↘</span>
                   </span>
+                  <span className="hero-cta-touch-copy">
+                    <span>Bekijk 7 cases</span>
+                    <ArrowUpRight aria-hidden="true" />
+                  </span>
                 </a>
               </div>
             </div>
@@ -1514,19 +1545,23 @@ export function HomeExperience() {
                     style={{ "--zone-color": zone.color } as CSSProperties}
                     aria-pressed={isActive}
                     aria-label={`${zone.number} ${zone.label}: ${zone.title}. ${zone.detail}`}
-                    onMouseEnter={() => {
-                      if (window.matchMedia("(hover: hover)").matches) setActiveMindZone(zone.id);
+                    onPointerEnter={(event) => {
+                      if (event.pointerType === "mouse" || event.pointerType === "pen") {
+                        setActiveMindZone(zone.id);
+                      }
                     }}
-                    onMouseLeave={() => {
-                      if (window.matchMedia("(hover: hover)").matches) setActiveMindZone(null);
+                    onPointerLeave={(event) => {
+                      if (event.pointerType === "mouse" || event.pointerType === "pen") {
+                        setActiveMindZone(null);
+                      }
                     }}
                     onFocus={(event) => {
                       if (event.currentTarget.matches(":focus-visible")) setActiveMindZone(zone.id);
                     }}
                     onBlur={() => setActiveMindZone(null)}
                     onClick={() => {
-                      if (window.matchMedia("(hover: none)").matches) {
-                        setActiveMindZone((current) => current === zone.id ? null : zone.id);
+                      if (window.matchMedia("(max-width: 980px), (hover: none), (pointer: coarse)").matches) {
+                        setActiveMindZone(zone.id);
                       }
                     }}
                   >
@@ -1596,6 +1631,45 @@ export function HomeExperience() {
                   </span>
                 );
               })}
+            </div>
+
+            <div
+              className="mind-touch-explorer"
+              role="region"
+              aria-label="Onderdelen van mijn ontwerpdenken"
+            >
+              <div className="mind-touch-tabs" role="group" aria-label="Kies een hersendeel">
+                {mindZones.map((zone) => {
+                  const isActive = touchMindZone.id === zone.id;
+
+                  return (
+                    <button
+                      key={`touch-${zone.id}`}
+                      type="button"
+                      className={`mind-touch-tab${isActive ? " is-active" : ""}`}
+                      style={{ "--zone-color": zone.color } as CSSProperties}
+                      aria-pressed={isActive}
+                      aria-controls="mind-touch-detail"
+                      aria-label={`${zone.number} ${zone.label}`}
+                      onClick={() => setActiveMindZone(zone.id)}
+                    >
+                      <span>{zone.number}</span>
+                    </button>
+                  );
+                })}
+              </div>
+              <div
+                className="mind-touch-detail"
+                id="mind-touch-detail"
+                style={{ "--zone-color": touchMindZone.color } as CSSProperties}
+                aria-live="polite"
+              >
+                <span className="mind-touch-kicker label">
+                  {touchMindZone.number} / {touchMindZone.label}
+                </span>
+                <strong>{touchMindZone.title}</strong>
+                <p>{touchMindZone.detail}</p>
+              </div>
             </div>
 
           </div>

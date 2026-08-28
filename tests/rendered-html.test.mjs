@@ -37,6 +37,8 @@ test("server-renders the complete portfolio homepage", async () => {
   assert.match(html, /brain-default\.svg/);
   assert.equal((html.match(/class="mind-brain-region /g) ?? []).length, 5);
   assert.equal((html.match(/class="mind-zone mind-zone-/g) ?? []).length, 5);
+  assert.equal((html.match(/class="mind-touch-tab(?: is-active)?"/g) ?? []).length, 5);
+  assert.match(html, /Bekijk 7 cases/);
   assert.equal((html.match(/class="manifesto-marker-stroke"/g) ?? []).length, 3);
   assert.match(html, /class="mind-brain-stage"/);
   assert.doesNotMatch(html, /mind-zone-motif/);
@@ -130,7 +132,7 @@ test("uses bounded raster assets on the homepage and case pages", async () => {
   assert.match(aynSource, /styleGuide: true/);
   assert.match(tareeqiSource, /styleGuide: true/);
   assert.doesNotMatch(css, /backdrop-filter:\s*blur/i);
-  assert.doesNotMatch(css, /prefers-reduced-motion:\s*reduce/i);
+  assert.match(css, /prefers-reduced-motion:\s*reduce/i);
   assert.doesNotMatch(css, /\.mind-brush-stroke-base/);
   assert.doesNotMatch(homeSource, /mind-connector-map/);
   assert.match(homeSource, /heroCtaIdleRingCopy = "ZIE DE GEVOLGEN · ZIE DE GEVOLGEN · "/);
