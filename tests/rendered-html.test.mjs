@@ -35,7 +35,7 @@ test("server-renders the complete portfolio homepage", async () => {
   assert.match(html, /class="mind-hero-photo-slide"/);
   assert.match(html, /hero-abdel-profile\.png/);
   assert.match(html, /brain-default\.svg/);
-  assert.equal((html.match(/class="mind-brain-region /g) ?? []).length, 5);
+  assert.equal((html.match(/class="mind-brain-region(?: is-active)?"/g) ?? []).length, 5);
   assert.equal((html.match(/class="mind-zone mind-zone-/g) ?? []).length, 5);
   assert.equal((html.match(/class="mind-touch-tab(?: is-active)?"/g) ?? []).length, 5);
   assert.match(html, /Bekijk 7 cases/);
@@ -68,17 +68,19 @@ test("server-renders the complete portfolio homepage", async () => {
 });
 
 test("uses bounded raster assets on the homepage and case pages", async () => {
-  const [homeSource, editorialSource, tareeqiSource, guidanceSource, aynSource, caseData, css, caseResponse, tareeqiResponse, aynResponse, oppasResponse] = await Promise.all([
+  const [homeSource, editorialSource, tareeqiSource, guidanceSource, aynSource, baynSource, caseData, css, caseResponse, tareeqiResponse, aynResponse, baynResponse, oppasResponse] = await Promise.all([
     readFile(new URL("../app/components/HomeExperience.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/components/EditorialCaseExperience.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/components/CaseExperience.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/components/GuidanceTravelExperience.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/components/AynAlHikmahExperience.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/components/BaynSignalExperience.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/data/caseContent.ts", import.meta.url), "utf8"),
     readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
     render("/cases/guidance-travel"),
     render("/cases/tareeqi"),
     render("/cases/ayn-al-hikmah"),
+    render("/cases/bayn-signal"),
     render("/cases/oppas-by-chaima"),
   ]);
 
@@ -97,6 +99,12 @@ test("uses bounded raster assets on the homepage and case pages", async () => {
   assert.match(aynHtml, /Ayn Al-Hikmah/);
   assert.match(aynHtml, /ayn-2026%2Fhero-laptops\.webp/);
   assert.match(aynHtml, /tc-style-board-ayn/);
+
+  assert.equal(baynResponse.status, 200);
+  const baynHtml = await baynResponse.text();
+  assert.match(baynHtml, /Bayn Signal/);
+  assert.match(baynHtml, /bayn-2026%2Fhero-laptops\.webp/);
+  assert.match(baynHtml, /tc-style-board-bayn/);
 
   assert.equal(oppasResponse.status, 200);
   const oppasHtml = await oppasResponse.text();
@@ -130,6 +138,8 @@ test("uses bounded raster assets on the homepage and case pages", async () => {
   assert.match(guidanceSource, /guidance-2026\/landing-desktop\.webp/);
   assert.match(guidanceSource, /styleGuide: true/);
   assert.match(aynSource, /styleGuide: true/);
+  assert.match(baynSource, /bayn-2026\/landing-mobile\.webp/);
+  assert.match(baynSource, /styleGuide: true/);
   assert.match(tareeqiSource, /styleGuide: true/);
   assert.doesNotMatch(css, /backdrop-filter:\s*blur/i);
   assert.match(css, /prefers-reduced-motion:\s*reduce/i);
@@ -142,7 +152,7 @@ test("uses bounded raster assets on the homepage and case pages", async () => {
   assert.doesNotMatch(homeSource, /Scroll om verder te kijken/);
   assert.match(css, /white-space: nowrap/);
   assert.match(css, /\.tc-card-shell \+ \.tc-card-shell \{ margin-top: -12svh; \}/);
-  assert.match(css, /object-position 24s linear/);
+  assert.match(css, /object-position 24s cubic-bezier\(0\.37, 0, 0\.63, 1\)/);
   assert.match(css, /\.tc-page-ayn \.tc-card-shell:nth-child\(5\) \.tc-card \{ background: #401818;/);
 });
 

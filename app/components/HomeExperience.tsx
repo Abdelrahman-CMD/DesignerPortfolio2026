@@ -683,7 +683,7 @@ export function HomeExperience() {
             heroCta.classList.toggle("is-engaged", engaged);
           }
           document.documentElement.classList.toggle(
-            "hero-cta-cursor-captured",
+            "is-cta-captured",
             engaged && capturePointer && finePointer.matches && !hasFocus,
           );
         };
@@ -762,7 +762,7 @@ export function HomeExperience() {
           heroCta.removeEventListener("focus", handleFocus);
           heroCta.removeEventListener("blur", handleBlur);
           if (pointerFrame) window.cancelAnimationFrame(pointerFrame);
-          document.documentElement.classList.remove("hero-cta-cursor-captured");
+          document.documentElement.classList.remove("is-cta-captured");
         };
       }
 
@@ -1271,7 +1271,7 @@ export function HomeExperience() {
 
       const methodPin = root.current?.querySelector<HTMLElement>(".method-pin");
       const methodTrack = root.current?.querySelector<HTMLElement>(".method-track");
-      const methodProgress = root.current?.querySelector<HTMLElement>(".method-horizontal-progress span");
+      const methodProgress = root.current?.querySelector<HTMLElement>(".method-progress span");
 
       if (methodPin && methodTrack && methodProgress) {
         const getMethodDistance = () => Math.max(0, methodTrack.scrollWidth - methodPin.clientWidth);
@@ -1461,7 +1461,8 @@ export function HomeExperience() {
                   />
                   {mindZones.map((zone) => (
                     <span
-                      className={`mind-brain-region mind-brain-region-${zone.id}${activeMindZone === zone.id ? " is-active" : ""}`}
+                      className={`mind-brain-region${activeMindZone === zone.id ? " is-active" : ""}`}
+                      data-zone={zone.id}
                       key={`brain-region-${zone.id}`}
                     />
                   ))}
@@ -1478,7 +1479,7 @@ export function HomeExperience() {
               />
             </div>
 
-            <div className="mind-hero-copy">
+            <header className="mind-hero-copy">
               <p className="mind-hero-kicker label">Geen vaste formule. Wel een stevig vertrekpunt.</p>
               <h1 id="hero-title" aria-label="Ik ontwerp met alles wat ik onderweg leer.">
                 <span className="mind-title-line"><span>Ik ontwerp met</span></span>
@@ -1489,7 +1490,7 @@ export function HomeExperience() {
                 Wat ik leer verandert mijn blik. Wat ik belangrijk vind blijft staan:
                 een helder fundament, scherpe keuzes en websites die mensen zonder omwegen begrijpen.
               </p>
-            </div>
+            </header>
 
             <div className="mind-hero-actions">
               <div className="hero-cta-stage">
@@ -1580,7 +1581,8 @@ export function HomeExperience() {
 
                 return (
                   <span
-                    className={`mind-annotation-panel mind-annotation-panel-${zone.id}${isActive ? " is-active" : ""}`}
+                    className={`mind-annotation-panel${isActive ? " is-active" : ""}`}
+                    data-zone={zone.id}
                     style={{ "--zone-color": zone.color } as CSSProperties}
                     aria-hidden={!isActive}
                     key={`annotation-${zone.id}`}
@@ -1729,7 +1731,7 @@ export function HomeExperience() {
             <span className="case-cursor-core"><ArrowUpRight /></span>
           </span>
         </div>
-        <div className="showcase-heading">
+        <header className="showcase-heading">
           <p className="section-kicker"><span>02</span> Projecten</p>
           <div className="showcase-heading-copy">
             <h2 id="work-title">Geselecteerd werk</h2>
@@ -1743,7 +1745,7 @@ export function HomeExperience() {
             <span><strong>04</strong> Conceptprojecten</span>
             <span><strong>03</strong> Klantprojecten</span>
           </div>
-        </div>
+        </header>
 
         <div className="project-grid">
           {projects.map((project) => (
@@ -1779,10 +1781,10 @@ export function HomeExperience() {
                     <span>{project.category}</span>
                     <span>{project.status}</span>
                   </div>
-                  <div className="project-card-title">
+                  <header className="project-card-title">
                     <h3>{project.name}</h3>
                     <span className="link-icon" aria-hidden="true"><ArrowUpRight /></span>
-                  </div>
+                  </header>
                   <p>{project.summary}</p>
                   <span className="project-services">{project.services}</span>
                 </div>
@@ -1805,14 +1807,14 @@ export function HomeExperience() {
       </section>
 
       <section className="about-story" id="over" data-nav-theme="light" data-nav-key="over" aria-labelledby="about-title">
-        <div className="about-story-heading">
+        <header className="about-story-heading">
           <p className="section-kicker"><span>04</span> De mens achter het werk</p>
           <h2 id="about-title">
             <span>Een klik voel je snel.</span>
             <span>Goed werk bouw je samen.</span>
           </h2>
           <p>Ik maak makkelijk contact, maar zeg ook eerlijk wanneer een samenwerking niet klopt. Als er vertrouwen is, mag het gesprek scherp worden. Dan komen de vragen op tafel die een website beter maken.</p>
-        </div>
+        </header>
 
         <div className="story-route">
           <svg className="story-route-svg" aria-hidden="true" focusable="false" preserveAspectRatio="none">
@@ -1870,7 +1872,7 @@ export function HomeExperience() {
       </section>
 
       <section className="method" id="aanpak" data-nav-theme="dark" data-nav-key="aanpak" aria-labelledby="method-title">
-        <div className="method-intro">
+        <header className="method-intro">
           <p className="section-kicker section-kicker-light"><span>05</span> Hoe ik werk</p>
           <h2 id="method-title">
             <span className="method-title-line"><span>Niet alleen ontwerpen.</span></span>
@@ -1880,13 +1882,13 @@ export function HomeExperience() {
             <p>Ik pas de route aan zodra onderzoek daar aanleiding toe geeft. De volgorde blijft helder: samen scherpstellen, bewijs zoeken, tastbaar maken en tussendoor beslissen of we nog hetzelfde probleem oplossen.</p>
             <span className="label">Strategie → Onderzoek → Ontwerp → Richting</span>
           </div>
-        </div>
+        </header>
 
         <div className="method-horizontal" aria-label="Vier stappen in mijn werkwijze">
           <div className="method-pin">
             <div className="method-horizontal-meta">
               <p className="label">Scrollroute · links naar rechts</p>
-              <div className="method-horizontal-progress" aria-hidden="true"><span /></div>
+              <div className="method-progress" aria-hidden="true"><span /></div>
               <p className="label">01 — 04</p>
             </div>
             <div className="method-track">

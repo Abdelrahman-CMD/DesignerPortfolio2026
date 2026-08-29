@@ -62,9 +62,6 @@ for (let pixel = 0; pixel < pixelCount; pixel += 1) {
   const minimum = Math.min(red, green, blue);
   const chroma = maximum - minimum;
 
-  // The supplied engraving uses five distinct colour families. Dark ink is
-  // assigned below from the nearest coloured neighbour so its fine lines stay
-  // attached to the correct lobe.
   if (maximum < 42 || chroma < 9) continue;
 
   const hue = rgbToHue(red, green, blue);

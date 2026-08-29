@@ -1,5 +1,4 @@
 "use client";
-/* eslint-disable @next/next/no-html-link-for-pages -- Native navigation keeps the case independent from the client router. */
 
 import Image from "next/image";
 import { CSSProperties, useLayoutEffect, useRef } from "react";
@@ -252,11 +251,11 @@ export function AynAlHikmahExperience() {
       </section>
 
       <section className="tc-proof" aria-labelledby="ayn-proof-title">
-        <div className="tc-proof-heading">
+        <header className="tc-proof-heading">
           <p>Drie kernflows / volledig uitgewerkt</p>
           <h2 id="ayn-proof-title">Van belofte.<br />Naar boekkeuze.<br /><em>Naar begrip.</em></h2>
           <p>De landing, boekwinkel en detailpagina vertellen samen één verhaal: eerst herkennen wat ontbreekt, daarna gericht ontdekken en uiteindelijk met voldoende context een keuze maken.</p>
-        </div>
+        </header>
         <div className="tc-proof-grid">
           {proofFrames.map((frame) => (
             <figure className="tc-proof-frame" key={frame.label}>

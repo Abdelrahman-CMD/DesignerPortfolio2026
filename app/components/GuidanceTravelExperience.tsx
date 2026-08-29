@@ -1,5 +1,4 @@
 "use client";
-/* eslint-disable @next/next/no-html-link-for-pages -- Native navigation keeps the case independent from the client router. */
 
 import Image from "next/image";
 import { CSSProperties, useLayoutEffect, useRef } from "react";
@@ -189,11 +188,11 @@ export function GuidanceTravelExperience() {
       </section>
 
       <section className="tc-proof" aria-labelledby="guidance-proof-title">
-        <div className="tc-proof-heading">
+        <header className="tc-proof-heading">
           <p>Responsive bewijs / compact beoordeelbaar</p>
           <h2 id="guidance-proof-title">Eén reislogica.<br />Drie formaten.<br /><em>Negen echte schermen.</em></h2>
           <p>Landing, pakketkeuze en vertrouwen zijn niet als losse pagina’s ontworpen, maar als één doorlopende beslisroute op desktop, tablet en mobiel.</p>
-        </div>
+        </header>
         <div className="tc-proof-grid">
           {proofFrames.map((frame) => <figure className="tc-proof-frame" key={frame.label}><div className="tc-proof-media"><Image src={frame.src} alt={`${frame.label} van Guidance Travel`} fill sizes="(max-width: 760px) 86vw, 29vw" /></div><figcaption>{frame.label}</figcaption></figure>)}
         </div>

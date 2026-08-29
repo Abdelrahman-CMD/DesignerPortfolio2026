@@ -1,5 +1,4 @@
 "use client";
-/* eslint-disable @next/next/no-html-link-for-pages -- Native navigation keeps the case independent from the client router. */
 
 import Image from "next/image";
 import { CSSProperties, useLayoutEffect, useRef } from "react";
@@ -321,11 +320,11 @@ export function CaseExperience() {
       </section>
 
       <section className="tc-proof" aria-labelledby="tc-proof-title">
-        <div className="tc-proof-heading">
+        <header className="tc-proof-heading">
           <p>Responsive bewijs / geen eindeloze walkthrough</p>
           <h2 id="tc-proof-title">Eén systeem.<br />Drie formaten.<br /><em>Tien echte schermen.</em></h2>
           <p>De volledige exports blijven beschikbaar, maar worden hier als een compacte redactionele contact sheet getoond. Zo is de breedte van het concept snel te beoordelen.</p>
-        </div>
+        </header>
         <div className="tc-proof-grid">
           {proofFrames.map((frame) => (
             <figure className="tc-proof-frame" key={frame.label}>

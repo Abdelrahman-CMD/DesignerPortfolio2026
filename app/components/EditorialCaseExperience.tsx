@@ -1,5 +1,4 @@
 "use client";
-/* eslint-disable @next/next/no-html-link-for-pages -- Native document navigation avoids a vinext RSC link interception failure. */
 
 import Image from "next/image";
 import { CSSProperties, useLayoutEffect, useRef, useState } from "react";
@@ -200,16 +199,16 @@ export function EditorialCaseExperience({ project }: { project: EditorialCase })
         </figure>
       </header>
 
-      <div id="case-story">
+      <article id="case-story">
         <section className="ec-context">
           <p className="section-kicker"><span>01</span> Context</p>
-          <div className="ec-context-grid ec-reveal">
+          <header className="ec-context-grid ec-reveal">
             <h2>{project.contextTitle}</h2>
             <div>
               <p className="ec-context-lead">{project.contextLead}</p>
               <p>{project.contextBody}</p>
             </div>
-          </div>
+          </header>
         </section>
 
         <section className="ec-insight">
@@ -222,10 +221,10 @@ export function EditorialCaseExperience({ project }: { project: EditorialCase })
         </section>
 
         <section className="ec-concept">
-          <div className="ec-concept-heading ec-reveal">
+          <header className="ec-concept-heading ec-reveal">
             <p className="section-kicker"><span>03</span> Het concept</p>
             <h2>{project.conceptTitle}</h2>
-          </div>
+          </header>
 
           <div className="ec-duality ec-reveal">
             <article>
@@ -284,11 +283,11 @@ export function EditorialCaseExperience({ project }: { project: EditorialCase })
         </section>
 
         <section className="ec-system">
-          <div className="ec-system-heading ec-reveal">
+          <header className="ec-system-heading ec-reveal">
             <p className="section-kicker"><span>04</span> Design system</p>
             <h2>Een visuele stem die het concept draagt.</h2>
             <p>Typografie en kleur zijn geen decoratie. Ze helpen de gebruiker begrijpen wat belangrijk is, wat vertrouwd voelt en waar actie nodig is.</p>
-          </div>
+          </header>
           <div className="ec-type ec-reveal">
             <div><span>Aa</span><p>{project.headingFont}<small>Headlines / identity</small></p></div>
             <div><span>Aa</span><p>{project.bodyFont}<small>Body / interface / clarity</small></p></div>
@@ -307,11 +306,11 @@ export function EditorialCaseExperience({ project }: { project: EditorialCase })
         </section>
 
         <section className="ec-gallery">
-          <div className="ec-gallery-heading ec-reveal">
+          <header className="ec-gallery-heading ec-reveal">
             <p className="section-kicker"><span>05</span> De ervaring</p>
             <h2>Van principe naar product.</h2>
             <p>{project.galleryIntro ?? "De belangrijkste schermen uit het concept, rechtstreeks uit de casepresentatie."}</p>
-          </div>
+          </header>
           <div className="ec-shot-grid">
             {project.shots.map((shot, index) => (
               <figure className={`ec-shot ec-shot-${index + 1} ${shot.src.includes("-site-") ? "ec-shot-website" : ""} ec-reveal`} key={shot.src}>
@@ -343,7 +342,7 @@ export function EditorialCaseExperience({ project }: { project: EditorialCase })
             ))}
           </dl>
         </section>
-      </div>
+      </article>
 
       <footer className="ec-footer">
         <p className="section-kicker"><span>Next</span> Volgende case</p>

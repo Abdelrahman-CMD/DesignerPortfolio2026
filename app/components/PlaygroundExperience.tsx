@@ -1,5 +1,4 @@
 "use client";
-/* eslint-disable @next/next/no-html-link-for-pages -- The playground remains a self-contained route. */
 
 import { CSSProperties, PointerEvent, useLayoutEffect, useRef } from "react";
 import ArrowDown from "lucide-react/icons/arrow-down";

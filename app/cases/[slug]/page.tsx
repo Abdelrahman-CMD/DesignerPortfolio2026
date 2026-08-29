@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-/* eslint-disable @next/next/no-html-link-for-pages -- Keep the fallback route independent from the client router. */
 import { CaseExperience } from "../../components/CaseExperience";
 import { GuidanceTravelExperience } from "../../components/GuidanceTravelExperience";
 import { AynAlHikmahExperience } from "../../components/AynAlHikmahExperience";
+import { BaynSignalExperience } from "../../components/BaynSignalExperience";
 import { EditorialCaseExperience } from "../../components/EditorialCaseExperience";
 import { editorialCases } from "../../data/caseContent";
 
@@ -31,6 +31,13 @@ export async function generateMetadata({
       title: "Ayn Al-Hikmah — Case study",
       description:
         "Een zelf geïnitieerd platformconcept dat authentieke boeken, betrouwbare geleerden en persoonlijke leerpaden samenbrengt.",
+    };
+  }
+  if (slug === "bayn-signal") {
+    return {
+      title: "Bayn Signal — Case study",
+      description:
+        "Een zelf geïnitieerd lokaal kennisplatform dat nieuws, communitycontext en praktische vervolgstappen samenbrengt in één scanbare pulse.",
     };
   }
 
@@ -64,6 +71,10 @@ export default async function CasePage({
 
   if (slug === "ayn-al-hikmah") {
     return <AynAlHikmahExperience />;
+  }
+
+  if (slug === "bayn-signal") {
+    return <BaynSignalExperience />;
   }
 
   const project = editorialCases[slug];
