@@ -68,19 +68,21 @@ test("server-renders the complete portfolio homepage", async () => {
 });
 
 test("uses bounded raster assets on the homepage and case pages", async () => {
-  const [homeSource, editorialSource, tareeqiSource, guidanceSource, aynSource, baynSource, caseData, css, caseResponse, tareeqiResponse, aynResponse, baynResponse, oppasResponse] = await Promise.all([
+  const [homeSource, editorialSource, tareeqiSource, guidanceSource, aynSource, baynSource, hijamaSource, caseData, css, caseResponse, tareeqiResponse, aynResponse, baynResponse, hijamaResponse, oppasResponse] = await Promise.all([
     readFile(new URL("../app/components/HomeExperience.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/components/EditorialCaseExperience.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/components/CaseExperience.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/components/GuidanceTravelExperience.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/components/AynAlHikmahExperience.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/components/BaynSignalExperience.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/components/HijamaNCupsExperience.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/data/caseContent.ts", import.meta.url), "utf8"),
     readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
     render("/cases/guidance-travel"),
     render("/cases/tareeqi"),
     render("/cases/ayn-al-hikmah"),
     render("/cases/bayn-signal"),
+    render("/cases/hijaman-cups"),
     render("/cases/oppas-by-chaima"),
   ]);
 
@@ -105,6 +107,13 @@ test("uses bounded raster assets on the homepage and case pages", async () => {
   assert.match(baynHtml, /Bayn Signal/);
   assert.match(baynHtml, /bayn-2026%2Fhero-laptops\.webp/);
   assert.match(baynHtml, /tc-style-board-bayn/);
+
+  assert.equal(hijamaResponse.status, 200);
+  const hijamaHtml = await hijamaResponse.text();
+  assert.match(hijamaHtml, /Hijama ’N Cups/);
+  assert.match(hijamaHtml, /hijama-2026%2Fhero-laptops\.webp/);
+  assert.match(hijamaHtml, /tc-style-board-hijama/);
+  assert.match(hijamaHtml, /https:\/\/hijamancups\.com\//);
 
   assert.equal(oppasResponse.status, 200);
   const oppasHtml = await oppasResponse.text();
@@ -140,6 +149,8 @@ test("uses bounded raster assets on the homepage and case pages", async () => {
   assert.match(aynSource, /styleGuide: true/);
   assert.match(baynSource, /bayn-2026\/landing-mobile\.webp/);
   assert.match(baynSource, /styleGuide: true/);
+  assert.match(hijamaSource, /hijama-2026\/home-mobile\.webp/);
+  assert.match(hijamaSource, /styleGuide: true/);
   assert.match(tareeqiSource, /styleGuide: true/);
   assert.doesNotMatch(css, /backdrop-filter:\s*blur/i);
   assert.match(css, /prefers-reduced-motion:\s*reduce/i);

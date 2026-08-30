@@ -3,6 +3,7 @@ import { CaseExperience } from "../../components/CaseExperience";
 import { GuidanceTravelExperience } from "../../components/GuidanceTravelExperience";
 import { AynAlHikmahExperience } from "../../components/AynAlHikmahExperience";
 import { BaynSignalExperience } from "../../components/BaynSignalExperience";
+import { HijamaNCupsExperience } from "../../components/HijamaNCupsExperience";
 import { EditorialCaseExperience } from "../../components/EditorialCaseExperience";
 import { editorialCases } from "../../data/caseContent";
 
@@ -40,6 +41,13 @@ export async function generateMetadata({
         "Een zelf geïnitieerd lokaal kennisplatform dat nieuws, communitycontext en praktische vervolgstappen samenbrengt in één scanbare pulse.",
     };
   }
+  if (slug === "hijaman-cups") {
+    return {
+      title: "Hijama 'N Cups — Case study",
+      description:
+        "Een klantcase over het vertalen van Nora's vertrouwde hijamapraktijk naar een warme, vindbare website met WhatsApp als persoonlijke route naar een afspraak.",
+    };
+  }
 
   const project = editorialCases[slug];
   return project
@@ -75,6 +83,10 @@ export default async function CasePage({
 
   if (slug === "bayn-signal") {
     return <BaynSignalExperience />;
+  }
+
+  if (slug === "hijaman-cups") {
+    return <HijamaNCupsExperience />;
   }
 
   const project = editorialCases[slug];

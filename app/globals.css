@@ -71,6 +71,16 @@
   --tc-footer: #c6d6c8;
 }
 
+.tc-page-hijama {
+  --tc-paper: #f7f7f2;
+  --tc-ink: #15662d;
+  --tc-brown: #b99a49;
+  --tc-deck: #c7d8cc;
+  --tc-contribution: #15662d;
+  --tc-contribution-ink: #f7f7f2;
+  --tc-footer: #e8d5b0;
+}
+
 .tc-page-ayn .tc-nav,
 .tc-page-ayn .tc-hero-meta div,
 .tc-page-ayn .tc-hero-media figcaption { background: #fff3e9; }
@@ -88,6 +98,15 @@
 .tc-page-bayn .tc-hero-meta dd { color: #315f54; }
 
 .tc-page-bayn .tc-hero-media { background: #77ae98; }
+
+.tc-page-hijama .tc-nav,
+.tc-page-hijama .tc-hero-meta div,
+.tc-page-hijama .tc-hero-media figcaption { background: #f7f7f2; }
+
+.tc-page-hijama .tc-hero-summary,
+.tc-page-hijama .tc-hero-meta dd { color: #356b45; }
+
+.tc-page-hijama .tc-hero-media { background: #dae5dd; }
 
 .tc-nav {
   position: fixed;
@@ -314,6 +333,11 @@
 .tc-tone-bayn-sage { --card-bg: #eaf0e9; --card-ink: #13433a; }
 .tc-tone-bayn-mint { --card-bg: #c6d6c8; --card-ink: #13433a; }
 .tc-tone-bayn-deep { --card-bg: #13433a; --card-ink: #eaf0e9; }
+.tc-tone-hijama-ivory { --card-bg: #f7f7f2; --card-ink: #15662d; }
+.tc-tone-hijama-mint { --card-bg: #dae5dd; --card-ink: #15662d; }
+.tc-tone-hijama-leaf { --card-bg: #288e47; --card-ink: #f7f7f2; }
+.tc-tone-hijama-gold { --card-bg: #e8d5b0; --card-ink: #3c341f; }
+.tc-tone-hijama-deep { --card-bg: #15662d; --card-ink: #f7f7f2; }
 
 .tc-page-ayn .tc-card-shell:nth-child(1) .tc-card { background: #f3e8df; color: #401818; }
 .tc-page-ayn .tc-card-shell:nth-child(2) .tc-card { background: #fed496; color: #401818; }
@@ -339,6 +363,8 @@
 .tc-tone-ink .tc-card-media > img:first-child,
 .tc-tone-black .tc-card-media > img:first-child,
 .tc-tone-bayn-mint .tc-card-media > img:first-child { object-position: top center; }
+.tc-page-hijama .tc-card-shell:nth-child(4) .tc-card-media > img:first-child,
+.tc-page-hijama .tc-card-shell:nth-child(6) .tc-card-media > img:first-child { object-position: top center; }
 .tc-card-logo { position: absolute !important; z-index: 3; right: var(--space-3) !important; bottom: var(--space-3) !important; left: auto !important; width: min(16rem, 38%) !important; height: auto !important; padding: var(--space-1); border-radius: var(--space-1); background: rgba(249,246,240,0.92); object-fit: contain !important; }
 
 .tc-feature-row { display: flex; flex-wrap: wrap; gap: var(--space-1); margin-top: var(--space-3); }
@@ -367,6 +393,9 @@
 .tc-style-board-bayn { background: #eaf0e9; color: #13433a; }
 .tc-style-board-bayn .tc-style-type article:first-child strong { font-family: var(--sans); font-weight: 800; }
 .tc-style-board-bayn .tc-style-type article:last-child strong { font-family: Arial, var(--sans); font-weight: 500; }
+.tc-style-board-hijama { background: #f7f7f2; color: #15662d; }
+.tc-style-board-hijama .tc-style-type article:first-child strong { font-family: "Trebuchet MS", var(--sans); font-weight: 500; }
+.tc-style-board-hijama .tc-style-type article:last-child strong { font-family: "Montserrat", var(--sans); font-weight: 600; }
 .tc-validation-list { display: grid; gap: var(--space-1); margin: var(--space-3) 0 0; padding: 0; list-style: none; counter-reset: validation; }
 .tc-validation-list li { display: grid; grid-template-columns: 1.7rem 1fr; align-items: start; font-size: 0.75rem; line-height: 1.4; counter-increment: validation; }
 .tc-validation-list li::before { content: counter(validation, decimal-leading-zero); opacity: 0.65; }
@@ -388,6 +417,10 @@
 .tc-contribution { display: grid; min-height: 82svh; grid-template-columns: 0.7fr 2.3fr; align-content: center; gap: var(--space-6); padding: var(--space-12) var(--page-gutter); background: var(--tc-contribution, var(--tc-brown)); color: var(--tc-contribution-ink, #fff9ee); }
 .tc-contribution h2 { max-width: 80rem; margin: 0; font-family: var(--serif); font-size: clamp(3.2rem, 6vw, 7.6rem); font-weight: 400; letter-spacing: -0.052em; line-height: 0.96; }
 .tc-contribution div > p { width: min(42rem, 72%); margin: var(--space-6) 0 0 auto; font-size: 1rem; line-height: 1.7; }
+.tc-live-link { display: inline-flex; min-height: 3rem; align-items: center; gap: var(--space-1); margin: var(--space-4) 0 0 auto; padding: 0 var(--space-2); border: 1px solid currentColor; border-radius: 999px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; transition: background-color var(--motion-standard) var(--ease-premium), color var(--motion-standard) var(--ease-premium), transform var(--motion-standard) var(--ease-premium); }
+.tc-contribution div .tc-live-link { width: fit-content; }
+.tc-live-link:hover { background: var(--tc-contribution-ink); color: var(--tc-contribution); transform: translateY(-2px); }
+.tc-live-link svg { width: 1rem; }
 
 .tc-footer { padding: var(--space-10) var(--space-6) var(--space-4); background: var(--tc-footer, #e5d8c9); color: #2d2a26; }
 .tc-footer > a { display: flex; align-items: center; justify-content: space-between; margin-top: 3.5rem; padding-bottom: var(--space-2); border-bottom: 1px solid currentColor; font-family: var(--serif); font-size: clamp(4rem, 10vw, 12rem); letter-spacing: -0.065em; line-height: 0.92; }
@@ -405,6 +438,11 @@
   .tc-proof-heading > p:last-child { grid-column: 2; }
 }
 
+@media (min-width: 721px) and (max-width: 980px) {
+  .tc-page-hijama .tc-hero-copy { min-height: 68svh; }
+  .tc-page-hijama .tc-hero-media { min-height: 58svh; }
+}
+
 @media (min-width: 721px) {
   .tc-page-guidance .tc-title-line:first-child { font-size: clamp(4.35rem, 7vw, 8.3rem); }
   .tc-page-guidance .tc-card h2 { font-size: clamp(2.35rem, 3.85vw, 5.05rem); }
@@ -412,6 +450,8 @@
   .tc-page-ayn .tc-card h2 { font-size: clamp(2.2rem, 3.6vw, 4.7rem); }
   .tc-page-bayn .tc-title-line:first-child { font-size: clamp(4.1rem, 7vw, 8.2rem); }
   .tc-page-bayn .tc-card h2 { font-size: clamp(2.2rem, 3.6vw, 4.7rem); }
+  .tc-page-hijama .tc-title-line:first-child { font-size: clamp(3.8rem, 6.3vw, 7.6rem); }
+  .tc-page-hijama .tc-card h2 { font-size: clamp(2.05rem, 3.35vw, 4.4rem); }
 }
 
 @media (max-width: 720px) {
@@ -426,6 +466,7 @@
   .tc-page-guidance .tc-title-line:first-child { font-size: clamp(3.9rem, 19vw, 6.4rem); }
   .tc-page-ayn .tc-title-line:first-child { font-size: clamp(3.75rem, 18vw, 6.2rem); }
   .tc-page-bayn .tc-title-line:first-child { font-size: clamp(3.6rem, 17vw, 6rem); }
+  .tc-page-hijama .tc-title-line:first-child { font-size: clamp(3.1rem, 14.7vw, 5.2rem); }
   .tc-title-small { font-size: clamp(2rem, 10.8vw, 3.35rem); line-height: 0.96; }
   .tc-title-small:last-child { padding-left: 0.55em; }
   .tc-hero-summary { margin: var(--space-3) 0 0 10%; font-size: 0.91rem; }
@@ -490,10 +531,14 @@
   .tc-page-ayn .tc-card-shell:last-child .tc-card h2 { font-size: clamp(1.45rem, 6.5vw, 2.05rem); }
   .tc-page-bayn .tc-card h2 { font-size: clamp(1.66rem, 7.5vw, 2.45rem); }
   .tc-page-bayn .tc-card-shell:last-child .tc-card h2 { font-size: clamp(1.45rem, 6.5vw, 2.05rem); }
+  .tc-page-hijama .tc-card h2 { font-size: clamp(1.56rem, 7vw, 2.28rem); }
+  .tc-page-hijama .tc-card-shell:last-child .tc-card h2 { font-size: clamp(1.4rem, 6.2vw, 1.96rem); }
   .tc-tone-chocolate .tc-card-media > img:first-child,
   .tc-tone-ink .tc-card-media > img:first-child,
   .tc-tone-black .tc-card-media > img:first-child,
   .tc-tone-bayn-mint .tc-card-media > img:first-child { object-position: center 12%; }
+  .tc-page-hijama .tc-card-shell:nth-child(4) .tc-card-media > img:first-child,
+  .tc-page-hijama .tc-card-shell:nth-child(6) .tc-card-media > img:first-child { object-position: center 8%; }
 
   .tc-proof { padding: var(--space-10) var(--space-2); }
   .tc-proof-heading { display: block; }
@@ -507,6 +552,7 @@
   .tc-contribution { display: block; min-height: 86svh; padding: var(--space-10) var(--space-2); }
   .tc-contribution h2 { margin-top: var(--space-8); font-size: clamp(3rem, 13.5vw, 5rem); }
   .tc-contribution div > p { width: 88%; margin: var(--space-6) 0 0 auto; font-size: 0.9rem; }
+  .tc-contribution div .tc-live-link { margin-top: var(--space-3); }
   .tc-footer { padding: var(--space-8) var(--space-2) var(--space-3); }
   .tc-footer > a { margin-top: var(--space-6); font-size: clamp(3.8rem, 18vw, 6.2rem); }
   .tc-footer > div { gap: 1rem; font-size: 0.58rem; }
