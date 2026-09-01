@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { HomeExperience } from "./components/HomeExperience";
+import { LocalizedSurface } from "./i18n";
 
 export const metadata: Metadata = {
   title: { absolute: "Abdelrahman — Senior digitaal ontwerper" },
@@ -8,5 +9,5 @@ export const metadata: Metadata = {
 };
 
 export default function Home() {
-  return <HomeExperience />;
+  return <LocalizedSurface locale="nl" respectPreference><HomeExperience locale="nl" /></LocalizedSurface>;
 }

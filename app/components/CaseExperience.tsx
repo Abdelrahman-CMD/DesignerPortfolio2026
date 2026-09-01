@@ -13,6 +13,7 @@ import UsersRound from "lucide-react/icons/users-round";
 import WifiOff from "lucide-react/icons/wifi-off";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { LanguageSwitcher, Locale, localeHref } from "../i18n";
 import { CaseStyleGuide, type CaseStyleGuideData } from "./CaseStyleGuide";
 
 const tareeqiStyleGuide: CaseStyleGuideData = {
@@ -109,7 +110,7 @@ const proofFrames = [
   { label: "Story / mobile", src: "/projects/tareeqi-2026/story-mobile.webp" },
 ] as const;
 
-export function CaseExperience() {
+export function CaseExperience({ locale = "nl" }: { locale?: Locale }) {
   const root = useRef<HTMLElement>(null);
 
   useLayoutEffect(() => {
@@ -220,9 +221,9 @@ export function CaseExperience() {
       <a className="skip-link" href="#tareeqi-content">Ga naar de case</a>
 
       <nav className="tc-nav" aria-label="Case navigatie">
-        <a href="/#werk"><ArrowLeft aria-hidden="true" /> Alle cases</a>
-        <a className="tc-nav-brand" href="/">Abdelrahman / Digital designer</a>
-        <span>01 / 07</span>
+        <a href={localeHref("/#werk", locale)}><ArrowLeft aria-hidden="true" /> Alle cases</a>
+        <a className="tc-nav-brand" href={localeHref("/", locale)}>Abdelrahman / Digital designer</a>
+        <div className="tc-nav-actions"><span>01 / 07</span><LanguageSwitcher locale={locale} path="/cases/tareeqi" /></div>
       </nav>
 
       <header className="tc-hero">

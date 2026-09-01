@@ -12,6 +12,7 @@ import ShieldCheck from "lucide-react/icons/shield-check";
 import Sparkles from "lucide-react/icons/sparkles";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { LanguageSwitcher, Locale, localeHref } from "../i18n";
 import { CaseStyleGuide, type CaseStyleGuideData } from "./CaseStyleGuide";
 
 const styleGuide: CaseStyleGuideData = {
@@ -101,7 +102,7 @@ const proofFrames = [
   { label: "Begrijpen / boekdetail", src: "/projects/ayn-2026/detail-desktop.webp" },
 ] as const;
 
-export function AynAlHikmahExperience() {
+export function AynAlHikmahExperience({ locale = "nl" }: { locale?: Locale }) {
   const root = useRef<HTMLElement>(null);
 
   useLayoutEffect(() => {
@@ -190,9 +191,9 @@ export function AynAlHikmahExperience() {
     <main ref={root} className="tc-page tc-page-ayn">
       <a className="skip-link" href="#ayn-content">Ga naar de case</a>
       <nav className="tc-nav" aria-label="Case navigatie">
-        <a href="/#werk"><ArrowLeft aria-hidden="true" /> Alle cases</a>
-        <a className="tc-nav-brand" href="/">Abdelrahman / Digital designer</a>
-        <span>02 / 07</span>
+        <a href={localeHref("/#werk", locale)}><ArrowLeft aria-hidden="true" /> Alle cases</a>
+        <a className="tc-nav-brand" href={localeHref("/", locale)}>Abdelrahman / Digital designer</a>
+        <div className="tc-nav-actions"><span>02 / 07</span><LanguageSwitcher locale={locale} path="/cases/ayn-al-hikmah" /></div>
       </nav>
 
       <header className="tc-hero">

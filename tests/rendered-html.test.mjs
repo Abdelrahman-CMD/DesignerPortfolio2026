@@ -62,7 +62,9 @@ test("server-renders the complete portfolio homepage", async () => {
   assert.match(html, /Geselecteerd werk/);
   assert.doesNotMatch(html, /Selected work|project-open|Digital designer|Strategy \/ UX \/ Direction/);
   assert.doesNotMatch(html, /showcase-sticky|showcase-progress/);
-  assert.match(html, /href="\/cases\/oppas-by-chaima"/);
+  assert.match(html, /href="\/nl\/cases\/oppas-by-chaima"/);
+  assert.match(html, /class="language-switcher language-switcher-light"/);
+  assert.match(html, /href="\/en"/);
   assert.equal((html.match(/class="method-note /g) ?? []).length, 4);
   assert.equal((html.match(/<canvas class="story-photo-mosaic"/g) ?? []).length, 4);
 });
@@ -156,9 +158,9 @@ test("uses bounded raster assets on the homepage and case pages", async () => {
   assert.match(css, /prefers-reduced-motion:\s*reduce/i);
   assert.doesNotMatch(css, /\.mind-brush-stroke-base/);
   assert.doesNotMatch(homeSource, /mind-connector-map/);
-  assert.match(homeSource, /heroCtaIdleRingCopy = "ZIE DE GEVOLGEN · ZIE DE GEVOLGEN · "/);
-  assert.match(homeSource, /heroCtaActiveRingCopy = "ONTDEK PROJECTEN · ONTDEK PROJECTEN · "/);
-  assert.match(homeSource, /caseCursorRingCopy = "BEKIJK CASE · BEKIJK CASE · "/);
+  assert.match(homeSource, /idle: "ZIE DE GEVOLGEN · ZIE DE GEVOLGEN · "/);
+  assert.match(homeSource, /active: "ONTDEK PROJECTEN · ONTDEK PROJECTEN · "/);
+  assert.match(homeSource, /case: "BEKIJK CASE · BEKIJK CASE · "/);
   assert.doesNotMatch(homeSource, /<circle cx=\{zone\.dotX\}/);
   assert.doesNotMatch(homeSource, /Scroll om verder te kijken/);
   assert.match(css, /white-space: nowrap/);
@@ -179,4 +181,28 @@ test("server-renders the atmospheric playground route", async () => {
   assert.match(html, /pg-card-tall/);
   assert.match(html, /pg-card-wide-two/);
   assert.match(html, /De ruimte staat\. De inhoud mag groeien\./);
+});
+
+test("server-renders localized portfolio routes", async () => {
+  const [englishHome, dutchHome, englishCase] = await Promise.all([
+    render("/en"),
+    render("/nl"),
+    render("/en/cases/hijaman-cups"),
+  ]);
+
+  assert.equal(englishHome.status, 200);
+  assert.equal(dutchHome.status, 200);
+  assert.equal(englishCase.status, 200);
+
+  const englishHtml = await englishHome.text();
+  const dutchHtml = await dutchHome.text();
+  const englishCaseHtml = await englishCase.text();
+
+  assert.match(englishHtml, /data-locale="en"/);
+  assert.match(englishHtml, /href="\/en\/playground"/);
+  assert.match(englishHtml, /aria-current="page" aria-label="English"/);
+  assert.match(dutchHtml, /data-locale="nl"/);
+  assert.match(dutchHtml, /href="\/nl\/playground"/);
+  assert.match(englishCaseHtml, /data-locale="en"/);
+  assert.match(englishCaseHtml, /class="tc-nav-actions"/);
 });

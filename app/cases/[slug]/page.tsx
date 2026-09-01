@@ -6,6 +6,7 @@ import { BaynSignalExperience } from "../../components/BaynSignalExperience";
 import { HijamaNCupsExperience } from "../../components/HijamaNCupsExperience";
 import { EditorialCaseExperience } from "../../components/EditorialCaseExperience";
 import { editorialCases } from "../../data/caseContent";
+import { LocalizedSurface } from "../../i18n";
 
 export async function generateMetadata({
   params,
@@ -70,35 +71,35 @@ export default async function CasePage({
   const { slug } = await params;
 
   if (slug === "tareeqi") {
-    return <CaseExperience />;
+    return <LocalizedSurface locale="nl" respectPreference><CaseExperience locale="nl" /></LocalizedSurface>;
   }
 
   if (slug === "guidance-travel") {
-    return <GuidanceTravelExperience />;
+    return <LocalizedSurface locale="nl" respectPreference><GuidanceTravelExperience locale="nl" /></LocalizedSurface>;
   }
 
   if (slug === "ayn-al-hikmah") {
-    return <AynAlHikmahExperience />;
+    return <LocalizedSurface locale="nl" respectPreference><AynAlHikmahExperience locale="nl" /></LocalizedSurface>;
   }
 
   if (slug === "bayn-signal") {
-    return <BaynSignalExperience />;
+    return <LocalizedSurface locale="nl" respectPreference><BaynSignalExperience locale="nl" /></LocalizedSurface>;
   }
 
   if (slug === "hijaman-cups") {
-    return <HijamaNCupsExperience />;
+    return <LocalizedSurface locale="nl" respectPreference><HijamaNCupsExperience locale="nl" /></LocalizedSurface>;
   }
 
   const project = editorialCases[slug];
 
   if (!project) {
     return (
-      <main className="not-found">
+      <LocalizedSurface locale="nl" respectPreference><main className="not-found">
         <p>Deze case is nog niet gepubliceerd.</p>
         <a href="/#werk">Terug naar het werk</a>
-      </main>
+      </main></LocalizedSurface>
     );
   }
 
-  return <EditorialCaseExperience project={project} />;
+  return <LocalizedSurface locale="nl" respectPreference><EditorialCaseExperience project={project} locale="nl" /></LocalizedSurface>;
 }

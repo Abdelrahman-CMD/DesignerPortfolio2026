@@ -5,6 +5,7 @@ import { CSSProperties, useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import type { EditorialCase } from "../data/caseContent";
+import { LanguageSwitcher, Locale, localeHref } from "../i18n";
 
 const prototypeContent = {
   guidance: {
@@ -69,7 +70,7 @@ const prototypeContent = {
   },
 } as const;
 
-export function EditorialCaseExperience({ project }: { project: EditorialCase }) {
+export function EditorialCaseExperience({ project, locale = "nl" }: { project: EditorialCase; locale?: Locale }) {
   const root = useRef<HTMLElement>(null);
   const prototype = prototypeContent[project.prototype];
   const [selection, setSelection] = useState<string>(prototype.options[0]);
@@ -166,9 +167,9 @@ export function EditorialCaseExperience({ project }: { project: EditorialCase })
       <a className="skip-link" href="#case-story">Ga naar de case</a>
 
       <nav className="ec-nav" aria-label="Case navigatie">
-        <a href="/#werk" className="case-back"><span aria-hidden="true">←</span> Alle cases</a>
-        <a href="/" className="case-brand">Abdelrahman / Digital designer</a>
-        <a href="mailto:dhr_abdelrahman@outlook.com">Start een gesprek</a>
+        <a href={localeHref("/#werk", locale)} className="case-back"><span aria-hidden="true">←</span> Alle cases</a>
+        <a href={localeHref("/", locale)} className="case-brand">Abdelrahman / Digital designer</a>
+        <div className="ec-nav-actions"><a href="mailto:dhr_abdelrahman@outlook.com">Start een gesprek</a><LanguageSwitcher locale={locale} path={`/cases/${project.slug}`} tone={project.prototype === "atotz" ? "dark" : "light"} /></div>
       </nav>
 
       <header className="ec-hero">

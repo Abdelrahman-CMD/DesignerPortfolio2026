@@ -16,6 +16,7 @@ import UserRound from "lucide-react/icons/user-round";
 import Workflow from "lucide-react/icons/workflow";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { LanguageSwitcher, Locale, localeHref } from "../i18n";
 
 const projects = [
   {
@@ -133,9 +134,18 @@ const projects = [
 ] as const;
 
 const projectCount = String(projects.length).padStart(2, "0");
-const heroCtaIdleRingCopy = "ZIE DE GEVOLGEN · ZIE DE GEVOLGEN · ";
-const heroCtaActiveRingCopy = "ONTDEK PROJECTEN · ONTDEK PROJECTEN · ";
-const caseCursorRingCopy = "BEKIJK CASE · BEKIJK CASE · ";
+const heroCtaRingCopy = {
+  nl: {
+    idle: "ZIE DE GEVOLGEN · ZIE DE GEVOLGEN · ",
+    active: "ONTDEK PROJECTEN · ONTDEK PROJECTEN · ",
+    case: "BEKIJK CASE · BEKIJK CASE · ",
+  },
+  en: {
+    idle: "SEE THE OUTCOME · SEE THE OUTCOME · ",
+    active: "EXPLORE PROJECTS · EXPLORE PROJECTS · ",
+    case: "VIEW CASE · VIEW CASE · ",
+  },
+} as const;
 
 const manifestoMarkerWords = new Set(["écht", "kwartje", "kern"]);
 
@@ -144,6 +154,7 @@ const personalStory = [
     step: "01",
     kicker: "Wie ik ben",
     title: "Ik breek het ijs. Niet de basis.",
+    englishTitle: "I break the ice, not the foundation.",
     body: "Ik ben Abdelrahman. Sociaal genoeg om snel aan tafel te komen, scherp genoeg om niet overal ja op te zeggen. Een goede klik geeft ruimte voor eerlijke vragen — precies waar het werk sterker van wordt.",
     image: "/about/web/portrait-studio.webp",
     alt: "Abdelrahman in zijn ontwerpstudio",
@@ -157,6 +168,7 @@ const personalStory = [
     step: "02",
     kicker: "Wat ik doe",
     title: "Eerst begrijpen wat er schuurt. Dan pas een scherm.",
+    englishTitle: "Understand the friction first. Then design the screen.",
     body: "We leggen aannames, gedrag en doelen naast elkaar. Ik zoek het moment waarop losse informatie één duidelijke richting krijgt. Vanaf daar ontwerp ik websites die logisch reageren op echte keuzes.",
     image: "/about/web/designing.webp",
     alt: "Abdelrahman werkt aan een digitaal ontwerp achter zijn bureau",
@@ -170,6 +182,7 @@ const personalStory = [
     step: "03",
     kicker: "Hoe ik blijf groeien",
     title: "Wat ik vandaag leer, verandert morgen mijn ontwerp.",
+    englishTitle: "What I learn today changes tomorrow’s design.",
     body: "Ik lees, observeer en experimenteer met strategie, psychologie, techniek, cultuur en AI. Niet om iedere trend te volgen, maar om per vraag een rijker antwoord te kunnen geven.",
     image: "/about/web/learning.webp",
     alt: "Abdelrahman leest The Heart of Design",
@@ -183,6 +196,7 @@ const personalStory = [
     step: "04",
     kicker: "En buiten het scherm",
     title: "Papa zijn is mijn scherpste gebruikerstest.",
+    englishTitle: "Being a father is my sharpest usability test.",
     body: "Een kind accepteert geen ingewikkelde uitleg voor iets dat simpel moet zijn. Vaderschap houdt mijn werk menselijk: aandacht is schaars, context verandert continu en verantwoordelijkheid laat zich niet wegstylen.",
     image: "/about/web/fatherhood.webp",
     alt: "Abdelrahman als vader bij de kinderwagen",
@@ -517,7 +531,7 @@ const mindZones = [
   },
 ] as const;
 
-export function HomeExperience() {
+export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
   const root = useRef<HTMLElement>(null);
   const [activeMindZone, setActiveMindZone] = useState<string | null>(null);
   const [activeNav, setActiveNav] = useState("");
@@ -1341,8 +1355,10 @@ export function HomeExperience() {
     };
   }, []);
 
-  const manifesto =
-    "Een website hoeft niet harder te roepen. Ze moet écht duidelijk maken waarom iemand blijft. Daarom stel ik vragen tot de ruis verdwijnt. Wanneer het kwartje valt, bouwen we verder op een kern die ook morgen nog klopt.";
+  const manifesto = locale === "en"
+    ? "A website does not need to shout louder. It needs to make it genuinely clear why someone stays. I keep asking questions until the noise disappears. Once it clicks, we build on a foundation that will still make sense tomorrow."
+    : "Een website hoeft niet harder te roepen. Ze moet écht duidelijk maken waarom iemand blijft. Daarom stel ik vragen tot de ruis verdwijnt. Wanneer het kwartje valt, bouwen we verder op een kern die ook morgen nog klopt.";
+  const ringCopy = heroCtaRingCopy[locale];
 
   const activateContact = () => {
     if (window.matchMedia("(hover: none)").matches) {
@@ -1364,12 +1380,15 @@ export function HomeExperience() {
           <span>A</span>
           <span className="site-mark-copy">Abdelrahman<br />Digitaal ontwerper</span>
         </a>
-        <nav className="top-nav" aria-label="Portfolio tabs">
-          <a href="#werk" aria-current={activeNav === "werk" ? "location" : undefined}><span className="link-icon" aria-hidden="true"><BriefcaseBusiness /></span><span>Werk</span></a>
-          <a href="#over" aria-current={activeNav === "over" ? "location" : undefined}><span className="link-icon" aria-hidden="true"><UserRound /></span><span>Over</span></a>
-          <a href="#aanpak" aria-current={activeNav === "aanpak" ? "location" : undefined}><span className="link-icon" aria-hidden="true"><Workflow /></span><span>Aanpak</span></a>
-          <a href="/playground"><span className="link-icon" aria-hidden="true"><Blocks /></span><span>Playground</span></a>
-        </nav>
+        <div className="site-header-actions">
+          <nav className="top-nav" aria-label="Portfolio tabs">
+            <a href="#werk" aria-current={activeNav === "werk" ? "location" : undefined}><span className="link-icon" aria-hidden="true"><BriefcaseBusiness /></span><span>Werk</span></a>
+            <a href="#over" aria-current={activeNav === "over" ? "location" : undefined}><span className="link-icon" aria-hidden="true"><UserRound /></span><span>Over</span></a>
+            <a href="#aanpak" aria-current={activeNav === "aanpak" ? "location" : undefined}><span className="link-icon" aria-hidden="true"><Workflow /></span><span>Aanpak</span></a>
+            <a href={localeHref("/playground", locale)}><span className="link-icon" aria-hidden="true"><Blocks /></span><span>Playground</span></a>
+          </nav>
+          <LanguageSwitcher locale={locale} />
+        </div>
       </header>
 
       <aside
@@ -1501,7 +1520,7 @@ export function HomeExperience() {
                 >
                   <span className="hero-cta-shape" aria-hidden="true">
                     <span className="editorial-text-ring hero-cta-ring-idle">
-                      {[...heroCtaIdleRingCopy].map((character, index, characters) => (
+                      {[...ringCopy.idle].map((character, index, characters) => (
                         <span
                           style={{
                             "--ring-angle": `${(index / characters.length) * 360}deg`,
@@ -1513,7 +1532,7 @@ export function HomeExperience() {
                       ))}
                     </span>
                     <span className="editorial-text-ring hero-cta-ring-active">
-                      {[...heroCtaActiveRingCopy].map((character, index, characters) => (
+                      {[...ringCopy.active].map((character, index, characters) => (
                         <span
                           style={{
                             "--ring-angle": `${(index / characters.length) * 360}deg`,
@@ -1719,7 +1738,7 @@ export function HomeExperience() {
         <div className="case-cursor" aria-hidden="true">
           <span className="case-cursor-shape">
             <span className="editorial-text-ring case-cursor-ring">
-              {[...caseCursorRingCopy].map((character, index, characters) => (
+              {[...ringCopy.case].map((character, index, characters) => (
                 <span
                   style={{ "--ring-angle": `${(index / characters.length) * 360}deg` } as CSSProperties}
                   key={`case-cursor-${character}-${index}`}
@@ -1759,7 +1778,7 @@ export function HomeExperience() {
             >
               <a
                 className="project-card-link"
-                href={project.href}
+                href={localeHref(project.href, locale)}
                 aria-label={`Bekijk de case ${project.name}`}
                 data-cursor-bg={project.bg}
                 data-cursor-ink={project.ink}
@@ -1860,7 +1879,7 @@ export function HomeExperience() {
               <div className="story-stop-copy">
                 <p className="label">{story.kicker}</p>
                 <h3>
-                  {story.title.split(" ").map((word, wordIndex) => (
+                  {(locale === "en" ? story.englishTitle : story.title).split(" ").map((word, wordIndex) => (
                     <span className="story-heading-word" key={`${word}-${wordIndex}`}>{word}{" "}</span>
                   ))}
                 </h3>

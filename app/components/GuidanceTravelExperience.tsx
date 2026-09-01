@@ -13,6 +13,7 @@ import ShieldCheck from "lucide-react/icons/shield-check";
 import UsersRound from "lucide-react/icons/users-round";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { LanguageSwitcher, Locale, localeHref } from "../i18n";
 import { CaseStyleGuide, type CaseStyleGuideData } from "./CaseStyleGuide";
 
 const styleGuide: CaseStyleGuideData = {
@@ -89,7 +90,7 @@ const proofFrames = [
   { label: "Gidsen & FAQ / mobile", src: "/projects/guidance-2026/faq-mobile.webp" },
 ] as const;
 
-export function GuidanceTravelExperience() {
+export function GuidanceTravelExperience({ locale = "nl" }: { locale?: Locale }) {
   const root = useRef<HTMLElement>(null);
 
   useLayoutEffect(() => {
@@ -127,9 +128,9 @@ export function GuidanceTravelExperience() {
     <main ref={root} className="tc-page tc-page-guidance">
       <a className="skip-link" href="#guidance-content">Ga naar de case</a>
       <nav className="tc-nav" aria-label="Case navigatie">
-        <a href="/#werk"><ArrowLeft aria-hidden="true" /> Alle cases</a>
-        <a className="tc-nav-brand" href="/">Abdelrahman / Digital designer</a>
-        <span>03 / 07</span>
+        <a href={localeHref("/#werk", locale)}><ArrowLeft aria-hidden="true" /> Alle cases</a>
+        <a className="tc-nav-brand" href={localeHref("/", locale)}>Abdelrahman / Digital designer</a>
+        <div className="tc-nav-actions"><span>03 / 07</span><LanguageSwitcher locale={locale} path="/cases/guidance-travel" /></div>
       </nav>
 
       <header className="tc-hero">

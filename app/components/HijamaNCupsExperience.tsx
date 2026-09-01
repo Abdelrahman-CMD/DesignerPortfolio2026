@@ -13,6 +13,7 @@ import Sparkles from "lucide-react/icons/sparkles";
 import UserRound from "lucide-react/icons/user-round";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { LanguageSwitcher, Locale, localeHref } from "../i18n";
 import { CaseStyleGuide, type CaseStyleGuideData } from "./CaseStyleGuide";
 
 const styleGuide: CaseStyleGuideData = {
@@ -104,7 +105,7 @@ const proofFrames = [
   { label: "Veelgestelde vragen / mobiel", src: "/projects/hijama-2026/faq-mobile.webp" },
 ] as const;
 
-export function HijamaNCupsExperience() {
+export function HijamaNCupsExperience({ locale = "nl" }: { locale?: Locale }) {
   const root = useRef<HTMLElement>(null);
 
   useLayoutEffect(() => {
@@ -193,9 +194,9 @@ export function HijamaNCupsExperience() {
     <main ref={root} className="tc-page tc-page-hijama">
       <a className="skip-link" href="#hijama-content">Ga naar de case</a>
       <nav className="tc-nav" aria-label="Case navigatie">
-        <a href="/#werk"><ArrowLeft aria-hidden="true" /> Alle cases</a>
-        <a className="tc-nav-brand" href="/">Abdelrahman / Digital designer</a>
-        <span>05 / 07</span>
+        <a href={localeHref("/#werk", locale)}><ArrowLeft aria-hidden="true" /> Alle cases</a>
+        <a className="tc-nav-brand" href={localeHref("/", locale)}>Abdelrahman / Digital designer</a>
+        <div className="tc-nav-actions"><span>05 / 07</span><LanguageSwitcher locale={locale} path="/cases/hijaman-cups" /></div>
       </nav>
 
       <header className="tc-hero">

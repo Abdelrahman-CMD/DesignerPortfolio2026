@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PlaygroundExperience } from "../components/PlaygroundExperience";
+import { LocalizedSurface } from "../i18n";
 
 export const metadata: Metadata = {
   title: "Playground",
@@ -18,5 +19,5 @@ export const metadata: Metadata = {
 };
 
 export default function PlaygroundPage() {
-  return <PlaygroundExperience />;
+  return <LocalizedSurface locale="nl" respectPreference><PlaygroundExperience locale="nl" /></LocalizedSurface>;
 }

@@ -6,6 +6,7 @@ import ArrowLeft from "lucide-react/icons/arrow-left";
 import Sparkles from "lucide-react/icons/sparkles";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { LanguageSwitcher, Locale, localeHref } from "../i18n";
 
 const placeholders = [
   { number: "01", label: "Breed kader", placement: "wide", tone: "clay", depth: 7 },
@@ -18,7 +19,7 @@ const placeholders = [
   { number: "08", label: "Breed archief", placement: "wide-two", tone: "sage", depth: 14 },
 ] as const;
 
-export function PlaygroundExperience() {
+export function PlaygroundExperience({ locale = "nl" }: { locale?: Locale }) {
   const root = useRef<HTMLElement>(null);
   const world = useRef<HTMLDivElement>(null);
 
@@ -73,9 +74,9 @@ export function PlaygroundExperience() {
     <main ref={root} className="pg-page" onPointerMove={moveWorld} onPointerLeave={resetWorld}>
       <a className="skip-link" href="#playground-space">Ga naar de playground</a>
       <nav className="pg-nav" aria-label="Playground navigatie">
-        <a href="/"><ArrowLeft aria-hidden="true" /> Portfolio</a>
+        <a href={localeHref("/", locale)}><ArrowLeft aria-hidden="true" /> Portfolio</a>
         <span>Playground / ruimte voor experiment</span>
-        <span>Open veld · 2026</span>
+        <div className="pg-nav-actions"><span>Open veld · 2026</span><LanguageSwitcher locale={locale} path="/playground" tone="dark" /></div>
       </nav>
 
       <header className="pg-hero">
@@ -116,7 +117,7 @@ export function PlaygroundExperience() {
 
       <footer className="pg-footer">
         <p>De ruimte staat. De inhoud mag groeien.</p>
-        <a href="/#werk"><span>Terug naar geselecteerd werk</span><ArrowLeft aria-hidden="true" /></a>
+        <a href={localeHref("/#werk", locale)}><span>Terug naar geselecteerd werk</span><ArrowLeft aria-hidden="true" /></a>
         <div><span>Abdelrahman / Playground</span><span>Wordt vervolgd · 2026</span></div>
       </footer>
     </main>
