@@ -13,7 +13,7 @@ import UsersRound from "lucide-react/icons/users-round";
 import WifiOff from "lucide-react/icons/wifi-off";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { LanguageSwitcher, Locale, localeHref } from "../i18n";
+import { LanguageSwitcher, Locale, localeHref, translateText } from "../i18n";
 import { CaseStyleGuide, type CaseStyleGuideData } from "./CaseStyleGuide";
 
 const tareeqiStyleGuide: CaseStyleGuideData = {
@@ -112,6 +112,12 @@ const proofFrames = [
 
 export function CaseExperience({ locale = "nl" }: { locale?: Locale }) {
   const root = useRef<HTMLElement>(null);
+  const tx = (value: string) => translateText(locale, value);
+  const localizedStyleGuide = {
+    ...tareeqiStyleGuide,
+    displayUse: tx(tareeqiStyleGuide.displayUse),
+    interfaceUse: tx(tareeqiStyleGuide.interfaceUse),
+  };
 
   useLayoutEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -218,37 +224,33 @@ export function CaseExperience({ locale = "nl" }: { locale?: Locale }) {
 
   return (
     <main ref={root} className="tc-page">
-      <a className="skip-link" href="#tareeqi-content">Ga naar de case</a>
+      <a className="skip-link" href="#tareeqi-content">{tx("Ga naar de case")}</a>
 
-      <nav className="tc-nav" aria-label="Case navigatie">
-        <a href={localeHref("/#werk", locale)}><ArrowLeft aria-hidden="true" /> Alle cases</a>
-        <a className="tc-nav-brand" href={localeHref("/", locale)}>Abdelrahman / Digital designer</a>
-        <div className="tc-nav-actions"><span>01 / 07</span><LanguageSwitcher locale={locale} path="/cases/tareeqi" /></div>
+      <nav className="tc-nav" aria-label={tx("Case navigatie")}>
+        <a href={localeHref("/#werk", locale)}><ArrowLeft aria-hidden="true" /> {tx("Alle cases")}</a>
+        <a className="tc-nav-brand" href={localeHref("/", locale)}>Abdelrahman / Product &amp; UX/UI designer</a>
+        <div className="tc-nav-actions"><span>02 / 08</span><LanguageSwitcher locale={locale} path="/cases/tareeqi" /></div>
       </nav>
 
       <header className="tc-hero">
         <div className="tc-hero-copy">
-          <p className="tc-hero-kicker">Case 01 · Concept Solution</p>
+          <p className="tc-hero-kicker">{tx("Case 02 · Concept Solution")}</p>
           <h1>
             <span className="tc-title-line"><span>Tareeqi</span></span>
-            <span className="tc-title-line tc-title-small"><span>De route was duidelijk.</span></span>
-            <span className="tc-title-line tc-title-small"><span>Wat ernaast lag, niet.</span></span>
+            <span className="tc-title-line tc-title-small"><span>{tx("De route was duidelijk.")}</span></span>
+            <span className="tc-title-line tc-title-small"><span>{tx("Wat ernaast lag, niet.")}</span></span>
           </h1>
-          <p className="tc-hero-summary">
-            Ik zag een gat tussen generieke navigatie en de lokale kennis die een reis
-            betekenis geeft. Tareeqi is mijn ontworpen antwoord: een contextuele
-            discovery-laag voor Mekka en Medina.
-          </p>
+          <p className="tc-hero-summary">{tx("Ik zag een gat tussen generieke navigatie en de lokale kennis die een reis betekenis geeft. Tareeqi is mijn ontworpen antwoord: een contextuele discovery-laag voor Mekka en Medina.")}</p>
           <dl className="tc-hero-meta">
-            <div><dt>Vertrekpunt</dt><dd>Zelf geïnitieerde bevinding</dd></div>
-            <div><dt>Mijn rol</dt><dd>Research · Strategy · UX/UI</dd></div>
-            <div><dt>Status</dt><dd>Toetsbare oplossingsrichting</dd></div>
+            <div><dt>{tx("Vertrekpunt")}</dt><dd>{tx("Zelf geïnitieerde bevinding")}</dd></div>
+            <div><dt>{tx("Mijn rol")}</dt><dd>Research · Strategy · UX/UI</dd></div>
+            <div><dt>{tx("Status")}</dt><dd>{tx("Toetsbare oplossingsrichting")}</dd></div>
           </dl>
         </div>
         <figure className="tc-hero-media">
           <Image
             src="/projects/tareeqi-2026/hero-laptops.webp"
-            alt="Tareeqi websiteconcept op twee laptops"
+            alt={tx("Tareeqi websiteconcept op twee laptops")}
             fill
             priority
             sizes="(max-width: 760px) 100vw, 58vw"
@@ -258,16 +260,16 @@ export function CaseExperience({ locale = "nl" }: { locale?: Locale }) {
       </header>
 
       <section className="tc-premise" id="tareeqi-content" aria-labelledby="tc-premise-title">
-        <p>Probleemvinding vóór productvorming</p>
-        <h2 id="tc-premise-title">Ik begon niet met een scherm. Ik begon met wat de bestaande kaarten niet konden vertellen.</h2>
+        <p>{tx("Probleemvinding vóór productvorming")}</p>
+        <h2 id="tc-premise-title">{tx("Ik begon niet met een scherm. Ik begon met wat de bestaande kaarten niet konden vertellen.")}</h2>
         <div className="tc-premise-notes">
-          <span><Search aria-hidden="true" /> Generieke zoekresultaten</span>
-          <span><UsersRound aria-hidden="true" /> Verspreide lokale kennis</span>
-          <span><Compass aria-hidden="true" /> Geen route op intentie</span>
+          <span><Search aria-hidden="true" /> {tx("Generieke zoekresultaten")}</span>
+          <span><UsersRound aria-hidden="true" /> {tx("Verspreide lokale kennis")}</span>
+          <span><Compass aria-hidden="true" /> {tx("Geen route op intentie")}</span>
         </div>
       </section>
 
-      <section className="tc-deck" aria-label="Tareeqi oplossingsverhaal in zes kaarten">
+      <section className="tc-deck" aria-label={tx("Tareeqi oplossingsverhaal in zes kaarten")}>
         {cards.map((card, index) => (
           <article
             className={`tc-card-shell tc-tone-${card.tone}`}
@@ -279,40 +281,40 @@ export function CaseExperience({ locale = "nl" }: { locale?: Locale }) {
               <span className="tc-card-dim" aria-hidden="true" />
               <div className="tc-card-copy">
                 <div className="tc-card-index"><span>{card.number}</span><span>06</span></div>
-                <p className="tc-mask tc-card-eyebrow"><span>{card.eyebrow}</span></p>
-                <h2 className="tc-mask"><span>{card.title}</span></h2>
-                <p className="tc-mask tc-card-body"><span>{card.body}</span></p>
-                <p className="tc-mask tc-card-note"><span>{card.note}</span></p>
+                <p className="tc-mask tc-card-eyebrow"><span>{tx(card.eyebrow)}</span></p>
+                <h2 className="tc-mask"><span>{tx(card.title)}</span></h2>
+                <p className="tc-mask tc-card-body"><span>{tx(card.body)}</span></p>
+                <p className="tc-mask tc-card-note"><span>{tx(card.note)}</span></p>
                 {index === 2 && (
-                  <div className="tc-feature-row" aria-label="Ontdekkingsfuncties">
-                    <span><MapPinned aria-hidden="true" /> Contextuele kaart</span>
-                    <span><Search aria-hidden="true" /> Intentiefilters</span>
-                    <span><UsersRound aria-hidden="true" /> Lokale curatie</span>
+                  <div className="tc-feature-row" aria-label={tx("Ontdekkingsfuncties")}>
+                    <span><MapPinned aria-hidden="true" /> {tx("Contextuele kaart")}</span>
+                    <span><Search aria-hidden="true" /> {tx("Intentiefilters")}</span>
+                    <span><UsersRound aria-hidden="true" /> {tx("Lokale curatie")}</span>
                   </div>
                 )}
                 {index === 3 && (
-                  <div className="tc-feature-row" aria-label="Toegankelijkheidsfuncties">
+                  <div className="tc-feature-row" aria-label={tx("Toegankelijkheidsfuncties")}>
                     <span><WifiOff aria-hidden="true" /> Offline</span>
-                    <span><Accessibility aria-hidden="true" /> Familie &amp; ouderen</span>
-                    <span><ShieldCheck aria-hidden="true" /> Herkomst zichtbaar</span>
+                    <span><Accessibility aria-hidden="true" /> {tx("Familie & ouderen")}</span>
+                    <span><ShieldCheck aria-hidden="true" /> {tx("Herkomst zichtbaar")}</span>
                   </div>
                 )}
                 {index === 4 && (
-                  <p className="tc-system-caption">Canela draagt het verhaal. Inter en Work Sans houden de bediening stil en precies.</p>
+                  <p className="tc-system-caption">{tx("Canela draagt het verhaal. Inter en Work Sans houden de bediening stil en precies.")}</p>
                 )}
                 {index === 5 && (
                   <ul className="tc-validation-list">
-                    <li>Past de route echt beter bij het moment?</li>
-                    <li>Verlaagt offline zekerheid de mentale belasting?</li>
-                    <li>Blijft communitykennis betrouwbaar en actueel?</li>
+                    <li>{tx("Past de route echt beter bij het moment?")}</li>
+                    <li>{tx("Verlaagt offline zekerheid de mentale belasting?")}</li>
+                    <li>{tx("Blijft communitykennis betrouwbaar en actueel?")}</li>
                   </ul>
                 )}
               </div>
               <figure className={`tc-card-media${"styleGuide" in card ? " tc-style-card-media" : ""}`}>
                 {"styleGuide" in card ? (
-                  <CaseStyleGuide data={tareeqiStyleGuide} />
+                  <CaseStyleGuide data={localizedStyleGuide} />
                 ) : (
-                  <Image src={card.image} alt={card.imageAlt} fill sizes="(max-width: 760px) 92vw, 54vw" />
+                  <Image src={card.image} alt={tx(card.imageAlt)} fill sizes="(max-width: 760px) 92vw, 54vw" />
                 )}
               </figure>
             </div>
@@ -322,34 +324,39 @@ export function CaseExperience({ locale = "nl" }: { locale?: Locale }) {
 
       <section className="tc-proof" aria-labelledby="tc-proof-title">
         <header className="tc-proof-heading">
-          <p>Responsive bewijs / geen eindeloze walkthrough</p>
-          <h2 id="tc-proof-title">Eén systeem.<br />Drie formaten.<br /><em>Tien echte schermen.</em></h2>
-          <p>De volledige exports blijven beschikbaar, maar worden hier als een compacte redactionele contact sheet getoond. Zo is de breedte van het concept snel te beoordelen.</p>
+          <p>{tx("Responsive bewijs / geen eindeloze walkthrough")}</p>
+          <h2 id="tc-proof-title">{tx("Eén systeem.")}<br />{tx("Drie formaten.")}<br /><em>{tx("Tien echte schermen.")}</em></h2>
+          <p>{tx("De volledige exports blijven beschikbaar, maar worden hier als een compacte redactionele contact sheet getoond. Zo is de breedte van het concept snel te beoordelen.")}</p>
         </header>
         <div className="tc-proof-grid">
-          {proofFrames.map((frame) => (
+          {proofFrames.map((frame, index) => (
             <figure className="tc-proof-frame" key={frame.label}>
               <div className="tc-proof-media">
-                <Image src={frame.src} alt={`${frame.label} van Tareeqi`} fill sizes="(max-width: 760px) 86vw, 29vw" />
+                <Image
+                  src={frame.src}
+                  alt={locale === "en" ? `Responsive Tareeqi interface ${index + 1}` : `${frame.label} van Tareeqi`}
+                  fill
+                  sizes="(max-width: 760px) 86vw, 29vw"
+                />
               </div>
-              <figcaption>{frame.label}</figcaption>
+              <figcaption>{tx(frame.label)}</figcaption>
             </figure>
           ))}
         </div>
       </section>
 
       <section className="tc-contribution">
-        <p>Mijn bijdrage</p>
+        <p>{tx("Mijn bijdrage")}</p>
         <div>
-          <h2>Niet aantonen dat ik een interface kan maken. Aantonen dat ik een onbenutte vraag kan vinden en vertalen naar een toetsbaar systeem.</h2>
-          <p>De waarde van Tareeqi zit voor mij in de verbinding tussen observatie, positionering en uitvoering. Ik heb de kans afgebakend, de kernfuncties geprioriteerd, het responsive systeem ontworpen en zichtbaar gemaakt welke aannames nog validatie nodig hebben.</p>
+          <h2>{tx("Niet aantonen dat ik een interface kan maken. Aantonen dat ik een onbenutte vraag kan vinden en vertalen naar een toetsbaar systeem.")}</h2>
+          <p>{tx("De waarde van Tareeqi zit voor mij in de verbinding tussen observatie, positionering en uitvoering. Ik heb de kans afgebakend, de kernfuncties geprioriteerd, het responsive systeem ontworpen en zichtbaar gemaakt welke aannames nog validatie nodig hebben.")}</p>
         </div>
       </section>
 
       <footer className="tc-footer">
-        <p>Volgende case / Concept Solution</p>
-        <a href="/cases/ayn-al-hikmah"><span>Ayn Al-Hikmah</span><ArrowUpRight aria-hidden="true" /></a>
-        <div><span>Abdelrahman / Senior digital designer</span><span>© 2026</span></div>
+        <p>{tx("Volgende case / Concept Solution")}</p>
+        <a href={localeHref("/cases/ayn-al-hikmah", locale)}><span>Ayn Al-Hikmah</span><ArrowUpRight aria-hidden="true" /></a>
+        <div><span>Abdelrahman / Product &amp; UX/UI designer</span><span>© 2026</span></div>
       </footer>
     </main>
   );

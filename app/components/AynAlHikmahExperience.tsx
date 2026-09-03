@@ -12,7 +12,7 @@ import ShieldCheck from "lucide-react/icons/shield-check";
 import Sparkles from "lucide-react/icons/sparkles";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { LanguageSwitcher, Locale, localeHref } from "../i18n";
+import { LanguageSwitcher, Locale, localeHref, translateText } from "../i18n";
 import { CaseStyleGuide, type CaseStyleGuideData } from "./CaseStyleGuide";
 
 const styleGuide: CaseStyleGuideData = {
@@ -104,6 +104,12 @@ const proofFrames = [
 
 export function AynAlHikmahExperience({ locale = "nl" }: { locale?: Locale }) {
   const root = useRef<HTMLElement>(null);
+  const tx = (value: string) => translateText(locale, value);
+  const localizedStyleGuide = {
+    ...styleGuide,
+    displayUse: tx(styleGuide.displayUse),
+    interfaceUse: tx(styleGuide.interfaceUse),
+  };
 
   useLayoutEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -189,62 +195,62 @@ export function AynAlHikmahExperience({ locale = "nl" }: { locale?: Locale }) {
 
   return (
     <main ref={root} className="tc-page tc-page-ayn">
-      <a className="skip-link" href="#ayn-content">Ga naar de case</a>
-      <nav className="tc-nav" aria-label="Case navigatie">
-        <a href={localeHref("/#werk", locale)}><ArrowLeft aria-hidden="true" /> Alle cases</a>
-        <a className="tc-nav-brand" href={localeHref("/", locale)}>Abdelrahman / Digital designer</a>
-        <div className="tc-nav-actions"><span>02 / 07</span><LanguageSwitcher locale={locale} path="/cases/ayn-al-hikmah" /></div>
+      <a className="skip-link" href="#ayn-content">{tx("Ga naar de case")}</a>
+      <nav className="tc-nav" aria-label={tx("Case navigatie")}>
+        <a href={localeHref("/#werk", locale)}><ArrowLeft aria-hidden="true" /> {tx("Alle cases")}</a>
+        <a className="tc-nav-brand" href={localeHref("/", locale)}>Abdelrahman / Product &amp; UX/UI designer</a>
+        <div className="tc-nav-actions"><span>03 / 08</span><LanguageSwitcher locale={locale} path="/cases/ayn-al-hikmah" /></div>
       </nav>
 
       <header className="tc-hero">
         <div className="tc-hero-copy">
-          <p className="tc-hero-kicker">Case 02 · Zelf geïnitieerd concept</p>
+          <p className="tc-hero-kicker">{tx("Case 03 · Zelf geïnitieerd concept")}</p>
           <h1>
             <span className="tc-title-line"><span>Ayn Al-Hikmah</span></span>
-            <span className="tc-title-line tc-title-small"><span>Kennis meenemen.</span></span>
-            <span className="tc-title-line tc-title-small"><span>Ook na Medina.</span></span>
+            <span className="tc-title-line tc-title-small"><span>{tx("Kennis meenemen.")}</span></span>
+            <span className="tc-title-line tc-title-small"><span>{tx("Ook na Medina.")}</span></span>
           </h1>
-          <p className="tc-hero-summary">Een boekhandel en leeromgeving die authentieke boeken, betrouwbare geleerden en persoonlijke studiestructuur samenbrengt — voor kenniszoekers die thuis het ritme van Medina willen vasthouden.</p>
+          <p className="tc-hero-summary">{tx("Een boekhandel en leeromgeving die authentieke boeken, betrouwbare geleerden en persoonlijke studiestructuur samenbrengt — voor kenniszoekers die thuis het ritme van Medina willen vasthouden.")}</p>
           <dl className="tc-hero-meta">
-            <div><dt>Vertrekpunt</dt><dd>Een gat tussen toegang en begeleiding</dd></div>
-            <div><dt>Mijn rol</dt><dd>Concept · Strategie · UX/UI</dd></div>
-            <div><dt>Status</dt><dd>Toetsbaar platformconcept</dd></div>
+            <div><dt>{tx("Vertrekpunt")}</dt><dd>{tx("Een gat tussen toegang en begeleiding")}</dd></div>
+            <div><dt>{tx("Mijn rol")}</dt><dd>{tx("Concept · Strategie · UX/UI")}</dd></div>
+            <div><dt>{tx("Status")}</dt><dd>{tx("Toetsbaar platformconcept")}</dd></div>
           </dl>
         </div>
         <figure className="tc-hero-media">
-          <Image src="/projects/ayn-2026/hero-laptops.webp" alt="Ayn Al-Hikmah webshop en boekdetail op twee laptops" fill priority sizes="(max-width: 760px) 100vw, 58vw" />
+          <Image src="/projects/ayn-2026/hero-laptops.webp" alt={tx("Ayn Al-Hikmah webshop en boekdetail op twee laptops")} fill priority sizes="(max-width: 760px) 100vw, 58vw" />
           <figcaption>Commerce + learning / responsive concept</figcaption>
         </figure>
       </header>
 
       <section className="tc-premise" id="ayn-content" aria-labelledby="ayn-premise-title">
-        <p>De leegte na Medina</p>
-        <h2 id="ayn-premise-title">Ik zag geen gebrek aan motivatie. Ik zag een gebrek aan structuur, gezelschap en betrouwbare toegang.</h2>
+        <p>{tx("De leegte na Medina")}</p>
+        <h2 id="ayn-premise-title">{tx("Ik zag geen gebrek aan motivatie. Ik zag een gebrek aan structuur, gezelschap en betrouwbare toegang.")}</h2>
         <div className="tc-premise-notes">
-          <span><BookOpenText aria-hidden="true" /> Authentieke bronnen</span>
-          <span><RadioTower aria-hidden="true" /> Lessen met context</span>
-          <span><Route aria-hidden="true" /> Een haalbaar leerpad</span>
+          <span><BookOpenText aria-hidden="true" /> {tx("Authentieke bronnen")}</span>
+          <span><RadioTower aria-hidden="true" /> {tx("Lessen met context")}</span>
+          <span><Route aria-hidden="true" /> {tx("Een haalbaar leerpad")}</span>
         </div>
       </section>
 
-      <section className="tc-deck" aria-label="Ayn Al-Hikmah oplossingsverhaal in zes kaarten">
+      <section className="tc-deck" aria-label={tx("Ayn Al-Hikmah oplossingsverhaal in zes kaarten")}>
         {cards.map((card, index) => (
           <article className={`tc-card-shell tc-tone-${card.tone}`} id={`chapter-${card.number}`} key={card.number} style={{ "--tc-index": index + 1 } as CSSProperties}>
             <div className="tc-card">
               <span className="tc-card-dim" aria-hidden="true" />
               <div className="tc-card-copy">
                 <div className="tc-card-index"><span>{card.number}</span><span>06</span></div>
-                <p className="tc-mask tc-card-eyebrow"><span>{card.eyebrow}</span></p>
-                <h2 className="tc-mask"><span>{card.title}</span></h2>
-                <p className="tc-mask tc-card-body"><span>{card.body}</span></p>
-                <p className="tc-mask tc-card-note"><span>{card.note}</span></p>
-                {index === 2 && <div className="tc-feature-row"><span><BookOpenText aria-hidden="true" /> Gecureerde boeken</span><span><Languages aria-hidden="true" /> Taalondersteuning</span><span><RadioTower aria-hidden="true" /> Live context</span></div>}
-                {index === 3 && <div className="tc-feature-row"><span><ShieldCheck aria-hidden="true" /> Herkomst</span><span><Route aria-hidden="true" /> Niveau &amp; volgorde</span><span><Sparkles aria-hidden="true" /> Passende hulp</span></div>}
-                {index === 4 && <p className="tc-system-caption">Tajawal brengt richting. Lora geeft uitleg en langere leestekst rust.</p>}
-                {index === 5 && <ul className="tc-validation-list"><li>Kiezen studenten aantoonbaar passender materiaal?</li><li>Begrijpen zij waarom een titel wordt aanbevolen?</li><li>Helpt de begeleiding hen het studieritme vol te houden?</li></ul>}
+                <p className="tc-mask tc-card-eyebrow"><span>{tx(card.eyebrow)}</span></p>
+                <h2 className="tc-mask"><span>{tx(card.title)}</span></h2>
+                <p className="tc-mask tc-card-body"><span>{tx(card.body)}</span></p>
+                <p className="tc-mask tc-card-note"><span>{tx(card.note)}</span></p>
+                {index === 2 && <div className="tc-feature-row"><span><BookOpenText aria-hidden="true" /> {tx("Gecureerde boeken")}</span><span><Languages aria-hidden="true" /> {tx("Taalondersteuning")}</span><span><RadioTower aria-hidden="true" /> {tx("Live context")}</span></div>}
+                {index === 3 && <div className="tc-feature-row"><span><ShieldCheck aria-hidden="true" /> {tx("Herkomst")}</span><span><Route aria-hidden="true" /> {tx("Niveau & volgorde")}</span><span><Sparkles aria-hidden="true" /> {tx("Passende hulp")}</span></div>}
+                {index === 4 && <p className="tc-system-caption">{tx("Tajawal brengt richting. Lora geeft uitleg en langere leestekst rust.")}</p>}
+                {index === 5 && <ul className="tc-validation-list"><li>{tx("Kiezen studenten aantoonbaar passender materiaal?")}</li><li>{tx("Begrijpen zij waarom een titel wordt aanbevolen?")}</li><li>{tx("Helpt de begeleiding hen het studieritme vol te houden?")}</li></ul>}
               </div>
               <figure className={`tc-card-media${"styleGuide" in card ? " tc-style-card-media" : ""}`}>
-                {"styleGuide" in card ? <CaseStyleGuide data={styleGuide} /> : <Image src={card.image} alt={card.imageAlt} fill sizes="(max-width: 760px) 92vw, 54vw" />}
+                {"styleGuide" in card ? <CaseStyleGuide data={localizedStyleGuide} /> : <Image src={card.image} alt={tx(card.imageAlt)} fill sizes="(max-width: 760px) 92vw, 54vw" />}
               </figure>
             </div>
           </article>
@@ -253,29 +259,29 @@ export function AynAlHikmahExperience({ locale = "nl" }: { locale?: Locale }) {
 
       <section className="tc-proof" aria-labelledby="ayn-proof-title">
         <header className="tc-proof-heading">
-          <p>Drie kernflows / volledig uitgewerkt</p>
-          <h2 id="ayn-proof-title">Van belofte.<br />Naar boekkeuze.<br /><em>Naar begrip.</em></h2>
-          <p>De landing, boekwinkel en detailpagina vertellen samen één verhaal: eerst herkennen wat ontbreekt, daarna gericht ontdekken en uiteindelijk met voldoende context een keuze maken.</p>
+          <p>{tx("Drie kernflows / volledig uitgewerkt")}</p>
+          <h2 id="ayn-proof-title">{tx("Van belofte.")}<br />{tx("Naar boekkeuze.")}<br /><em>{tx("Naar begrip.")}</em></h2>
+          <p>{tx("De landing, boekwinkel en detailpagina vertellen samen één verhaal: eerst herkennen wat ontbreekt, daarna gericht ontdekken en uiteindelijk met voldoende context een keuze maken.")}</p>
         </header>
         <div className="tc-proof-grid">
-          {proofFrames.map((frame) => (
+          {proofFrames.map((frame, index) => (
             <figure className="tc-proof-frame" key={frame.label}>
-              <div className="tc-proof-media"><Image src={frame.src} alt={`${frame.label} van Ayn Al-Hikmah`} fill sizes="(max-width: 760px) 86vw, 29vw" /></div>
-              <figcaption>{frame.label}</figcaption>
+              <div className="tc-proof-media"><Image src={frame.src} alt={locale === "en" ? `Responsive Ayn Al-Hikmah interface ${index + 1}` : `${frame.label} van Ayn Al-Hikmah`} fill sizes="(max-width: 760px) 86vw, 29vw" /></div>
+              <figcaption>{tx(frame.label)}</figcaption>
             </figure>
           ))}
         </div>
       </section>
 
       <section className="tc-contribution">
-        <p>Mijn bijdrage</p>
-        <div><h2>Van een webshop voor boeken naar een omgeving die kennis helpt landen, groeien en doorgaan.</h2><p>Ik vertaalde de nichekans naar positionering, servicearchitectuur, informatiehiërarchie en een responsive interface. Omdat dit een conceptproject is, presenteer ik geen verzonnen impactcijfers; de case maakt juist helder welke aannames met kenniszoekers getoetst moeten worden.</p></div>
+        <p>{tx("Mijn bijdrage")}</p>
+        <div><h2>{tx("Van een webshop voor boeken naar een omgeving die kennis helpt landen, groeien en doorgaan.")}</h2><p>{tx("Ik vertaalde de nichekans naar positionering, servicearchitectuur, informatiehiërarchie en een responsive interface. Omdat dit een conceptproject is, presenteer ik geen verzonnen impactcijfers; de case maakt juist helder welke aannames met kenniszoekers getoetst moeten worden.")}</p></div>
       </section>
 
       <footer className="tc-footer">
-        <p>Volgende case / Conceptproject</p>
-        <a href="/cases/guidance-travel"><span>Guidance Travel</span><ArrowUpRight aria-hidden="true" /></a>
-        <div><span>Abdelrahman / Senior digital designer</span><span>© 2026</span></div>
+        <p>{tx("Volgende case / Conceptproject")}</p>
+        <a href={localeHref("/cases/guidance-travel", locale)}><span>Guidance Travel</span><ArrowUpRight aria-hidden="true" /></a>
+        <div><span>Abdelrahman / Product &amp; UX/UI designer</span><span>© 2026</span></div>
       </footer>
     </main>
   );

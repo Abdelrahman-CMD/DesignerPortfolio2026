@@ -13,7 +13,7 @@ import ShieldCheck from "lucide-react/icons/shield-check";
 import UsersRound from "lucide-react/icons/users-round";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { LanguageSwitcher, Locale, localeHref } from "../i18n";
+import { LanguageSwitcher, Locale, localeHref, translateText } from "../i18n";
 import { CaseStyleGuide, type CaseStyleGuideData } from "./CaseStyleGuide";
 
 const styleGuide: CaseStyleGuideData = {
@@ -92,6 +92,12 @@ const proofFrames = [
 
 export function GuidanceTravelExperience({ locale = "nl" }: { locale?: Locale }) {
   const root = useRef<HTMLElement>(null);
+  const tx = (value: string) => translateText(locale, value);
+  const localizedStyleGuide = {
+    ...styleGuide,
+    displayUse: tx(styleGuide.displayUse),
+    interfaceUse: tx(styleGuide.interfaceUse),
+  };
 
   useLayoutEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -126,62 +132,62 @@ export function GuidanceTravelExperience({ locale = "nl" }: { locale?: Locale })
 
   return (
     <main ref={root} className="tc-page tc-page-guidance">
-      <a className="skip-link" href="#guidance-content">Ga naar de case</a>
-      <nav className="tc-nav" aria-label="Case navigatie">
-        <a href={localeHref("/#werk", locale)}><ArrowLeft aria-hidden="true" /> Alle cases</a>
-        <a className="tc-nav-brand" href={localeHref("/", locale)}>Abdelrahman / Digital designer</a>
-        <div className="tc-nav-actions"><span>03 / 07</span><LanguageSwitcher locale={locale} path="/cases/guidance-travel" /></div>
+      <a className="skip-link" href="#guidance-content">{tx("Ga naar de case")}</a>
+      <nav className="tc-nav" aria-label={tx("Case navigatie")}>
+        <a href={localeHref("/#werk", locale)}><ArrowLeft aria-hidden="true" /> {tx("Alle cases")}</a>
+        <a className="tc-nav-brand" href={localeHref("/", locale)}>Abdelrahman / Product &amp; UX/UI designer</a>
+        <div className="tc-nav-actions"><span>04 / 08</span><LanguageSwitcher locale={locale} path="/cases/guidance-travel" /></div>
       </nav>
 
       <header className="tc-hero">
         <div className="tc-hero-copy">
-          <p className="tc-hero-kicker">Case 03 · Concept Solution</p>
+          <p className="tc-hero-kicker">{tx("Case 04 · Concept Solution")}</p>
           <h1>
             <span className="tc-title-line"><span>Guidance Travel</span></span>
-            <span className="tc-title-line tc-title-small"><span>De reis vroeg overgave.</span></span>
-            <span className="tc-title-line tc-title-small"><span>Het boeken vooral overzicht.</span></span>
+            <span className="tc-title-line tc-title-small"><span>{tx("De reis vroeg overgave.")}</span></span>
+            <span className="tc-title-line tc-title-small"><span>{tx("Het boeken vooral overzicht.")}</span></span>
           </h1>
-          <p className="tc-hero-summary">Ik zag een markt waarin persoonlijke begeleiding digitaal vaak eindigde als een ondoorzichtige pakketlijst. Guidance Travel vertaalt die zorg naar een rustige route van intentie naar een passende reis.</p>
+          <p className="tc-hero-summary">{tx("Ik zag een markt waarin persoonlijke begeleiding digitaal vaak eindigde als een ondoorzichtige pakketlijst. Guidance Travel vertaalt die zorg naar een rustige route van intentie naar een passende reis.")}</p>
           <dl className="tc-hero-meta">
-            <div><dt>Vertrekpunt</dt><dd>Marktobservatie Hajj &amp; Umrah</dd></div>
-            <div><dt>Mijn rol</dt><dd>Strategy · UX/UI · Direction</dd></div>
-            <div><dt>Status</dt><dd>Toetsbaar serviceconcept</dd></div>
+            <div><dt>{tx("Vertrekpunt")}</dt><dd>{tx("Marktobservatie Hajj & Umrah")}</dd></div>
+            <div><dt>{tx("Mijn rol")}</dt><dd>Strategy · UX/UI · Direction</dd></div>
+            <div><dt>{tx("Status")}</dt><dd>{tx("Toetsbaar serviceconcept")}</dd></div>
           </dl>
         </div>
         <figure className="tc-hero-media">
-          <Image src="/projects/guidance-2026/hero-laptops.webp" alt="Guidance Travel websiteconcept op een laptop" fill priority sizes="(max-width: 760px) 100vw, 58vw" />
+          <Image src="/projects/guidance-2026/hero-laptops.webp" alt={tx("Guidance Travel websiteconcept op een laptop")} fill priority sizes="(max-width: 760px) 100vw, 58vw" />
           <figcaption>Responsive service concept / Hajj &amp; Umrah</figcaption>
         </figure>
       </header>
 
       <section className="tc-premise" id="guidance-content" aria-labelledby="guidance-premise-title">
-        <p>Zekerheid vóór pakketkeuze</p>
-        <h2 id="guidance-premise-title">Ik begon niet met meer verkoopdruk. Ik begon met de vragen die een pelgrim wakker houden vóór vertrek.</h2>
+        <p>{tx("Zekerheid vóór pakketkeuze")}</p>
+        <h2 id="guidance-premise-title">{tx("Ik begon niet met meer verkoopdruk. Ik begon met de vragen die een pelgrim wakker houden vóór vertrek.")}</h2>
         <div className="tc-premise-notes">
-          <span><Search aria-hidden="true" /> Versnipperde pakketinformatie</span>
-          <span><HeartHandshake aria-hidden="true" /> Begeleiding bleef onzichtbaar</span>
-          <span><ShieldCheck aria-hidden="true" /> Te weinig besliszekerheid</span>
+          <span><Search aria-hidden="true" /> {tx("Versnipperde pakketinformatie")}</span>
+          <span><HeartHandshake aria-hidden="true" /> {tx("Begeleiding bleef onzichtbaar")}</span>
+          <span><ShieldCheck aria-hidden="true" /> {tx("Te weinig besliszekerheid")}</span>
         </div>
       </section>
 
-      <section className="tc-deck" aria-label="Guidance Travel oplossingsverhaal in zes kaarten">
+      <section className="tc-deck" aria-label={tx("Guidance Travel oplossingsverhaal in zes kaarten")}>
         {cards.map((card, index) => (
           <article className={`tc-card-shell tc-tone-${card.tone}`} id={`chapter-${card.number}`} key={card.number} style={{ "--tc-index": index + 1 } as CSSProperties}>
             <div className="tc-card">
               <span className="tc-card-dim" aria-hidden="true" />
               <div className="tc-card-copy">
                 <div className="tc-card-index"><span>{card.number}</span><span>06</span></div>
-                <p className="tc-mask tc-card-eyebrow"><span>{card.eyebrow}</span></p>
-                <h2 className="tc-mask"><span>{card.title}</span></h2>
-                <p className="tc-mask tc-card-body"><span>{card.body}</span></p>
-                <p className="tc-mask tc-card-note"><span>{card.note}</span></p>
-                {index === 2 && <div className="tc-feature-row"><span><CalendarRange aria-hidden="true" /> Periode &amp; intentie</span><span><UsersRound aria-hidden="true" /> Reisgezelschap</span><span><Compass aria-hidden="true" /> Passend pakket</span></div>}
-                {index === 3 && <div className="tc-feature-row"><span><HeartHandshake aria-hidden="true" /> Menselijke gidsen</span><span><CircleCheckBig aria-hidden="true" /> Heldere inclusies</span><span><ShieldCheck aria-hidden="true" /> Vragen in context</span></div>}
-                {index === 4 && <p className="tc-system-caption">Neue Haas Unica Pro zet de richting. Work Sans houdt informatie scanbaar.</p>}
-                {index === 5 && <ul className="tc-validation-list"><li>Welke informatie verlaagt twijfel aantoonbaar?</li><li>Versterken zichtbare gidsen het vertrouwen?</li><li>Komt iemand sneller bij een passend pakket?</li></ul>}
+                <p className="tc-mask tc-card-eyebrow"><span>{tx(card.eyebrow)}</span></p>
+                <h2 className="tc-mask"><span>{tx(card.title)}</span></h2>
+                <p className="tc-mask tc-card-body"><span>{tx(card.body)}</span></p>
+                <p className="tc-mask tc-card-note"><span>{tx(card.note)}</span></p>
+                {index === 2 && <div className="tc-feature-row"><span><CalendarRange aria-hidden="true" /> {tx("Periode & intentie")}</span><span><UsersRound aria-hidden="true" /> {tx("Reisgezelschap")}</span><span><Compass aria-hidden="true" /> {tx("Passend pakket")}</span></div>}
+                {index === 3 && <div className="tc-feature-row"><span><HeartHandshake aria-hidden="true" /> {tx("Menselijke gidsen")}</span><span><CircleCheckBig aria-hidden="true" /> {tx("Heldere inclusies")}</span><span><ShieldCheck aria-hidden="true" /> {tx("Vragen in context")}</span></div>}
+                {index === 4 && <p className="tc-system-caption">{tx("Neue Haas Unica Pro zet de richting. Work Sans houdt informatie scanbaar.")}</p>}
+                {index === 5 && <ul className="tc-validation-list"><li>{tx("Welke informatie verlaagt twijfel aantoonbaar?")}</li><li>{tx("Versterken zichtbare gidsen het vertrouwen?")}</li><li>{tx("Komt iemand sneller bij een passend pakket?")}</li></ul>}
               </div>
               <figure className={`tc-card-media${"styleGuide" in card ? " tc-style-card-media" : ""}`}>
-                {"styleGuide" in card ? <CaseStyleGuide data={styleGuide} /> : <Image src={card.image} alt={card.imageAlt} fill sizes="(max-width: 760px) 92vw, 54vw" />}
+                {"styleGuide" in card ? <CaseStyleGuide data={localizedStyleGuide} /> : <Image src={card.image} alt={tx(card.imageAlt)} fill sizes="(max-width: 760px) 92vw, 54vw" />}
               </figure>
             </div>
           </article>
@@ -190,24 +196,24 @@ export function GuidanceTravelExperience({ locale = "nl" }: { locale?: Locale })
 
       <section className="tc-proof" aria-labelledby="guidance-proof-title">
         <header className="tc-proof-heading">
-          <p>Responsive bewijs / compact beoordeelbaar</p>
-          <h2 id="guidance-proof-title">Eén reislogica.<br />Drie formaten.<br /><em>Negen echte schermen.</em></h2>
-          <p>Landing, pakketkeuze en vertrouwen zijn niet als losse pagina’s ontworpen, maar als één doorlopende beslisroute op desktop, tablet en mobiel.</p>
+          <p>{tx("Responsive bewijs / compact beoordeelbaar")}</p>
+          <h2 id="guidance-proof-title">{tx("Eén reislogica.")}<br />{tx("Drie formaten.")}<br /><em>{tx("Negen echte schermen.")}</em></h2>
+          <p>{tx("Landing, pakketkeuze en vertrouwen zijn niet als losse pagina’s ontworpen, maar als één doorlopende beslisroute op desktop, tablet en mobiel.")}</p>
         </header>
         <div className="tc-proof-grid">
-          {proofFrames.map((frame) => <figure className="tc-proof-frame" key={frame.label}><div className="tc-proof-media"><Image src={frame.src} alt={`${frame.label} van Guidance Travel`} fill sizes="(max-width: 760px) 86vw, 29vw" /></div><figcaption>{frame.label}</figcaption></figure>)}
+          {proofFrames.map((frame, index) => <figure className="tc-proof-frame" key={frame.label}><div className="tc-proof-media"><Image src={frame.src} alt={locale === "en" ? `Responsive Guidance Travel interface ${index + 1}` : `${frame.label} van Guidance Travel`} fill sizes="(max-width: 760px) 86vw, 29vw" /></div><figcaption>{tx(frame.label)}</figcaption></figure>)}
         </div>
       </section>
 
       <section className="tc-contribution">
-        <p>Mijn bijdrage</p>
-        <div><h2>Van een markt vol pakketten naar een dienst die al vóór vertrek vertrouwen begint op te bouwen.</h2><p>Ik heb de marktfrictie vertaald naar positionering, informatiehiërarchie, keuzehulp en een responsive systeem. Het resultaat claimt geen verzonnen conversiewinst; het maakt precies zichtbaar welke aannames met echte reizigers getoetst moeten worden.</p></div>
+        <p>{tx("Mijn bijdrage")}</p>
+        <div><h2>{tx("Van een markt vol pakketten naar een dienst die al vóór vertrek vertrouwen begint op te bouwen.")}</h2><p>{tx("Ik heb de marktfrictie vertaald naar positionering, informatiehiërarchie, keuzehulp en een responsive systeem. Het resultaat claimt geen verzonnen conversiewinst; het maakt precies zichtbaar welke aannames met echte reizigers getoetst moeten worden.")}</p></div>
       </section>
 
       <footer className="tc-footer">
-        <p>Volgende case / Concept Solution</p>
-        <a href="/cases/bayn-signal"><span>Bayn Signal</span><ArrowUpRight aria-hidden="true" /></a>
-        <div><span>Abdelrahman / Senior digital designer</span><span>© 2026</span></div>
+        <p>{tx("Volgende case / Concept Solution")}</p>
+        <a href={localeHref("/cases/bayn-signal", locale)}><span>Bayn Signal</span><ArrowUpRight aria-hidden="true" /></a>
+        <div><span>Abdelrahman / Product &amp; UX/UI designer</span><span>© 2026</span></div>
       </footer>
     </main>
   );

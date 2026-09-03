@@ -12,7 +12,7 @@ import ShieldCheck from "lucide-react/icons/shield-check";
 import UsersRound from "lucide-react/icons/users-round";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { LanguageSwitcher, Locale, localeHref } from "../i18n";
+import { LanguageSwitcher, Locale, localeHref, translateText } from "../i18n";
 import { CaseStyleGuide, type CaseStyleGuideData } from "./CaseStyleGuide";
 
 const styleGuide: CaseStyleGuideData = {
@@ -106,6 +106,12 @@ const proofFrames = [
 
 export function BaynSignalExperience({ locale = "nl" }: { locale?: Locale }) {
   const root = useRef<HTMLElement>(null);
+  const tx = (value: string) => translateText(locale, value);
+  const localizedStyleGuide = {
+    ...styleGuide,
+    displayUse: tx(styleGuide.displayUse),
+    interfaceUse: tx(styleGuide.interfaceUse),
+  };
 
   useLayoutEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -191,62 +197,62 @@ export function BaynSignalExperience({ locale = "nl" }: { locale?: Locale }) {
 
   return (
     <main ref={root} className="tc-page tc-page-bayn">
-      <a className="skip-link" href="#bayn-content">Ga naar de case</a>
-      <nav className="tc-nav" aria-label="Case navigatie">
-        <a href={localeHref("/#werk", locale)}><ArrowLeft aria-hidden="true" /> Alle cases</a>
-        <a className="tc-nav-brand" href={localeHref("/", locale)}>Abdelrahman / Digital designer</a>
-        <div className="tc-nav-actions"><span>04 / 07</span><LanguageSwitcher locale={locale} path="/cases/bayn-signal" /></div>
+      <a className="skip-link" href="#bayn-content">{tx("Ga naar de case")}</a>
+      <nav className="tc-nav" aria-label={tx("Case navigatie")}>
+        <a href={localeHref("/#werk", locale)}><ArrowLeft aria-hidden="true" /> {tx("Alle cases")}</a>
+        <a className="tc-nav-brand" href={localeHref("/", locale)}>Abdelrahman / Product &amp; UX/UI designer</a>
+        <div className="tc-nav-actions"><span>05 / 08</span><LanguageSwitcher locale={locale} path="/cases/bayn-signal" /></div>
       </nav>
 
       <header className="tc-hero">
         <div className="tc-hero-copy">
-          <p className="tc-hero-kicker">Case 04 · Zelf geïnitieerd concept</p>
+          <p className="tc-hero-kicker">{tx("Case 05 · Zelf geïnitieerd concept")}</p>
           <h1>
             <span className="tc-title-line"><span>Bayn Signal</span></span>
-            <span className="tc-title-line tc-title-small"><span>Zie verandering.</span></span>
-            <span className="tc-title-line tc-title-small"><span>Voor je haar voelt.</span></span>
+            <span className="tc-title-line tc-title-small"><span>{tx("Zie verandering.")}</span></span>
+            <span className="tc-title-line tc-title-small"><span>{tx("Voor je haar voelt.")}</span></span>
           </h1>
-          <p className="tc-hero-summary">Een actueel kennisplatform voor expats, migranten en bewoners die niet méér nieuws nodig hebben, maar het juiste lokale signaal op het juiste moment.</p>
+          <p className="tc-hero-summary">{tx("Een actueel kennisplatform voor expats, migranten en bewoners die niet méér nieuws nodig hebben, maar het juiste lokale signaal op het juiste moment.")}</p>
           <dl className="tc-hero-meta">
-            <div><dt>Vertrekpunt</dt><dd>Een gat tussen nieuws en lokale actie</dd></div>
-            <div><dt>Mijn rol</dt><dd>Strategie · Editorial UX · UI</dd></div>
-            <div><dt>Status</dt><dd>Toetsbaar platformconcept</dd></div>
+            <div><dt>{tx("Vertrekpunt")}</dt><dd>{tx("Een gat tussen nieuws en lokale actie")}</dd></div>
+            <div><dt>{tx("Mijn rol")}</dt><dd>{tx("Strategie · Editorial UX · UI")}</dd></div>
+            <div><dt>{tx("Status")}</dt><dd>{tx("Toetsbaar platformconcept")}</dd></div>
           </dl>
         </div>
         <figure className="tc-hero-media">
-          <Image src="/projects/bayn-2026/hero-laptops.webp" alt="Bayn Signal lokale pulse en artikeloverzicht op twee laptops" fill priority sizes="(max-width: 760px) 100vw, 58vw" />
+          <Image src="/projects/bayn-2026/hero-laptops.webp" alt={tx("Bayn Signal lokale pulse en artikeloverzicht op twee laptops")} fill priority sizes="(max-width: 760px) 100vw, 58vw" />
           <figcaption>Local intelligence / responsive concept</figcaption>
         </figure>
       </header>
 
       <section className="tc-premise" id="bayn-content" aria-labelledby="bayn-premise-title">
-        <p>De lokale informatiekloof</p>
-        <h2 id="bayn-premise-title">Ik zag geen tekort aan informatie. Ik zag een tekort aan timing, lokale context en een geloofwaardige volgende stap.</h2>
+        <p>{tx("De lokale informatiekloof")}</p>
+        <h2 id="bayn-premise-title">{tx("Ik zag geen tekort aan informatie. Ik zag een tekort aan timing, lokale context en een geloofwaardige volgende stap.")}</h2>
         <div className="tc-premise-notes">
-          <span><Search aria-hidden="true" /> Snel scanbaar</span>
-          <span><RadioTower aria-hidden="true" /> Tijdig en relevant</span>
-          <span><UsersRound aria-hidden="true" /> Gedragen door context</span>
+          <span><Search aria-hidden="true" /> {tx("Snel scanbaar")}</span>
+          <span><RadioTower aria-hidden="true" /> {tx("Tijdig en relevant")}</span>
+          <span><UsersRound aria-hidden="true" /> {tx("Gedragen door context")}</span>
         </div>
       </section>
 
-      <section className="tc-deck" aria-label="Bayn Signal oplossingsverhaal in zes kaarten">
+      <section className="tc-deck" aria-label={tx("Bayn Signal oplossingsverhaal in zes kaarten")}>
         {cards.map((card, index) => (
           <article className={`tc-card-shell tc-tone-${card.tone}`} id={`chapter-${card.number}`} key={card.number} style={{ "--tc-index": index + 1 } as CSSProperties}>
             <div className="tc-card">
               <span className="tc-card-dim" aria-hidden="true" />
               <div className="tc-card-copy">
                 <div className="tc-card-index"><span>{card.number}</span><span>06</span></div>
-                <p className="tc-mask tc-card-eyebrow"><span>{card.eyebrow}</span></p>
-                <h2 className="tc-mask"><span>{card.title}</span></h2>
-                <p className="tc-mask tc-card-body"><span>{card.body}</span></p>
-                <p className="tc-mask tc-card-note"><span>{card.note}</span></p>
-                {index === 2 && <div className="tc-feature-row"><span><Search aria-hidden="true" /> Scanbare pulse</span><span><RadioTower aria-hidden="true" /> Vroege signalen</span><span><UsersRound aria-hidden="true" /> Ervaringscontext</span></div>}
-                {index === 3 && <div className="tc-feature-row"><span><ShieldCheck aria-hidden="true" /> Bron &amp; tijdstip</span><span><Compass aria-hidden="true" /> Lokale relevantie</span><span><CircleCheckBig aria-hidden="true" /> Volgende stap</span></div>}
-                {index === 4 && <p className="tc-system-caption">Inter houdt de signalen direct. Sana geeft uitleg en langere context voldoende ademruimte.</p>}
-                {index === 5 && <ul className="tc-validation-list"><li>Herkennen gebruikers sneller welk bericht voor hen relevant is?</li><li>Begrijpen zij waarom een bron en lokaal perspectief betrouwbaar zijn?</li><li>Leidt de persoonlijke pulse eerder tot een passende actie?</li></ul>}
+                <p className="tc-mask tc-card-eyebrow"><span>{tx(card.eyebrow)}</span></p>
+                <h2 className="tc-mask"><span>{tx(card.title)}</span></h2>
+                <p className="tc-mask tc-card-body"><span>{tx(card.body)}</span></p>
+                <p className="tc-mask tc-card-note"><span>{tx(card.note)}</span></p>
+                {index === 2 && <div className="tc-feature-row"><span><Search aria-hidden="true" /> {tx("Scanbare pulse")}</span><span><RadioTower aria-hidden="true" /> {tx("Vroege signalen")}</span><span><UsersRound aria-hidden="true" /> {tx("Ervaringscontext")}</span></div>}
+                {index === 3 && <div className="tc-feature-row"><span><ShieldCheck aria-hidden="true" /> {tx("Bron & tijdstip")}</span><span><Compass aria-hidden="true" /> {tx("Lokale relevantie")}</span><span><CircleCheckBig aria-hidden="true" /> {tx("Volgende stap")}</span></div>}
+                {index === 4 && <p className="tc-system-caption">{tx("Inter houdt de signalen direct. Sana geeft uitleg en langere context voldoende ademruimte.")}</p>}
+                {index === 5 && <ul className="tc-validation-list"><li>{tx("Herkennen gebruikers sneller welk bericht voor hen relevant is?")}</li><li>{tx("Begrijpen zij waarom een bron en lokaal perspectief betrouwbaar zijn?")}</li><li>{tx("Leidt de persoonlijke pulse eerder tot een passende actie?")}</li></ul>}
               </div>
               <figure className={`tc-card-media${"styleGuide" in card ? " tc-style-card-media" : ""}`}>
-                {"styleGuide" in card ? <CaseStyleGuide data={styleGuide} /> : <Image src={card.image} alt={card.imageAlt} fill sizes="(max-width: 760px) 92vw, 54vw" />}
+                {"styleGuide" in card ? <CaseStyleGuide data={localizedStyleGuide} /> : <Image src={card.image} alt={tx(card.imageAlt)} fill sizes="(max-width: 760px) 92vw, 54vw" />}
               </figure>
             </div>
           </article>
@@ -255,29 +261,29 @@ export function BaynSignalExperience({ locale = "nl" }: { locale?: Locale }) {
 
       <section className="tc-proof" aria-labelledby="bayn-proof-title">
         <header className="tc-proof-heading">
-          <p>De kernflows / responsive uitgewerkt</p>
-          <h2 id="bayn-proof-title">Van signaleren.<br />Naar begrijpen.<br /><em>Naar handelen.</em></h2>
-          <p>De landing, bibliotheek en artikelervaring bouwen dezelfde informatielogica op ieder formaat: eerst relevantie herkennen, daarna de lokale context begrijpen en tenslotte weten wat je kunt doen.</p>
+          <p>{tx("De kernflows / responsive uitgewerkt")}</p>
+          <h2 id="bayn-proof-title">{tx("Van signaleren.")}<br />{tx("Naar begrijpen.")}<br /><em>{tx("Naar handelen.")}</em></h2>
+          <p>{tx("De landing, bibliotheek en artikelervaring bouwen dezelfde informatielogica op ieder formaat: eerst relevantie herkennen, daarna de lokale context begrijpen en tenslotte weten wat je kunt doen.")}</p>
         </header>
         <div className="tc-proof-grid">
-          {proofFrames.map((frame) => (
+          {proofFrames.map((frame, index) => (
             <figure className="tc-proof-frame" key={frame.label}>
-              <div className="tc-proof-media"><Image src={frame.src} alt={`${frame.label} van Bayn Signal`} fill sizes="(max-width: 760px) 86vw, 18vw" /></div>
-              <figcaption>{frame.label}</figcaption>
+              <div className="tc-proof-media"><Image src={frame.src} alt={locale === "en" ? `Responsive Bayn Signal interface ${index + 1}` : `${frame.label} van Bayn Signal`} fill sizes="(max-width: 760px) 86vw, 18vw" /></div>
+              <figcaption>{tx(frame.label)}</figcaption>
             </figure>
           ))}
         </div>
       </section>
 
       <section className="tc-contribution">
-        <p>Mijn bijdrage</p>
-        <div><h2>Van informatie-overload naar een lokale pulse die betekenis vóór volume plaatst.</h2><p>Ik vertaalde de nichekans naar positionering, contentarchitectuur, signaalhiërarchie en een responsive interfacesysteem. Omdat dit een conceptproject is, presenteer ik geen verzonnen impactcijfers; de case maakt juist zichtbaar welke aannames rond relevantie, vertrouwen en gedrag met echte gebruikers getoetst moeten worden.</p></div>
+        <p>{tx("Mijn bijdrage")}</p>
+        <div><h2>{tx("Van informatie-overload naar een lokale pulse die betekenis vóór volume plaatst.")}</h2><p>{tx("Ik vertaalde de nichekans naar positionering, contentarchitectuur, signaalhiërarchie en een responsive interfacesysteem. Omdat dit een conceptproject is, presenteer ik geen verzonnen impactcijfers; de case maakt juist zichtbaar welke aannames rond relevantie, vertrouwen en gedrag met echte gebruikers getoetst moeten worden.")}</p></div>
       </section>
 
       <footer className="tc-footer">
-        <p>Volgende case / Klantproject</p>
-        <a href="/cases/hijaman-cups"><span>Hijama&apos;N Cups</span><ArrowUpRight aria-hidden="true" /></a>
-        <div><span>Abdelrahman / Senior digital designer</span><span>© 2026</span></div>
+        <p>{tx("Volgende case / Klantproject")}</p>
+        <a href={localeHref("/cases/hijaman-cups", locale)}><span>Hijama&apos;N Cups</span><ArrowUpRight aria-hidden="true" /></a>
+        <div><span>Abdelrahman / Product &amp; UX/UI designer</span><span>© 2026</span></div>
       </footer>
     </main>
   );

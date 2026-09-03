@@ -8,7 +8,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const locale = resolveLocale((await params).locale);
   return locale === "en" ? {
     title: { absolute: "Abdelrahman — Senior digital designer" },
-    description: "I design digital products at the intersection of strategy, human value and thoughtful visual direction.",
+    description: "I design clear, thoughtful digital experiences where strategy, human needs and visual craft come together.",
     alternates: { languages: { "nl-NL": "/nl", "en-GB": "/en" } },
   } : {
     title: { absolute: "Abdelrahman — Senior digitaal ontwerper" },

@@ -5,7 +5,7 @@ import { CSSProperties, useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import type { EditorialCase } from "../data/caseContent";
-import { LanguageSwitcher, Locale, localeHref } from "../i18n";
+import { LanguageSwitcher, Locale, localeHref, translateText } from "../i18n";
 
 const prototypeContent = {
   guidance: {
@@ -72,6 +72,7 @@ const prototypeContent = {
 
 export function EditorialCaseExperience({ project, locale = "nl" }: { project: EditorialCase; locale?: Locale }) {
   const root = useRef<HTMLElement>(null);
+  const tx = (value: string) => translateText(locale, value);
   const prototype = prototypeContent[project.prototype];
   const [selection, setSelection] = useState<string>(prototype.options[0]);
 
@@ -164,39 +165,39 @@ export function EditorialCaseExperience({ project, locale = "nl" }: { project: E
 
   return (
     <main ref={root} className={`editorial-case editorial-case-${project.prototype}`} style={style}>
-      <a className="skip-link" href="#case-story">Ga naar de case</a>
+      <a className="skip-link" href="#case-story">{tx("Ga naar de case")}</a>
 
-      <nav className="ec-nav" aria-label="Case navigatie">
-        <a href={localeHref("/#werk", locale)} className="case-back"><span aria-hidden="true">←</span> Alle cases</a>
-        <a href={localeHref("/", locale)} className="case-brand">Abdelrahman / Digital designer</a>
-        <div className="ec-nav-actions"><a href="mailto:dhr_abdelrahman@outlook.com">Start een gesprek</a><LanguageSwitcher locale={locale} path={`/cases/${project.slug}`} tone={project.prototype === "atotz" ? "dark" : "light"} /></div>
+      <nav className="ec-nav" aria-label={tx("Case navigatie")}>
+        <a href={localeHref("/#werk", locale)} className="case-back"><span aria-hidden="true">←</span> {tx("Alle cases")}</a>
+        <a href={localeHref("/", locale)} className="case-brand">Abdelrahman / Product &amp; UX/UI designer</a>
+        <div className="ec-nav-actions"><a href="mailto:dhr_abdelrahman@outlook.com">{tx("Start een gesprek")}</a><LanguageSwitcher locale={locale} path={`/cases/${project.slug}`} tone={project.prototype === "atotz" ? "dark" : "light"} /></div>
       </nav>
 
       <header className="ec-hero">
         <div className="ec-hero-grid" aria-hidden="true" />
         <div className="ec-hero-copy">
-          <p className="section-kicker"><span>Case {project.number}</span> {project.eyebrow}</p>
+          <p className="section-kicker"><span>Case {project.number}</span> {tx(project.eyebrow)}</p>
           <h1>
             {(project.titleLines ?? [project.name]).map((line, index) => (
               <span className={`ec-title-line ec-title-line-${index + 1}`} key={line}><span>{line}</span></span>
             ))}
           </h1>
-          <p className="ec-hero-headline">{project.headline}</p>
+          <p className="ec-hero-headline">{tx(project.headline)}</p>
           <dl className="ec-meta">
-            <div><dt>Rol</dt><dd>{project.role}</dd></div>
-            <div><dt>Focus</dt><dd>{project.focus}</dd></div>
-            <div><dt>{project.yearLabel ?? "Jaar"}</dt><dd>{project.year}</dd></div>
+            <div><dt>{tx("Rol")}</dt><dd>{tx(project.role)}</dd></div>
+            <div><dt>Focus</dt><dd>{tx(project.focus)}</dd></div>
+            <div><dt>{tx(project.yearLabel ?? "Jaar")}</dt><dd>{tx(project.year)}</dd></div>
           </dl>
         </div>
         <figure className="ec-featured">
           <Image
             src={project.featured}
-            alt={project.featuredAlt ?? `${project.name} projectoverzicht`}
+            alt={tx(project.featuredAlt ?? `${project.name} projectoverzicht`)}
             fill
             priority
             sizes="94vw"
           />
-          <figcaption><span>Project overview</span><span>{project.creditLine ?? "Concept / UX/UI / Strategy"}</span></figcaption>
+          <figcaption><span>Project overview</span><span>{tx(project.creditLine ?? "Concept / UX/UI / Strategy")}</span></figcaption>
         </figure>
       </header>
 
@@ -204,54 +205,54 @@ export function EditorialCaseExperience({ project, locale = "nl" }: { project: E
         <section className="ec-context">
           <p className="section-kicker"><span>01</span> Context</p>
           <header className="ec-context-grid ec-reveal">
-            <h2>{project.contextTitle}</h2>
+            <h2>{tx(project.contextTitle)}</h2>
             <div>
-              <p className="ec-context-lead">{project.contextLead}</p>
-              <p>{project.contextBody}</p>
+              <p className="ec-context-lead">{tx(project.contextLead)}</p>
+              <p>{tx(project.contextBody)}</p>
             </div>
           </header>
         </section>
 
         <section className="ec-insight">
-          <p className="section-kicker section-kicker-light"><span>02</span> Het kwartje</p>
+          <p className="section-kicker section-kicker-light"><span>02</span> {tx("Het kwartje")}</p>
           <blockquote className="ec-insight-quote ec-reveal">
             <span className="ec-insight-rule" aria-hidden="true" />
-            “{project.insightQuote}”
+            “{tx(project.insightQuote)}”
           </blockquote>
-          <p className="ec-insight-body ec-reveal">{project.insightBody}</p>
+          <p className="ec-insight-body ec-reveal">{tx(project.insightBody)}</p>
         </section>
 
         <section className="ec-concept">
           <header className="ec-concept-heading ec-reveal">
-            <p className="section-kicker"><span>03</span> Het concept</p>
-            <h2>{project.conceptTitle}</h2>
+            <p className="section-kicker"><span>03</span> {tx("Het concept")}</p>
+            <h2>{tx(project.conceptTitle)}</h2>
           </header>
 
           <div className="ec-duality ec-reveal">
             <article>
               <span className="ec-duality-index">A</span>
               <p className="label">Freedom / Out-of-the-box</p>
-              <h3>{project.freedomTitle}</h3>
-              <p>{project.freedomBody}</p>
+              <h3>{tx(project.freedomTitle)}</h3>
+              <p>{tx(project.freedomBody)}</p>
             </article>
             <article>
               <span className="ec-duality-index">B</span>
               <p className="label">Responsibility / Structure</p>
-              <h3>{project.responsibilityTitle}</h3>
-              <p>{project.responsibilityBody}</p>
+              <h3>{tx(project.responsibilityTitle)}</h3>
+              <p>{tx(project.responsibilityBody)}</p>
             </article>
           </div>
 
           <div className="ec-prototype ec-reveal">
             <div className="ec-prototype-copy">
               <p className="label">Interactive thought</p>
-              <h3>{prototype.question}</h3>
-              <p>Probeer het principe. De interface verandert mee met de behoefte, maar houdt de keuze rustig en overzichtelijk.</p>
+              <h3>{tx(prototype.question)}</h3>
+              <p>{tx("Probeer het principe. De interface verandert mee met de behoefte, maar houdt de keuze rustig en overzichtelijk.")}</p>
             </div>
             <div className="ec-prototype-ui">
               <div className="ec-prototype-top">
-                <span className="label">{prototype.label}</span>
-                <span className="ec-live-dot">Live concept</span>
+                <span className="label">{tx(prototype.label)}</span>
+                <span className="ec-live-dot">{tx("Live concept")}</span>
               </div>
               <div className="ec-prototype-options" role="group" aria-label={prototype.question}>
                 {prototype.options.map((option) => (
@@ -262,23 +263,23 @@ export function EditorialCaseExperience({ project, locale = "nl" }: { project: E
                     aria-pressed={selection === option}
                     onClick={() => setSelection(option)}
                   >
-                    {option}
+                    {tx(option)}
                   </button>
                 ))}
               </div>
               <div className="ec-prototype-result" aria-live="polite">
-                <span className="label">Persoonlijke uitkomst</span>
-                <strong>{result?.[0]}</strong>
-                <small>{result?.[1]}</small>
+                <span className="label">{tx("Persoonlijke uitkomst")}</span>
+                <strong>{result?.[0] ? tx(result[0]) : null}</strong>
+                <small>{result?.[1] ? tx(result[1]) : null}</small>
                 <div className="ec-result-line"><span /></div>
-                <button type="button">Bekijk de volgende stap <span aria-hidden="true">↗</span></button>
+                <button type="button">{tx("Bekijk de volgende stap")} <span aria-hidden="true">↗</span></button>
               </div>
             </div>
           </div>
 
           <ol className="ec-feature-list ec-reveal">
             {project.features.map((feature, index) => (
-              <li key={feature}><span>0{index + 1}</span>{feature}</li>
+              <li key={feature}><span>0{index + 1}</span>{tx(feature)}</li>
             ))}
           </ol>
         </section>
@@ -286,8 +287,8 @@ export function EditorialCaseExperience({ project, locale = "nl" }: { project: E
         <section className="ec-system">
           <header className="ec-system-heading ec-reveal">
             <p className="section-kicker"><span>04</span> Design system</p>
-            <h2>Een visuele stem die het concept draagt.</h2>
-            <p>Typografie en kleur zijn geen decoratie. Ze helpen de gebruiker begrijpen wat belangrijk is, wat vertrouwd voelt en waar actie nodig is.</p>
+            <h2>{tx("Een visuele stem die het concept draagt.")}</h2>
+            <p>{tx("Typografie en kleur zijn geen decoratie. Ze helpen de gebruiker begrijpen wat belangrijk is, wat vertrouwd voelt en waar actie nodig is.")}</p>
           </header>
           <div className="ec-type ec-reveal">
             <div><span>Aa</span><p>{project.headingFont}<small>Headlines / identity</small></p></div>
@@ -308,49 +309,51 @@ export function EditorialCaseExperience({ project, locale = "nl" }: { project: E
 
         <section className="ec-gallery">
           <header className="ec-gallery-heading ec-reveal">
-            <p className="section-kicker"><span>05</span> De ervaring</p>
-            <h2>Van principe naar product.</h2>
-            <p>{project.galleryIntro ?? "De belangrijkste schermen uit het concept, rechtstreeks uit de casepresentatie."}</p>
+            <p className="section-kicker"><span>05</span> {tx("De ervaring")}</p>
+            <h2>{tx("Van principe naar product.")}</h2>
+            <p>{tx(project.galleryIntro ?? "De belangrijkste schermen uit het concept, rechtstreeks uit de casepresentatie.")}</p>
           </header>
           <div className="ec-shot-grid">
             {project.shots.map((shot, index) => (
               <figure className={`ec-shot ec-shot-${index + 1} ${shot.src.includes("-site-") ? "ec-shot-website" : ""} ec-reveal`} key={shot.src}>
                 <div className="ec-shot-media">
-                  <Image src={shot.src} alt={shot.alt} fill sizes={index === 0 ? "92vw" : "46vw"} />
+                  <Image src={shot.src} alt={tx(shot.alt)} fill sizes={index === 0 ? "92vw" : "46vw"} />
                 </div>
-                <figcaption><span>0{index + 1}</span><span>{shot.caption}</span></figcaption>
+                <figcaption><span>0{index + 1}</span><span>{tx(shot.caption)}</span></figcaption>
               </figure>
             ))}
           </div>
         </section>
 
         <section className="ec-impact">
-          <p className="section-kicker section-kicker-light"><span>06</span> De bijdrage</p>
+          <p className="section-kicker section-kicker-light"><span>06</span> {tx("De bijdrage")}</p>
           <div className="ec-impact-grid ec-reveal">
-            <h2>{project.impactTitle}</h2>
+            <h2>{tx(project.impactTitle)}</h2>
             <div>
-              {project.impactBody.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+              {project.impactBody.map((paragraph) => <p key={paragraph}>{tx(paragraph)}</p>)}
               {project.externalUrl ? (
                 <a className="ec-live-link" href={project.externalUrl} target="_blank" rel="noreferrer">
-                  Bekijk de live website <span aria-hidden="true">↗</span>
+                  {tx("Bekijk de live website")} <span aria-hidden="true">↗</span>
                 </a>
               ) : null}
             </div>
           </div>
           <dl className="ec-stats ec-reveal">
             {project.stats.map((stat) => (
-              <div key={stat.label}><dt>{stat.value}</dt><dd>{stat.label}</dd></div>
+              <div key={stat.label}><dt>{stat.value}</dt><dd>{tx(stat.label)}</dd></div>
             ))}
           </dl>
         </section>
       </article>
 
       <footer className="ec-footer">
-        <p className="section-kicker"><span>Next</span> Volgende case</p>
-        <a href={`/cases/${project.next.slug}`}>
+        <p className="section-kicker">
+          <span>{locale === "en" ? "Next" : "Volgende"}</span> {locale === "en" ? "case study" : "case"}
+        </p>
+        <a href={localeHref(`/cases/${project.next.slug}`, locale)}>
           <span>{project.next.name}</span><span aria-hidden="true">↗</span>
         </a>
-        <div><span>Abdelrahman / Digital designer</span><span>© 2026</span></div>
+        <div><span>Abdelrahman / Product &amp; UX/UI designer</span><span>© 2026</span></div>
       </footer>
     </main>
   );

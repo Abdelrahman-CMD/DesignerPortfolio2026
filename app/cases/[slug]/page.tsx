@@ -4,6 +4,7 @@ import { GuidanceTravelExperience } from "../../components/GuidanceTravelExperie
 import { AynAlHikmahExperience } from "../../components/AynAlHikmahExperience";
 import { BaynSignalExperience } from "../../components/BaynSignalExperience";
 import { HijamaNCupsExperience } from "../../components/HijamaNCupsExperience";
+import { MirqaExperience } from "../../components/MirqaExperience";
 import { EditorialCaseExperience } from "../../components/EditorialCaseExperience";
 import { editorialCases } from "../../data/caseContent";
 import { LocalizedSurface } from "../../i18n";
@@ -14,6 +15,13 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
+  if (slug === "mirqa") {
+    return {
+      title: "MIRQA — Product case study",
+      description:
+        "Een mobiele productcase in ontwikkeling die intentie vertaalt naar een haalbaar vertrek naar de moskee.",
+    };
+  }
   if (slug === "tareeqi") {
     return {
       title: "Tareeqi — Case study",
@@ -58,7 +66,12 @@ export async function generateMetadata({
 
 export function generateStaticParams() {
   return [
+    { slug: "mirqa" },
     { slug: "tareeqi" },
+    { slug: "guidance-travel" },
+    { slug: "ayn-al-hikmah" },
+    { slug: "bayn-signal" },
+    { slug: "hijaman-cups" },
     ...Object.keys(editorialCases).map((slug) => ({ slug })),
   ];
 }
@@ -69,6 +82,10 @@ export default async function CasePage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
+
+  if (slug === "mirqa") {
+    return <LocalizedSurface locale="nl" respectPreference><MirqaExperience locale="nl" /></LocalizedSurface>;
+  }
 
   if (slug === "tareeqi") {
     return <LocalizedSurface locale="nl" respectPreference><CaseExperience locale="nl" /></LocalizedSurface>;

@@ -16,11 +16,27 @@ import UserRound from "lucide-react/icons/user-round";
 import Workflow from "lucide-react/icons/workflow";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { LanguageSwitcher, Locale, localeHref } from "../i18n";
+import { LanguageSwitcher, Locale, localeHref, translateText } from "../i18n";
 
 const projects = [
   {
     number: "01",
+    slug: "mirqa",
+    name: "MIRQA",
+    title: "Van goede intentie naar een haalbaar vertrek naar de moskee",
+    summary:
+      "Een rustige mobiele companion die één gekozen gebed, een vertrouwde moskee en een realistische vertrektijd samenbrengt.",
+    services: "Productstrategie · UX research · UX/UI",
+    category: "Conceptproject",
+    status: "Binnenkort",
+    bg: "#c9653d",
+    ink: "#fff8f0",
+    image: "/projects/mirqa/mosque-map.jpg",
+    imagePosition: "center",
+    href: "/cases/mirqa",
+  },
+  {
+    number: "02",
     slug: "tareeqi",
     name: "Tareeqi",
     title: "Mekka en Medina ontdekken voorbij het voor de hand liggende",
@@ -36,7 +52,7 @@ const projects = [
     href: "/cases/tareeqi",
   },
   {
-    number: "02",
+    number: "03",
     slug: "ayn",
     name: "Ayn Al-Hikmah",
     title: "Het gat vullen voor kenniszoekers die Medina verlaten",
@@ -52,7 +68,7 @@ const projects = [
     href: "/cases/ayn-al-hikmah",
   },
   {
-    number: "03",
+    number: "04",
     slug: "guidance",
     name: "Guidance Travel",
     title: "Een functionele herdefinitie van hoogwaardige reizen",
@@ -68,7 +84,7 @@ const projects = [
     href: "/cases/guidance-travel",
   },
   {
-    number: "04",
+    number: "05",
     slug: "bayn",
     name: "Bayn Signal",
     title: "Vooruitlopen op lokale veranderingen met bruikbare inzichten",
@@ -84,7 +100,7 @@ const projects = [
     href: "/cases/bayn-signal",
   },
   {
-    number: "05",
+    number: "06",
     slug: "hijaman-cups",
     name: "Hijama’N Cups",
     title: "Traditionele zorg vertalen naar een rustige digitale ontvangst",
@@ -100,7 +116,7 @@ const projects = [
     href: "/cases/hijaman-cups",
   },
   {
-    number: "06",
+    number: "07",
     slug: "atotz",
     name: "AtotZ Detachering",
     title: "De juiste mensen op de juiste plek, zonder onnodige drempels",
@@ -116,7 +132,7 @@ const projects = [
     href: "/cases/atotz-detachering",
   },
   {
-    number: "07",
+    number: "08",
     slug: "oppasbychaima",
     name: "Oppas by Chaima",
     title: "Thuiszorg vertalen naar rustig en geloofwaardig digitaal vertrouwen",
@@ -147,14 +163,17 @@ const heroCtaRingCopy = {
   },
 } as const;
 
-const manifestoMarkerWords = new Set(["écht", "kwartje", "kern"]);
+const manifestoMarkerWords = {
+  nl: new Set(["écht", "kwartje", "kern"]),
+  en: new Set(["clear", "answer", "foundation"]),
+};
 
 const personalStory = [
   {
     step: "01",
     kicker: "Wie ik ben",
     title: "Ik breek het ijs. Niet de basis.",
-    englishTitle: "I break the ice, not the foundation.",
+    englishTitle: "Easy conversation. Serious foundations.",
     body: "Ik ben Abdelrahman. Sociaal genoeg om snel aan tafel te komen, scherp genoeg om niet overal ja op te zeggen. Een goede klik geeft ruimte voor eerlijke vragen — precies waar het werk sterker van wordt.",
     image: "/about/web/portrait-studio.webp",
     alt: "Abdelrahman in zijn ontwerpstudio",
@@ -168,7 +187,7 @@ const personalStory = [
     step: "02",
     kicker: "Wat ik doe",
     title: "Eerst begrijpen wat er schuurt. Dan pas een scherm.",
-    englishTitle: "Understand the friction first. Then design the screen.",
+    englishTitle: "Understand the friction before designing the screen.",
     body: "We leggen aannames, gedrag en doelen naast elkaar. Ik zoek het moment waarop losse informatie één duidelijke richting krijgt. Vanaf daar ontwerp ik websites die logisch reageren op echte keuzes.",
     image: "/about/web/designing.webp",
     alt: "Abdelrahman werkt aan een digitaal ontwerp achter zijn bureau",
@@ -182,7 +201,7 @@ const personalStory = [
     step: "03",
     kicker: "Hoe ik blijf groeien",
     title: "Wat ik vandaag leer, verandert morgen mijn ontwerp.",
-    englishTitle: "What I learn today changes tomorrow’s design.",
+    englishTitle: "What I learn today shapes what I design tomorrow.",
     body: "Ik lees, observeer en experimenteer met strategie, psychologie, techniek, cultuur en AI. Niet om iedere trend te volgen, maar om per vraag een rijker antwoord te kunnen geven.",
     image: "/about/web/learning.webp",
     alt: "Abdelrahman leest The Heart of Design",
@@ -196,7 +215,7 @@ const personalStory = [
     step: "04",
     kicker: "En buiten het scherm",
     title: "Papa zijn is mijn scherpste gebruikerstest.",
-    englishTitle: "Being a father is my sharpest usability test.",
+    englishTitle: "Fatherhood is my most honest usability test.",
     body: "Een kind accepteert geen ingewikkelde uitleg voor iets dat simpel moet zijn. Vaderschap houdt mijn werk menselijk: aandacht is schaars, context verandert continu en verantwoordelijkheid laat zich niet wegstylen.",
     image: "/about/web/fatherhood.webp",
     alt: "Abdelrahman als vader bij de kinderwagen",
@@ -1356,7 +1375,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
   }, []);
 
   const manifesto = locale === "en"
-    ? "A website does not need to shout louder. It needs to make it genuinely clear why someone stays. I keep asking questions until the noise disappears. Once it clicks, we build on a foundation that will still make sense tomorrow."
+    ? "A website does not need to shout louder. It needs to make clear why someone should stay. I keep asking questions until the noise falls away. Once the answer feels obvious, we build on a foundation that will still make sense tomorrow."
     : "Een website hoeft niet harder te roepen. Ze moet écht duidelijk maken waarom iemand blijft. Daarom stel ik vragen tot de ruis verdwijnt. Wanneer het kwartje valt, bouwen we verder op een kern die ook morgen nog klopt.";
   const ringCopy = heroCtaRingCopy[locale];
 
@@ -1516,7 +1535,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
                 <a
                   className="hero-cta-container"
                   href="#werk"
-                  aria-label="Zie de gevolgen en ontdek de zeven projecten"
+                  aria-label="Zie de gevolgen en ontdek de acht projecten"
                 >
                   <span className="hero-cta-shape" aria-hidden="true">
                     <span className="editorial-text-ring hero-cta-ring-idle">
@@ -1546,7 +1565,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
                     <span className="hero-cta-orbit-core">↘</span>
                   </span>
                   <span className="hero-cta-touch-copy">
-                    <span>Bekijk 7 cases</span>
+                    <span>Bekijk 8 cases</span>
                     <ArrowUpRight aria-hidden="true" />
                   </span>
                 </a>
@@ -1556,6 +1575,9 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
             <div className="mind-zone-layer" role="group" aria-label="Interactieve kaart van mijn ontwerpdenken">
               {mindZones.map((zone) => {
                 const isActive = activeMindZone === zone.id;
+                const zoneLabel = translateText(locale, zone.label);
+                const zoneTitle = translateText(locale, zone.title);
+                const zoneDetail = translateText(locale, zone.detail);
 
                 return (
                   <button
@@ -1564,7 +1586,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
                     className={`mind-zone mind-zone-${zone.id}${isActive ? " is-active" : ""}`}
                     style={{ "--zone-color": zone.color } as CSSProperties}
                     aria-pressed={isActive}
-                    aria-label={`${zone.number} ${zone.label}: ${zone.title}. ${zone.detail}`}
+                    aria-label={`${zone.number} ${zoneLabel}: ${zoneTitle}. ${zoneDetail}`}
                     onPointerEnter={(event) => {
                       if (event.pointerType === "mouse" || event.pointerType === "pen") {
                         setActiveMindZone(zone.id);
@@ -1587,9 +1609,9 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
                   >
                     <span className="mind-zone-surface" aria-hidden="true" />
                     <span className="mind-zone-mobile-copy">
-                      <span className="mind-zone-mobile-kicker label">{zone.number} / {zone.label}</span>
-                      <strong>{zone.title}</strong>
-                      <span>{zone.detail}</span>
+                      <span className="mind-zone-mobile-kicker label">{zone.number} / {zoneLabel}</span>
+                      <strong>{zoneTitle}</strong>
+                      <span>{zoneDetail}</span>
                     </span>
                   </button>
                 );
@@ -1597,6 +1619,9 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
 
               {mindZones.map((zone) => {
                 const isActive = activeMindZone === zone.id;
+                const zoneLabel = translateText(locale, zone.label);
+                const zoneTitle = translateText(locale, zone.title);
+                const zoneDetail = translateText(locale, zone.detail);
 
                 return (
                   <span
@@ -1607,10 +1632,10 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
                     key={`annotation-${zone.id}`}
                   >
                       <span className="mind-annotation-kicker label">
-                        {zone.number} / {zone.label}
+                        {zone.number} / {zoneLabel}
                       </span>
-                      <strong aria-label={zone.title} style={{ "--char-count": zone.title.length } as CSSProperties}>
-                        {zone.title.split(" ").map((word, wordIndex, words) => {
+                      <strong aria-label={zoneTitle} style={{ "--char-count": zoneTitle.length } as CSSProperties}>
+                        {zoneTitle.split(" ").map((word, wordIndex, words) => {
                           const charOffset = words.slice(0, wordIndex).reduce((total, current) => total + current.length + 1, 0);
 
                           return (
@@ -1620,7 +1645,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
                                   className="mind-written-char"
                                   style={{
                                     "--char-delay": `${(charOffset + characterIndex) * 24}ms`,
-                                    "--erase-delay": `${(zone.title.length - charOffset - characterIndex) * 12}ms`,
+                                    "--erase-delay": `${(zoneTitle.length - charOffset - characterIndex) * 12}ms`,
                                   } as CSSProperties}
                                   key={`${character}-${characterIndex}`}
                                 >
@@ -1631,7 +1656,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
                           );
                         })}
                       </strong>
-                      <span className="mind-annotation-detail">{zone.detail}</span>
+                      <span className="mind-annotation-detail">{zoneDetail}</span>
 
                       {zone.id === "direction" && (
                         <span className="mind-tools" aria-label="Gereedschap: Figma, Framer en AI">
@@ -1671,7 +1696,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
                       style={{ "--zone-color": zone.color } as CSSProperties}
                       aria-pressed={isActive}
                       aria-controls="mind-touch-detail"
-                      aria-label={`${zone.number} ${zone.label}`}
+                      aria-label={`${zone.number} ${translateText(locale, zone.label)}`}
                       onClick={() => setActiveMindZone(zone.id)}
                     >
                       <span>{zone.number}</span>
@@ -1686,10 +1711,10 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
                 aria-live="polite"
               >
                 <span className="mind-touch-kicker label">
-                  {touchMindZone.number} / {touchMindZone.label}
+                  {touchMindZone.number} / {translateText(locale, touchMindZone.label)}
                 </span>
-                <strong>{touchMindZone.title}</strong>
-                <p>{touchMindZone.detail}</p>
+                <strong>{translateText(locale, touchMindZone.title)}</strong>
+                <p>{translateText(locale, touchMindZone.detail)}</p>
               </div>
             </div>
 
@@ -1701,8 +1726,8 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
         <p className="section-kicker" id="manifesto-label"><span>01</span> Mijn houding</p>
         <p className="manifesto-copy">
           {manifesto.split(" ").map((word, index) => {
-            const normalizedWord = word.toLocaleLowerCase("nl-NL").replace(/[^\p{L}]/gu, "");
-            const isMarkerWord = manifestoMarkerWords.has(normalizedWord);
+            const normalizedWord = word.toLocaleLowerCase(locale === "en" ? "en-GB" : "nl-NL").replace(/[^\p{L}]/gu, "");
+            const isMarkerWord = manifestoMarkerWords[locale].has(normalizedWord);
 
             return (
               <span
@@ -1755,13 +1780,13 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
           <div className="showcase-heading-copy">
             <h2 id="work-title">Geselecteerd werk</h2>
             <p>
-              Vier zelf geïnitieerde concepten tonen hoe ik kansen in een niche ontdek
+              Vijf zelf geïnitieerde concepten tonen hoe ik kansen in een niche ontdek
               en vertaal naar een heldere digitale richting. Drie live klantprojecten
               laten zien hoe strategie, content en ontwerp in de praktijk samenkomen.
             </p>
           </div>
           <div className="showcase-index" aria-label="Verdeling van de cases">
-            <span><strong>04</strong> Conceptprojecten</span>
+            <span><strong>05</strong> Conceptprojecten</span>
             <span><strong>03</strong> Klantprojecten</span>
           </div>
         </header>

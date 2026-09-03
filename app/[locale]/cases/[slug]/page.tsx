@@ -4,6 +4,7 @@ import { GuidanceTravelExperience } from "../../../components/GuidanceTravelExpe
 import { AynAlHikmahExperience } from "../../../components/AynAlHikmahExperience";
 import { BaynSignalExperience } from "../../../components/BaynSignalExperience";
 import { HijamaNCupsExperience } from "../../../components/HijamaNCupsExperience";
+import { MirqaExperience } from "../../../components/MirqaExperience";
 import { EditorialCaseExperience } from "../../../components/EditorialCaseExperience";
 import { editorialCases } from "../../../data/caseContent";
 import { Locale, LocalizedSurface } from "../../../i18n";
@@ -11,6 +12,10 @@ import { Locale, LocalizedSurface } from "../../../i18n";
 const resolveLocale = (value: string): Locale => value === "en" ? "en" : "nl";
 
 const caseDescriptions: Record<string, { nl: string; en: string }> = {
+  mirqa: {
+    nl: "Een mobiele productcase in ontwikkeling die intentie vertaalt naar een haalbaar vertrek naar de moskee.",
+    en: "A mobile product case study in development, turning intention into a realistic journey to the mosque.",
+  },
   tareeqi: {
     nl: "Een zelf geïnitieerde case over het gat tussen generieke navigatie en lokale kennis in Mekka en Medina.",
     en: "A self-initiated case study exploring the gap between generic navigation and local knowledge in Mecca and Medina.",
@@ -21,15 +26,15 @@ const caseDescriptions: Record<string, { nl: string; en: string }> = {
   },
   "ayn-al-hikmah": {
     nl: "Een platformconcept dat authentieke boeken, betrouwbare geleerden en persoonlijke leerpaden samenbrengt.",
-    en: "A platform concept bringing authentic books, trusted scholars and personal learning paths together.",
+    en: "A platform concept that connects authentic books and trusted scholars with personal learning paths.",
   },
   "bayn-signal": {
     nl: "Een lokaal kennisplatform dat nieuws, communitycontext en praktische vervolgstappen samenbrengt.",
-    en: "A local knowledge platform bringing news, community context and practical next steps together.",
+    en: "A local knowledge platform that turns news and community context into practical next steps.",
   },
   "hijaman-cups": {
     nl: "Nora’s vertrouwde hijamapraktijk vertaald naar een warme website met WhatsApp als route naar een afspraak.",
-    en: "Nora’s trusted hijama practice translated into a warm website with WhatsApp as the route to an appointment.",
+    en: "A warm, reassuring website for Nora’s trusted hijama practice, with WhatsApp as the most personal way to book.",
   },
 };
 
@@ -47,7 +52,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 }
 
 export function generateStaticParams() {
-  const slugs = ["tareeqi", "guidance-travel", "ayn-al-hikmah", "bayn-signal", "hijaman-cups", ...Object.keys(editorialCases)];
+  const slugs = ["mirqa", "tareeqi", "guidance-travel", "ayn-al-hikmah", "bayn-signal", "hijaman-cups", ...Object.keys(editorialCases)];
   return ["nl", "en"].flatMap((locale) => slugs.map((slug) => ({ locale, slug })));
 }
 
@@ -56,7 +61,8 @@ export default async function LocalizedCasePage({ params }: { params: Promise<{ 
   const locale = resolveLocale(localeValue);
   let content;
 
-  if (slug === "tareeqi") content = <CaseExperience locale={locale} />;
+  if (slug === "mirqa") content = <MirqaExperience locale={locale} />;
+  else if (slug === "tareeqi") content = <CaseExperience locale={locale} />;
   else if (slug === "guidance-travel") content = <GuidanceTravelExperience locale={locale} />;
   else if (slug === "ayn-al-hikmah") content = <AynAlHikmahExperience locale={locale} />;
   else if (slug === "bayn-signal") content = <BaynSignalExperience locale={locale} />;

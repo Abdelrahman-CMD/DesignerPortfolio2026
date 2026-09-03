@@ -13,7 +13,7 @@ import Sparkles from "lucide-react/icons/sparkles";
 import UserRound from "lucide-react/icons/user-round";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { LanguageSwitcher, Locale, localeHref } from "../i18n";
+import { LanguageSwitcher, Locale, localeHref, translateText } from "../i18n";
 import { CaseStyleGuide, type CaseStyleGuideData } from "./CaseStyleGuide";
 
 const styleGuide: CaseStyleGuideData = {
@@ -107,6 +107,12 @@ const proofFrames = [
 
 export function HijamaNCupsExperience({ locale = "nl" }: { locale?: Locale }) {
   const root = useRef<HTMLElement>(null);
+  const tx = (value: string) => translateText(locale, value);
+  const localizedStyleGuide = {
+    ...styleGuide,
+    displayUse: tx(styleGuide.displayUse),
+    interfaceUse: tx(styleGuide.interfaceUse),
+  };
 
   useLayoutEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -192,62 +198,62 @@ export function HijamaNCupsExperience({ locale = "nl" }: { locale?: Locale }) {
 
   return (
     <main ref={root} className="tc-page tc-page-hijama">
-      <a className="skip-link" href="#hijama-content">Ga naar de case</a>
-      <nav className="tc-nav" aria-label="Case navigatie">
-        <a href={localeHref("/#werk", locale)}><ArrowLeft aria-hidden="true" /> Alle cases</a>
-        <a className="tc-nav-brand" href={localeHref("/", locale)}>Abdelrahman / Digital designer</a>
-        <div className="tc-nav-actions"><span>05 / 07</span><LanguageSwitcher locale={locale} path="/cases/hijaman-cups" /></div>
+      <a className="skip-link" href="#hijama-content">{tx("Ga naar de case")}</a>
+      <nav className="tc-nav" aria-label={tx("Case navigatie")}>
+        <a href={localeHref("/#werk", locale)}><ArrowLeft aria-hidden="true" /> {tx("Alle cases")}</a>
+        <a className="tc-nav-brand" href={localeHref("/", locale)}>Abdelrahman / Product &amp; UX/UI designer</a>
+        <div className="tc-nav-actions"><span>06 / 08</span><LanguageSwitcher locale={locale} path="/cases/hijaman-cups" /></div>
       </nav>
 
       <header className="tc-hero">
         <div className="tc-hero-copy">
-          <p className="tc-hero-kicker">Case 05 · Klantproject</p>
+          <p className="tc-hero-kicker">{tx("Case 06 · Klantproject")}</p>
           <h1>
             <span className="tc-title-line"><span>Hijama ’N Cups</span></span>
-            <span className="tc-title-line tc-title-small"><span>Vertrouwen voelen.</span></span>
-            <span className="tc-title-line tc-title-small"><span>Contact durven.</span></span>
+            <span className="tc-title-line tc-title-small"><span>{tx("Vertrouwen voelen.")}</span></span>
+            <span className="tc-title-line tc-title-small"><span>{tx("Contact durven.")}</span></span>
           </h1>
-          <p className="tc-hero-summary">Een warme digitale praktijk voor Nora: haar expertise, behandelingen en antwoorden helder bij elkaar, met WhatsApp als persoonlijke en laagdrempelige route naar een afspraak.</p>
+          <p className="tc-hero-summary">{tx("Een warme digitale praktijk voor Nora: haar expertise, behandelingen en antwoorden helder bij elkaar, met WhatsApp als persoonlijke en laagdrempelige route naar een afspraak.")}</p>
           <dl className="tc-hero-meta">
-            <div><dt>Opdracht</dt><dd>Een professionele digitale plek claimen</dd></div>
-            <div><dt>Mijn rol</dt><dd>Strategie · UX/UI · Figma · Framer</dd></div>
-            <div><dt>Resultaat</dt><dd>Live website met WhatsApp-boeking</dd></div>
+            <div><dt>{tx("Opdracht")}</dt><dd>{tx("Een professionele digitale plek claimen")}</dd></div>
+            <div><dt>{tx("Mijn rol")}</dt><dd>{tx("Strategie · UX/UI · Figma · Framer")}</dd></div>
+            <div><dt>{tx("Resultaat")}</dt><dd>{tx("Live website met WhatsApp-boeking")}</dd></div>
           </dl>
         </div>
         <figure className="tc-hero-media">
-          <Image src="/projects/hijama-2026/hero-laptops.webp" alt="Hijama 'N Cups homepage en behandelingen op twee laptops" fill priority sizes="(max-width: 760px) 100vw, 58vw" />
-          <figcaption>Klantproject / live sinds 2025</figcaption>
+          <Image src="/projects/hijama-2026/hero-laptops.webp" alt={tx("Hijama 'N Cups homepage en behandelingen op twee laptops")} fill priority sizes="(max-width: 760px) 100vw, 58vw" />
+          <figcaption>{tx("Klantproject / live sinds 2025")}</figcaption>
         </figure>
       </header>
 
       <section className="tc-premise" id="hijama-content" aria-labelledby="hijama-premise-title">
-        <p>De digitale vertrouwensvraag</p>
-        <h2 id="hijama-premise-title">Hoe laat je een nieuwe bezoeker online dezelfde rust, aandacht en deskundigheid voelen als een vaste klant in Nora’s behandelkamer?</h2>
+        <p>{tx("De digitale vertrouwensvraag")}</p>
+        <h2 id="hijama-premise-title">{tx("Hoe laat je een nieuwe bezoeker online dezelfde rust, aandacht en deskundigheid voelen als een vaste klant in Nora’s behandelkamer?")}</h2>
         <div className="tc-premise-notes">
-          <span><UserRound aria-hidden="true" /> Persoonlijk verhaal</span>
-          <span><ShieldCheck aria-hidden="true" /> Heldere expertise</span>
-          <span><MessageCircle aria-hidden="true" /> Direct contact</span>
+          <span><UserRound aria-hidden="true" /> {tx("Persoonlijk verhaal")}</span>
+          <span><ShieldCheck aria-hidden="true" /> {tx("Heldere expertise")}</span>
+          <span><MessageCircle aria-hidden="true" /> {tx("Direct contact")}</span>
         </div>
       </section>
 
-      <section className="tc-deck" aria-label="Hijama 'N Cups oplossingsverhaal in zes kaarten">
+      <section className="tc-deck" aria-label={tx("Hijama 'N Cups oplossingsverhaal in zes kaarten")}>
         {cards.map((card, index) => (
           <article className={`tc-card-shell tc-tone-${card.tone}`} id={`chapter-${card.number}`} key={card.number} style={{ "--tc-index": index + 1 } as CSSProperties}>
             <div className="tc-card">
               <span className="tc-card-dim" aria-hidden="true" />
               <div className="tc-card-copy">
                 <div className="tc-card-index"><span>{card.number}</span><span>06</span></div>
-                <p className="tc-mask tc-card-eyebrow"><span>{card.eyebrow}</span></p>
-                <h2 className="tc-mask"><span>{card.title}</span></h2>
-                <p className="tc-mask tc-card-body"><span>{card.body}</span></p>
-                <p className="tc-mask tc-card-note"><span>{card.note}</span></p>
-                {index === 1 && <div className="tc-feature-row"><span><UserRound aria-hidden="true" /> Over Nora</span><span><Sparkles aria-hidden="true" /> Behandelingen</span><span><Search aria-hidden="true" /> Vragen vooraf</span></div>}
-                {index === 2 && <div className="tc-feature-row"><span><CalendarCheck aria-hidden="true" /> Behandeling kiezen</span><span><MessageCircle aria-hidden="true" /> WhatsApp openen</span><span><HeartHandshake aria-hidden="true" /> Persoonlijk afstemmen</span></div>}
-                {index === 4 && <p className="tc-system-caption">Chillax brengt warmte en persoonlijkheid. Montserrat houdt uitleg, prijzen en veelgestelde vragen snel scanbaar.</p>}
-                {index === 5 && <ul className="tc-validation-list"><li>Welke pagina brengt de meeste passende WhatsApp-gesprekken op gang?</li><li>Welke behandelvragen blijven vóór het contact onbeantwoord?</li><li>Hoe dragen organisch verkeer en lokale zoektermen bij aan nieuwe aanvragen?</li></ul>}
+                <p className="tc-mask tc-card-eyebrow"><span>{tx(card.eyebrow)}</span></p>
+                <h2 className="tc-mask"><span>{tx(card.title)}</span></h2>
+                <p className="tc-mask tc-card-body"><span>{tx(card.body)}</span></p>
+                <p className="tc-mask tc-card-note"><span>{tx(card.note)}</span></p>
+                {index === 1 && <div className="tc-feature-row"><span><UserRound aria-hidden="true" /> {tx("Over Nora")}</span><span><Sparkles aria-hidden="true" /> {tx("Behandelingen")}</span><span><Search aria-hidden="true" /> {tx("Vragen vooraf")}</span></div>}
+                {index === 2 && <div className="tc-feature-row"><span><CalendarCheck aria-hidden="true" /> {tx("Behandeling kiezen")}</span><span><MessageCircle aria-hidden="true" /> {tx("WhatsApp openen")}</span><span><HeartHandshake aria-hidden="true" /> {tx("Persoonlijk afstemmen")}</span></div>}
+                {index === 4 && <p className="tc-system-caption">{tx("Chillax brengt warmte en persoonlijkheid. Montserrat houdt uitleg, prijzen en veelgestelde vragen snel scanbaar.")}</p>}
+                {index === 5 && <ul className="tc-validation-list"><li>{tx("Welke pagina brengt de meeste passende WhatsApp-gesprekken op gang?")}</li><li>{tx("Welke behandelvragen blijven vóór het contact onbeantwoord?")}</li><li>{tx("Hoe dragen organisch verkeer en lokale zoektermen bij aan nieuwe aanvragen?")}</li></ul>}
               </div>
               <figure className={`tc-card-media${"styleGuide" in card ? " tc-style-card-media" : ""}`}>
-                {"styleGuide" in card ? <CaseStyleGuide data={styleGuide} /> : <Image src={card.image} alt={card.imageAlt} fill sizes="(max-width: 760px) 92vw, 54vw" />}
+                {"styleGuide" in card ? <CaseStyleGuide data={localizedStyleGuide} /> : <Image src={card.image} alt={tx(card.imageAlt)} fill sizes="(max-width: 760px) 92vw, 54vw" />}
               </figure>
             </div>
           </article>
@@ -256,33 +262,33 @@ export function HijamaNCupsExperience({ locale = "nl" }: { locale?: Locale }) {
 
       <section className="tc-proof" aria-labelledby="hijama-proof-title">
         <header className="tc-proof-heading">
-          <p>De kernflows / responsive gebouwd</p>
-          <h2 id="hijama-proof-title">Eerst begrijpen.<br />Dan vertrouwen.<br /><em>Dan contact.</em></h2>
-          <p>De homepage, behandelingen, Nora’s achtergrond en de FAQ vormen op ieder formaat één doorlopende beslisroute. De bezoeker kan rustig oriënteren en heeft steeds een herkenbare weg naar persoonlijk contact.</p>
+          <p>{tx("De kernflows / responsive gebouwd")}</p>
+          <h2 id="hijama-proof-title">{tx("Eerst begrijpen.")}<br />{tx("Dan vertrouwen.")}<br /><em>{tx("Dan contact.")}</em></h2>
+          <p>{tx("De homepage, behandelingen, Nora’s achtergrond en de FAQ vormen op ieder formaat één doorlopende beslisroute. De bezoeker kan rustig oriënteren en heeft steeds een herkenbare weg naar persoonlijk contact.")}</p>
         </header>
         <div className="tc-proof-grid">
-          {proofFrames.map((frame) => (
+          {proofFrames.map((frame, index) => (
             <figure className="tc-proof-frame" key={frame.label}>
-              <div className="tc-proof-media"><Image src={frame.src} alt={`${frame.label} van Hijama 'N Cups`} fill sizes="(max-width: 760px) 86vw, 18vw" /></div>
-              <figcaption>{frame.label}</figcaption>
+              <div className="tc-proof-media"><Image src={frame.src} alt={locale === "en" ? `Responsive Hijama 'N Cups interface ${index + 1}` : `${frame.label} van Hijama 'N Cups`} fill sizes="(max-width: 760px) 86vw, 18vw" /></div>
+              <figcaption>{tx(frame.label)}</figcaption>
             </figure>
           ))}
         </div>
       </section>
 
       <section className="tc-contribution">
-        <p>Mijn bijdrage</p>
+        <p>{tx("Mijn bijdrage")}</p>
         <div>
-          <h2>Van mond-tot-mondvertrouwen naar een digitale praktijk die Nora’s eigen manier van werken bewaart.</h2>
-          <p>Ik bracht positionering, content, informatiearchitectuur en interface samen in Figma en bouwde de uiteindelijke ervaring in Framer. De website staat live en maakt Nora’s aanbod vindbaar en begrijpelijk. Zonder gekoppelde analytics schrijf ik geen conversie-impact toe; Google Search Console, WhatsApp-kliks en aanvraagkwaliteit zijn de logische volgende bewijslaag.</p>
-          <a className="tc-live-link" href="https://hijamancups.com/" target="_blank" rel="noreferrer">Bekijk de live website <ArrowUpRight aria-hidden="true" /></a>
+          <h2>{tx("Van mond-tot-mondvertrouwen naar een digitale praktijk die Nora’s eigen manier van werken bewaart.")}</h2>
+          <p>{tx("Ik bracht positionering, content, informatiearchitectuur en interface samen in Figma en bouwde de uiteindelijke ervaring in Framer. De website staat live en maakt Nora’s aanbod vindbaar en begrijpelijk. Zonder gekoppelde analytics schrijf ik geen conversie-impact toe; Google Search Console, WhatsApp-kliks en aanvraagkwaliteit zijn de logische volgende bewijslaag.")}</p>
+          <a className="tc-live-link" href="https://hijamancups.com/" target="_blank" rel="noreferrer">{tx("Bekijk de live website")} <ArrowUpRight aria-hidden="true" /></a>
         </div>
       </section>
 
       <footer className="tc-footer">
-        <p>Volgende case / Klantproject</p>
-        <a href="/cases/atotz-detachering"><span>AtotZ</span><ArrowUpRight aria-hidden="true" /></a>
-        <div><span>Abdelrahman / Senior digital designer</span><span>© 2026</span></div>
+        <p>{tx("Volgende case / Klantproject")}</p>
+        <a href={localeHref("/cases/atotz-detachering", locale)}><span>AtotZ</span><ArrowUpRight aria-hidden="true" /></a>
+        <div><span>Abdelrahman / Product &amp; UX/UI designer</span><span>© 2026</span></div>
       </footer>
     </main>
   );

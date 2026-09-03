@@ -38,7 +38,7 @@ test("server-renders the complete portfolio homepage", async () => {
   assert.equal((html.match(/class="mind-brain-region(?: is-active)?"/g) ?? []).length, 5);
   assert.equal((html.match(/class="mind-zone mind-zone-/g) ?? []).length, 5);
   assert.equal((html.match(/class="mind-touch-tab(?: is-active)?"/g) ?? []).length, 5);
-  assert.match(html, /Bekijk 7 cases/);
+  assert.match(html, /Bekijk 8 cases/);
   assert.equal((html.match(/class="manifesto-marker-stroke"/g) ?? []).length, 3);
   assert.match(html, /class="mind-brain-stage"/);
   assert.doesNotMatch(html, /mind-zone-motif/);
@@ -51,18 +51,19 @@ test("server-renders the complete portfolio homepage", async () => {
   assert.match(html, /mailto:dhr_abdelrahman@outlook\.com/);
   assert.match(html, /https:\/\/wa\.me\/31621572124/);
   assert.doesNotMatch(html, /instagram/i);
-  assert.equal((html.match(/class="link-icon"/g) ?? []).length, 15);
+  assert.equal((html.match(/class="link-icon"/g) ?? []).length, 16);
   assert.match(html, /class="method-horizontal"/);
-  assert.equal((html.match(/class="project-entry /g) ?? []).length, 7);
+  assert.equal((html.match(/class="project-entry /g) ?? []).length, 8);
   assert.match(html, /class="project-grid"/);
-  assert.equal((html.match(/class="project-parallax-media"/g) ?? []).length, 7);
-  assert.match(html, /04<\/strong> Conceptprojecten/);
+  assert.equal((html.match(/class="project-parallax-media"/g) ?? []).length, 8);
+  assert.match(html, /05<\/strong> Conceptprojecten/);
   assert.match(html, /03<\/strong> Klantprojecten/);
   assert.match(html, /class="case-cursor"/);
   assert.match(html, /Geselecteerd werk/);
   assert.doesNotMatch(html, /Selected work|project-open|Digital designer|Strategy \/ UX \/ Direction/);
   assert.doesNotMatch(html, /showcase-sticky|showcase-progress/);
   assert.match(html, /href="\/nl\/cases\/oppas-by-chaima"/);
+  assert.match(html, /href="\/nl\/cases\/mirqa"/);
   assert.match(html, /class="language-switcher language-switcher-light"/);
   assert.match(html, /href="\/en"/);
   assert.equal((html.match(/class="method-note /g) ?? []).length, 4);
@@ -70,7 +71,7 @@ test("server-renders the complete portfolio homepage", async () => {
 });
 
 test("uses bounded raster assets on the homepage and case pages", async () => {
-  const [homeSource, editorialSource, tareeqiSource, guidanceSource, aynSource, baynSource, hijamaSource, caseData, css, caseResponse, tareeqiResponse, aynResponse, baynResponse, hijamaResponse, oppasResponse] = await Promise.all([
+  const [homeSource, editorialSource, tareeqiSource, guidanceSource, aynSource, baynSource, hijamaSource, mirqaSource, caseData, css, caseResponse, tareeqiResponse, aynResponse, baynResponse, hijamaResponse, mirqaResponse, oppasResponse] = await Promise.all([
     readFile(new URL("../app/components/HomeExperience.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/components/EditorialCaseExperience.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/components/CaseExperience.tsx", import.meta.url), "utf8"),
@@ -78,6 +79,7 @@ test("uses bounded raster assets on the homepage and case pages", async () => {
     readFile(new URL("../app/components/AynAlHikmahExperience.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/components/BaynSignalExperience.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/components/HijamaNCupsExperience.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/components/MirqaExperience.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/data/caseContent.ts", import.meta.url), "utf8"),
     readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
     render("/cases/guidance-travel"),
@@ -85,6 +87,7 @@ test("uses bounded raster assets on the homepage and case pages", async () => {
     render("/cases/ayn-al-hikmah"),
     render("/cases/bayn-signal"),
     render("/cases/hijaman-cups"),
+    render("/cases/mirqa"),
     render("/cases/oppas-by-chaima"),
   ]);
 
@@ -117,6 +120,14 @@ test("uses bounded raster assets on the homepage and case pages", async () => {
   assert.match(hijamaHtml, /tc-style-board-hijama/);
   assert.match(hijamaHtml, /https:\/\/hijamancups\.com\//);
 
+  assert.equal(mirqaResponse.status, 200);
+  const mirqaHtml = await mirqaResponse.text();
+  assert.match(mirqaHtml, /MIRQA/);
+  assert.match(mirqaHtml, /projects%2Fmirqa%2Fonboarding-welcome\.jpg/);
+  assert.match(mirqaHtml, /tc-style-board-mirqa/);
+  assert.match(mirqaSource, /mosque-map\.jpg/);
+  assert.match(mirqaSource, /Product &amp; UX\/UI designer/);
+
   assert.equal(oppasResponse.status, 200);
   const oppasHtml = await oppasResponse.text();
   assert.match(oppasHtml, /Oppas by Chaima/);
@@ -137,7 +148,8 @@ test("uses bounded raster assets on the homepage and case pages", async () => {
   assert.doesNotMatch(homeSource, /mind-portrait-foreground-(glasses|ear)/);
   assert.doesNotMatch(homeSource, /\/about\/brain-color\.svg/);
   assert.match(homeSource, /xPercent: 104/);
-  assert.match(homeSource, /manifestoMarkerWords = new Set\(\["écht", "kwartje", "kern"\]\)/);
+  assert.match(homeSource, /nl: new Set\(\["écht", "kwartje", "kern"\]\)/);
+  assert.match(homeSource, /en: new Set\(\["clear", "answer", "foundation"\]\)/);
   assert.match(homeSource, /\/about\/web\/fatherhood\.webp/);
   assert.doesNotMatch(homeSource, /image: "\/projects\/(tareeqi|ayn|guidance|bayn)-overview\.jpg"/);
   assert.match(caseData, /\/projects\/case-shots\/ayn-detail\.webp/);
@@ -184,10 +196,11 @@ test("server-renders the atmospheric playground route", async () => {
 });
 
 test("server-renders localized portfolio routes", async () => {
-  const [englishHome, dutchHome, englishCase] = await Promise.all([
+  const [englishHome, dutchHome, englishCase, i18nSource] = await Promise.all([
     render("/en"),
     render("/nl"),
     render("/en/cases/hijaman-cups"),
+    readFile(new URL("../app/i18n.tsx", import.meta.url), "utf8"),
   ]);
 
   assert.equal(englishHome.status, 200);
@@ -205,4 +218,10 @@ test("server-renders localized portfolio routes", async () => {
   assert.match(dutchHtml, /href="\/nl\/playground"/);
   assert.match(englishCaseHtml, /data-locale="en"/);
   assert.match(englishCaseHtml, /class="tc-nav-actions"/);
+  assert.match(i18nSource, /Everything I learn shifts my perspective/);
+  assert.match(i18nSource, /Curious whether/);
+  assert.match(i18nSource, /we’d work well together\?/);
+  assert.match(i18nSource, /The right people in the right place, without the friction/);
+  assert.match(i18nSource, /A personal service that still feels personal online/);
+  assert.doesNotMatch(i18nSource, /Direction remains human work|if we click\?|fitting package faster/);
 });

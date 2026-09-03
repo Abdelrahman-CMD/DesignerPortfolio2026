@@ -47,7 +47,7 @@ export type EditorialCase = {
 export const editorialCases: Record<string, EditorialCase> = {
   "guidance-travel": {
     slug: "guidance-travel",
-    number: "03",
+    number: "04",
     name: "Guidance Travel",
     eyebrow: "High-trust travel experience",
     headline: "Redefining premium travel with Form Follows Function.",
@@ -124,7 +124,7 @@ export const editorialCases: Record<string, EditorialCase> = {
   },
   "bayn-signal": {
     slug: "bayn-signal",
-    number: "04",
+    number: "05",
     name: "Bayn Signal",
     eyebrow: "Real-time local intelligence",
     headline: "Staying ahead of the local pulse with vital insights.",
@@ -201,7 +201,7 @@ export const editorialCases: Record<string, EditorialCase> = {
   },
   "ayn-al-hikmah": {
     slug: "ayn-al-hikmah",
-    number: "02",
+    number: "03",
     name: "Ayn Al-Hikmah",
     eyebrow: "Books, scholars & learning paths",
     headline: "Filling the void for knowledge seekers leaving Medina.",
@@ -278,7 +278,7 @@ export const editorialCases: Record<string, EditorialCase> = {
   },
   "hijaman-cups": {
     slug: "hijaman-cups",
-    number: "05",
+    number: "06",
     name: "Hijama’N Cups",
     eyebrow: "Live client work · Framer",
     headline: "Turning traditional care into a calm, clear digital welcome.",
@@ -361,7 +361,7 @@ export const editorialCases: Record<string, EditorialCase> = {
   },
   "atotz-detachering": {
     slug: "atotz-detachering",
-    number: "06",
+    number: "07",
     name: "AtotZ Detachering",
     eyebrow: "Live client work · Framer",
     headline: "Putting the right people in the right place — without the friction.",
@@ -447,7 +447,7 @@ export const editorialCases: Record<string, EditorialCase> = {
   },
   "oppas-by-chaima": {
     slug: "oppas-by-chaima",
-    number: "07",
+    number: "08",
     name: "Oppas by Chaima",
     eyebrow: "Live client work · Web design & build",
     headline: "Turning a parent’s biggest question into calm digital trust.",
@@ -527,7 +527,7 @@ export const editorialCases: Record<string, EditorialCase> = {
       { value: "0–12", label: "jaar als leeftijdsbereik" },
       { value: "04", label: "duidelijke stappen vóór de oppas" },
     ],
-    next: { slug: "tareeqi", name: "Tareeqi" },
+    next: { slug: "mirqa", name: "MIRQA" },
     externalUrl: "https://oppasbychaima.nl/",
     prototype: "oppas",
   },
