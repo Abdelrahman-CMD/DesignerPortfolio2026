@@ -82,24 +82,24 @@ export function EditorialCaseExperience({ project, locale = "nl" }: { project: E
     const context = gsap.context(() => {
       const intro = gsap.timeline({ defaults: { ease: "power4.out" } });
       intro
-        .from(".ec-nav", { opacity: 0, y: -16, duration: 0.65 })
+        .from(".ec-nav", { opacity: 0, y: -16, duration: 0.34 })
         .from(".ec-title-line > span", {
           yPercent: 115,
-          duration: 1.1,
-          stagger: 0.08,
-        }, "-=0.25")
+          duration: 0.56,
+          stagger: 0.05,
+        }, "-=0.18")
         .from(".ec-hero-copy > p, .ec-meta", {
           opacity: 0,
           y: 24,
-          duration: 0.75,
-          stagger: 0.08,
-        }, "-=0.55")
+          duration: 0.38,
+          stagger: 0.05,
+        }, "-=0.3")
         .from(".ec-featured", {
           opacity: 0,
           y: 80,
           scale: 0.96,
-          duration: 1.05,
-        }, "-=0.65");
+          duration: 0.72,
+        }, "-=0.42");
 
       gsap.to(".ec-featured", {
         yPercent: -10,
@@ -202,29 +202,49 @@ export function EditorialCaseExperience({ project, locale = "nl" }: { project: E
       </header>
 
       <article id="case-story">
-        <section className="ec-context">
-          <p className="section-kicker"><span>01</span> Context</p>
-          <header className="ec-context-grid ec-reveal">
-            <h2>{tx(project.contextTitle)}</h2>
-            <div>
-              <p className="ec-context-lead">{tx(project.contextLead)}</p>
-              <p>{tx(project.contextBody)}</p>
-            </div>
+        <section className="ec-snapshot" aria-labelledby={`${project.slug}-snapshot-title`}>
+          <header>
+            <p className="section-kicker"><span>01</span> {locale === "en" ? "The 30-second case" : "De case in 30 seconden"}</p>
+            <h2 id={`${project.slug}-snapshot-title`}>{locale === "en" ? "Problem. Solution. Outcome." : "Probleem. Oplossing. Resultaat."}</h2>
           </header>
+          <div className="ec-snapshot-grid">
+            <div><span>{locale === "en" ? "Problem" : "Probleem"}</span><p>{tx(project.contextLead)}</p></div>
+            <div><span>{locale === "en" ? "Solution" : "Oplossing"}</span><p>{tx(project.insightBody)}</p></div>
+            <div><span>{locale === "en" ? "Outcome" : "Resultaat"}</span><p>{tx(project.impactBody[0])}</p></div>
+          </div>
         </section>
 
-        <section className="ec-insight">
-          <p className="section-kicker section-kicker-light"><span>02</span> {tx("Het kwartje")}</p>
-          <blockquote className="ec-insight-quote ec-reveal">
-            <span className="ec-insight-rule" aria-hidden="true" />
-            “{tx(project.insightQuote)}”
-          </blockquote>
-          <p className="ec-insight-body ec-reveal">{tx(project.insightBody)}</p>
-        </section>
+        <details className="ec-deep-dive">
+          <summary>
+            <span><strong>{locale === "en" ? "Optional context and insight" : "Optionele context en inzicht"}</strong><small>{locale === "en" ? "Open the supporting reasoning" : "Open de onderliggende redenering"}</small></span>
+            <span aria-hidden="true">+</span>
+          </summary>
+          <div>
+            <section className="ec-context">
+              <p className="section-kicker"><span>A</span> Context</p>
+              <header className="ec-context-grid ec-reveal">
+                <h2>{tx(project.contextTitle)}</h2>
+                <div>
+                  <p className="ec-context-lead">{tx(project.contextLead)}</p>
+                  <p>{tx(project.contextBody)}</p>
+                </div>
+              </header>
+            </section>
+
+            <section className="ec-insight">
+              <p className="section-kicker section-kicker-light"><span>B</span> {tx("Het kwartje")}</p>
+              <blockquote className="ec-insight-quote ec-reveal">
+                <span className="ec-insight-rule" aria-hidden="true" />
+                “{tx(project.insightQuote)}”
+              </blockquote>
+              <p className="ec-insight-body ec-reveal">{tx(project.insightBody)}</p>
+            </section>
+          </div>
+        </details>
 
         <section className="ec-concept">
           <header className="ec-concept-heading ec-reveal">
-            <p className="section-kicker"><span>03</span> {tx("Het concept")}</p>
+            <p className="section-kicker"><span>02</span> {tx("Het concept")}</p>
             <h2>{tx(project.conceptTitle)}</h2>
           </header>
 
@@ -286,7 +306,7 @@ export function EditorialCaseExperience({ project, locale = "nl" }: { project: E
 
         <section className="ec-system">
           <header className="ec-system-heading ec-reveal">
-            <p className="section-kicker"><span>04</span> Design system</p>
+            <p className="section-kicker"><span>03</span> Design system</p>
             <h2>{tx("Een visuele stem die het concept draagt.")}</h2>
             <p>{tx("Typografie en kleur zijn geen decoratie. Ze helpen de gebruiker begrijpen wat belangrijk is, wat vertrouwd voelt en waar actie nodig is.")}</p>
           </header>
@@ -309,7 +329,7 @@ export function EditorialCaseExperience({ project, locale = "nl" }: { project: E
 
         <section className="ec-gallery">
           <header className="ec-gallery-heading ec-reveal">
-            <p className="section-kicker"><span>05</span> {tx("De ervaring")}</p>
+            <p className="section-kicker"><span>04</span> {tx("De ervaring")}</p>
             <h2>{tx("Van principe naar product.")}</h2>
             <p>{tx(project.galleryIntro ?? "De belangrijkste schermen uit het concept, rechtstreeks uit de casepresentatie.")}</p>
           </header>
@@ -326,7 +346,7 @@ export function EditorialCaseExperience({ project, locale = "nl" }: { project: E
         </section>
 
         <section className="ec-impact">
-          <p className="section-kicker section-kicker-light"><span>06</span> {tx("De bijdrage")}</p>
+          <p className="section-kicker section-kicker-light"><span>05</span> {tx("De bijdrage")}</p>
           <div className="ec-impact-grid ec-reveal">
             <h2>{tx(project.impactTitle)}</h2>
             <div>

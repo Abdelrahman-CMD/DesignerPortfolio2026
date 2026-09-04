@@ -5,7 +5,6 @@ import { CSSProperties, useLayoutEffect, useRef } from "react";
 import Accessibility from "lucide-react/icons/accessibility";
 import ArrowLeft from "lucide-react/icons/arrow-left";
 import ArrowUpRight from "lucide-react/icons/arrow-up-right";
-import Compass from "lucide-react/icons/compass";
 import MapPinned from "lucide-react/icons/map-pinned";
 import Search from "lucide-react/icons/search";
 import ShieldCheck from "lucide-react/icons/shield-check";
@@ -14,6 +13,7 @@ import WifiOff from "lucide-react/icons/wifi-off";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { LanguageSwitcher, Locale, localeHref, translateText } from "../i18n";
+import { CaseDeepDive } from "./CaseDeepDive";
 import { CaseStyleGuide, type CaseStyleGuideData } from "./CaseStyleGuide";
 
 const tareeqiStyleGuide: CaseStyleGuideData = {
@@ -125,11 +125,11 @@ export function CaseExperience({ locale = "nl" }: { locale?: Locale }) {
     const context = gsap.context(() => {
       const intro = gsap.timeline({ defaults: { ease: "power4.out" } });
       intro
-        .from(".tc-nav", { opacity: 0, y: -18, duration: 0.55 })
-        .from(".tc-hero-kicker", { opacity: 0, y: 16, duration: 0.45 }, "+=0.08")
-        .from(".tc-title-line > span", { yPercent: 112, duration: 0.85, stagger: 0.08 }, "-=0.12")
-        .from(".tc-hero-summary, .tc-hero-meta", { opacity: 0, y: 24, duration: 0.6, stagger: 0.08 }, "-=0.42")
-        .from(".tc-hero-media", { opacity: 0, xPercent: 16, scale: 0.97, duration: 1.15 }, "-=0.42");
+        .from(".tc-nav", { opacity: 0, y: -18, duration: 0.32 })
+        .from(".tc-hero-kicker", { opacity: 0, y: 16, duration: 0.28 }, "-=0.08")
+        .from(".tc-title-line > span", { yPercent: 112, duration: 0.52, stagger: 0.05 }, "-=0.16")
+        .from(".tc-hero-summary, .tc-hero-meta", { opacity: 0, y: 24, duration: 0.38, stagger: 0.05 }, "-=0.32")
+        .from(".tc-hero-media", { opacity: 0, xPercent: 16, scale: 0.97, duration: 0.78 }, "-=0.46");
 
       gsap.to(".tc-hero-media img", {
         yPercent: -7,
@@ -259,18 +259,17 @@ export function CaseExperience({ locale = "nl" }: { locale?: Locale }) {
         </figure>
       </header>
 
-      <section className="tc-premise" id="tareeqi-content" aria-labelledby="tc-premise-title">
-        <p>{tx("Probleemvinding vóór productvorming")}</p>
-        <h2 id="tc-premise-title">{tx("Ik begon niet met een scherm. Ik begon met wat de bestaande kaarten niet konden vertellen.")}</h2>
-        <div className="tc-premise-notes">
-          <span><Search aria-hidden="true" /> {tx("Generieke zoekresultaten")}</span>
-          <span><UsersRound aria-hidden="true" /> {tx("Verspreide lokale kennis")}</span>
-          <span><Compass aria-hidden="true" /> {tx("Geen route op intentie")}</span>
+      <section className="tc-snapshot" id="tareeqi-content" aria-labelledby="tc-snapshot-title">
+        <header><p>{tx("De case in 30 seconden")}</p><h2 id="tc-snapshot-title">{tx("Probleem. Oplossing. Volgende stap.")}</h2></header>
+        <div className="tc-snapshot-grid">
+          <article><span>{tx("Probleem")}</span><p>{tx(cards[0].note)}</p></article>
+          <article><span>{tx("Oplossing")}</span><p>{tx(cards[2].note)}</p></article>
+          <article><span>{tx("Status / volgende stap")}</span><p>{tx(cards[5].note)}</p></article>
         </div>
       </section>
 
-      <section className="tc-deck" aria-label={tx("Tareeqi oplossingsverhaal in zes kaarten")}>
-        {cards.map((card, index) => (
+      <section className="tc-deck" aria-label={tx("Tareeqi oplossingsverhaal in drie beslissingen")}>
+        {cards.slice(0, 3).map((card, index) => (
           <article
             className={`tc-card-shell tc-tone-${card.tone}`}
             id={`chapter-${card.number}`}
@@ -280,7 +279,7 @@ export function CaseExperience({ locale = "nl" }: { locale?: Locale }) {
             <div className="tc-card">
               <span className="tc-card-dim" aria-hidden="true" />
               <div className="tc-card-copy">
-                <div className="tc-card-index"><span>{card.number}</span><span>06</span></div>
+                <div className="tc-card-index"><span>{card.number}</span><span>03</span></div>
                 <p className="tc-mask tc-card-eyebrow"><span>{tx(card.eyebrow)}</span></p>
                 <h2 className="tc-mask"><span>{tx(card.title)}</span></h2>
                 <p className="tc-mask tc-card-body"><span>{tx(card.body)}</span></p>
@@ -322,14 +321,16 @@ export function CaseExperience({ locale = "nl" }: { locale?: Locale }) {
         ))}
       </section>
 
+      <CaseDeepDive items={cards.slice(3).map((card) => ({ ...card, eyebrow: tx(card.eyebrow), title: tx(card.title), body: tx(card.body), note: tx(card.note) }))} locale={locale} />
+
       <section className="tc-proof" aria-labelledby="tc-proof-title">
         <header className="tc-proof-heading">
-          <p>{tx("Responsive bewijs / geen eindeloze walkthrough")}</p>
-          <h2 id="tc-proof-title">{tx("Eén systeem.")}<br />{tx("Drie formaten.")}<br /><em>{tx("Tien echte schermen.")}</em></h2>
-          <p>{tx("De volledige exports blijven beschikbaar, maar worden hier als een compacte redactionele contact sheet getoond. Zo is de breedte van het concept snel te beoordelen.")}</p>
+          <p>{tx("Geselecteerde schermen / snel te beoordelen")}</p>
+          <h2 id="tc-proof-title">{tx("Eén systeem.")}<br />{tx("Drie formaten.")}<br /><em>{tx("Vier kernschermen.")}</em></h2>
+          <p>{tx("Vier representatieve schermen tonen de belangrijkste ervaring. De volledige exports blijven op verzoek beschikbaar.")}</p>
         </header>
         <div className="tc-proof-grid">
-          {proofFrames.map((frame, index) => (
+          {proofFrames.slice(0, 4).map((frame, index) => (
             <figure className="tc-proof-frame" key={frame.label}>
               <div className="tc-proof-media">
                 <Image

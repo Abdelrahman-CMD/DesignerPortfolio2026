@@ -13,6 +13,7 @@ import UsersRound from "lucide-react/icons/users-round";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { LanguageSwitcher, Locale, localeHref, translateText } from "../i18n";
+import { CaseDeepDive } from "./CaseDeepDive";
 import { CaseStyleGuide, type CaseStyleGuideData } from "./CaseStyleGuide";
 
 const styleGuide: CaseStyleGuideData = {
@@ -118,11 +119,11 @@ export function BaynSignalExperience({ locale = "nl" }: { locale?: Locale }) {
     const context = gsap.context(() => {
       const intro = gsap.timeline({ defaults: { ease: "power4.out" } });
       intro
-        .from(".tc-nav", { opacity: 0, y: -18, duration: 0.55 })
-        .from(".tc-hero-kicker", { opacity: 0, y: 16, duration: 0.45 }, "+=0.08")
-        .from(".tc-title-line > span", { yPercent: 112, duration: 0.85, stagger: 0.08 }, "-=0.12")
-        .from(".tc-hero-summary, .tc-hero-meta", { opacity: 0, y: 24, duration: 0.6, stagger: 0.08 }, "-=0.42")
-        .from(".tc-hero-media", { opacity: 0, xPercent: 16, scale: 0.97, duration: 1.15 }, "-=0.42");
+        .from(".tc-nav", { opacity: 0, y: -18, duration: 0.32 })
+        .from(".tc-hero-kicker", { opacity: 0, y: 16, duration: 0.28 }, "-=0.08")
+        .from(".tc-title-line > span", { yPercent: 112, duration: 0.52, stagger: 0.05 }, "-=0.16")
+        .from(".tc-hero-summary, .tc-hero-meta", { opacity: 0, y: 24, duration: 0.38, stagger: 0.05 }, "-=0.32")
+        .from(".tc-hero-media", { opacity: 0, xPercent: 16, scale: 0.97, duration: 0.78 }, "-=0.46");
 
       gsap.to(".tc-hero-media img", {
         yPercent: -7,
@@ -225,23 +226,22 @@ export function BaynSignalExperience({ locale = "nl" }: { locale?: Locale }) {
         </figure>
       </header>
 
-      <section className="tc-premise" id="bayn-content" aria-labelledby="bayn-premise-title">
-        <p>{tx("De lokale informatiekloof")}</p>
-        <h2 id="bayn-premise-title">{tx("Ik zag geen tekort aan informatie. Ik zag een tekort aan timing, lokale context en een geloofwaardige volgende stap.")}</h2>
-        <div className="tc-premise-notes">
-          <span><Search aria-hidden="true" /> {tx("Snel scanbaar")}</span>
-          <span><RadioTower aria-hidden="true" /> {tx("Tijdig en relevant")}</span>
-          <span><UsersRound aria-hidden="true" /> {tx("Gedragen door context")}</span>
+      <section className="tc-snapshot" id="bayn-content" aria-labelledby="bayn-snapshot-title">
+        <header><p>{tx("De case in 30 seconden")}</p><h2 id="bayn-snapshot-title">{tx("Probleem. Oplossing. Volgende stap.")}</h2></header>
+        <div className="tc-snapshot-grid">
+          <article><span>{tx("Probleem")}</span><p>{tx(cards[0].note)}</p></article>
+          <article><span>{tx("Oplossing")}</span><p>{tx(cards[2].note)}</p></article>
+          <article><span>{tx("Status / volgende stap")}</span><p>{tx(cards[5].note)}</p></article>
         </div>
       </section>
 
-      <section className="tc-deck" aria-label={tx("Bayn Signal oplossingsverhaal in zes kaarten")}>
-        {cards.map((card, index) => (
+      <section className="tc-deck" aria-label={tx("Bayn Signal oplossingsverhaal in drie beslissingen")}>
+        {cards.slice(0, 3).map((card, index) => (
           <article className={`tc-card-shell tc-tone-${card.tone}`} id={`chapter-${card.number}`} key={card.number} style={{ "--tc-index": index + 1 } as CSSProperties}>
             <div className="tc-card">
               <span className="tc-card-dim" aria-hidden="true" />
               <div className="tc-card-copy">
-                <div className="tc-card-index"><span>{card.number}</span><span>06</span></div>
+                <div className="tc-card-index"><span>{card.number}</span><span>03</span></div>
                 <p className="tc-mask tc-card-eyebrow"><span>{tx(card.eyebrow)}</span></p>
                 <h2 className="tc-mask"><span>{tx(card.title)}</span></h2>
                 <p className="tc-mask tc-card-body"><span>{tx(card.body)}</span></p>
@@ -259,6 +259,8 @@ export function BaynSignalExperience({ locale = "nl" }: { locale?: Locale }) {
         ))}
       </section>
 
+      <CaseDeepDive items={cards.slice(3).map((card) => ({ ...card, eyebrow: tx(card.eyebrow), title: tx(card.title), body: tx(card.body), note: tx(card.note) }))} locale={locale} />
+
       <section className="tc-proof" aria-labelledby="bayn-proof-title">
         <header className="tc-proof-heading">
           <p>{tx("De kernflows / responsive uitgewerkt")}</p>
@@ -266,9 +268,9 @@ export function BaynSignalExperience({ locale = "nl" }: { locale?: Locale }) {
           <p>{tx("De landing, bibliotheek en artikelervaring bouwen dezelfde informatielogica op ieder formaat: eerst relevantie herkennen, daarna de lokale context begrijpen en tenslotte weten wat je kunt doen.")}</p>
         </header>
         <div className="tc-proof-grid">
-          {proofFrames.map((frame, index) => (
+          {proofFrames.slice(0, 4).map((frame, index) => (
             <figure className="tc-proof-frame" key={frame.label}>
-              <div className="tc-proof-media"><Image src={frame.src} alt={locale === "en" ? `Responsive Bayn Signal interface ${index + 1}` : `${frame.label} van Bayn Signal`} fill sizes="(max-width: 760px) 86vw, 18vw" /></div>
+              <div className="tc-proof-media"><Image src={frame.src} alt={locale === "en" ? `Responsive Bayn Signal interface ${index + 1}` : `${frame.label} van Bayn Signal`} fill sizes="(max-width: 760px) 86vw, 44vw" /></div>
               <figcaption>{tx(frame.label)}</figcaption>
             </figure>
           ))}

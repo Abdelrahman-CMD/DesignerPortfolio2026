@@ -8,12 +8,12 @@ import CalendarRange from "lucide-react/icons/calendar-range";
 import CircleCheckBig from "lucide-react/icons/circle-check-big";
 import Compass from "lucide-react/icons/compass";
 import HeartHandshake from "lucide-react/icons/heart-handshake";
-import Search from "lucide-react/icons/search";
 import ShieldCheck from "lucide-react/icons/shield-check";
 import UsersRound from "lucide-react/icons/users-round";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { LanguageSwitcher, Locale, localeHref, translateText } from "../i18n";
+import { CaseDeepDive } from "./CaseDeepDive";
 import { CaseStyleGuide, type CaseStyleGuideData } from "./CaseStyleGuide";
 
 const styleGuide: CaseStyleGuideData = {
@@ -103,11 +103,11 @@ export function GuidanceTravelExperience({ locale = "nl" }: { locale?: Locale })
     gsap.registerPlugin(ScrollTrigger);
     const context = gsap.context(() => {
       const intro = gsap.timeline({ defaults: { ease: "power4.out" } });
-      intro.from(".tc-nav", { opacity: 0, y: -18, duration: 0.55 })
-        .from(".tc-hero-kicker", { opacity: 0, y: 16, duration: 0.45 }, "+=0.08")
-        .from(".tc-title-line > span", { yPercent: 112, duration: 0.85, stagger: 0.08 }, "-=0.12")
-        .from(".tc-hero-summary, .tc-hero-meta", { opacity: 0, y: 24, duration: 0.6, stagger: 0.08 }, "-=0.42")
-        .from(".tc-hero-media", { opacity: 0, xPercent: 16, scale: 0.97, duration: 1.15 }, "-=0.42");
+      intro.from(".tc-nav", { opacity: 0, y: -18, duration: 0.32 })
+        .from(".tc-hero-kicker", { opacity: 0, y: 16, duration: 0.28 }, "-=0.08")
+        .from(".tc-title-line > span", { yPercent: 112, duration: 0.52, stagger: 0.05 }, "-=0.16")
+        .from(".tc-hero-summary, .tc-hero-meta", { opacity: 0, y: 24, duration: 0.38, stagger: 0.05 }, "-=0.32")
+        .from(".tc-hero-media", { opacity: 0, xPercent: 16, scale: 0.97, duration: 0.78 }, "-=0.46");
 
       gsap.to(".tc-hero-media img", { yPercent: -7, ease: "none", scrollTrigger: { trigger: ".tc-hero", start: "top top", end: "bottom top", scrub: true } });
 
@@ -160,23 +160,22 @@ export function GuidanceTravelExperience({ locale = "nl" }: { locale?: Locale })
         </figure>
       </header>
 
-      <section className="tc-premise" id="guidance-content" aria-labelledby="guidance-premise-title">
-        <p>{tx("Zekerheid vóór pakketkeuze")}</p>
-        <h2 id="guidance-premise-title">{tx("Ik begon niet met meer verkoopdruk. Ik begon met de vragen die een pelgrim wakker houden vóór vertrek.")}</h2>
-        <div className="tc-premise-notes">
-          <span><Search aria-hidden="true" /> {tx("Versnipperde pakketinformatie")}</span>
-          <span><HeartHandshake aria-hidden="true" /> {tx("Begeleiding bleef onzichtbaar")}</span>
-          <span><ShieldCheck aria-hidden="true" /> {tx("Te weinig besliszekerheid")}</span>
+      <section className="tc-snapshot" id="guidance-content" aria-labelledby="guidance-snapshot-title">
+        <header><p>{tx("De case in 30 seconden")}</p><h2 id="guidance-snapshot-title">{tx("Probleem. Oplossing. Volgende stap.")}</h2></header>
+        <div className="tc-snapshot-grid">
+          <article><span>{tx("Probleem")}</span><p>{tx(cards[0].note)}</p></article>
+          <article><span>{tx("Oplossing")}</span><p>{tx(cards[2].note)}</p></article>
+          <article><span>{tx("Status / volgende stap")}</span><p>{tx(cards[5].note)}</p></article>
         </div>
       </section>
 
-      <section className="tc-deck" aria-label={tx("Guidance Travel oplossingsverhaal in zes kaarten")}>
-        {cards.map((card, index) => (
+      <section className="tc-deck" aria-label={tx("Guidance Travel oplossingsverhaal in drie beslissingen")}>
+        {cards.slice(0, 3).map((card, index) => (
           <article className={`tc-card-shell tc-tone-${card.tone}`} id={`chapter-${card.number}`} key={card.number} style={{ "--tc-index": index + 1 } as CSSProperties}>
             <div className="tc-card">
               <span className="tc-card-dim" aria-hidden="true" />
               <div className="tc-card-copy">
-                <div className="tc-card-index"><span>{card.number}</span><span>06</span></div>
+                <div className="tc-card-index"><span>{card.number}</span><span>03</span></div>
                 <p className="tc-mask tc-card-eyebrow"><span>{tx(card.eyebrow)}</span></p>
                 <h2 className="tc-mask"><span>{tx(card.title)}</span></h2>
                 <p className="tc-mask tc-card-body"><span>{tx(card.body)}</span></p>
@@ -194,14 +193,16 @@ export function GuidanceTravelExperience({ locale = "nl" }: { locale?: Locale })
         ))}
       </section>
 
+      <CaseDeepDive items={cards.slice(3).map((card) => ({ ...card, eyebrow: tx(card.eyebrow), title: tx(card.title), body: tx(card.body), note: tx(card.note) }))} locale={locale} />
+
       <section className="tc-proof" aria-labelledby="guidance-proof-title">
         <header className="tc-proof-heading">
-          <p>{tx("Responsive bewijs / compact beoordeelbaar")}</p>
-          <h2 id="guidance-proof-title">{tx("Eén reislogica.")}<br />{tx("Drie formaten.")}<br /><em>{tx("Negen echte schermen.")}</em></h2>
-          <p>{tx("Landing, pakketkeuze en vertrouwen zijn niet als losse pagina’s ontworpen, maar als één doorlopende beslisroute op desktop, tablet en mobiel.")}</p>
+          <p>{tx("Geselecteerde schermen / snel te beoordelen")}</p>
+          <h2 id="guidance-proof-title">{tx("Eén reislogica.")}<br />{tx("Drie formaten.")}<br /><em>{tx("Vier kernschermen.")}</em></h2>
+          <p>{tx("Vier representatieve schermen tonen de beslisroute. De volledige responsive uitwerking blijft op verzoek beschikbaar.")}</p>
         </header>
         <div className="tc-proof-grid">
-          {proofFrames.map((frame, index) => <figure className="tc-proof-frame" key={frame.label}><div className="tc-proof-media"><Image src={frame.src} alt={locale === "en" ? `Responsive Guidance Travel interface ${index + 1}` : `${frame.label} van Guidance Travel`} fill sizes="(max-width: 760px) 86vw, 29vw" /></div><figcaption>{tx(frame.label)}</figcaption></figure>)}
+          {proofFrames.slice(0, 4).map((frame, index) => <figure className="tc-proof-frame" key={frame.label}><div className="tc-proof-media"><Image src={frame.src} alt={locale === "en" ? `Responsive Guidance Travel interface ${index + 1}` : `${frame.label} van Guidance Travel`} fill sizes="(max-width: 760px) 86vw, 44vw" /></div><figcaption>{tx(frame.label)}</figcaption></figure>)}
         </div>
       </section>
 

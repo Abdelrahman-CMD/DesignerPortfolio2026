@@ -28,7 +28,7 @@ const projects = [
       "Een rustige mobiele companion die één gekozen gebed, een vertrouwde moskee en een realistische vertrektijd samenbrengt.",
     services: "Productstrategie · UX research · UX/UI",
     category: "Conceptproject",
-    status: "Binnenkort",
+    status: "In ontwikkeling",
     bg: "#c9653d",
     ink: "#fff8f0",
     image: "/projects/mirqa/mosque-map.jpg",
@@ -164,8 +164,8 @@ const heroCtaRingCopy = {
 } as const;
 
 const manifestoMarkerWords = {
-  nl: new Set(["écht", "kwartje", "kern"]),
-  en: new Set(["clear", "answer", "foundation"]),
+  nl: new Set(["probleem", "gebruikers", "bouwen"]),
+  en: new Set(["problem", "users", "build"]),
 };
 
 const personalStory = [
@@ -642,47 +642,47 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
           .from(".site-header", {
             autoAlpha: 0,
             y: -16,
-            duration: 0.46,
+            duration: 0.28,
           })
           .from(
             ".mind-hero-meta span",
-            { autoAlpha: 0, y: 10, duration: 0.38, stagger: 0.07 },
-            ">+=0.12",
+            { autoAlpha: 0, y: 10, duration: 0.24, stagger: 0.05 },
+            "-=0.06",
           )
           .from(
             ".mind-hero-canvas",
-            { clipPath: "inset(0 0 100% 0)", duration: 0.48, ease: "power3.inOut" },
-            "-=0.08",
+            { clipPath: "inset(0 0 100% 0)", duration: 0.36, ease: "power3.inOut" },
+            "-=0.18",
           )
           .from(
             ".mind-hero-kicker",
-            { autoAlpha: 0, y: 12, duration: 0.36 },
-            ">-=0.06",
+            { autoAlpha: 0, y: 12, duration: 0.24 },
+            "-=0.18",
           )
           .from(
             ".mind-title-line > span",
-            { yPercent: 112, duration: 0.56, stagger: 0.08 },
-            ">-=0.04",
+            { yPercent: 112, duration: 0.4, stagger: 0.06 },
+            "-=0.16",
           )
           .from(
             ".mind-hero-lede",
-            { autoAlpha: 0, y: 15, duration: 0.4 },
-            ">-=0.04",
+            { autoAlpha: 0, y: 15, duration: 0.28 },
+            "-=0.2",
           )
           .from(
             ".mind-hero-actions",
-            { autoAlpha: 0, y: 12, duration: 0.36 },
-            ">-=0.06",
+            { autoAlpha: 0, y: 12, duration: 0.24 },
+            "-=0.18",
           )
           .from(
             ".mind-hero-photo-slide",
             {
               xPercent: 104,
               opacity: 0.12,
-              duration: 1.22,
+              duration: 0.75,
               ease: "power3.inOut",
             },
-            ">+=0.08",
+            "-=0.5",
           );
       }
 
@@ -1375,8 +1375,8 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
   }, []);
 
   const manifesto = locale === "en"
-    ? "A website does not need to shout louder. It needs to make clear why someone should stay. I keep asking questions until the noise falls away. Once the answer feels obvious, we build on a foundation that will still make sense tomorrow."
-    : "Een website hoeft niet harder te roepen. Ze moet écht duidelijk maken waarom iemand blijft. Daarom stel ik vragen tot de ruis verdwijnt. Wanneer het kwartje valt, bouwen we verder op een kern die ook morgen nog klopt.";
+    ? "I make complex choices easier to understand. First define the problem. Then design a direction users understand and teams can build."
+    : "Ik maak complexe keuzes begrijpelijk. Eerst het probleem scherp. Dan een richting die gebruikers begrijpen en teams kunnen bouwen.";
   const ringCopy = heroCtaRingCopy[locale];
 
   const activateContact = () => {
@@ -1397,7 +1397,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
       <header className="site-header" data-theme="light" aria-label="Hoofdnavigatie">
         <a className="site-mark" href="#top" aria-label="Naar boven">
           <span>A</span>
-          <span className="site-mark-copy">Abdelrahman<br />Digitaal ontwerper</span>
+          <span className="site-mark-copy">Abdelrahman<br />{locale === "en" ? "Product & UX/UI designer" : "Product- & UX/UI-designer"}</span>
         </a>
         <div className="site-header-actions">
           <nav className="top-nav" aria-label="Portfolio tabs">
@@ -1470,8 +1470,8 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
         <div className="mind-hero-content">
           <div className="mind-hero-meta label" aria-label="Portfolio metadata">
             <span>Portfolio / 2026</span>
-            <span>Een kaart van hoe ik ontwerp</span>
-            <span>Strategie / UX / Richting</span>
+            <span>{locale === "en" ? "Product strategy / UX/UI" : "Productstrategie / UX/UI"}</span>
+            <span>{locale === "en" ? "Digital products / websites" : "Digitale producten / websites"}</span>
           </div>
 
           <div className="mind-hero-canvas">
@@ -1518,15 +1518,16 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
             </div>
 
             <header className="mind-hero-copy">
-              <p className="mind-hero-kicker label">Geen vaste formule. Wel een stevig vertrekpunt.</p>
-              <h1 id="hero-title" aria-label="Ik ontwerp met alles wat ik onderweg leer.">
-                <span className="mind-title-line"><span>Ik ontwerp met</span></span>
-                <span className="mind-title-line"><span>alles wat ik</span></span>
-                <span className="mind-title-line"><span>onderweg <em>leer.</em></span></span>
+              <p className="mind-hero-kicker label">{locale === "en" ? "Product designer · UX/UI · Amsterdam" : "Productdesigner · UX/UI · Amsterdam"}</p>
+              <h1 id="hero-title" aria-label={locale === "en" ? "Product designer turning complexity into clarity." : "Productdesigner die complexiteit helder maakt."}>
+                <span className="mind-title-line"><span>{locale === "en" ? "Product designer" : "Productdesigner"}</span></span>
+                <span className="mind-title-line"><span>{locale === "en" ? "turning complexity" : "maakt complexiteit"}</span></span>
+                <span className="mind-title-line"><span>{locale === "en" ? "into" : "begrijpelijk en"} <em>{locale === "en" ? "clarity." : "bruikbaar."}</em></span></span>
               </h1>
               <p className="mind-hero-lede">
-                Wat ik leer verandert mijn blik. Wat ik belangrijk vind blijft staan:
-                een helder fundament, scherpe keuzes en websites die mensen zonder omwegen begrijpen.
+                {locale === "en"
+                  ? "I combine product strategy, UX research and interface design to turn complex ideas into digital products people understand and teams can build."
+                  : "Ik combineer productstrategie, UX-onderzoek en interfaceontwerp om complexe ideeën te vertalen naar digitale producten die mensen begrijpen en teams kunnen bouwen."}
               </p>
             </header>
 
@@ -1722,37 +1723,6 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
         </div>
       </section>
 
-      <section className="manifesto" id="houding" data-nav-theme="light" aria-labelledby="manifesto-label">
-        <p className="section-kicker" id="manifesto-label"><span>01</span> Mijn houding</p>
-        <p className="manifesto-copy">
-          {manifesto.split(" ").map((word, index) => {
-            const normalizedWord = word.toLocaleLowerCase(locale === "en" ? "en-GB" : "nl-NL").replace(/[^\p{L}]/gu, "");
-            const isMarkerWord = manifestoMarkerWords[locale].has(normalizedWord);
-
-            return (
-              <span
-                className={`manifesto-word${isMarkerWord ? " manifesto-marker" : ""}`}
-                data-marker-word={isMarkerWord ? normalizedWord : undefined}
-                key={`${word}-${index}`}
-              >
-                <span className="manifesto-word-text">{word}</span>
-                {isMarkerWord && <span className="manifesto-marker-stroke" aria-hidden="true" />}
-                {normalizedWord === "kwartje" && (
-                  <span className="manifesto-quarter-roll" aria-hidden="true">
-                    <span className="manifesto-quarter-sketch"><strong>25</strong><small>cent</small></span>
-                  </span>
-                )}
-                {" "}
-              </span>
-            );
-          })}
-        </p>
-        <aside className="manifesto-aside">
-          <span className="label">Dualiteit als methode</span>
-          <p>Vrij denken.<br />Verantwoord bouwen.</p>
-        </aside>
-      </section>
-
       <section
         className="showcase"
         id="werk"
@@ -1776,7 +1746,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
           </span>
         </div>
         <header className="showcase-heading">
-          <p className="section-kicker"><span>02</span> Projecten</p>
+          <p className="section-kicker"><span>01</span> Projecten</p>
           <div className="showcase-heading-copy">
             <h2 id="work-title">Geselecteerd werk</h2>
             <p>
@@ -1829,7 +1799,8 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
                     <h3>{project.name}</h3>
                     <span className="link-icon" aria-hidden="true"><ArrowUpRight /></span>
                   </header>
-                  <p>{project.summary}</p>
+                  <p className="project-problem">{project.title}</p>
+                  <p className="project-summary">{project.summary}</p>
                   <span className="project-services">{project.services}</span>
                 </div>
               </a>
@@ -1838,77 +1809,63 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
         </div>
       </section>
 
-      <section className="principle" data-nav-theme="light" aria-label="Ontwerpprincipe">
-        <p className="section-kicker"><span>03</span> De balans</p>
-        <div className="principle-grid">
-          <p className="principle-big">Fundament vóór <em>effect.</em></p>
-          <p>
-            Ik wissel van gereedschap, tempo en route zodra de vraag daarom vraagt.
-            Helderheid, toegankelijkheid en intentie blijven staan. Daar toets ik
-            iedere vondst aan.
-          </p>
-        </div>
+      <section className="manifesto" id="houding" data-nav-theme="light" aria-labelledby="manifesto-label">
+        <p className="section-kicker" id="manifesto-label"><span>02</span> {locale === "en" ? "Design principle" : "Ontwerpprincipe"}</p>
+        <p className="manifesto-copy">
+          {manifesto.split(" ").map((word, index) => {
+            const normalizedWord = word.toLocaleLowerCase(locale === "en" ? "en-GB" : "nl-NL").replace(/[^\p{L}]/gu, "");
+            const isMarkerWord = manifestoMarkerWords[locale].has(normalizedWord);
+
+            return (
+              <span
+                className={`manifesto-word${isMarkerWord ? " manifesto-marker" : ""}`}
+                data-marker-word={isMarkerWord ? normalizedWord : undefined}
+                key={`${word}-${index}`}
+              >
+                <span className="manifesto-word-text">{word}</span>
+                {isMarkerWord && <span className="manifesto-marker-stroke" aria-hidden="true" />}
+                {" "}
+              </span>
+            );
+          })}
+        </p>
+        <aside className="manifesto-aside">
+          <span className="label">{locale === "en" ? "My standard" : "Mijn maatstaf"}</span>
+          <p>{locale === "en" ? <>Clear to people.<br />Buildable for teams.</> : <>Helder voor mensen.<br />Bouwbaar voor teams.</>}</p>
+        </aside>
       </section>
 
       <section className="about-story" id="over" data-nav-theme="light" data-nav-key="over" aria-labelledby="about-title">
         <header className="about-story-heading">
-          <p className="section-kicker"><span>04</span> De mens achter het werk</p>
+          <p className="section-kicker"><span>03</span> De mens achter het werk</p>
           <h2 id="about-title">
-            <span>Een klik voel je snel.</span>
-            <span>Goed werk bouw je samen.</span>
+            <span>{locale === "en" ? "Real conversations." : "Echte gesprekken."}</span>
+            <span>{locale === "en" ? "Better product thinking." : "Beter productdenken."}</span>
           </h2>
-          <p>Ik maak makkelijk contact, maar zeg ook eerlijk wanneer een samenwerking niet klopt. Als er vertrouwen is, mag het gesprek scherp worden. Dan komen de vragen op tafel die een website beter maken.</p>
+          <p>{locale === "en" ? "I make it easy to talk, but I do not avoid difficult questions. Trust creates room to challenge assumptions and make the product stronger." : "Ik maak makkelijk contact, maar ga lastige vragen niet uit de weg. Vertrouwen geeft ruimte om aannames te toetsen en het product sterker te maken."}</p>
         </header>
 
-        <div className="story-route">
-          <svg className="story-route-svg" aria-hidden="true" focusable="false" preserveAspectRatio="none">
-            <path className="story-route-base" />
-            <path className="story-route-progress" />
-          </svg>
-          <span className="story-route-runner" aria-hidden="true" />
-          <div className="story-board-meta label" aria-hidden="true">
-            <span>Personal field notes</span>
-            <span>01 — 04</span>
-          </div>
-          {personalStory.map((story, index) => (
-            <article
-              className={`story-stop story-stop-${index + 1}`}
-              key={story.step}
-              style={{
-                "--dot-x": story.dotX,
-                "--dot-mobile-x": story.dotMobileX,
-              } as CSSProperties}
-            >
-              <div className="story-stop-dot" aria-hidden="true">
-                <span className="story-stop-dot-fill" />
-                <strong>{story.step}</strong>
-              </div>
+        <div className="about-compact-grid">
+          {personalStory.slice(0, 2).map((story) => (
+            <article className="about-compact-card" key={story.step}>
               <figure className="story-photo">
-                <div className="story-photo-stage" role="img" aria-label={story.alt}>
+                <div className="story-photo-stage">
                   <Image
                     className="story-photo-full"
                     src={story.image}
-                    alt=""
-                    aria-hidden="true"
+                    alt={translateText(locale, story.alt)}
                     fill
-                    unoptimized
                     sizes="(max-width: 720px) 88vw, 48vw"
                     style={{ objectPosition: story.position }}
                   />
-                  <canvas className="story-photo-mosaic" width="1" height="1" aria-hidden="true" />
                   <span className="story-tape" aria-hidden="true" />
                 </div>
-                <figcaption><span>{story.caption}</span><span>© Abdelrahman</span></figcaption>
+                <figcaption><span>{translateText(locale, story.caption)}</span><span>{story.step} / 02</span></figcaption>
               </figure>
-              <aside className="story-margin-note" aria-hidden="true">{story.note}</aside>
-              <div className="story-stop-copy">
-                <p className="label">{story.kicker}</p>
-                <h3>
-                  {(locale === "en" ? story.englishTitle : story.title).split(" ").map((word, wordIndex) => (
-                    <span className="story-heading-word" key={`${word}-${wordIndex}`}>{word}{" "}</span>
-                  ))}
-                </h3>
-                <p>{story.body}</p>
+              <div className="about-compact-copy">
+                <p className="label">{translateText(locale, story.kicker)}</p>
+                <h3>{locale === "en" ? story.englishTitle : story.title}</h3>
+                <p>{translateText(locale, story.body)}</p>
               </div>
             </article>
           ))}
@@ -1917,44 +1874,31 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
 
       <section className="method" id="aanpak" data-nav-theme="dark" data-nav-key="aanpak" aria-labelledby="method-title">
         <header className="method-intro">
-          <p className="section-kicker section-kicker-light"><span>05</span> Hoe ik werk</p>
+          <p className="section-kicker section-kicker-light"><span>04</span> Hoe ik werk</p>
           <h2 id="method-title">
-            <span className="method-title-line"><span>Niet alleen ontwerpen.</span></span>
-            <span className="method-title-line method-title-indent"><span>Het proces dirigeren.</span></span>
+            <span className="method-title-line"><span>{locale === "en" ? "From question" : "Van vraag"}</span></span>
+            <span className="method-title-line method-title-indent"><span>{locale === "en" ? "to tested direction." : "naar getoetste richting."}</span></span>
           </h2>
           <div className="method-intro-copy">
-            <p>Ik pas de route aan zodra onderzoek daar aanleiding toe geeft. De volgorde blijft helder: samen scherpstellen, bewijs zoeken, tastbaar maken en tussendoor beslissen of we nog hetzelfde probleem oplossen.</p>
-            <span className="label">Strategie → Onderzoek → Ontwerp → Richting</span>
+            <p>{locale === "en" ? "I keep the process deliberately simple: define the right problem, find evidence and make the direction tangible enough to test and improve." : "Ik houd het proces bewust eenvoudig: het juiste probleem scherpstellen, bewijs zoeken en de richting tastbaar genoeg maken om te testen en verbeteren."}</p>
+            <span className="label">{locale === "en" ? "Define → Explore → Design & validate" : "Scherpstellen → Onderzoeken → Ontwerpen & toetsen"}</span>
           </div>
         </header>
 
-        <div className="method-horizontal" aria-label="Vier stappen in mijn werkwijze">
-          <div className="method-pin">
-            <div className="method-horizontal-meta">
-              <p className="label">Scrollroute · links naar rechts</p>
-              <div className="method-progress" aria-hidden="true"><span /></div>
-              <p className="label">01 — 04</p>
-            </div>
-            <div className="method-track">
-              {workingMethod.map((step, index) => (
-                <article className={`method-note method-note-${index + 1}`} key={step.number}>
-                  <span className="method-note-tape" aria-hidden="true" />
-                  <header>
-                    <span className="method-note-number">{step.number}</span>
-                    <p className="label">{step.phase}</p>
-                  </header>
-                  <h3>{step.title}</h3>
-                  <p>{step.body}</p>
-                  <span className="method-tools label">{step.tools}</span>
-                  <aside>{step.annotation}</aside>
-                </article>
-              ))}
-              <div className="method-track-exit" aria-hidden="true">
-                <span>↓</span>
-                <p>Vanaf hier weer verticaal.</p>
-              </div>
-            </div>
-          </div>
+        <div className="method-grid" aria-label={locale === "en" ? "Three steps in my process" : "Drie stappen in mijn werkwijze"}>
+          {workingMethod.slice(0, 3).map((step, index) => (
+            <article className={`method-note method-note-${index + 1}`} key={step.number}>
+              <span className="method-note-tape" aria-hidden="true" />
+              <header>
+                <span className="method-note-number">{step.number}</span>
+                <p className="label">{translateText(locale, step.phase)}</p>
+              </header>
+              <h3>{translateText(locale, step.title)}</h3>
+              <p>{translateText(locale, step.body)}</p>
+              <span className="method-tools label">{translateText(locale, step.tools)}</span>
+              <aside>{translateText(locale, step.annotation)}</aside>
+            </article>
+          ))}
         </div>
 
         <div className="method-stack" aria-label="Mijn ontwerpstack">

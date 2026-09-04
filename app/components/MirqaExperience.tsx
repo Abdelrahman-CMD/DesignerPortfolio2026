@@ -7,14 +7,10 @@ import ArrowLeft from "lucide-react/icons/arrow-left";
 import ArrowUpRight from "lucide-react/icons/arrow-up-right";
 import BellOff from "lucide-react/icons/bell-off";
 import CheckCircle2 from "lucide-react/icons/check-circle-2";
-import List from "lucide-react/icons/list";
-import LocateFixed from "lucide-react/icons/locate-fixed";
-import Map from "lucide-react/icons/map";
-import ShieldCheck from "lucide-react/icons/shield-check";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { LanguageSwitcher, Locale, localeHref } from "../i18n";
-import { CaseStyleGuide, type CaseStyleGuideData } from "./CaseStyleGuide";
+import { CaseDeepDive } from "./CaseDeepDive";
 
 const content = {
   nl: {
@@ -97,7 +93,7 @@ const content = {
       "Helpt één gekozen gebed om intentie vaker in gedrag om te zetten?",
     ],
     proofKicker: "Productbeslissingen / zichtbaar gemaakt",
-    proofTitle: ["Zeven beslissingen.", "Eén rustige flow.", "Een product in beweging."],
+    proofTitle: ["Vier kernmomenten.", "Eén rustige flow.", "Een product in beweging."],
     proofBody:
       "Deze schermen zijn geen losse UI-oefeningen. Samen laten ze zien hoe positionering, consent, gedrag, toegankelijkheid en bronvertrouwen doorwerken in één mobiele productervaring.",
     proofLabels: [
@@ -196,7 +192,7 @@ const content = {
       "Can one chosen prayer help turn intention into action more often?",
     ],
     proofKicker: "Product decisions / made visible",
-    proofTitle: ["Seven decisions.", "One calm flow.", "A product in motion."],
+    proofTitle: ["Four defining moments.", "One calm flow.", "A product in motion."],
     proofBody:
       "These are not isolated UI exercises. Together they show how positioning, consent, behaviour, accessibility and trust in the underlying data shape one coherent mobile product experience.",
     proofLabels: [
@@ -230,32 +226,15 @@ const images = [
 export function MirqaExperience({ locale = "nl" }: { locale?: Locale }) {
   const root = useRef<HTMLElement>(null);
   const copy = content[locale];
-  const styleGuide: CaseStyleGuideData = {
-    project: "MIRQA",
-    logo: "/projects/mirqa/app-icon.png",
-    logoAlt: locale === "en" ? "MIRQA app icon" : "MIRQA app-icoon",
-    displayFont: "Iowan Old Style",
-    displayUse: locale === "en" ? "Meaning / reflection" : "Betekenis / reflectie",
-    interfaceFont: "Inter",
-    interfaceUse: locale === "en" ? "Interface / clarity" : "Interface / helderheid",
-    variant: "mirqa",
-    colors: [
-      { name: "Warm ivory", value: "#F4ECE2", ink: "#211C18" },
-      { name: "Clay", value: "#B64A29", ink: "#FFF8F0" },
-      { name: "Soft sand", value: "#DDD2C1", ink: "#211C18" },
-      { name: "Grounded ink", value: "#211C18", ink: "#FFF8F0" },
-    ],
-  };
-
   useLayoutEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
     const context = gsap.context(() => {
       const intro = gsap.timeline({ defaults: { ease: "power4.out" } });
-      intro.from(".tc-nav", { opacity: 0, y: -18, duration: 0.55 })
-        .from(".tc-hero-kicker", { opacity: 0, y: 16, duration: 0.45 }, "+=0.08")
-        .from(".tc-title-line > span", { yPercent: 112, duration: 0.85, stagger: 0.08 }, "-=0.12")
-        .from(".tc-hero-summary, .tc-hero-meta", { opacity: 0, y: 24, duration: 0.6, stagger: 0.08 }, "-=0.42")
-        .from(".tc-hero-media", { opacity: 0, xPercent: 16, scale: 0.97, duration: 1.15 }, "-=0.42");
+      intro.from(".tc-nav", { opacity: 0, y: -18, duration: 0.32 })
+        .from(".tc-hero-kicker", { opacity: 0, y: 16, duration: 0.28 }, "-=0.08")
+        .from(".tc-title-line > span", { yPercent: 112, duration: 0.52, stagger: 0.05 }, "-=0.16")
+        .from(".tc-hero-summary, .tc-hero-meta", { opacity: 0, y: 24, duration: 0.38, stagger: 0.05 }, "-=0.32")
+        .from(".tc-hero-media", { opacity: 0, xPercent: 16, scale: 0.97, duration: 0.78 }, "-=0.46");
 
       gsap.to(".tc-hero-media > img:first-child", { yPercent: -5, ease: "none", scrollTrigger: { trigger: ".tc-hero", start: "top top", end: "bottom top", scrub: true } });
 
@@ -304,39 +283,49 @@ export function MirqaExperience({ locale = "nl" }: { locale?: Locale }) {
         </figure>
       </header>
 
-      <section className="tc-premise" id="mirqa-content" aria-labelledby="mirqa-premise-title">
-        <p>{copy.premiseKicker}</p>
-        <h2 id="mirqa-premise-title">{copy.premiseTitle}</h2>
-        <div className="tc-premise-notes">
-          <span><AlarmClock aria-hidden="true" /> {copy.premiseNotes[0]}</span>
-          <span><BellOff aria-hidden="true" /> {copy.premiseNotes[1]}</span>
-          <span><ShieldCheck aria-hidden="true" /> {copy.premiseNotes[2]}</span>
+      <section className="tc-snapshot" id="mirqa-content" aria-labelledby="mirqa-snapshot-title">
+        <header>
+          <p>{locale === "en" ? "The 30-second case" : "De case in 30 seconden"}</p>
+          <h2 id="mirqa-snapshot-title">{locale === "en" ? "Problem. Solution. Next step." : "Probleem. Oplossing. Volgende stap."}</h2>
+        </header>
+        <div className="tc-snapshot-grid">
+          <div><span>{locale === "en" ? "Problem" : "Probleem"}</span><p>{copy.cards[0].note}</p></div>
+          <div><span>{locale === "en" ? "Solution" : "Oplossing"}</span><p>{copy.cards[2].note}</p></div>
+          <div><span>{locale === "en" ? "Status / next step" : "Status / volgende stap"}</span><p>{copy.cards[5].note}</p></div>
         </div>
       </section>
 
-      <section className="tc-deck" aria-label={locale === "en" ? "MIRQA product story in six chapters" : "MIRQA productverhaal in zes hoofdstukken"}>
-        {copy.cards.map((card, index) => (
+      <section className="tc-deck" aria-label={locale === "en" ? "MIRQA product story in three decisions" : "MIRQA productverhaal in drie beslissingen"}>
+        {copy.cards.slice(0, 3).map((card, index) => (
           <article className={`tc-card-shell tc-tone-${card.tone}`} id={`chapter-${index + 1}`} key={card.eyebrow} style={{ "--tc-index": index + 1 } as CSSProperties}>
             <div className="tc-card">
               <span className="tc-card-dim" aria-hidden="true" />
               <div className="tc-card-copy">
-                <div className="tc-card-index"><span>0{index + 1}</span><span>06</span></div>
+                <div className="tc-card-index"><span>0{index + 1}</span><span>03</span></div>
                 <p className="tc-mask tc-card-eyebrow"><span>{card.eyebrow}</span></p>
                 <h2 className="tc-mask"><span>{card.title}</span></h2>
                 <p className="tc-mask tc-card-body"><span>{card.body}</span></p>
                 <p className="tc-mask tc-card-note"><span>{card.note}</span></p>
                 {index === 1 && <div className="tc-feature-row"><span><CheckCircle2 aria-hidden="true" /> {copy.featureLabels[0]}</span><span><BellOff aria-hidden="true" /> {copy.featureLabels[1]}</span><span><AlarmClock aria-hidden="true" /> {copy.featureLabels[2]}</span></div>}
-                {index === 3 && <div className="tc-feature-row"><span><Map aria-hidden="true" /> {copy.accessLabels[0]}</span><span><List aria-hidden="true" /> {copy.accessLabels[1]}</span><span><LocateFixed aria-hidden="true" /> {copy.accessLabels[2]}</span></div>}
-                {index === 4 && <p className="tc-system-caption">{copy.systemCaption}</p>}
-                {index === 5 && <ul className="tc-validation-list">{copy.validation.map((item) => <li key={item}>{item}</li>)}</ul>}
               </div>
-              <figure className={`tc-card-media${"styleGuide" in card ? " tc-style-card-media" : ""}`}>
-                {"styleGuide" in card ? <CaseStyleGuide data={styleGuide} /> : <Image src={card.image} alt={card.imageAlt} fill sizes="(max-width: 760px) 92vw, 54vw" />}
+              <figure className="tc-card-media">
+                <Image src={card.image} alt={card.imageAlt} fill sizes="(max-width: 760px) 92vw, 54vw" />
               </figure>
             </div>
           </article>
         ))}
       </section>
+
+      <CaseDeepDive
+        locale={locale}
+        items={copy.cards.slice(3).map((card, index) => ({
+          number: `0${index + 4}`,
+          eyebrow: card.eyebrow,
+          title: card.title,
+          body: card.body,
+          note: card.note,
+        }))}
+      />
 
       <section className="tc-proof" aria-labelledby="mirqa-proof-title">
         <header className="tc-proof-heading">
@@ -345,7 +334,7 @@ export function MirqaExperience({ locale = "nl" }: { locale?: Locale }) {
           <p>{copy.proofBody}</p>
         </header>
         <div className="tc-proof-grid">
-          {images.map((src, index) => (
+          {images.slice(0, 4).map((src, index) => (
             <figure className="tc-proof-frame" key={src}>
               <div className="tc-proof-media"><Image src={src} alt={`${copy.proofLabels[index]} — MIRQA`} fill sizes="(max-width: 760px) 82vw, 44vw" /></div>
               <figcaption>{copy.proofLabels[index]}</figcaption>

@@ -30,7 +30,8 @@ test("server-renders the complete portfolio homepage", async () => {
 
   const html = await response.text();
   assert.match(html, /Abdelrahman — Senior digitaal ontwerper/);
-  assert.match(html, /Ik ontwerp met alles wat ik onderweg leer/);
+  assert.match(html, /Productdesigner die complexiteit helder maakt/);
+  assert.match(html, /Ik combineer productstrategie, UX-onderzoek en interfaceontwerp/);
   assert.match(html, /class="mind-hero-canvas"/);
   assert.match(html, /class="mind-hero-photo-slide"/);
   assert.match(html, /hero-abdel-profile\.png/);
@@ -46,13 +47,14 @@ test("server-renders the complete portfolio homepage", async () => {
   assert.doesNotMatch(html, /hero-project-letter|hero-rule/);
   assert.match(html, /class="contact-postcard"/);
   assert.match(html, /class="floating-contact"/);
-  assert.match(html, /class="manifesto-quarter-roll"/);
+  assert.doesNotMatch(html, /class="manifesto-quarter-roll"/);
   assert.doesNotMatch(html, /manifesto-coin|manifesto-coin-edge|manifesto-coin-shadow/);
   assert.match(html, /mailto:dhr_abdelrahman@outlook\.com/);
   assert.match(html, /https:\/\/wa\.me\/31621572124/);
   assert.doesNotMatch(html, /instagram/i);
   assert.equal((html.match(/class="link-icon"/g) ?? []).length, 16);
-  assert.match(html, /class="method-horizontal"/);
+  assert.match(html, /class="method-grid"/);
+  assert.doesNotMatch(html, /class="method-horizontal"/);
   assert.equal((html.match(/class="project-entry /g) ?? []).length, 8);
   assert.match(html, /class="project-grid"/);
   assert.equal((html.match(/class="project-parallax-media"/g) ?? []).length, 8);
@@ -66,8 +68,9 @@ test("server-renders the complete portfolio homepage", async () => {
   assert.match(html, /href="\/nl\/cases\/mirqa"/);
   assert.match(html, /class="language-switcher language-switcher-light"/);
   assert.match(html, /href="\/en"/);
-  assert.equal((html.match(/class="method-note /g) ?? []).length, 4);
-  assert.equal((html.match(/<canvas class="story-photo-mosaic"/g) ?? []).length, 4);
+  assert.equal((html.match(/class="method-note /g) ?? []).length, 3);
+  assert.equal((html.match(/class="about-compact-card"/g) ?? []).length, 2);
+  assert.equal((html.match(/<canvas class="story-photo-mosaic"/g) ?? []).length, 0);
 });
 
 test("uses bounded raster assets on the homepage and case pages", async () => {
@@ -95,36 +98,39 @@ test("uses bounded raster assets on the homepage and case pages", async () => {
   const caseHtml = await caseResponse.text();
   assert.match(caseHtml, /Guidance Travel/);
   assert.match(caseHtml, /guidance-2026%2Fhero-laptops\.webp/);
-  assert.match(caseHtml, /tc-style-board-guidance/);
+  assert.match(caseHtml, /class="tc-snapshot"/);
+  assert.match(caseHtml, /class="tc-deep-dive"/);
+  assert.equal((caseHtml.match(/class="tc-card-shell /g) ?? []).length, 3);
 
   assert.equal(tareeqiResponse.status, 200);
   const tareeqiHtml = await tareeqiResponse.text();
-  assert.match(tareeqiHtml, /tc-style-board-tareeqi/);
+  assert.match(tareeqiHtml, /class="tc-snapshot"/);
+  assert.match(tareeqiHtml, /class="tc-deep-dive"/);
 
   assert.equal(aynResponse.status, 200);
   const aynHtml = await aynResponse.text();
   assert.match(aynHtml, /Ayn Al-Hikmah/);
   assert.match(aynHtml, /ayn-2026%2Fhero-laptops\.webp/);
-  assert.match(aynHtml, /tc-style-board-ayn/);
+  assert.match(aynHtml, /class="tc-deep-dive"/);
 
   assert.equal(baynResponse.status, 200);
   const baynHtml = await baynResponse.text();
   assert.match(baynHtml, /Bayn Signal/);
   assert.match(baynHtml, /bayn-2026%2Fhero-laptops\.webp/);
-  assert.match(baynHtml, /tc-style-board-bayn/);
+  assert.match(baynHtml, /class="tc-deep-dive"/);
 
   assert.equal(hijamaResponse.status, 200);
   const hijamaHtml = await hijamaResponse.text();
   assert.match(hijamaHtml, /Hijama ’N Cups/);
   assert.match(hijamaHtml, /hijama-2026%2Fhero-laptops\.webp/);
-  assert.match(hijamaHtml, /tc-style-board-hijama/);
+  assert.match(hijamaHtml, /class="tc-deep-dive"/);
   assert.match(hijamaHtml, /https:\/\/hijamancups\.com\//);
 
   assert.equal(mirqaResponse.status, 200);
   const mirqaHtml = await mirqaResponse.text();
   assert.match(mirqaHtml, /MIRQA/);
   assert.match(mirqaHtml, /projects%2Fmirqa%2Fonboarding-welcome\.jpg/);
-  assert.match(mirqaHtml, /tc-style-board-mirqa/);
+  assert.match(mirqaHtml, /class="tc-deep-dive"/);
   assert.match(mirqaSource, /mosque-map\.jpg/);
   assert.match(mirqaSource, /Product &amp; UX\/UI designer/);
 
@@ -133,7 +139,8 @@ test("uses bounded raster assets on the homepage and case pages", async () => {
   assert.match(oppasHtml, /Oppas by Chaima/);
   assert.match(oppasHtml, /oppas-site-desktop\.png/);
 
-  assert.match(homeSource, /className="story-photo-mosaic"/);
+  assert.doesNotMatch(homeSource, /className="story-photo-mosaic"/);
+  assert.match(homeSource, /className="about-compact-grid"/);
   assert.doesNotMatch(homeSource, /story-photo-piece/);
   assert.match(homeSource, /\/projects\/home\/tareeqi\.webp/);
   assert.match(homeSource, /\/about\/hero-abdel-profile\.png/);
@@ -148,8 +155,8 @@ test("uses bounded raster assets on the homepage and case pages", async () => {
   assert.doesNotMatch(homeSource, /mind-portrait-foreground-(glasses|ear)/);
   assert.doesNotMatch(homeSource, /\/about\/brain-color\.svg/);
   assert.match(homeSource, /xPercent: 104/);
-  assert.match(homeSource, /nl: new Set\(\["écht", "kwartje", "kern"\]\)/);
-  assert.match(homeSource, /en: new Set\(\["clear", "answer", "foundation"\]\)/);
+  assert.match(homeSource, /nl: new Set\(\["probleem", "gebruikers", "bouwen"\]\)/);
+  assert.match(homeSource, /en: new Set\(\["problem", "users", "build"\]\)/);
   assert.match(homeSource, /\/about\/web\/fatherhood\.webp/);
   assert.doesNotMatch(homeSource, /image: "\/projects\/(tareeqi|ayn|guidance|bayn)-overview\.jpg"/);
   assert.match(caseData, /\/projects\/case-shots\/ayn-detail\.webp/);
