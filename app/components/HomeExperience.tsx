@@ -31,7 +31,7 @@ const projects = [
     status: "In ontwikkeling",
     bg: "#c9653d",
     ink: "#fff8f0",
-    image: "/projects/mirqa/mosque-map.jpg",
+    image: "/projects/home/mirqa-cover.webp",
     imagePosition: "center",
     href: "/cases/mirqa",
   },
@@ -143,7 +143,7 @@ const projects = [
     status: "Online",
     bg: "#f0e2ce",
     ink: "#342d27",
-    image: "/projects/live/oppas-site-desktop.png",
+    image: "/projects/home/oppas-by-chaima-cover.webp",
     imagePosition: "center",
     href: "/cases/oppas-by-chaima",
   },
@@ -510,7 +510,7 @@ const mindZones = [
     title: "De echte vraag vinden",
     detail:
       "Aandacht, afweging en vooruitdenken brengen aannames terug tot de vraag die er echt toe doet.",
-    color: "#d4ae62",
+    color: "#7b4b0d",
   },
   {
     id: "connections",
@@ -582,6 +582,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
     let cleanupStoryMosaics = () => {};
     let cleanupHeader = () => {};
     let cleanupHeroCta = () => {};
+    let cleanupHeroMosaic = () => {};
     let cleanupCaseCursor = () => {};
 
     const context = gsap.context(() => {
@@ -636,6 +637,29 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
         if (scrollFrame) window.cancelAnimationFrame(scrollFrame);
       };
 
+      const heroMosaicCanvas = root.current?.querySelector<HTMLCanvasElement>(".mind-hero-mosaic");
+      const heroFullImage = root.current?.querySelector<HTMLElement>(".mind-hero-base");
+      const heroMosaic = heroMosaicCanvas && heroFullImage
+        ? createStoryMosaic(
+          heroMosaicCanvas,
+          heroFullImage,
+          "/about/hero-abdel-profile.png",
+          "right bottom",
+          -1,
+        )
+        : null;
+      const heroReveal = { progress: prefersReducedMotion ? 1 : 0 };
+
+      if (heroMosaic) {
+        const resizeHeroMosaic = () => heroMosaic.resize();
+        heroMosaic.render(heroReveal.progress, 0);
+        window.addEventListener("resize", resizeHeroMosaic);
+        cleanupHeroMosaic = () => {
+          window.removeEventListener("resize", resizeHeroMosaic);
+          heroMosaic.dispose();
+        };
+      }
+
       if (!prefersReducedMotion) {
         const intro = gsap.timeline({ defaults: { ease: "power4.out" } });
         intro
@@ -683,6 +707,16 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
               ease: "power3.inOut",
             },
             "-=0.5",
+          )
+          .to(
+            heroReveal,
+            {
+              progress: 1,
+              duration: 0.78,
+              ease: "power2.out",
+              onUpdate: () => heroMosaic?.render(heroReveal.progress, 0),
+            },
+            "<",
           );
       }
 
@@ -962,7 +996,6 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
         let pointerFrame = 0;
         let pointerX = -200;
         let pointerY = -200;
-        let pointerTarget: EventTarget | null = null;
 
         gsap.set(caseCursor, { xPercent: -50, yPercent: -50 });
 
@@ -974,7 +1007,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
           cursorX(pointerX);
           cursorY(pointerY);
 
-          const target = pointerTarget instanceof Element ? pointerTarget : null;
+          const target = document.elementFromPoint(pointerX, pointerY);
           const card = target?.closest<HTMLElement>(".project-card-link") ?? null;
           const nextCard = card && showcaseSection.contains(card) ? card : null;
 
@@ -993,24 +1026,28 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
         const handleCasePointerMove = (event: PointerEvent) => {
           pointerX = event.clientX;
           pointerY = event.clientY;
-          pointerTarget = event.target;
           showcaseSection.classList.add("is-pointer-present");
+          if (!pointerFrame) pointerFrame = window.requestAnimationFrame(renderCasePointer);
+        };
+
+        const handleCasePointerScroll = () => {
           if (!pointerFrame) pointerFrame = window.requestAnimationFrame(renderCasePointer);
         };
 
         const handleCasePointerLeave = () => {
           activeCard = null;
-          pointerTarget = null;
           caseCursor.classList.remove("is-visible");
           showcaseSection.classList.remove("is-pointer-present", "is-case-hover");
         };
 
         showcaseSection.addEventListener("pointermove", handleCasePointerMove, { passive: true });
         showcaseSection.addEventListener("pointerleave", handleCasePointerLeave);
+        window.addEventListener("scroll", handleCasePointerScroll, { passive: true });
 
         cleanupCaseCursor = () => {
           showcaseSection.removeEventListener("pointermove", handleCasePointerMove);
           showcaseSection.removeEventListener("pointerleave", handleCasePointerLeave);
+          window.removeEventListener("scroll", handleCasePointerScroll);
           if (pointerFrame) window.cancelAnimationFrame(pointerFrame);
           showcaseSection.classList.remove("is-pointer-present", "is-case-hover");
         };
@@ -1369,6 +1406,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
       cleanupStoryMosaics();
       cleanupHeader();
       cleanupHeroCta();
+      cleanupHeroMosaic();
       cleanupCaseCursor();
       context.revert();
     };
@@ -1487,6 +1525,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
                   sizes="(max-width: 720px) 82vw, 34vw"
                   style={{ objectFit: "contain", objectPosition: "right bottom" }}
                 />
+                <canvas className="mind-hero-mosaic" width="1" height="1" aria-hidden="true" />
                 <div className="mind-brain-stage" aria-hidden="true">
                   <Image
                     className="mind-brain-state mind-brain-default"
@@ -1501,6 +1540,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
                     <span
                       className={`mind-brain-region${activeMindZone === zone.id ? " is-active" : ""}`}
                       data-zone={zone.id}
+                      style={{ "--zone-color": zone.color } as CSSProperties}
                       key={`brain-region-${zone.id}`}
                     />
                   ))}
@@ -1839,32 +1879,60 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
         <header className="about-story-heading">
           <p className="section-kicker"><span>03</span> De mens achter het werk</p>
           <h2 id="about-title">
-            <span>{locale === "en" ? "Real conversations." : "Echte gesprekken."}</span>
-            <span>{locale === "en" ? "Better product thinking." : "Beter productdenken."}</span>
+            <span>Een klik voel je snel.</span>
+            <span>Goed werk bouw je samen.</span>
           </h2>
-          <p>{locale === "en" ? "I make it easy to talk, but I do not avoid difficult questions. Trust creates room to challenge assumptions and make the product stronger." : "Ik maak makkelijk contact, maar ga lastige vragen niet uit de weg. Vertrouwen geeft ruimte om aannames te toetsen en het product sterker te maken."}</p>
+          <p>Ik maak makkelijk contact, maar zeg ook eerlijk wanneer een samenwerking niet klopt. Als er vertrouwen is, mag het gesprek scherp worden. Dan komen de vragen op tafel die een website beter maken.</p>
         </header>
 
-        <div className="about-compact-grid">
-          {personalStory.slice(0, 2).map((story) => (
-            <article className="about-compact-card" key={story.step}>
+        <div className="story-route">
+          <svg className="story-route-svg" aria-hidden="true" focusable="false" preserveAspectRatio="none">
+            <path className="story-route-base" />
+            <path className="story-route-progress" />
+          </svg>
+          <span className="story-route-runner" aria-hidden="true" />
+          <div className="story-board-meta label" aria-hidden="true">
+            <span>Personal field notes</span>
+            <span>01 — 04</span>
+          </div>
+          {personalStory.map((story, index) => (
+            <article
+              className={`story-stop story-stop-${index + 1}`}
+              key={story.step}
+              style={{
+                "--dot-x": story.dotX,
+                "--dot-mobile-x": story.dotMobileX,
+              } as CSSProperties}
+            >
+              <div className="story-stop-dot" aria-hidden="true">
+                <span className="story-stop-dot-fill" />
+                <strong>{story.step}</strong>
+              </div>
               <figure className="story-photo">
-                <div className="story-photo-stage">
+                <div className="story-photo-stage" role="img" aria-label={translateText(locale, story.alt)}>
                   <Image
                     className="story-photo-full"
                     src={story.image}
-                    alt={translateText(locale, story.alt)}
+                    alt=""
+                    aria-hidden="true"
                     fill
+                    unoptimized
                     sizes="(max-width: 720px) 88vw, 48vw"
                     style={{ objectPosition: story.position }}
                   />
+                  <canvas className="story-photo-mosaic" width="1" height="1" aria-hidden="true" />
                   <span className="story-tape" aria-hidden="true" />
                 </div>
-                <figcaption><span>{translateText(locale, story.caption)}</span><span>{story.step} / 02</span></figcaption>
+                <figcaption><span>{translateText(locale, story.caption)}</span><span>© Abdelrahman</span></figcaption>
               </figure>
-              <div className="about-compact-copy">
+              <aside className="story-margin-note" aria-hidden="true">{translateText(locale, story.note)}</aside>
+              <div className="story-stop-copy">
                 <p className="label">{translateText(locale, story.kicker)}</p>
-                <h3>{locale === "en" ? story.englishTitle : story.title}</h3>
+                <h3>
+                  {(locale === "en" ? story.englishTitle : story.title).split(" ").map((word, wordIndex) => (
+                    <span className="story-heading-word" key={`${word}-${wordIndex}`}>{word}{" "}</span>
+                  ))}
+                </h3>
                 <p>{translateText(locale, story.body)}</p>
               </div>
             </article>
@@ -1876,29 +1944,42 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
         <header className="method-intro">
           <p className="section-kicker section-kicker-light"><span>04</span> Hoe ik werk</p>
           <h2 id="method-title">
-            <span className="method-title-line"><span>{locale === "en" ? "From question" : "Van vraag"}</span></span>
-            <span className="method-title-line method-title-indent"><span>{locale === "en" ? "to tested direction." : "naar getoetste richting."}</span></span>
+            <span className="method-title-line"><span>Niet alleen ontwerpen.</span></span>
+            <span className="method-title-line method-title-indent"><span>Het proces dirigeren.</span></span>
           </h2>
           <div className="method-intro-copy">
-            <p>{locale === "en" ? "I keep the process deliberately simple: define the right problem, find evidence and make the direction tangible enough to test and improve." : "Ik houd het proces bewust eenvoudig: het juiste probleem scherpstellen, bewijs zoeken en de richting tastbaar genoeg maken om te testen en verbeteren."}</p>
-            <span className="label">{locale === "en" ? "Define → Explore → Design & validate" : "Scherpstellen → Onderzoeken → Ontwerpen & toetsen"}</span>
+            <p>Ik pas de route aan zodra onderzoek daar aanleiding toe geeft. De volgorde blijft helder: samen scherpstellen, bewijs zoeken, tastbaar maken en tussendoor beslissen of we nog hetzelfde probleem oplossen.</p>
+            <span className="label">Strategie → Onderzoek → Ontwerp → Richting</span>
           </div>
         </header>
 
-        <div className="method-grid" aria-label={locale === "en" ? "Three steps in my process" : "Drie stappen in mijn werkwijze"}>
-          {workingMethod.slice(0, 3).map((step, index) => (
-            <article className={`method-note method-note-${index + 1}`} key={step.number}>
-              <span className="method-note-tape" aria-hidden="true" />
-              <header>
-                <span className="method-note-number">{step.number}</span>
-                <p className="label">{translateText(locale, step.phase)}</p>
-              </header>
-              <h3>{translateText(locale, step.title)}</h3>
-              <p>{translateText(locale, step.body)}</p>
-              <span className="method-tools label">{translateText(locale, step.tools)}</span>
-              <aside>{translateText(locale, step.annotation)}</aside>
-            </article>
-          ))}
+        <div className="method-horizontal" aria-label={translateText(locale, "Vier stappen in mijn werkwijze")}>
+          <div className="method-pin">
+            <div className="method-horizontal-meta">
+              <p className="label">Scrollroute · links naar rechts</p>
+              <div className="method-progress" aria-hidden="true"><span /></div>
+              <p className="label">01 — 04</p>
+            </div>
+            <div className="method-track">
+              {workingMethod.map((step, index) => (
+                <article className={`method-note method-note-${index + 1}`} key={step.number}>
+                  <span className="method-note-tape" aria-hidden="true" />
+                  <header>
+                    <span className="method-note-number">{step.number}</span>
+                    <p className="label">{translateText(locale, step.phase)}</p>
+                  </header>
+                  <h3>{translateText(locale, step.title)}</h3>
+                  <p>{translateText(locale, step.body)}</p>
+                  <span className="method-tools label">{translateText(locale, step.tools)}</span>
+                  <aside>{translateText(locale, step.annotation)}</aside>
+                </article>
+              ))}
+              <div className="method-track-exit" aria-hidden="true">
+                <span>↓</span>
+                <p>Vanaf hier weer verticaal.</p>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div className="method-stack" aria-label="Mijn ontwerpstack">

@@ -34,6 +34,7 @@ test("server-renders the complete portfolio homepage", async () => {
   assert.match(html, /Ik combineer productstrategie, UX-onderzoek en interfaceontwerp/);
   assert.match(html, /class="mind-hero-canvas"/);
   assert.match(html, /class="mind-hero-photo-slide"/);
+  assert.match(html, /class="mind-hero-mosaic"/);
   assert.match(html, /hero-abdel-profile\.png/);
   assert.match(html, /brain-default\.svg/);
   assert.equal((html.match(/class="mind-brain-region(?: is-active)?"/g) ?? []).length, 5);
@@ -53,8 +54,8 @@ test("server-renders the complete portfolio homepage", async () => {
   assert.match(html, /https:\/\/wa\.me\/31621572124/);
   assert.doesNotMatch(html, /instagram/i);
   assert.equal((html.match(/class="link-icon"/g) ?? []).length, 16);
-  assert.match(html, /class="method-grid"/);
-  assert.doesNotMatch(html, /class="method-horizontal"/);
+  assert.match(html, /class="method-horizontal"/);
+  assert.doesNotMatch(html, /class="method-grid"/);
   assert.equal((html.match(/class="project-entry /g) ?? []).length, 8);
   assert.match(html, /class="project-grid"/);
   assert.equal((html.match(/class="project-parallax-media"/g) ?? []).length, 8);
@@ -68,9 +69,9 @@ test("server-renders the complete portfolio homepage", async () => {
   assert.match(html, /href="\/nl\/cases\/mirqa"/);
   assert.match(html, /class="language-switcher language-switcher-light"/);
   assert.match(html, /href="\/en"/);
-  assert.equal((html.match(/class="method-note /g) ?? []).length, 3);
-  assert.equal((html.match(/class="about-compact-card"/g) ?? []).length, 2);
-  assert.equal((html.match(/<canvas class="story-photo-mosaic"/g) ?? []).length, 0);
+  assert.equal((html.match(/class="method-note /g) ?? []).length, 4);
+  assert.equal((html.match(/class="story-stop story-stop-/g) ?? []).length, 4);
+  assert.equal((html.match(/<canvas class="story-photo-mosaic"/g) ?? []).length, 4);
 });
 
 test("uses bounded raster assets on the homepage and case pages", async () => {
@@ -139,16 +140,21 @@ test("uses bounded raster assets on the homepage and case pages", async () => {
   assert.match(oppasHtml, /Oppas by Chaima/);
   assert.match(oppasHtml, /oppas-site-desktop\.png/);
 
-  assert.doesNotMatch(homeSource, /className="story-photo-mosaic"/);
-  assert.match(homeSource, /className="about-compact-grid"/);
+  assert.match(homeSource, /className="story-photo-mosaic"/);
+  assert.match(homeSource, /className="story-route"/);
   assert.doesNotMatch(homeSource, /story-photo-piece/);
   assert.match(homeSource, /\/projects\/home\/tareeqi\.webp/);
   assert.match(homeSource, /\/about\/hero-abdel-profile\.png/);
+  assert.match(homeSource, /\/projects\/home\/mirqa-cover\.webp/);
+  assert.match(homeSource, /\/projects\/home\/oppas-by-chaima-cover\.webp/);
   assert.match(homeSource, /\/about\/brain-default\.svg/);
   assert.match(css, /\/about\/brain-hover\.svg/);
   assert.doesNotMatch(css, /brain-head-clip|manifesto-coin-scene/);
   assert.equal((css.match(/--brain-region-mask:/g) ?? []).length, 5);
   assert.match(css, /color: var\(--zone-color\)/);
+  assert.match(css, /background-blend-mode: multiply/);
+  assert.match(homeSource, /document\.elementFromPoint\(pointerX, pointerY\)/);
+  assert.match(homeSource, /window\.addEventListener\("scroll", handleCasePointerScroll/);
   assert.doesNotMatch(homeSource, /brain-stage-zone-/);
   assert.doesNotMatch(homeSource, /mind-portrait-foreground/);
   assert.doesNotMatch(homeSource, /\/about\/hero-profile-cutout-v2\.webp/);
