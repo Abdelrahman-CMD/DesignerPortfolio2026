@@ -25,36 +25,34 @@ const content = {
       ["Status", "In ontwikkeling · Coming soon"],
     ],
     heroCaption: "Mobiele productcase / binnenkort beschikbaar",
+    heroAlt: "MIRQA app in een schuine iPhone-mockup met het persoonlijke vertrekplan voor Maghrib",
     premiseKicker: "Gedrag ondersteunen zonder geloof te gamificeren",
     premiseTitle:
       "Ik begon niet met meer meldingen. Ik begon met de vraag waarom een goede intentie onderweg toch verloren gaat.",
     premiseNotes: ["Eén gebed als doel", "Vertrektijd in plaats van aftellen", "Geen scores of publieke prestaties"],
     cards: [
       {
-        eyebrow: "De productvraag",
-        title: "Gebedstijden vertellen wanneer. Niet wat er nodig is om op tijd te vertrekken.",
-        body: "De meeste apps eindigen bij een tijdstip of melding. MIRQA richt zich op het gedrag ervoor: één gebed kiezen, een moskee bepalen en op een realistisch moment vertrekken. Zo wordt een abstracte intentie een kleine, uitvoerbare afspraak met jezelf.",
-        note: "Niet méér aandacht vragen. Precies op tijd de juiste steun geven.",
-        image: "/projects/mirqa/onboarding-welcome.jpg",
-        imageAlt: "MIRQA welkomstscherm met de productbelofte en een rustige startknop",
+        eyebrow: "Onboarding / intentie en vertrouwen",
+        title: "Een groot voornemen wordt één haalbare eerste stap.",
+        body: "Vier schermen bouwen vertrouwen stap voor stap op: eerst de productbelofte, daarna een naam alleen voor de aanspreekvorm, één focusgebed als haalbaar begin en locatie pas wanneer de opbrengst duidelijk is. Ieder scherm vraagt één beslissing en houdt de gebruiker in controle.",
+        note: "Eerst begrijpen wat MIRQA toevoegt. Daarna pas iets kiezen of delen.",
+        imageAlt: "Vier MIRQA-schermen voor welkom, aanspreekvorm, focusgebed en locatiebevestiging",
         tone: "mirqa-paper",
       },
       {
-        eyebrow: "De gedragskeuze",
-        title: "Eén gebed tegelijk verlaagt de drempel.",
-        body: "De onboarding vraagt niet welk gebed iemand het vaakst mist, maar met welk gebed diegene wil beginnen. Dat verschuift de ervaring van schuld naar haalbaarheid. De app ondersteunt gewoontevorming zonder aanbidding te reduceren tot een score, streak of ranglijst.",
-        note: "Een betekenisvolle keuze hoeft niet zwaar te voelen.",
-        image: "/projects/mirqa/onboarding-prayer.jpg",
-        imageAlt: "MIRQA onboarding waarin de gebruiker één gebed als startpunt kiest",
+        eyebrow: "Moskee kiezen / overzicht en toegankelijkheid",
+        title: "Kaart en lijst leiden naar dezelfde betrouwbare keuze.",
+        body: "De vaste moskee verbindt de onboarding met het dagelijkse vertrekplan. Daarna biedt de zoeker geografisch overzicht op de kaart en dezelfde resultaten scanbaar in een lijst. Selectie, volgorde, afstand en bronzekerheid blijven gelijk, zodat toegankelijkheid nooit een tweederangs ervaring wordt.",
+        note: "De vorm mag veranderen. De kwaliteit van de beslissing niet.",
+        imageAlt: "Drie MIRQA-schermen voor een vaste moskee, kaartweergave en gelijkwaardige lijstweergave",
         tone: "mirqa-clay",
       },
       {
-        eyebrow: "Onboarding en consent",
-        title: "Eerst de belofte. Daarna pas de toestemming.",
-        body: "Naam, locatie en vaste moskee verschijnen alleen wanneer ze aantoonbaar iets verbeteren. Elk toestemmingsmoment krijgt een eigen uitkomst en herstelroute. De gebruiker begrijpt wat de app teruggeeft voordat er om data wordt gevraagd.",
-        note: "Toestemming is een productmoment, geen systeemtussenscherm.",
-        image: "/projects/mirqa/onboarding-location.jpg",
-        imageAlt: "MIRQA bevestigt rustig dat locatie is ingesteld en legt de waarde uit",
+        eyebrow: "Dagelijks gebruik / vertrekken en terugkijken",
+        title: "Eén rustige lijn van plan naar vertrek en reflectie.",
+        body: "Het homescherm vertaalt gebedstijd, reistijd, voorbereiding en rustmarge naar één vertrekmoment. In Plan kan de gebruiker die logica aanpassen; Terugblik zoekt patronen zonder scores en Gids geeft alleen context die rondom het moskeebezoek direct bruikbaar is.",
+        note: "Niet vaker openen, maar op het juiste moment beter ondersteunen.",
+        imageAlt: "Vier MIRQA-schermen voor home, vertrekplanning, terugblik en praktische begeleiding",
         tone: "mirqa-sand",
       },
       {
@@ -124,36 +122,34 @@ const content = {
       ["Status", "In development · Coming soon"],
     ],
     heroCaption: "Mobile product case study / coming soon",
+    heroAlt: "MIRQA shown in an angled iPhone mockup with a personal Maghrib departure plan",
     premiseKicker: "Supporting behaviour without gamifying faith",
     premiseTitle:
       "I did not start with more notifications. I started with why a good intention can still get lost before someone leaves home.",
     premiseNotes: ["One prayer as the goal", "A time to leave, not a countdown", "No scores or public performance"],
     cards: [
       {
-        eyebrow: "The product question",
-        title: "Prayer times tell people when. They do not help them leave on time.",
-        body: "Most apps stop at a timetable or notification. MIRQA focuses on the behaviour around it: choose one prayer, select a mosque and work back to a realistic departure time. An abstract intention becomes a small commitment someone can act on.",
-        note: "Ask for less attention. Offer the right support at the right moment.",
-        image: "/projects/mirqa/onboarding-welcome.jpg",
-        imageAlt: "MIRQA welcome screen introducing the product promise and a calm way to begin",
+        eyebrow: "Onboarding / intention and trust",
+        title: "A meaningful intention becomes one achievable first step.",
+        body: "Four screens build trust in sequence: the product promise comes first, a name is used only to personalise the conversation, one focus prayer creates an achievable starting point and location is requested only after its value is clear. Each screen asks for one decision and keeps the user in control.",
+        note: "Help people understand MIRQA before asking them to choose or share anything.",
+        imageAlt: "Four MIRQA screens covering the welcome, preferred name, focus prayer and location confirmation",
         tone: "mirqa-paper",
       },
       {
-        eyebrow: "The behavioural choice",
-        title: "One prayer at a time makes the goal feel achievable.",
-        body: "Onboarding does not ask which prayer someone misses most. It asks where they want to begin. That reframes the experience around progress rather than guilt. The product supports habit formation without reducing worship to a score, streak or leaderboard.",
-        note: "A meaningful choice does not have to feel heavy.",
-        image: "/projects/mirqa/onboarding-prayer.jpg",
-        imageAlt: "MIRQA onboarding lets someone choose one prayer as a starting point",
+        eyebrow: "Choosing a mosque / overview and access",
+        title: "Map and list lead to the same trustworthy choice.",
+        body: "The regular mosque connects onboarding to the everyday departure plan. The finder then offers geographic context on a map and the same results in a scannable list. Selection, order, distance and source confidence stay consistent, so the accessible alternative never becomes a lesser experience.",
+        note: "The format can change. The quality of the decision should not.",
+        imageAlt: "Three MIRQA screens showing a regular mosque, map view and equivalent list view",
         tone: "mirqa-clay",
       },
       {
-        eyebrow: "Onboarding and consent",
-        title: "Explain the value first. Ask for permission second.",
-        body: "A name, location and regular mosque are requested only when they improve the experience. Every permission state has its own outcome and recovery route. People understand what MIRQA gives back before they are asked to share data.",
-        note: "Consent is a product moment, not a system interruption.",
-        image: "/projects/mirqa/onboarding-location.jpg",
-        imageAlt: "MIRQA calmly confirms that location is set and explains its value",
+        eyebrow: "Everyday use / leaving and reflecting",
+        title: "One calm journey from planning to departure and reflection.",
+        body: "Home combines prayer time, travel, preparation and a personal buffer into one time to leave. Plan makes that logic adjustable; Reflection reveals patterns without scores, while Guide offers only the context that is useful before, during and after a mosque visit.",
+        note: "Not more reasons to open the app—better support at the moment it matters.",
+        imageAlt: "Four MIRQA screens for home, departure planning, reflection and practical guidance",
         tone: "mirqa-sand",
       },
       {
@@ -223,6 +219,26 @@ const images = [
   "/projects/mirqa/mosque-list.jpg",
 ] as const;
 
+const cardScreenGroups = [
+  [
+    "/projects/mirqa/screens/onboarding-welcome.webp",
+    "/projects/mirqa/screens/onboarding-name.webp",
+    "/projects/mirqa/screens/onboarding-prayer.webp",
+    "/projects/mirqa/screens/onboarding-location.webp",
+  ],
+  [
+    "/projects/mirqa/screens/onboarding-mosque.webp",
+    "/projects/mirqa/screens/mosque-map.webp",
+    "/projects/mirqa/screens/mosque-list.webp",
+  ],
+  [
+    "/projects/mirqa/screens/home.webp",
+    "/projects/mirqa/screens/plan.webp",
+    "/projects/mirqa/screens/reflection.webp",
+    "/projects/mirqa/screens/guide.webp",
+  ],
+] as const;
+
 export function MirqaExperience({ locale = "nl" }: { locale?: Locale }) {
   const root = useRef<HTMLElement>(null);
   const copy = content[locale];
@@ -278,7 +294,7 @@ export function MirqaExperience({ locale = "nl" }: { locale?: Locale }) {
           </dl>
         </div>
         <figure className="tc-hero-media">
-          <Image src="/projects/mirqa/onboarding-welcome.jpg" alt={copy.cards[0].imageAlt} fill priority sizes="(max-width: 760px) 100vw, 58vw" />
+          <Image src="/projects/mirqa/mirqa-case-hero.webp" alt={copy.heroAlt} fill priority sizes="(max-width: 760px) 100vw, 58vw" />
           <figcaption>{copy.heroCaption}</figcaption>
         </figure>
       </header>
@@ -306,10 +322,18 @@ export function MirqaExperience({ locale = "nl" }: { locale?: Locale }) {
                 <h2 className="tc-mask"><span>{card.title}</span></h2>
                 <p className="tc-mask tc-card-body"><span>{card.body}</span></p>
                 <p className="tc-mask tc-card-note"><span>{card.note}</span></p>
-                {index === 1 && <div className="tc-feature-row"><span><CheckCircle2 aria-hidden="true" /> {copy.featureLabels[0]}</span><span><BellOff aria-hidden="true" /> {copy.featureLabels[1]}</span><span><AlarmClock aria-hidden="true" /> {copy.featureLabels[2]}</span></div>}
+                {index === 0 && <div className="tc-feature-row"><span><CheckCircle2 aria-hidden="true" /> {copy.featureLabels[0]}</span><span><BellOff aria-hidden="true" /> {copy.featureLabels[1]}</span><span><AlarmClock aria-hidden="true" /> {copy.featureLabels[2]}</span></div>}
               </div>
-              <figure className="tc-card-media">
-                <Image src={card.image} alt={card.imageAlt} fill sizes="(max-width: 760px) 92vw, 54vw" />
+              <figure
+                className={`tc-card-media tc-mirqa-screen-composition tc-mirqa-screen-composition-${index + 1}`}
+                role="img"
+                aria-label={card.imageAlt}
+              >
+                {cardScreenGroups[index].map((src, screenIndex) => (
+                  <span className={`tc-mirqa-screen tc-mirqa-screen-${screenIndex + 1}`} key={src} aria-hidden="true">
+                    <Image src={src} alt="" fill sizes="(max-width: 760px) 34vw, 22vw" />
+                  </span>
+                ))}
               </figure>
             </div>
           </article>

@@ -130,7 +130,10 @@ test("uses bounded raster assets on the homepage and case pages", async () => {
   assert.equal(mirqaResponse.status, 200);
   const mirqaHtml = await mirqaResponse.text();
   assert.match(mirqaHtml, /MIRQA/);
-  assert.match(mirqaHtml, /projects%2Fmirqa%2Fonboarding-welcome\.jpg/);
+  assert.match(mirqaHtml, /projects%2Fmirqa%2Fmirqa-case-hero\.webp/);
+  assert.equal((mirqaHtml.match(/tc-mirqa-screen-composition tc-mirqa-screen-composition-/g) ?? []).length, 3);
+  assert.match(mirqaHtml, /projects%2Fmirqa%2Fscreens%2Fhome\.webp/);
+  assert.match(mirqaHtml, /projects%2Fmirqa%2Fscreens%2Fmosque-list\.webp/);
   assert.match(mirqaHtml, /class="tc-deep-dive"/);
   assert.match(mirqaSource, /mosque-map\.jpg/);
   assert.match(mirqaSource, /Product &amp; UX\/UI designer/);

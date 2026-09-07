@@ -5653,6 +5653,50 @@ html.is-cta-captured a { cursor: none !important; }
   object-fit: contain;
   object-position: center;
 }
+.tc-page-mirqa .tc-hero-media { background: #292840; }
+.tc-page-mirqa .tc-mirqa-screen-composition {
+  isolation: isolate;
+  background:
+    radial-gradient(circle at 50% 46%, rgba(255, 251, 244, 0.92), transparent 48%),
+    linear-gradient(135deg, #eadfd1 0%, #cbb9a7 100%);
+}
+.tc-mirqa-screen-composition::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background:
+    linear-gradient(rgba(33, 28, 24, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(33, 28, 24, 0.045) 1px, transparent 1px);
+  background-size: 22% 22%;
+  content: "";
+}
+.tc-mirqa-screen {
+  --screen-rotate: 0deg;
+  position: absolute;
+  width: 34%;
+  aspect-ratio: 1170 / 2544;
+  filter: drop-shadow(0 1.25rem 1.35rem rgba(33, 28, 24, 0.2));
+  transform: rotate(var(--screen-rotate));
+  transform-origin: center;
+  transition: transform 520ms var(--ease-premium), filter 520ms var(--ease-premium);
+}
+.tc-mirqa-screen img { object-fit: contain; }
+.tc-mirqa-screen-1 { z-index: 2; left: 1%; top: 14%; --screen-rotate: -7deg; }
+.tc-mirqa-screen-2 { z-index: 4; left: 26%; top: -8%; --screen-rotate: 4deg; }
+.tc-mirqa-screen-3 { z-index: 3; left: 49%; top: 18%; --screen-rotate: -4deg; }
+.tc-mirqa-screen-4 { z-index: 1; left: 70%; top: -5%; --screen-rotate: 7deg; }
+.tc-mirqa-screen-composition-2 .tc-mirqa-screen { width: 39%; }
+.tc-mirqa-screen-composition-2 .tc-mirqa-screen-1 { left: -1%; top: 9%; --screen-rotate: -7deg; }
+.tc-mirqa-screen-composition-2 .tc-mirqa-screen-2 { left: 31%; top: -6%; --screen-rotate: 4deg; }
+.tc-mirqa-screen-composition-2 .tc-mirqa-screen-3 { left: 63%; top: 11%; --screen-rotate: 7deg; }
+.tc-mirqa-screen-composition-3 .tc-mirqa-screen-1 { left: -1%; top: 10%; }
+.tc-mirqa-screen-composition-3 .tc-mirqa-screen-2 { left: 25%; top: -8%; }
+.tc-mirqa-screen-composition-3 .tc-mirqa-screen-3 { left: 49%; top: 18%; }
+.tc-mirqa-screen-composition-3 .tc-mirqa-screen-4 { left: 71%; top: -4%; }
+.tc-card:hover .tc-mirqa-screen {
+  filter: drop-shadow(0 1.55rem 1.65rem rgba(33, 28, 24, 0.26));
+  transform: translateY(-0.55rem) rotate(var(--screen-rotate));
+}
 .tc-hero-kicker,
 .tc-hero-meta dt,
 .tc-card-eyebrow,
@@ -5751,6 +5795,15 @@ html.is-cta-captured a { cursor: none !important; }
   .tc-card-note { margin-top: var(--space-2); padding-top: var(--space-2); font-size: 1.15rem; }
   .tc-feature-row { margin-top: var(--space-2); }
   .tc-feature-row span { font-size: 0.75rem; }
+  .tc-mirqa-screen { width: 36%; }
+  .tc-mirqa-screen-composition-2 .tc-mirqa-screen { width: 41%; }
+  .tc-mirqa-screen-1 { left: -2%; top: 13%; }
+  .tc-mirqa-screen-2 { left: 25%; top: -7%; }
+  .tc-mirqa-screen-3 { left: 50%; top: 17%; }
+  .tc-mirqa-screen-4 { left: 72%; top: -4%; }
+  .tc-mirqa-screen-composition-2 .tc-mirqa-screen-1 { left: -3%; top: 8%; }
+  .tc-mirqa-screen-composition-2 .tc-mirqa-screen-2 { left: 30%; top: -5%; }
+  .tc-mirqa-screen-composition-2 .tc-mirqa-screen-3 { left: 63%; top: 10%; }
   .tc-deep-dive { padding: var(--space-6) var(--space-2) var(--space-8); }
   .tc-deep-dive summary { min-height: 6rem; }
   .tc-deep-dive summary small { font-size: 0.9rem; }
