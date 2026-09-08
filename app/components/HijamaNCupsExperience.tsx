@@ -14,6 +14,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { LanguageSwitcher, Locale, localeHref, translateText } from "../i18n";
 import { CaseDeepDive } from "./CaseDeepDive";
+import { revealCaseCard } from "./caseScrollStory";
 
 const cards = [
   {
@@ -112,13 +113,7 @@ export function HijamaNCupsExperience({ locale = "nl" }: { locale?: Locale }) {
       cardElements.forEach((card, index) => {
         const shell = shells[index];
         const nextShell = shells[index + 1];
-        gsap.from(card.querySelectorAll(".tc-mask > span"), {
-          yPercent: 115,
-          duration: 0.9,
-          stagger: 0.07,
-          ease: "power4.out",
-          scrollTrigger: { trigger: shell, start: "top 72%", toggleActions: "play none none reverse" },
-        });
+        revealCaseCard(card, shell);
         const media = card.querySelector(".tc-card-media");
         if (media) {
           gsap.from(media, {

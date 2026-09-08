@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Caveat+Brush&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500&display=swap");
 @import "tailwindcss";
 
 :root {
@@ -11,7 +11,7 @@
   --nude: #b9a392;
   --cream: #f9f6f0;
   --green: #6c9f5e;
-  --serif: "Iowan Old Style", "Baskerville", "Times New Roman", serif;
+  --serif: "Newsreader", "Bodoni 72", Didot, Georgia, serif;
   --sans: "Helvetica Neue", "Inter", Arial, sans-serif;
   --hand: "Caveat Brush", "Bradley Hand", "Segoe Print", cursive;
   --space-1: 0.5rem;
@@ -6493,4 +6493,270 @@ html.is-cta-captured a { cursor: none !important; }
   .tc-card-media img,
   .tc-proof-frame,
   .ec-shot-media img { transform: none !important; }
+}
+
+/* Recruiter summary: three project-coloured notes on one editorial desk. */
+.tc-page {
+  --summary-accent: var(--tc-brown);
+  --summary-paper: var(--tc-paper);
+  --summary-ink: var(--tc-ink);
+}
+
+.editorial-case {
+  --summary-accent: var(--case-accent);
+  --summary-paper: var(--case-bg);
+  --summary-ink: var(--case-ink);
+}
+
+.tc-snapshot,
+.ec-snapshot {
+  display: block;
+  padding: 14svh 4vw 16svh;
+  overflow: hidden;
+  background-color: color-mix(in srgb, var(--summary-paper) 94%, #ffffff);
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--summary-ink) 7%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--summary-ink) 7%, transparent) 1px, transparent 1px);
+  background-size: var(--case-grid-size) var(--case-grid-size);
+  color: var(--summary-ink);
+}
+
+.tc-snapshot > header,
+.ec-snapshot > header {
+  display: grid;
+  grid-template-columns: minmax(12rem, 0.58fr) minmax(0, 1.42fr);
+  gap: 6vw;
+  align-items: start;
+}
+
+.tc-snapshot header > p,
+.ec-snapshot .section-kicker {
+  margin: 0;
+  padding-top: 0.7rem;
+  color: color-mix(in srgb, var(--summary-ink) 76%, transparent);
+}
+
+.tc-snapshot h2,
+.ec-snapshot h2 {
+  max-width: 11ch;
+  margin: 0;
+  color: color-mix(in srgb, var(--summary-accent) 72%, #211d19);
+  font-family: var(--hand);
+  font-size: clamp(4rem, 7.1vw, 8.5rem);
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 0.83;
+  text-transform: none;
+  transform: rotate(-1.2deg);
+  transform-origin: left center;
+}
+
+.tc-snapshot-grid,
+.ec-snapshot-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1.25rem, 2.6vw, 3.5rem);
+  align-items: start;
+  margin-top: 12svh;
+  border: 0;
+}
+
+.tc-snapshot-grid > :is(div, article),
+.tc-snapshot-grid > :is(div, article) + :is(div, article),
+.ec-snapshot-grid > div,
+.ec-snapshot-grid > div + div {
+  position: relative;
+  min-height: 21rem;
+  padding: clamp(2.6rem, 4vw, 4.6rem) clamp(1.4rem, 2.2vw, 2.8rem) clamp(2rem, 3vw, 3.4rem);
+  overflow: hidden;
+  border: 1px solid rgba(33, 29, 25, 0.2);
+  box-shadow: 0.5rem 1rem 2.4rem rgba(56, 45, 35, 0.13);
+  color: #211d19;
+}
+
+.tc-snapshot-grid > :is(div, article):nth-child(1),
+.ec-snapshot-grid > div:nth-child(1) {
+  background: color-mix(in srgb, var(--summary-accent) 24%, #f3d993);
+  transform: rotate(-1.15deg);
+}
+
+.tc-snapshot-grid > :is(div, article):nth-child(2),
+.ec-snapshot-grid > div:nth-child(2) {
+  margin-top: 2.4rem;
+  background: color-mix(in srgb, var(--summary-accent) 17%, #c9ded3);
+  transform: rotate(1deg);
+}
+
+.tc-snapshot-grid > :is(div, article):nth-child(3),
+.ec-snapshot-grid > div:nth-child(3) {
+  margin-top: -1.2rem;
+  background: color-mix(in srgb, var(--summary-accent) 20%, #e7cbd5);
+  transform: rotate(-0.65deg);
+}
+
+.tc-snapshot-grid > :is(div, article)::before,
+.ec-snapshot-grid > div::before {
+  position: absolute;
+  top: -0.55rem;
+  left: 50%;
+  width: 6.5rem;
+  height: 1.5rem;
+  background: rgba(255, 253, 246, 0.62);
+  box-shadow: 0 0.1rem 0.2rem rgba(33, 29, 25, 0.08);
+  content: "";
+  transform: translateX(-50%) rotate(-1.5deg);
+}
+
+.tc-snapshot-grid > :is(div, article)::after,
+.ec-snapshot-grid > div::after {
+  position: absolute;
+  right: -1px;
+  bottom: -1px;
+  width: 0;
+  height: 0;
+  border-top: 2rem solid rgba(33, 29, 25, 0.12);
+  border-right: 2rem solid color-mix(in srgb, var(--summary-paper) 96%, white);
+  content: "";
+}
+
+.tc-snapshot-grid span,
+.ec-snapshot-grid span {
+  color: #211d19;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.tc-snapshot-grid p,
+.ec-snapshot-grid p {
+  margin: var(--space-3) 0 0;
+  color: #211d19;
+  font-family: var(--serif);
+  font-size: clamp(1.35rem, 1.8vw, 2rem);
+  font-weight: 400;
+  line-height: 1.32;
+}
+
+@media (max-width: 720px) {
+  .tc-snapshot,
+  .ec-snapshot { padding: var(--space-10) var(--space-2) var(--space-10); }
+
+  .tc-snapshot > header,
+  .ec-snapshot > header { display: block; }
+
+  .tc-snapshot h2,
+  .ec-snapshot h2 {
+    margin-top: var(--space-4);
+    font-size: clamp(3.6rem, 17vw, 5.5rem);
+  }
+
+  .tc-snapshot-grid,
+  .ec-snapshot-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+    margin-top: var(--space-10);
+  }
+
+  .tc-snapshot-grid > :is(div, article),
+  .tc-snapshot-grid > :is(div, article) + :is(div, article),
+  .ec-snapshot-grid > div,
+  .ec-snapshot-grid > div + div {
+    min-height: 0;
+    margin: 0;
+    padding: 3rem var(--space-3) var(--space-4);
+    border: 1px solid rgba(33, 29, 25, 0.2);
+  }
+
+  .tc-snapshot-grid > :is(div, article):nth-child(1),
+  .ec-snapshot-grid > div:nth-child(1) { transform: rotate(-0.65deg); }
+
+  .tc-snapshot-grid > :is(div, article):nth-child(2),
+  .ec-snapshot-grid > div:nth-child(2) { transform: rotate(0.55deg); }
+
+  .tc-snapshot-grid > :is(div, article):nth-child(3),
+  .ec-snapshot-grid > div:nth-child(3) { transform: rotate(-0.35deg); }
+
+  .tc-snapshot-grid p,
+  .ec-snapshot-grid p { font-size: 1.35rem; }
+}
+
+/* Scroll-paced reading on large screens; compact and direct on mobile. */
+@media (min-width: 721px) {
+  .tc-card-shell,
+  .tc-card-shell:last-child { min-height: 170svh; }
+
+  .tc-card-shell:last-child { min-height: 155svh; }
+}
+
+/* Handwritten marginalia is reserved for the designer's interpretation. */
+.tc-card-note {
+  position: relative;
+  max-width: 30rem;
+  margin-top: var(--space-4);
+  padding: 0 0 0 2.4rem;
+  overflow: visible;
+  border: 0;
+  color: currentColor;
+  font-family: var(--hand);
+  font-size: clamp(1.55rem, 2vw, 2.15rem);
+  font-style: normal;
+  letter-spacing: -0.015em;
+  line-height: 1.02;
+  transform: rotate(-0.7deg);
+  transform-origin: left center;
+}
+
+.tc-card-note::before {
+  position: absolute;
+  top: 0.65em;
+  left: 0;
+  width: 1.75rem;
+  height: 0.16rem;
+  border-radius: 999px;
+  background: currentColor;
+  content: "";
+  opacity: 0.55;
+  transform: rotate(-8deg);
+}
+
+.tc-deep-dive-grid > article blockquote {
+  padding: var(--space-2) var(--space-2) var(--space-1);
+  border: 0;
+  background: color-mix(in srgb, var(--tc-brown) 13%, transparent);
+  font-family: var(--hand);
+  font-size: clamp(1.35rem, 1.8vw, 1.8rem);
+  font-style: normal;
+  line-height: 1.05;
+  transform: rotate(-0.5deg);
+}
+
+.tc-proof-heading h2 em {
+  display: inline-block;
+  font-family: var(--hand);
+  font-style: normal;
+  letter-spacing: -0.02em;
+  transform: rotate(-1deg);
+}
+
+.editorial-case .ec-insight-quote {
+  max-width: 16ch;
+  font-family: var(--hand);
+  font-size: clamp(4rem, 7.2vw, 8.4rem);
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 0.84;
+  transform: rotate(-0.65deg);
+  transform-origin: left center;
+}
+
+@media (max-width: 720px) {
+  .tc-card-note {
+    margin-top: var(--space-3);
+    padding-left: 2rem;
+    font-size: 1.55rem;
+  }
+
+  .tc-card-note::before { width: 1.4rem; }
 }

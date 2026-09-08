@@ -205,12 +205,12 @@ export function EditorialCaseExperience({ project, locale = "nl" }: { project: E
         <section className="ec-snapshot" aria-labelledby={`${project.slug}-snapshot-title`}>
           <header>
             <p className="section-kicker"><span>01</span> {locale === "en" ? "The 30-second case" : "De case in 30 seconden"}</p>
-            <h2 id={`${project.slug}-snapshot-title`}>{locale === "en" ? "Problem. Solution. Outcome." : "Probleem. Oplossing. Resultaat."}</h2>
+            <h2 id={`${project.slug}-snapshot-title`}>{locale === "en" ? "Problem. Solution. Outcome or next step." : "Probleem. Oplossing. Resultaat of volgende stap."}</h2>
           </header>
           <div className="ec-snapshot-grid">
             <div><span>{locale === "en" ? "Problem" : "Probleem"}</span><p>{tx(project.contextLead)}</p></div>
             <div><span>{locale === "en" ? "Solution" : "Oplossing"}</span><p>{tx(project.insightBody)}</p></div>
-            <div><span>{locale === "en" ? "Outcome" : "Resultaat"}</span><p>{tx(project.impactBody[0])}</p></div>
+            <div><span>{locale === "en" ? "Outcome / next step" : "Resultaat / volgende stap"}</span><p>{tx(project.impactBody[0])}</p></div>
           </div>
         </section>
 

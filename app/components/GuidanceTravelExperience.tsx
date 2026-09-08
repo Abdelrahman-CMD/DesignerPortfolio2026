@@ -15,6 +15,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { LanguageSwitcher, Locale, localeHref, translateText } from "../i18n";
 import { CaseDeepDive } from "./CaseDeepDive";
 import { CaseStyleGuide, type CaseStyleGuideData } from "./CaseStyleGuide";
+import { revealCaseCard } from "./caseScrollStory";
 
 const styleGuide: CaseStyleGuideData = {
   project: "Guidance Travel",
@@ -116,7 +117,7 @@ export function GuidanceTravelExperience({ locale = "nl" }: { locale?: Locale })
       cardElements.forEach((card, index) => {
         const shell = shells[index];
         const nextShell = shells[index + 1];
-        gsap.from(card.querySelectorAll(".tc-mask > span"), { yPercent: 115, duration: 0.9, stagger: 0.07, ease: "power4.out", scrollTrigger: { trigger: shell, start: "top 72%", toggleActions: "play none none reverse" } });
+        revealCaseCard(card, shell);
         const media = card.querySelector(".tc-card-media");
         if (media) gsap.from(media, { opacity: 0, y: 42, scale: 0.985, duration: 0.9, ease: "power3.out", scrollTrigger: { trigger: shell, start: "top 70%", toggleActions: "play none none reverse" } });
         if (nextShell) {
