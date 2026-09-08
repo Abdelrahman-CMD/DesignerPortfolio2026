@@ -14,8 +14,9 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { LanguageSwitcher, Locale, localeHref, translateText } from "../i18n";
 import { CaseDeepDive } from "./CaseDeepDive";
+import { CaseResearchEvidence } from "./CaseResearchEvidence";
 import { CaseStyleGuide, type CaseStyleGuideData } from "./CaseStyleGuide";
-import { revealCaseCard } from "./caseScrollStory";
+import { revealCaseCard, revealCaseEvidence } from "./caseScrollStory";
 
 const styleGuide: CaseStyleGuideData = {
   project: "Bayn Signal",
@@ -37,19 +38,19 @@ const styleGuide: CaseStyleGuideData = {
 const cards = [
   {
     number: "01",
-    eyebrow: "De observatie",
+    eyebrow: "De starthypothese",
     title: "Verhuizen is één beslissing. Aankomen zijn er duizend.",
-    body: "Wie zich in Saudi-Arabië vestigt, zoekt dagelijks antwoorden over visa, verkeer, gezondheidszorg, wonen en lokaal gedrag. Algemene nieuwsfeeds zijn vaak te breed of missen de context die bepaalt wat iemand vandaag werkelijk moet doen.",
-    note: "Het probleem was niet te weinig nieuws. Het was te weinig lokale betekenis op het juiste moment.",
+    body: "De case start met de hypothese dat nieuwe bewoners dagelijks antwoorden zoeken over visa, verkeer, gezondheidszorg, wonen en lokaal gedrag, terwijl algemene nieuwsfeeds te breed zijn of de context voor een concrete beslissing missen.",
+    note: "De aanname: niet meer nieuws, maar lokale betekenis op het juiste moment.",
     image: "/projects/bayn-2026/laptop-home.webp",
     imageAlt: "Bayn Signal landingspagina in een laptopmockup",
     tone: "bayn-beige",
   },
   {
     number: "02",
-    eyebrow: "De marktkans",
+    eyebrow: "De producthypothese",
     title: "Nieuws vertelt wat er gebeurt. Een signaal vertelt wat dat voor jou verandert.",
-    body: "Ik zag ruimte tussen formele berichtgeving en losse communitytips. Bayn Signal brengt snelheid, bronvermelding en ervaringskennis samen, zodat informatie eerder bruikbaar wordt voor expats, migranten en bewoners.",
+    body: "Bayn Signal onderzoekt de mogelijke ruimte tussen formele berichtgeving en losse communitytips. Het concept brengt snelheid, bronvermelding en ervaringskennis samen; onderzoek moet nog uitwijzen of dit informatie echt eerder bruikbaar maakt.",
     note: "Relevantie vóór volume: ieder signaal moet een concrete beslissing of vervolgstap verbeteren.",
     image: "/projects/bayn-2026/phones.webp",
     imageAlt: "Bayn Signal artikelen en lokale updates op twee smartphones",
@@ -132,14 +133,7 @@ export function BaynSignalExperience({ locale = "nl" }: { locale?: Locale }) {
         scrollTrigger: { trigger: ".tc-hero", start: "top top", end: "bottom top", scrub: true },
       });
 
-      gsap.from(".tc-premise h2, .tc-premise-notes", {
-        opacity: 0,
-        y: 44,
-        duration: 0.9,
-        stagger: 0.12,
-        ease: "power3.out",
-        scrollTrigger: { trigger: ".tc-premise", start: "top 64%" },
-      });
+      revealCaseEvidence();
 
       const cardElements = gsap.utils.toArray<HTMLElement>(".tc-card");
       const shells = gsap.utils.toArray<HTMLElement>(".tc-card-shell");
@@ -202,15 +196,15 @@ export function BaynSignalExperience({ locale = "nl" }: { locale?: Locale }) {
 
       <header className="tc-hero">
         <div className="tc-hero-copy">
-          <p className="tc-hero-kicker">{tx("Case 05 · Zelf geïnitieerd concept")}</p>
+          <p className="tc-hero-kicker">{locale === "en" ? "Case 05 · Hypothesis-led concept" : "Case 05 · Hypothesegedreven concept"}</p>
           <h1>
             <span className="tc-title-line"><span>Bayn Signal</span></span>
             <span className="tc-title-line tc-title-small"><span>{tx("Zie verandering.")}</span></span>
             <span className="tc-title-line tc-title-small"><span>{tx("Voor je haar voelt.")}</span></span>
           </h1>
-          <p className="tc-hero-summary">{tx("Een actueel kennisplatform voor expats, migranten en bewoners die niet méér nieuws nodig hebben, maar het juiste lokale signaal op het juiste moment.")}</p>
+          <p className="tc-hero-summary">{locale === "en" ? "A testable platform hypothesis for expats, migrants and residents who may not need more news, but the right local signal at the right moment." : "Een toetsbare platformhypothese voor expats, migranten en bewoners die mogelijk niet méér nieuws nodig hebben, maar het juiste lokale signaal op het juiste moment."}</p>
           <dl className="tc-hero-meta">
-            <div><dt>{tx("Vertrekpunt")}</dt><dd>{tx("Een gat tussen nieuws en lokale actie")}</dd></div>
+            <div><dt>{tx("Vertrekpunt")}</dt><dd>{locale === "en" ? "Self-initiated assumptions" : "Zelf geïnitieerde aannames"}</dd></div>
             <div><dt>{tx("Mijn rol")}</dt><dd>{tx("Strategie · Editorial UX · UI")}</dd></div>
             <div><dt>{tx("Status")}</dt><dd>{tx("Toetsbaar platformconcept")}</dd></div>
           </dl>
@@ -229,6 +223,8 @@ export function BaynSignalExperience({ locale = "nl" }: { locale?: Locale }) {
           <article><span>{tx("Status / volgende stap")}</span><p>{tx(cards[5].note)}</p></article>
         </div>
       </section>
+
+      <CaseResearchEvidence variant="bayn" locale={locale} />
 
       <section className="tc-deck" aria-label={tx("Bayn Signal oplossingsverhaal in drie beslissingen")}>
         {cards.slice(0, 3).map((card, index) => (

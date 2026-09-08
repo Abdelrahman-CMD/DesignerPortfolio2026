@@ -14,8 +14,9 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { LanguageSwitcher, Locale, localeHref, translateText } from "../i18n";
 import { CaseDeepDive } from "./CaseDeepDive";
+import { CaseResearchEvidence } from "./CaseResearchEvidence";
 import { CaseStyleGuide, type CaseStyleGuideData } from "./CaseStyleGuide";
-import { revealCaseCard } from "./caseScrollStory";
+import { revealCaseCard, revealCaseEvidence } from "./caseScrollStory";
 
 const tareeqiStyleGuide: CaseStyleGuideData = {
   project: "Tareeqi",
@@ -37,9 +38,9 @@ const tareeqiStyleGuide: CaseStyleGuideData = {
 const cards = [
   {
     number: "01",
-    eyebrow: "De bevinding",
+    eyebrow: "De kwalitatieve richting",
     title: "De route is vindbaar. De betekenis ernaast veel minder.",
-    body: "Wie digitaal zoekt rond Mekka en Medina, vindt vooral rituelen, highlights en generieke kaartresultaten. Rustige plekken, lokale boekwinkels en praktische familiekennis blijven versnipperd over mensen, posts en toevallige tips.",
+    body: "In terugkerende verhalen van meerdere pelgrims kwam hetzelfde patroon naar voren: kaarten vinden locaties, maar rustige plekken, lokale boekwinkels en praktische familiekennis blijven verspreid over mensen, posts en toevallige tips.",
     note: "Dat is geen gebrek aan plekken. Het is een gebrek aan context.",
     image: "/projects/tareeqi-2026/phones.webp",
     imageAlt: "Tareeqi op twee smartphones met de kaart en het verhaal achter het concept",
@@ -138,6 +139,8 @@ export function CaseExperience({ locale = "nl" }: { locale?: Locale }) {
         scrollTrigger: { trigger: ".tc-hero", start: "top top", end: "bottom top", scrub: true },
       });
 
+      revealCaseEvidence();
+
       const cardElements = gsap.utils.toArray<HTMLElement>(".tc-card");
       const shells = gsap.utils.toArray<HTMLElement>(".tc-card-shell");
 
@@ -228,15 +231,15 @@ export function CaseExperience({ locale = "nl" }: { locale?: Locale }) {
 
       <header className="tc-hero">
         <div className="tc-hero-copy">
-          <p className="tc-hero-kicker">{tx("Case 02 · Concept Solution")}</p>
+          <p className="tc-hero-kicker">{locale === "en" ? "Case 02 · Qualitative concept" : "Case 02 · Kwalitatief concept"}</p>
           <h1>
             <span className="tc-title-line"><span>Tareeqi</span></span>
             <span className="tc-title-line tc-title-small"><span>{tx("De route was duidelijk.")}</span></span>
             <span className="tc-title-line tc-title-small"><span>{tx("Wat ernaast lag, niet.")}</span></span>
           </h1>
-          <p className="tc-hero-summary">{tx("Ik zag een gat tussen generieke navigatie en de lokale kennis die een reis betekenis geeft. Tareeqi is mijn ontworpen antwoord: een contextuele discovery-laag voor Mekka en Medina.")}</p>
+          <p className="tc-hero-summary">{locale === "en" ? "Recurring stories from pilgrims exposed a gap between generic navigation and the local knowledge that gives a journey meaning. Tareeqi turns that qualitative direction into a testable discovery concept." : "Terugkerende verhalen van pelgrims legden een gat bloot tussen generieke navigatie en de lokale kennis die een reis betekenis geeft. Tareeqi vertaalt die kwalitatieve richting naar een toetsbaar discoveryconcept."}</p>
           <dl className="tc-hero-meta">
-            <div><dt>{tx("Vertrekpunt")}</dt><dd>{tx("Zelf geïnitieerde bevinding")}</dd></div>
+            <div><dt>{tx("Vertrekpunt")}</dt><dd>{locale === "en" ? "Recurring stories · proto-personas" : "Terugkerende verhalen · proto-persona’s"}</dd></div>
             <div><dt>{tx("Mijn rol")}</dt><dd>Research · Strategy · UX/UI</dd></div>
             <div><dt>{tx("Status")}</dt><dd>{tx("Toetsbare oplossingsrichting")}</dd></div>
           </dl>
@@ -261,6 +264,8 @@ export function CaseExperience({ locale = "nl" }: { locale?: Locale }) {
           <article><span>{tx("Status / volgende stap")}</span><p>{tx(cards[5].note)}</p></article>
         </div>
       </section>
+
+      <CaseResearchEvidence variant="tareeqi" locale={locale} />
 
       <section className="tc-deck" aria-label={tx("Tareeqi oplossingsverhaal in drie beslissingen")}>
         {cards.slice(0, 3).map((card, index) => (

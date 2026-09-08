@@ -14,8 +14,9 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { LanguageSwitcher, Locale, localeHref, translateText } from "../i18n";
 import { CaseDeepDive } from "./CaseDeepDive";
+import { CaseResearchEvidence } from "./CaseResearchEvidence";
 import { CaseStyleGuide, type CaseStyleGuideData } from "./CaseStyleGuide";
-import { revealCaseCard } from "./caseScrollStory";
+import { revealCaseCard, revealCaseEvidence } from "./caseScrollStory";
 
 const styleGuide: CaseStyleGuideData = {
   project: "Guidance Travel",
@@ -36,9 +37,9 @@ const styleGuide: CaseStyleGuideData = {
 
 const cards = [
   {
-    number: "01", eyebrow: "De bevinding",
+    number: "01", eyebrow: "De onderzoeksrichting",
     title: "De spirituele reis voelde persoonlijk. Het boeken ervan niet.",
-    body: "Veel Hajj- en Umrahwebsites presenteerden pakketten als losse prijzen en lange lijsten. De begeleiding die de reis waardevol maakt bleef onzichtbaar, terwijl juist vóór vertrek behoefte ontstaat aan overzicht, vertrouwen en een menselijk aanspreekpunt.",
+    body: "Een directionele enquête met 21 deelnemers maakte de prioriteiten concreet: 17 wilden een duidelijk reisprogramma, 15 heldere inclusies en 13 een transparante prijsopbouw. Begeleiding en contact moeten vóór vertrek zichtbaar en begrijpelijk zijn.",
     note: "De onzekerheid zat niet in de bestemming, maar in alles wat ervoor geregeld moest worden.",
     image: "/projects/guidance-2026/phones.webp", imageAlt: "Guidance Travel op twee smartphones", tone: "beige",
   },
@@ -112,6 +113,8 @@ export function GuidanceTravelExperience({ locale = "nl" }: { locale?: Locale })
 
       gsap.to(".tc-hero-media img", { yPercent: -7, ease: "none", scrollTrigger: { trigger: ".tc-hero", start: "top top", end: "bottom top", scrub: true } });
 
+      revealCaseEvidence();
+
       const cardElements = gsap.utils.toArray<HTMLElement>(".tc-card");
       const shells = gsap.utils.toArray<HTMLElement>(".tc-card-shell");
       cardElements.forEach((card, index) => {
@@ -142,15 +145,15 @@ export function GuidanceTravelExperience({ locale = "nl" }: { locale?: Locale })
 
       <header className="tc-hero">
         <div className="tc-hero-copy">
-          <p className="tc-hero-kicker">{tx("Case 04 · Concept Solution")}</p>
+          <p className="tc-hero-kicker">{locale === "en" ? "Case 04 · Research-led concept" : "Case 04 · Onderzoeksgericht concept"}</p>
           <h1>
             <span className="tc-title-line"><span>Guidance Travel</span></span>
             <span className="tc-title-line tc-title-small"><span>{tx("De reis vroeg overgave.")}</span></span>
             <span className="tc-title-line tc-title-small"><span>{tx("Het boeken vooral overzicht.")}</span></span>
           </h1>
-          <p className="tc-hero-summary">{tx("Ik zag een markt waarin persoonlijke begeleiding digitaal vaak eindigde als een ondoorzichtige pakketlijst. Guidance Travel vertaalt die zorg naar een rustige route van intentie naar een passende reis.")}</p>
+          <p className="tc-hero-summary">{locale === "en" ? "A directional survey with 21 respondents showed where booking confidence breaks down. Guidance Travel turns those findings into a calm route from intention to the right journey." : "Een directionele enquête met 21 deelnemers liet zien waar besliszekerheid verdwijnt. Guidance Travel vertaalt die bevindingen naar een rustige route van intentie naar een passende reis."}</p>
           <dl className="tc-hero-meta">
-            <div><dt>{tx("Vertrekpunt")}</dt><dd>{tx("Marktobservatie Hajj & Umrah")}</dd></div>
+            <div><dt>{tx("Vertrekpunt")}</dt><dd>{locale === "en" ? "Directional survey · 21 responses" : "Directionele enquête · 21 responsen"}</dd></div>
             <div><dt>{tx("Mijn rol")}</dt><dd>Strategy · UX/UI · Direction</dd></div>
             <div><dt>{tx("Status")}</dt><dd>{tx("Toetsbaar serviceconcept")}</dd></div>
           </dl>
@@ -169,6 +172,8 @@ export function GuidanceTravelExperience({ locale = "nl" }: { locale?: Locale })
           <article><span>{tx("Status / volgende stap")}</span><p>{tx(cards[5].note)}</p></article>
         </div>
       </section>
+
+      <CaseResearchEvidence variant="guidance" locale={locale} />
 
       <section className="tc-deck" aria-label={tx("Guidance Travel oplossingsverhaal in drie beslissingen")}>
         {cards.slice(0, 3).map((card, index) => (

@@ -633,6 +633,15 @@ const english: Record<string, string> = {
   "Oppas die thuis aansluit": "Childcare that fits your home",
   "Eten · spel · afspraken vooraf": "Meals · play · expectations agreed in advance",
   "Bekijk de live website": "View the live website",
+  "De onderzoeksrichting": "The research direction",
+  "Een directionele enquête met 21 deelnemers maakte de prioriteiten concreet: 17 wilden een duidelijk reisprogramma, 15 heldere inclusies en 13 een transparante prijsopbouw. Begeleiding en contact moeten vóór vertrek zichtbaar en begrijpelijk zijn.": "A directional survey with 21 respondents made the priorities concrete: 17 wanted a clear itinerary, 15 clear inclusions and 13 transparent pricing. Guidance and contact need to be visible and understandable before departure.",
+  "De kwalitatieve richting": "The qualitative direction",
+  "In terugkerende verhalen van meerdere pelgrims kwam hetzelfde patroon naar voren: kaarten vinden locaties, maar rustige plekken, lokale boekwinkels en praktische familiekennis blijven verspreid over mensen, posts en toevallige tips.": "Recurring stories from several pilgrims revealed the same pattern: maps find locations, but quiet places, local bookshops and practical family knowledge remain scattered across people, posts and chance recommendations.",
+  "De starthypothese": "The starting hypothesis",
+  "De case start met de hypothese dat nieuwe bewoners dagelijks antwoorden zoeken over visa, verkeer, gezondheidszorg, wonen en lokaal gedrag, terwijl algemene nieuwsfeeds te breed zijn of de context voor een concrete beslissing missen.": "The case starts with the hypothesis that new residents seek daily answers about visas, traffic, healthcare, housing and local behaviour, while general news feeds are too broad or lack the context needed for a concrete decision.",
+  "De aanname: niet meer nieuws, maar lokale betekenis op het juiste moment.": "The assumption: not more news, but local meaning at the right moment.",
+  "De producthypothese": "The product hypothesis",
+  "Bayn Signal onderzoekt de mogelijke ruimte tussen formele berichtgeving en losse communitytips. Het concept brengt snelheid, bronvermelding en ervaringskennis samen; onderzoek moet nog uitwijzen of dit informatie echt eerder bruikbaar maakt.": "Bayn Signal explores the possible space between formal reporting and scattered community tips. The concept combines speed, transparent sourcing and first-hand knowledge; research must still determine whether that makes information useful sooner.",
 };
 
 const normalise = (value: string) => value.replace(/\s+/g, " ").trim();

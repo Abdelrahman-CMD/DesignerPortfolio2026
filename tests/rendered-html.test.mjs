@@ -100,12 +100,21 @@ test("uses bounded raster assets on the homepage and case pages", async () => {
   assert.match(caseHtml, /Guidance Travel/);
   assert.match(caseHtml, /guidance-2026%2Fhero-laptops\.webp/);
   assert.match(caseHtml, /class="tc-snapshot"/);
+  assert.match(caseHtml, /class="tc-evidence tc-evidence-guidance"/);
+  assert.match(caseHtml, /21 deelnemers maakten de ontbrekende zekerheid concreet/);
+  assert.match(caseHtml, /Probleemsignaal onderbouwd · oplossing nog niet getest/);
+  assert.equal((caseHtml.match(/n = 21/g) ?? []).length, 4);
+  assert.match(caseHtml, /De huidige reis verliest zekerheid tussen intentie en vertrek/);
   assert.match(caseHtml, /class="tc-deep-dive"/);
   assert.equal((caseHtml.match(/class="tc-card-shell /g) ?? []).length, 3);
 
   assert.equal(tareeqiResponse.status, 200);
   const tareeqiHtml = await tareeqiResponse.text();
   assert.match(tareeqiHtml, /class="tc-snapshot"/);
+  assert.match(tareeqiHtml, /class="tc-evidence tc-evidence-tareeqi"/);
+  assert.match(tareeqiHtml, /Terugkerende verhalen werden drie proto-persona’s, geen schijnzekerheid/);
+  assert.match(tareeqiHtml, /geen formele steekproef of gevalideerde segmentatie/);
+  assert.equal((tareeqiHtml.match(/class="is-(?:high|mid|low)"/g) ?? []).length, 5);
   assert.match(tareeqiHtml, /class="tc-deep-dive"/);
 
   assert.equal(aynResponse.status, 200);
@@ -118,6 +127,10 @@ test("uses bounded raster assets on the homepage and case pages", async () => {
   const baynHtml = await baynResponse.text();
   assert.match(baynHtml, /Bayn Signal/);
   assert.match(baynHtml, /bayn-2026%2Fhero-laptops\.webp/);
+  assert.match(baynHtml, /class="tc-evidence tc-evidence-bayn"/);
+  assert.match(baynHtml, /De doelgroep is een hypothese/);
+  assert.match(baynHtml, /Nog geen primair onderzoek · aannames zichtbaar · journey bewust uitgesteld/);
+  assert.match(baynHtml, /Waarom hier nog geen journey staat/);
   assert.match(baynHtml, /class="tc-deep-dive"/);
 
   assert.equal(hijamaResponse.status, 200);
