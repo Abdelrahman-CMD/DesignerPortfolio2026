@@ -210,6 +210,45 @@ test("uses bounded raster assets on the homepage and case pages", async () => {
   assert.match(css, /\.tc-page-ayn \.tc-card-shell:nth-child\(5\) \.tc-card \{ background: #401818;/);
 });
 
+test("renders the three live client cases as measured scroll stories", async () => {
+  const [hijamaResponse, atotzResponse, oppasResponse, englishOppasResponse] = await Promise.all([
+    render("/cases/hijaman-cups"),
+    render("/cases/atotz-detachering"),
+    render("/cases/oppas-by-chaima"),
+    render("/en/cases/oppas-by-chaima"),
+  ]);
+
+  for (const response of [hijamaResponse, atotzResponse, oppasResponse, englishOppasResponse]) {
+    assert.equal(response.status, 200);
+  }
+
+  const [hijamaHtml, atotzHtml, oppasHtml, englishOppasHtml] = await Promise.all([
+    hijamaResponse.text(),
+    atotzResponse.text(),
+    oppasResponse.text(),
+    englishOppasResponse.text(),
+  ]);
+
+  for (const html of [hijamaHtml, atotzHtml, oppasHtml]) {
+    assert.match(html, /class="tc-page tc-page-client/);
+    assert.match(html, /class="tc-snapshot"/);
+    assert.match(html, /class="cc-metric-board"/);
+    assert.match(html, /class="tc-deep-dive"/);
+    assert.equal((html.match(/class="tc-card-shell /g) ?? []).length, 4);
+  }
+
+  assert.match(hijamaHtml, /9\.3K/);
+  assert.match(hijamaHtml, /182/);
+  assert.match(hijamaHtml, /2m56/);
+  assert.match(atotzHtml, /10/);
+  assert.match(atotzHtml, /12/);
+  assert.match(atotzHtml, /33\/36/);
+  assert.match(oppasHtml, /€2K\+/);
+  assert.match(oppasHtml, /Door eigenaar gerapporteerd/);
+  assert.match(englishOppasHtml, /Owner-reported/);
+  assert.match(englishOppasHtml, /More than €2,000 in bookings/);
+});
+
 test("server-renders the atmospheric playground route", async () => {
   const response = await render("/playground");
   assert.equal(response.status, 200);

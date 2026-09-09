@@ -6495,6 +6495,218 @@ html.is-cta-captured a { cursor: none !important; }
   .ec-shot-media img { transform: none !important; }
 }
 
+/* Live client cases: one editorial system, with evidence treated as part of the story. */
+.tc-page-client {
+  --client-rule: color-mix(in srgb, var(--tc-ink) 20%, transparent);
+}
+
+.tc-page-atotz {
+  --tc-paper: #f4f5f6;
+  --tc-ink: #102030;
+  --tc-brown: #0c766d;
+  --tc-deck: #b8c3ca;
+  --tc-contribution: #10283c;
+  --tc-contribution-ink: #f7fafb;
+  --tc-footer: #18a194;
+}
+
+.tc-page-oppas {
+  --tc-paper: #fbf6ea;
+  --tc-ink: #342d27;
+  --tc-brown: #b8502d;
+  --tc-deck: #ddc8ae;
+  --tc-contribution: #5b2d24;
+  --tc-contribution-ink: #fff8ec;
+  --tc-footer: #e5b88b;
+}
+
+.tc-page-atotz .tc-nav,
+.tc-page-atotz .tc-hero-meta div,
+.tc-page-atotz .tc-hero-media figcaption { background: #f4f5f6; }
+
+.tc-page-atotz .tc-hero-summary,
+.tc-page-atotz .tc-hero-meta dd { color: #354d60; }
+
+.tc-page-atotz .tc-hero-media { background: #182a3a; }
+
+.tc-page-oppas .tc-nav,
+.tc-page-oppas .tc-hero-meta div,
+.tc-page-oppas .tc-hero-media figcaption { background: #fbf6ea; }
+
+.tc-page-oppas .tc-hero-summary,
+.tc-page-oppas .tc-hero-meta dd { color: #665548; }
+
+.tc-page-oppas .tc-hero-media { background: #f0e2ce; }
+
+.tc-page-client .tc-hero { min-height: 105svh; }
+.tc-page-client .tc-hero-copy { padding-left: clamp(1rem, 3.6vw, 4.5rem); }
+.tc-page-client .tc-title-line:first-child { font-size: clamp(4.6rem, 8.1vw, 9.4rem); }
+.tc-page-client .tc-hero-media { border-radius: 0.3rem; }
+.tc-page-client .tc-hero-media::after {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  border: 0.8rem solid color-mix(in srgb, var(--tc-paper) 28%, transparent);
+  content: "";
+  pointer-events: none;
+}
+
+.tc-page-atotz .tc-hero-media > img,
+.tc-page-oppas .tc-hero-media > img {
+  object-fit: contain;
+  object-position: center;
+  transform: scale(0.94);
+}
+
+.cc-hero-note,
+.cc-media-note {
+  position: absolute;
+  z-index: 7;
+  max-width: 12ch;
+  color: var(--tc-ink);
+  font-family: var(--hand);
+  font-size: clamp(1.4rem, 2vw, 2.25rem);
+  line-height: 0.98;
+  transform: rotate(-4deg);
+}
+
+.cc-hero-note {
+  top: clamp(1.5rem, 5vw, 5rem);
+  left: clamp(1rem, 2vw, 2.5rem);
+  padding: 0.65rem 0.85rem;
+  background: color-mix(in srgb, var(--tc-paper) 92%, transparent);
+  box-shadow: 0.3rem 0.55rem 1.2rem rgba(22, 28, 25, 0.12);
+}
+
+.cc-media-note {
+  right: clamp(1.2rem, 2.5vw, 3rem);
+  bottom: clamp(1.2rem, 2.5vw, 3rem);
+  max-width: 13ch;
+  padding: 0.8rem 1rem;
+  background: color-mix(in srgb, var(--card-bg) 88%, white);
+  box-shadow: 0.35rem 0.7rem 1.6rem rgba(31, 28, 24, 0.14);
+}
+
+.tc-tone-atotz-paper { --card-bg: #f4f5f6; --card-ink: #102030; }
+.tc-tone-atotz-steel { --card-bg: #cfd8dc; --card-ink: #102030; }
+.tc-tone-atotz-navy { --card-bg: #10283c; --card-ink: #f7fafb; }
+.tc-tone-atotz-teal { --card-bg: #18a194; --card-ink: #071d20; }
+.tc-tone-oppas-paper { --card-bg: #fbf6ea; --card-ink: #342d27; }
+.tc-tone-oppas-sand { --card-bg: #ead8c1; --card-ink: #342d27; }
+.tc-tone-oppas-terracotta { --card-bg: #b8502d; --card-ink: #fff8ec; }
+.tc-tone-oppas-ink { --card-bg: #5b2d24; --card-ink: #fff8ec; }
+
+.tc-tone-atotz-steel .tc-card-media > img,
+.tc-tone-atotz-navy .tc-card-media > img,
+.tc-tone-oppas-sand .tc-card-media > img {
+  object-fit: contain;
+  object-position: center;
+}
+
+.cc-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-top: var(--space-3);
+}
+
+.cc-card-tags span {
+  padding: 0.52rem 0.75rem;
+  border: 1px solid color-mix(in srgb, currentColor 44%, transparent);
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.cc-card-metrics { display: grid; place-items: stretch; }
+
+.cc-metric-board {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  min-height: 100%;
+  grid-template-rows: auto 1fr auto;
+  padding: clamp(1.5rem, 3vw, 3.5rem);
+  color: inherit;
+}
+
+.cc-metric-board > header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid color-mix(in srgb, currentColor 38%, transparent);
+}
+
+.cc-metric-board > header span,
+.cc-metric-board small {
+  font-size: 0.68rem;
+  font-weight: 750;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.cc-metric-board > header strong {
+  font-family: var(--serif);
+  font-size: clamp(1.5rem, 2.25vw, 2.75rem);
+  font-weight: 400;
+}
+
+.cc-metric-board dl {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-content: stretch;
+  margin: 0;
+}
+
+.cc-metric-board dl > div {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(1rem, 2.2vw, 2.5rem);
+  border-bottom: 1px solid color-mix(in srgb, currentColor 25%, transparent);
+}
+
+.cc-metric-board dl > div:nth-child(odd) { border-right: 1px solid color-mix(in srgb, currentColor 25%, transparent); }
+.cc-metric-board dt { font-family: var(--serif); font-size: clamp(3rem, 5.7vw, 7rem); letter-spacing: -0.055em; line-height: 0.82; }
+.cc-metric-board dd { display: grid; gap: 0.55rem; margin: var(--space-2) 0 0; font-size: clamp(0.88rem, 1.05vw, 1.05rem); line-height: 1.35; }
+.cc-metric-board small { opacity: 0.66; }
+.cc-metric-board > p { max-width: 48rem; margin: var(--space-3) 0 0; font-size: 0.88rem; line-height: 1.55; }
+
+.cc-evidence-note {
+  display: block;
+  width: min(42rem, 70%);
+  margin-top: var(--space-4);
+  padding-top: var(--space-2);
+  border-top: 1px solid color-mix(in srgb, currentColor 30%, transparent);
+  font-size: 0.74rem;
+  line-height: 1.55;
+  opacity: 0.78;
+}
+
+.tc-page-client .tc-proof-media > img { object-position: top center; }
+
+@media (max-width: 720px) {
+  .tc-page-client .tc-hero { min-height: auto; }
+  .tc-page-client .tc-title-line:first-child { font-size: clamp(3.9rem, 18vw, 5.2rem); }
+  .tc-page-client .tc-hero-media { min-height: 66svh; }
+  .tc-page-atotz .tc-hero-media > img,
+  .tc-page-oppas .tc-hero-media > img { transform: scale(0.97); }
+  .cc-hero-note { top: 1rem; left: 1rem; font-size: 1.4rem; }
+  .cc-media-note { font-size: 1.45rem; }
+  .cc-card-tags { margin-bottom: var(--space-1); }
+  .cc-metric-board { padding: var(--space-2); }
+  .cc-metric-board dl > div { padding: var(--space-3) var(--space-2); }
+  .cc-metric-board dt { font-size: clamp(2.9rem, 15vw, 4.4rem); }
+  .cc-metric-board > p { font-size: 0.82rem; }
+  .cc-evidence-note { width: 100%; }
+}
+
 /* Recruiter summary: three project-coloured notes on one editorial desk. */
 .tc-page {
   --summary-accent: var(--tc-brown);

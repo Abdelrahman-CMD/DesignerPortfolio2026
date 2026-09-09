@@ -3,9 +3,9 @@ import { CaseExperience } from "../../../components/CaseExperience";
 import { GuidanceTravelExperience } from "../../../components/GuidanceTravelExperience";
 import { AynAlHikmahExperience } from "../../../components/AynAlHikmahExperience";
 import { BaynSignalExperience } from "../../../components/BaynSignalExperience";
-import { HijamaNCupsExperience } from "../../../components/HijamaNCupsExperience";
 import { MirqaExperience } from "../../../components/MirqaExperience";
 import { EditorialCaseExperience } from "../../../components/EditorialCaseExperience";
+import { ClientCaseExperience } from "../../../components/ClientCaseExperience";
 import { editorialCases } from "../../../data/caseContent";
 import { Locale, LocalizedSurface } from "../../../i18n";
 
@@ -66,7 +66,7 @@ export default async function LocalizedCasePage({ params }: { params: Promise<{ 
   else if (slug === "guidance-travel") content = <GuidanceTravelExperience locale={locale} />;
   else if (slug === "ayn-al-hikmah") content = <AynAlHikmahExperience locale={locale} />;
   else if (slug === "bayn-signal") content = <BaynSignalExperience locale={locale} />;
-  else if (slug === "hijaman-cups") content = <HijamaNCupsExperience locale={locale} />;
+  else if (["hijaman-cups", "atotz-detachering", "oppas-by-chaima"].includes(slug)) content = <ClientCaseExperience project={editorialCases[slug]} locale={locale} />;
   else if (editorialCases[slug]) content = <EditorialCaseExperience project={editorialCases[slug]} locale={locale} />;
   else content = <main className="not-found"><p>Deze case is nog niet gepubliceerd.</p><a href="/#werk">Terug naar het werk</a></main>;
 

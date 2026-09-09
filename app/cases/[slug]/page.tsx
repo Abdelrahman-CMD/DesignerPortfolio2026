@@ -3,9 +3,9 @@ import { CaseExperience } from "../../components/CaseExperience";
 import { GuidanceTravelExperience } from "../../components/GuidanceTravelExperience";
 import { AynAlHikmahExperience } from "../../components/AynAlHikmahExperience";
 import { BaynSignalExperience } from "../../components/BaynSignalExperience";
-import { HijamaNCupsExperience } from "../../components/HijamaNCupsExperience";
 import { MirqaExperience } from "../../components/MirqaExperience";
 import { EditorialCaseExperience } from "../../components/EditorialCaseExperience";
+import { ClientCaseExperience } from "../../components/ClientCaseExperience";
 import { editorialCases } from "../../data/caseContent";
 import { LocalizedSurface } from "../../i18n";
 
@@ -103,8 +103,8 @@ export default async function CasePage({
     return <LocalizedSurface locale="nl" respectPreference><BaynSignalExperience locale="nl" /></LocalizedSurface>;
   }
 
-  if (slug === "hijaman-cups") {
-    return <LocalizedSurface locale="nl" respectPreference><HijamaNCupsExperience locale="nl" /></LocalizedSurface>;
+  if (["hijaman-cups", "atotz-detachering", "oppas-by-chaima"].includes(slug)) {
+    return <LocalizedSurface locale="nl" respectPreference><ClientCaseExperience project={editorialCases[slug]} locale="nl" /></LocalizedSurface>;
   }
 
   const project = editorialCases[slug];
