@@ -211,21 +211,23 @@ test("uses bounded raster assets on the homepage and case pages", async () => {
 });
 
 test("renders the three live client cases as measured scroll stories", async () => {
-  const [hijamaResponse, atotzResponse, oppasResponse, englishOppasResponse] = await Promise.all([
+  const [hijamaResponse, atotzResponse, oppasResponse, englishAtotzResponse, englishOppasResponse] = await Promise.all([
     render("/cases/hijaman-cups"),
     render("/cases/atotz-detachering"),
     render("/cases/oppas-by-chaima"),
+    render("/en/cases/atotz-detachering"),
     render("/en/cases/oppas-by-chaima"),
   ]);
 
-  for (const response of [hijamaResponse, atotzResponse, oppasResponse, englishOppasResponse]) {
+  for (const response of [hijamaResponse, atotzResponse, oppasResponse, englishAtotzResponse, englishOppasResponse]) {
     assert.equal(response.status, 200);
   }
 
-  const [hijamaHtml, atotzHtml, oppasHtml, englishOppasHtml] = await Promise.all([
+  const [hijamaHtml, atotzHtml, oppasHtml, englishAtotzHtml, englishOppasHtml] = await Promise.all([
     hijamaResponse.text(),
     atotzResponse.text(),
     oppasResponse.text(),
+    englishAtotzResponse.text(),
     englishOppasResponse.text(),
   ]);
 
@@ -240,9 +242,12 @@ test("renders the three live client cases as measured scroll stories", async () 
   assert.match(hijamaHtml, /9\.3K/);
   assert.match(hijamaHtml, /182/);
   assert.match(hijamaHtml, /2m56/);
-  assert.match(atotzHtml, /10/);
-  assert.match(atotzHtml, /12/);
-  assert.match(atotzHtml, /33\/36/);
+  assert.match(atotzHtml, /2\.24K/);
+  assert.match(atotzHtml, /18\.6/);
+  assert.match(atotzHtml, /0\.7%/);
+  assert.match(atotzHtml, /817/);
+  assert.match(englishAtotzHtml, /Construction terms generate at least 817 impressions/);
+  assert.match(englishAtotzHtml, /client-shared three-month Google Search Console view/);
   assert.match(oppasHtml, /€2K\+/);
   assert.match(oppasHtml, /Door eigenaar gerapporteerd/);
   assert.match(englishOppasHtml, /Owner-reported/);

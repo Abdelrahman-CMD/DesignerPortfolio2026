@@ -174,11 +174,11 @@ const clientStories: Record<ClientSlug, ClientStory> = {
     hero: {
       kicker: copy("Case 07 · Live klantproject", "Case 07 · Live client project"),
       lines: [copy("AtotZ", "AtotZ"), copy("Van sectorvraag.", "From sector need."), copy("Naar gericht contact.", "To focused contact.")],
-      summary: copy("Een compacte recruitmentwebsite die meerdere sectoren en doelgroepen binnen één duidelijke merkroute houdt. Het publieke bewijs gaat hier over structuur, vindbaarheid en conversiearchitectuur — nog niet over leads.", "A compact recruitment website that keeps multiple sectors and audiences within one clear brand journey. The public evidence here covers structure, discoverability and conversion architecture — not leads yet."),
+      summary: copy("Een compacte recruitmentwebsite die meerdere sectoren en doelgroepen binnen één duidelijke merkroute houdt. Search Console toont inmiddels vroege organische zichtbaarheid; de publieke audit bewijst de structuur en conversiearchitectuur — nog niet het aantal leads.", "A compact recruitment website that keeps multiple sectors and audiences within one clear brand journey. Search Console now shows early organic visibility; the public audit proves the structure and conversion architecture — not lead volume yet."),
       meta: [
         { label: copy("Uitdaging", "Challenge"), value: copy("Meerdere sectoren zonder versnippering", "Multiple sectors without fragmentation") },
         { label: copy("Mijn rol", "My role"), value: copy("Positionering · UX/UI · Framer", "Positioning · UX/UI · Framer") },
-        { label: copy("Bewijs", "Evidence"), value: copy("Publieke audit · live implementatie", "Public audit · live implementation") },
+        { label: copy("Bewijs", "Evidence"), value: copy("Search Console · publieke audit", "Search Console · public audit") },
       ],
       image: "/projects/live/atotz-site-desktop.png",
       imageAlt: copy("Live desktopwebsite van AtotZ Detachering", "Live desktop website of AtotZ Detachering"),
@@ -188,7 +188,7 @@ const clientStories: Record<ClientSlug, ClientStory> = {
     snapshot: [
       { label: copy("Probleem", "Problem"), value: copy("Werkgevers en professionals moesten verschillende sectorvragen herkennen zonder te verdwalen in losse proposities.", "Employers and professionals needed to recognise different sector needs without getting lost in separate propositions.") },
       { label: copy("Oplossing", "Solution"), value: copy("Eén positionering leidt via sectorspecifieke content en vooraf ingevulde WhatsApp-routes naar gericht contact.", "One positioning system leads through sector-specific content and pre-filled WhatsApp routes to focused contact.") },
-      { label: copy("Publiek bewijs", "Public evidence"), value: copy("10 gelabelde instroomroutes, 12 unieke WhatsApp-doelen en structured data voor organisatie en FAQ.", "10 tagged entry routes, 12 unique WhatsApp targets and structured data for the organisation and FAQs.") },
+      { label: copy("Meetbaar bewijs", "Measured evidence"), value: copy("2,24K Google-vertoningen in drie maanden, een gemiddelde positie van 18,6 en een aantoonbaar gebouwde sectorspecifieke contactroute.", "2.24K Google impressions in three months, an average position of 18.6 and a demonstrably built sector-specific contact journey.") },
     ],
     cards: [
       {
@@ -218,24 +218,24 @@ const clientStories: Record<ClientSlug, ClientStory> = {
         annotation: copy("context reist mee tot in het gesprek ↗", "context travels into the conversation ↗"),
       },
       {
-        number: "04", eyebrow: copy("De publieke bewijslaag", "The public evidence layer"),
-        title: copy("De implementatie maakt snelheid mogelijk zonder ze als resultaat te verzinnen.", "The implementation enables speed without inventing it as an outcome."),
-        body: copy("De gerenderde website is mobiel stabiel, bevat benoemde bediening en stelt de meeste afbeeldingen uit tot ze nodig zijn. Organisatie- en FAQ-data helpen zoekmachines bovendien de inhoud begrijpen.", "The rendered website is stable on mobile, exposes named controls and defers most images until needed. Organisation and FAQ data also help search engines understand the content."),
-        note: copy("Leadkwaliteit en commerciële impact volgen zodra de klantdata beschikbaar is.", "Lead quality and commercial impact will follow when client data becomes available."),
+        number: "04", eyebrow: copy("De gemeten bewijslaag", "The measured evidence layer"),
+        title: copy("De site bouwt zichtbaarheid op; de klik verdient nu de aandacht.", "The site is building visibility; earning the click is the next task."),
+        body: copy("De gedeelde Search Console-weergave over drie maanden toont 2,24K vertoningen, 15 klikken, 0,7% CTR en een gemiddelde positie van 18,6. Dat bewijst dat Google de propositie vertoont, maar nog niet dat de zoekresultaattekst genoeg relevante bezoeken wint.", "The shared three-month Search Console view shows 2.24K impressions, 15 clicks, a 0.7% CTR and an average position of 18.6. This proves Google is surfacing the proposition, but not yet that the search snippet earns enough relevant visits."),
+        note: copy("Volgende stap: titels, descriptions en sectorspecifieke landingsrelevantie aanscherpen — daarna CTR opnieuw meten.", "Next: sharpen titles, descriptions and sector-specific landing relevance, then measure CTR again."),
         tone: "atotz-teal", metrics: true,
       },
     ],
     metrics: [
-      { value: "10", label: copy("gelabelde WhatsApp-instroomroutes", "tagged WhatsApp entry routes"), source: copy("Publieke audit", "Public audit") },
-      { value: "12", label: copy("unieke WhatsApp-doelen", "unique WhatsApp targets"), source: copy("Publieke audit", "Public audit") },
-      { value: "33/36", label: copy("afbeeldingen uitgesteld geladen", "rendered images lazy-loaded"), source: copy("Gerenderde audit", "Rendered audit") },
-      { value: "0", label: copy("kapotte beelden of mobiele overflow", "broken images or mobile overflow"), source: copy("Desktop + mobiel", "Desktop + mobile") },
+      { value: "2.24K", label: copy("Google-vertoningen · drie maanden", "Google impressions · three months"), source: copy("Search Console", "Search Console") },
+      { value: "15", label: copy("organische klikken", "organic clicks"), source: copy("Search Console", "Search Console") },
+      { value: "18.6", label: copy("gemiddelde zoekpositie", "average search position"), source: copy("Search Console", "Search Console") },
+      { value: "0.7%", label: copy("gemiddelde CTR", "average CTR"), source: copy("Search Console", "Search Console") },
     ],
-    metricContext: copy("Structured data is aanwezig voor Organization en FAQ. Alle elf gecontroleerde formulierelementen hebben een toegankelijke naam.", "Structured data is present for the Organisation and FAQs. All eleven checked form controls have an accessible name."),
+    metricContext: copy("De publieke audit vult dit aan: 10 gelabelde instroomroutes, 12 unieke WhatsApp-doelen, Organization- en FAQ-data, 33 van 36 lazy-loaded beelden, 11 toegankelijk benoemde formulierelementen en geen kapotte beelden of mobiele overflow.", "The public audit adds 10 tagged entry routes, 12 unique WhatsApp targets, Organisation and FAQ data, 33 of 36 lazy-loaded images, 11 accessibly named form controls, and no broken images or mobile overflow."),
     deepDive: [
       { number: "05", eyebrow: copy("Publieke audit", "Public audit"), title: copy("Een gerichte leadroute is aantoonbaar gebouwd", "A focused lead journey is demonstrably built"), body: copy("Sectorlinks gebruiken eigen context en herkenbare bronlabels. Daardoor kan het gesprek inhoudelijker beginnen en blijft latere attributie technisch mogelijk.", "Sector links use their own context and identifiable source labels. This lets the conversation start with more substance and keeps later attribution technically possible."), note: copy("Mogelijkheid tot attributie is nog geen bewezen conversie.", "The ability to attribute is not yet proven conversion.") },
-      { number: "06", eyebrow: copy("Technische levering", "Technical delivery"), title: copy("Mobiel stabiel en progressief geladen", "Stable on mobile and progressively loaded"), body: copy("De desktop- en mobiele controle vond geen horizontale overflow of kapotte afbeeldingen; 33 van 36 gerenderde beelden worden lazy-loaded.", "Desktop and mobile checks found no horizontal overflow or broken images; 33 of 36 rendered images are lazy-loaded."), note: copy("De audit meet de openbare implementatie, niet de ervaring van iedere gebruiker.", "The audit measures the public implementation, not every user’s experience.") },
-      { number: "07", eyebrow: copy("Open bewijsruimte", "Open evidence gap"), title: copy("De commerciële uitkomst blijft bewust leeg", "The commercial outcome deliberately remains open"), body: copy("Zonder klantdata claim ik geen aantallen aanvragen, matches, omzet of tijdswinst.", "Without client data, I do not claim enquiry, placement, revenue or time-saving figures."), note: copy("Eerst bewijs. Dan pas een resultaatheadline.", "Evidence first. Only then an outcome headline.") },
+      { number: "06", eyebrow: copy("Zoekintentie", "Search intent"), title: copy("Bouwtermen leveren minimaal 817 vertoningen op — nog zonder klik.", "Construction terms generate at least 817 impressions — but no clicks yet."), body: copy("Alleen al de vijf zichtbare bouwgerelateerde zoekopdrachten in de gedeelde top tien tellen samen 817 vertoningen. Dat laat een relevante zoekvraag zien, maar de getoonde rijen registreerden nog geen klikken.", "The five visible construction-related queries in the shared top ten total 817 impressions. That reveals relevant search demand, but the displayed rows had not yet registered clicks."), note: copy("Dit is een optimalisatiesignaal, geen conversieresultaat: hogere posities en een scherpere snippet moeten de volgende meting verbeteren.", "This is an optimisation signal, not a conversion outcome: higher rankings and a sharper snippet should improve the next measurement.") },
+      { number: "07", eyebrow: copy("Open bewijsruimte", "Open evidence gap"), title: copy("Vindbaarheid is bewezen; commerciële impact nog niet.", "Discoverability is proven; commercial impact is not yet."), body: copy("Search Console bewijst vertoningen en klikken, maar koppelt die niet aan aanvragen, plaatsingen, omzet of tijdswinst. Die resultaten voeg ik pas toe wanneer de klant ze bevestigt.", "Search Console proves impressions and clicks, but does not connect them to enquiries, placements, revenue or time saved. I will only add those outcomes once the client confirms them."), note: copy("Eerst bewijs. Dan pas een resultaatheadline.", "Evidence first. Only then an outcome headline.") },
     ],
     proof: {
       kicker: copy("Live ervaring / één herkenbaar systeem", "Live experience / one recognisable system"),
@@ -252,9 +252,9 @@ const clientStories: Record<ClientSlug, ClientStory> = {
       title: copy("Een breed detacheringsaanbod werd één scanbare route naar gericht contact.", "A broad staffing offer became one scannable journey to focused contact."),
       paragraphs: [
         copy("Ik bracht positionering, sectorarchitectuur, responsive interface en directe contactroutes samen in één modulaire Framer-website.", "I combined positioning, sector architecture, responsive interface design and direct contact routes in one modular Framer website."),
-        copy("De publieke audit bewijst de leveringskwaliteit en conversiearchitectuur. Commerciële resultaten voeg ik pas toe wanneer de klant ze heeft bevestigd.", "The public audit proves delivery quality and conversion architecture. I will only add commercial outcomes once the client has confirmed them."),
+        copy("Search Console bewijst vroege organische zichtbaarheid; de publieke audit bewijst de leveringskwaliteit en conversiearchitectuur. De lage CTR maakt de volgende optimalisatie bovendien concreet zonder commerciële impact te suggereren.", "Search Console proves early organic visibility; the public audit proves delivery quality and conversion architecture. The low CTR also makes the next optimisation concrete without implying commercial impact."),
       ],
-      evidenceNote: copy("Bron: publieke crawl en gerenderde desktop- en mobiele audit, uitgevoerd op 8–9 september 2026.", "Source: public crawl and rendered desktop and mobile audit conducted on 8–9 September 2026."),
+      evidenceNote: copy("Bronnen: door de klant gedeelde Google Search Console-weergave over drie maanden, september 2026, en publieke desktop- en mobiele audit van 8–9 september 2026.", "Sources: client-shared three-month Google Search Console view, September 2026, and public desktop and mobile audit conducted on 8–9 September 2026."),
     },
   },
   "oppas-by-chaima": {
