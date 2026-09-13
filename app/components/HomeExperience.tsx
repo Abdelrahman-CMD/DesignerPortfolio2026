@@ -584,6 +584,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
     let cleanupHeroCta = () => {};
     let cleanupHeroMosaic = () => {};
     let cleanupCaseCursor = () => {};
+    let cleanupCaseTransitions = () => {};
 
     const context = gsap.context(() => {
       const header = root.current?.querySelector<HTMLElement>(".site-header");
@@ -936,11 +937,28 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
         });
       }
 
+      const showcaseHeading = root.current?.querySelector<HTMLElement>(".showcase-heading");
+      if (showcaseHeading && !prefersReducedMotion) {
+        gsap.from(showcaseHeading.querySelectorAll(":scope > *"), {
+          autoAlpha: 0,
+          y: 30,
+          duration: 0.68,
+          stagger: 0.1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: showcaseHeading,
+            start: "top 84%",
+            toggleActions: "play none none none",
+            fastScrollEnd: true,
+          },
+        });
+      }
+
       gsap.utils.toArray<HTMLElement>(".project-entry").forEach((entry) => {
         const visual = entry.querySelector<HTMLElement>(".project-visual");
         const media = entry.querySelector<HTMLElement>(".project-parallax-media");
 
-        if (visual) {
+        if (visual && !prefersReducedMotion) {
           gsap.fromTo(visual, {
             autoAlpha: 0.72,
             y: 46,
@@ -951,13 +969,14 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
             ease: "power3.out",
             scrollTrigger: {
               trigger: entry,
-              start: "top 88%",
-              toggleActions: "play none none reverse",
+              start: "top 86%",
+              toggleActions: "play none none none",
+              fastScrollEnd: true,
             },
           });
         }
 
-        if (media) {
+        if (media && supportsHeroParallax && !prefersReducedMotion) {
           gsap.fromTo(media, {
             yPercent: -7,
           }, {
@@ -972,18 +991,60 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
           });
         }
 
-        gsap.from(entry.querySelector(".project-card-copy"), {
-          autoAlpha: 0,
-          y: 20,
-          duration: 0.65,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: entry,
-            start: "top 82%",
-            toggleActions: "play none none reverse",
-          },
-        });
+        if (!prefersReducedMotion) {
+          gsap.from(entry.querySelector(".project-card-copy"), {
+            autoAlpha: 0,
+            y: 20,
+            duration: 0.65,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: entry,
+              start: "top 82%",
+              toggleActions: "play none none none",
+              fastScrollEnd: true,
+            },
+          });
+        }
       });
+
+      const caseLinks = root.current
+        ? Array.from(root.current.querySelectorAll<HTMLAnchorElement>(".project-card-link[data-case-transition]"))
+        : [];
+      let transitionReset = 0;
+
+      const prepareCaseTransition = (event: MouseEvent) => {
+        if (
+          prefersReducedMotion
+          || event.defaultPrevented
+          || event.button !== 0
+          || event.metaKey
+          || event.ctrlKey
+          || event.shiftKey
+          || event.altKey
+          || !CSS.supports("view-transition-name: case-hero")
+        ) return;
+
+        const link = event.currentTarget as HTMLAnchorElement;
+        const visual = link.querySelector<HTMLElement>("[data-transition-media]");
+        if (!visual) return;
+
+        caseLinks.forEach((caseLink) => {
+          const caseVisual = caseLink.querySelector<HTMLElement>("[data-transition-media]");
+          if (caseVisual) caseVisual.style.viewTransitionName = "none";
+        });
+        visual.style.viewTransitionName = "case-hero";
+
+        window.clearTimeout(transitionReset);
+        transitionReset = window.setTimeout(() => {
+          visual.style.viewTransitionName = "none";
+        }, 1400);
+      };
+
+      caseLinks.forEach((link) => link.addEventListener("click", prepareCaseTransition));
+      cleanupCaseTransitions = () => {
+        window.clearTimeout(transitionReset);
+        caseLinks.forEach((link) => link.removeEventListener("click", prepareCaseTransition));
+      };
 
       const showcaseSection = root.current?.querySelector<HTMLElement>(".showcase");
       const caseCursor = showcaseSection?.querySelector<HTMLElement>(".case-cursor");
@@ -1325,10 +1386,10 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
 
       gsap.from(".method-title-line > span", {
         yPercent: 112,
-        duration: 1,
-        stagger: 0.12,
+        duration: 0.76,
+        stagger: 0.09,
         ease: "power4.out",
-        scrollTrigger: { trigger: ".method-intro", start: "top 72%" },
+        scrollTrigger: { trigger: ".method-intro", start: "top 82%", toggleActions: "play none none none", fastScrollEnd: true },
       });
 
       gsap.from(".method-intro-copy", {
@@ -1336,7 +1397,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
         y: 40,
         duration: 0.85,
         ease: "power3.out",
-        scrollTrigger: { trigger: ".method-intro-copy", start: "top 82%" },
+        scrollTrigger: { trigger: ".method-intro-copy", start: "top 82%", toggleActions: "play none none none", fastScrollEnd: true },
       });
 
       const methodPin = root.current?.querySelector<HTMLElement>(".method-pin");
@@ -1374,7 +1435,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
         stagger: { each: 0.06, from: "random" },
         duration: 0.7,
         ease: "back.out(1.6)",
-        scrollTrigger: { trigger: ".method-stack", start: "top 75%" },
+        scrollTrigger: { trigger: ".method-stack", start: "top 78%", toggleActions: "play none none none", fastScrollEnd: true },
       });
 
       gsap.from(".contact-postcard", {
@@ -1384,7 +1445,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
         rotation: -1.8,
         duration: 1.15,
         ease: "power4.out",
-        scrollTrigger: { trigger: ".contact", start: "top 72%" },
+        scrollTrigger: { trigger: ".contact", start: "top 74%", toggleActions: "play none none none", fastScrollEnd: true },
       });
 
       gsap.from(".postcard-copy > *, .postcard-portrait, .postcard-brand, .postcard-stamp, .postcard-links, .postcard-cta", {
@@ -1397,6 +1458,8 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
         scrollTrigger: {
           trigger: ".contact-postcard",
           start: "top 66%",
+          toggleActions: "play none none none",
+          fastScrollEnd: true,
         },
       });
     }, root);
@@ -1408,6 +1471,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
       cleanupHeroCta();
       cleanupHeroMosaic();
       cleanupCaseCursor();
+      cleanupCaseTransitions();
       context.revert();
     };
   }, []);
@@ -1817,8 +1881,9 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
                 aria-label={`Bekijk de case ${project.name}`}
                 data-cursor-bg={project.bg}
                 data-cursor-ink={project.ink}
+                data-case-transition
               >
-                <div className="project-visual">
+                <div className="project-visual" data-transition-media>
                   <div className="project-parallax-media">
                     <Image
                       src={project.image}

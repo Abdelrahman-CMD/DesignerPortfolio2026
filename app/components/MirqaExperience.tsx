@@ -7,11 +7,9 @@ import ArrowLeft from "lucide-react/icons/arrow-left";
 import ArrowUpRight from "lucide-react/icons/arrow-up-right";
 import BellOff from "lucide-react/icons/bell-off";
 import CheckCircle2 from "lucide-react/icons/check-circle-2";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { LanguageSwitcher, Locale, localeHref } from "../i18n";
 import { CaseDeepDive } from "./CaseDeepDive";
-import { revealCaseCard } from "./caseScrollStory";
+import { initCaseMotion } from "./caseScrollStory";
 
 const content = {
   nl: {
@@ -244,35 +242,13 @@ export function MirqaExperience({ locale = "nl" }: { locale?: Locale }) {
   const root = useRef<HTMLElement>(null);
   const copy = content[locale];
   useLayoutEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
-    const context = gsap.context(() => {
-      const intro = gsap.timeline({ defaults: { ease: "power4.out" } });
-      intro.from(".tc-nav", { opacity: 0, y: -18, duration: 0.32 })
-        .from(".tc-hero-kicker", { opacity: 0, y: 16, duration: 0.28 }, "-=0.08")
-        .from(".tc-title-line > span", { yPercent: 112, duration: 0.52, stagger: 0.05 }, "-=0.16")
-        .from(".tc-hero-summary, .tc-hero-meta", { opacity: 0, y: 24, duration: 0.38, stagger: 0.05 }, "-=0.32")
-        .from(".tc-hero-media", { opacity: 0, xPercent: 16, scale: 0.97, duration: 0.78 }, "-=0.46");
-
-      gsap.to(".tc-hero-media > img:first-child", { yPercent: -5, ease: "none", scrollTrigger: { trigger: ".tc-hero", start: "top top", end: "bottom top", scrub: true } });
-
-      const cardElements = gsap.utils.toArray<HTMLElement>(".tc-card");
-      const shells = gsap.utils.toArray<HTMLElement>(".tc-card-shell");
-      cardElements.forEach((card, index) => {
-        const shell = shells[index];
-        const nextShell = shells[index + 1];
-        revealCaseCard(card, shell);
-        const media = card.querySelector(".tc-card-media");
-        if (media) gsap.from(media, { opacity: 0, y: 42, scale: 0.985, duration: 0.9, ease: "power3.out", scrollTrigger: { trigger: shell, start: "top 70%", toggleActions: "play none none reverse" } });
-        if (nextShell) gsap.to(card, { scale: 0.985, filter: "brightness(0.95)", ease: "none", scrollTrigger: { trigger: nextShell, start: "top bottom", end: "top 10%", scrub: true, invalidateOnRefresh: true } });
-      });
-
-      gsap.utils.toArray<HTMLElement>(".tc-proof-frame").forEach((frame, index) => gsap.from(frame, { opacity: 0, y: 38, rotate: index % 2 === 0 ? -0.6 : 0.6, duration: 0.75, ease: "power3.out", scrollTrigger: { trigger: frame, start: "top 88%" } }));
-    }, root);
-    return () => context.revert();
+    const element = root.current;
+    if (!element) return;
+    return initCaseMotion(element, { heroParallax: 5 });
   }, []);
 
   return (
-    <main ref={root} className="tc-page tc-page-mirqa">
+    <main ref={root} className="tc-page tc-page-mirqa" data-motion-project="mirqa">
       <a className="skip-link" href="#mirqa-content">{locale === "en" ? "Skip to the case study" : "Ga naar de case"}</a>
 
       <nav className="tc-nav" aria-label={locale === "en" ? "Case study navigation" : "Case navigatie"}>
@@ -294,7 +270,7 @@ export function MirqaExperience({ locale = "nl" }: { locale?: Locale }) {
             {copy.meta.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}
           </dl>
         </div>
-        <figure className="tc-hero-media">
+        <figure className="tc-hero-media" style={{ viewTransitionName: "case-hero" } as CSSProperties}>
           <Image src="/projects/mirqa/mirqa-case-hero.webp" alt={copy.heroAlt} fill priority sizes="(max-width: 760px) 100vw, 58vw" />
           <figcaption>{copy.heroCaption}</figcaption>
         </figure>

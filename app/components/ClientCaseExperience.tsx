@@ -4,12 +4,10 @@ import Image from "next/image";
 import { CSSProperties, useLayoutEffect, useRef } from "react";
 import ArrowLeft from "lucide-react/icons/arrow-left";
 import ArrowUpRight from "lucide-react/icons/arrow-up-right";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import type { EditorialCase } from "../data/caseContent";
 import { LanguageSwitcher, Locale, localeHref } from "../i18n";
 import { CaseDeepDive } from "./CaseDeepDive";
-import { revealCaseCard } from "./caseScrollStory";
+import { initCaseMotion } from "./caseScrollStory";
 
 type LocalCopy = { nl: string; en: string };
 type ClientSlug = "hijaman-cups" | "atotz-detachering" | "oppas-by-chaima";
@@ -355,73 +353,9 @@ export function ClientCaseExperience({ project, locale = "nl" }: { project: Edit
   const story = clientStories[project.slug as ClientSlug];
 
   useLayoutEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
-    const context = gsap.context(() => {
-      const intro = gsap.timeline({ defaults: { ease: "power4.out" } });
-      intro
-        .from(".tc-nav", { opacity: 0, y: -18, duration: 0.32 })
-        .from(".tc-hero-kicker", { opacity: 0, y: 16, duration: 0.28 }, "-=0.08")
-        .from(".tc-title-line > span", { yPercent: 112, duration: 0.52, stagger: 0.05 }, "-=0.16")
-        .from(".tc-hero-summary, .tc-hero-meta", { opacity: 0, y: 24, duration: 0.38, stagger: 0.05 }, "-=0.32")
-        .from(".tc-hero-media", { opacity: 0, xPercent: 16, scale: 0.97, duration: 0.78 }, "-=0.46")
-        .from(".cc-hero-note", { opacity: 0, rotate: -4, y: 18, duration: 0.38 }, "-=0.2");
-
-      gsap.to(".tc-hero-media img", {
-        yPercent: -7,
-        ease: "none",
-        scrollTrigger: { trigger: ".tc-hero", start: "top top", end: "bottom top", scrub: true },
-      });
-
-      const cards = gsap.utils.toArray<HTMLElement>(".tc-card");
-      const shells = gsap.utils.toArray<HTMLElement>(".tc-card-shell");
-      cards.forEach((card, index) => {
-        const shell = shells[index];
-        const nextShell = shells[index + 1];
-        revealCaseCard(card, shell);
-
-        const media = card.querySelector(".tc-card-media");
-        if (media) {
-          gsap.from(media, {
-            opacity: 0,
-            y: 42,
-            scale: 0.985,
-            duration: 0.9,
-            ease: "power3.out",
-            scrollTrigger: { trigger: shell, start: "top 70%", toggleActions: "play none none reverse" },
-          });
-        }
-
-        if (nextShell) {
-          gsap.to(card, {
-            scale: 0.985,
-            filter: "brightness(0.95)",
-            ease: "none",
-            scrollTrigger: { trigger: nextShell, start: "top bottom", end: "top 10%", scrub: true, invalidateOnRefresh: true },
-          });
-          const dim = card.querySelector(".tc-card-dim");
-          if (dim) {
-            gsap.to(dim, {
-              opacity: 0.025,
-              ease: "none",
-              scrollTrigger: { trigger: nextShell, start: "top bottom", end: "top 10%", scrub: true, invalidateOnRefresh: true },
-            });
-          }
-        }
-      });
-
-      gsap.utils.toArray<HTMLElement>(".tc-proof-frame").forEach((frame, index) => {
-        gsap.from(frame, {
-          opacity: 0,
-          y: 38,
-          rotate: index % 2 === 0 ? -0.6 : 0.6,
-          duration: 0.75,
-          ease: "power3.out",
-          scrollTrigger: { trigger: frame, start: "top 88%" },
-        });
-      });
-    }, root);
-
-    return () => context.revert();
+    const element = root.current;
+    if (!element) return;
+    return initCaseMotion(element);
   }, [project.slug]);
 
   if (!story) return null;
@@ -431,7 +365,7 @@ export function ClientCaseExperience({ project, locale = "nl" }: { project: Edit
   } as CSSProperties;
 
   return (
-    <main ref={root} className={`tc-page tc-page-client tc-page-${story.theme}`} style={pageStyle}>
+    <main ref={root} className={`tc-page tc-page-client tc-page-${story.theme}`} style={pageStyle} data-motion-project={project.slug}>
       <a className="skip-link" href="#client-case-content">{locale === "en" ? "Skip to the case study" : "Ga naar de case"}</a>
 
       <nav className="tc-nav" aria-label={locale === "en" ? "Case study navigation" : "Case navigatie"}>
@@ -453,7 +387,7 @@ export function ClientCaseExperience({ project, locale = "nl" }: { project: Edit
             {story.hero.meta.map((item) => <div key={item.label.nl}><dt>{pick(locale, item.label)}</dt><dd>{pick(locale, item.value)}</dd></div>)}
           </dl>
         </div>
-        <figure className="tc-hero-media">
+        <figure className="tc-hero-media" style={{ viewTransitionName: "case-hero" } as CSSProperties}>
           <Image src={story.hero.image} alt={pick(locale, story.hero.imageAlt)} fill priority sizes="(max-width: 760px) 100vw, 58vw" />
           <span className="cc-hero-note">{pick(locale, story.hero.annotation)}</span>
           <figcaption>{pick(locale, story.hero.caption)}</figcaption>

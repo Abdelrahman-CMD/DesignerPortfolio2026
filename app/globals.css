@@ -6897,9 +6897,9 @@ html.is-cta-captured a { cursor: none !important; }
 /* Scroll-paced reading on large screens; compact and direct on mobile. */
 @media (min-width: 721px) {
   .tc-card-shell,
-  .tc-card-shell:last-child { min-height: 170svh; }
+  .tc-card-shell:last-child { min-height: 135svh; }
 
-  .tc-card-shell:last-child { min-height: 155svh; }
+  .tc-card-shell:last-child { min-height: 130svh; }
 }
 
 /* Handwritten marginalia is reserved for the designer's interpretation. */
@@ -7445,4 +7445,116 @@ html.is-cta-captured a { cursor: none !important; }
   .tc-evidence-reveal,
   .tc-journey-line { opacity: 1 !important; transform: none !important; }
   .tc-journey-line { stroke-dashoffset: 0 !important; }
+}
+
+/* Motion thesis: discovery → interpretation → decision → evidence. */
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-group(root) {
+  animation-duration: 0.62s;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+::view-transition-old(root) {
+  animation: portfolio-page-out 0.42s cubic-bezier(0.4, 0, 1, 1) both;
+}
+
+::view-transition-new(root) {
+  animation: portfolio-page-in 0.62s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+::view-transition-group(case-hero) {
+  z-index: 20;
+  overflow: clip;
+  border-radius: 0.35rem;
+  animation-duration: 0.86s;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+::view-transition-old(case-hero),
+::view-transition-new(case-hero) {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  overflow: clip;
+}
+
+@keyframes portfolio-page-out {
+  to { opacity: 0; filter: blur(3px); transform: scale(0.995); }
+}
+
+@keyframes portfolio-page-in {
+  from { opacity: 0; filter: blur(5px); transform: translateY(8px); }
+  to { opacity: 1; filter: blur(0); transform: translateY(0); }
+}
+
+.project-visual[data-transition-media],
+.tc-hero-media,
+.tc-snapshot-grid > *,
+.tc-proof-frame,
+.cc-metric-board dl > div {
+  backface-visibility: hidden;
+  transform-origin: center center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  ::view-transition-group(root),
+  ::view-transition-old(root),
+  ::view-transition-new(root),
+  ::view-transition-group(case-hero),
+  ::view-transition-old(case-hero),
+  ::view-transition-new(case-hero) {
+    animation: none !important;
+  }
+
+  .mind-hero-content,
+  .mind-hero-visual,
+  .mind-hero-photo-slide,
+  .mind-title-line > span,
+  .mind-hero-meta span,
+  .mind-hero-kicker,
+  .mind-hero-lede,
+  .mind-hero-actions,
+  .manifesto-word,
+  .manifesto-marker-stroke,
+  .manifesto-quarter-roll,
+  .project-visual,
+  .project-parallax-media,
+  .project-card-copy,
+  .story-stop-copy > *,
+  .story-photo,
+  .story-margin-note,
+  .story-tape,
+  .method-title-line > span,
+  .method-intro-copy,
+  .method-track,
+  .method-progress span,
+  .method-stack-chip,
+  .contact-postcard,
+  .postcard-copy > *,
+  .postcard-portrait,
+  .postcard-brand,
+  .postcard-stamp,
+  .postcard-links,
+  .postcard-cta,
+  .tc-page .tc-mask > span,
+  .tc-page .tc-evidence-reveal,
+  .tc-page .tc-mirqa-screen {
+    opacity: 1 !important;
+    filter: none !important;
+    clip-path: none !important;
+    transform: none !important;
+  }
 }

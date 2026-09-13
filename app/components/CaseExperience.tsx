@@ -10,13 +10,11 @@ import Search from "lucide-react/icons/search";
 import ShieldCheck from "lucide-react/icons/shield-check";
 import UsersRound from "lucide-react/icons/users-round";
 import WifiOff from "lucide-react/icons/wifi-off";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { LanguageSwitcher, Locale, localeHref, translateText } from "../i18n";
 import { CaseDeepDive } from "./CaseDeepDive";
 import { CaseResearchEvidence } from "./CaseResearchEvidence";
 import { CaseStyleGuide, type CaseStyleGuideData } from "./CaseStyleGuide";
-import { revealCaseCard, revealCaseEvidence } from "./caseScrollStory";
+import { initCaseMotion } from "./caseScrollStory";
 
 const tareeqiStyleGuide: CaseStyleGuideData = {
   project: "Tareeqi",
@@ -122,105 +120,13 @@ export function CaseExperience({ locale = "nl" }: { locale?: Locale }) {
   };
 
   useLayoutEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
-
-    const context = gsap.context(() => {
-      const intro = gsap.timeline({ defaults: { ease: "power4.out" } });
-      intro
-        .from(".tc-nav", { opacity: 0, y: -18, duration: 0.32 })
-        .from(".tc-hero-kicker", { opacity: 0, y: 16, duration: 0.28 }, "-=0.08")
-        .from(".tc-title-line > span", { yPercent: 112, duration: 0.52, stagger: 0.05 }, "-=0.16")
-        .from(".tc-hero-summary, .tc-hero-meta", { opacity: 0, y: 24, duration: 0.38, stagger: 0.05 }, "-=0.32")
-        .from(".tc-hero-media", { opacity: 0, xPercent: 16, scale: 0.97, duration: 0.78 }, "-=0.46");
-
-      gsap.to(".tc-hero-media img", {
-        yPercent: -7,
-        ease: "none",
-        scrollTrigger: { trigger: ".tc-hero", start: "top top", end: "bottom top", scrub: true },
-      });
-
-      revealCaseEvidence();
-
-      const cardElements = gsap.utils.toArray<HTMLElement>(".tc-card");
-      const shells = gsap.utils.toArray<HTMLElement>(".tc-card-shell");
-
-      cardElements.forEach((card, index) => {
-        const shell = shells[index];
-        const nextShell = shells[index + 1];
-        const media = card.querySelector(".tc-card-media");
-
-        revealCaseCard(card, shell);
-
-        if (media) {
-          gsap.from(media, {
-            opacity: 0,
-            y: 42,
-            scale: 0.985,
-            duration: 0.9,
-            ease: "power3.out",
-            scrollTrigger: { trigger: shell, start: "top 70%", toggleActions: "play none none reverse" },
-          });
-        }
-
-        if (nextShell) {
-          gsap.to(card, {
-            scale: 0.985,
-            filter: "brightness(0.95)",
-            ease: "none",
-            scrollTrigger: {
-              trigger: nextShell,
-              start: "top bottom",
-              end: "top 10%",
-              scrub: true,
-              invalidateOnRefresh: true,
-            },
-          });
-          const dim = card.querySelector(".tc-card-dim");
-          if (dim) {
-            gsap.to(dim, {
-              opacity: 0.025,
-              ease: "none",
-              scrollTrigger: {
-                trigger: nextShell,
-                start: "top bottom",
-                end: "top 10%",
-                scrub: true,
-                invalidateOnRefresh: true,
-              },
-            });
-          }
-        }
-      });
-
-      gsap.utils.toArray<HTMLElement>(".tc-proof-frame").forEach((frame, index) => {
-        gsap.from(frame, {
-          opacity: 0,
-          y: 38,
-          rotate: index % 2 === 0 ? -0.6 : 0.6,
-          duration: 0.75,
-          ease: "power3.out",
-          scrollTrigger: { trigger: frame, start: "top 88%" },
-        });
-      });
-
-      gsap.utils.toArray<HTMLVideoElement>(".tc-card video").forEach((video) => {
-        ScrollTrigger.create({
-          trigger: video.closest(".tc-card") ?? video,
-          start: "top 70%",
-          end: "bottom 30%",
-          onEnter: () => void video.play(),
-          onEnterBack: () => void video.play(),
-          onLeave: () => video.pause(),
-          onLeaveBack: () => video.pause(),
-        });
-      });
-    }, root);
-
-    return () => context.revert();
+    const element = root.current;
+    if (!element) return;
+    return initCaseMotion(element);
   }, []);
 
   return (
-    <main ref={root} className="tc-page">
+    <main ref={root} className="tc-page" data-motion-project="tareeqi">
       <a className="skip-link" href="#tareeqi-content">{tx("Ga naar de case")}</a>
 
       <nav className="tc-nav" aria-label={tx("Case navigatie")}>
@@ -244,7 +150,7 @@ export function CaseExperience({ locale = "nl" }: { locale?: Locale }) {
             <div><dt>{tx("Status")}</dt><dd>{tx("Toetsbare oplossingsrichting")}</dd></div>
           </dl>
         </div>
-        <figure className="tc-hero-media">
+        <figure className="tc-hero-media" style={{ viewTransitionName: "case-hero" } as CSSProperties}>
           <Image
             src="/projects/tareeqi-2026/hero-laptops.webp"
             alt={tx("Tareeqi websiteconcept op twee laptops")}
