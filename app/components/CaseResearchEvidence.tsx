@@ -297,7 +297,7 @@ function TareeqiEvidence({ locale }: { locale: Locale }) {
       />
 
       <p className="tc-evidence-handnote tc-evidence-reveal">
-        {locale === "en" ? "The original persona board remains a synthesis tool—not proof that these segments already exist at scale." : "Het oorspronkelijke personabord blijft een synthesetool — geen bewijs dat deze segmenten al op schaal bestaan."}
+        {locale === "en" ? "The original persona board remains a synthesis tool, not proof that these segments already exist at scale." : "Het oorspronkelijke personabord blijft een synthesetool, geen bewijs dat deze segmenten al op schaal bestaan."}
       </p>
     </section>
   );

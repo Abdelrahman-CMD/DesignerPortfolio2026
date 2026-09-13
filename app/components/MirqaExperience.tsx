@@ -147,7 +147,7 @@ const content = {
         eyebrow: "Everyday use / leaving and reflecting",
         title: "One calm journey from planning to departure and reflection.",
         body: "Home combines prayer time, travel, preparation and a personal buffer into one time to leave. Plan makes that logic adjustable; Reflection reveals patterns without scores, while Guide offers only the context that is useful before, during and after a mosque visit.",
-        note: "Not more reasons to open the app—better support at the moment it matters.",
+        note: "Fewer reasons to open the app. Better support at the moment it matters.",
         imageAlt: "Four MIRQA screens for home, departure planning, reflection and practical guidance",
         tone: "mirqa-sand",
       },
@@ -337,7 +337,7 @@ export function MirqaExperience({ locale = "nl" }: { locale?: Locale }) {
         <div className="tc-proof-grid">
           {images.slice(0, 4).map((src, index) => (
             <figure className="tc-proof-frame" key={src}>
-              <div className="tc-proof-media"><Image src={src} alt={`${copy.proofLabels[index]} — MIRQA`} fill sizes="(max-width: 760px) 82vw, 44vw" /></div>
+              <div className="tc-proof-media"><Image src={src} alt={`${copy.proofLabels[index]}, MIRQA`} fill sizes="(max-width: 760px) 82vw, 44vw" /></div>
               <figcaption>{copy.proofLabels[index]}</figcaption>
             </figure>
           ))}
@@ -351,7 +351,7 @@ export function MirqaExperience({ locale = "nl" }: { locale?: Locale }) {
 
       <footer className="tc-footer">
         <p>{copy.footerKicker}</p>
-        <a href={localeHref("/cases/tareeqi", locale)}><span>Tareeqi</span><ArrowUpRight aria-hidden="true" /></a>
+        <a href={localeHref("/cases/oppas-by-chaima", locale)}><span>Oppas by Chaima</span><ArrowUpRight aria-hidden="true" /></a>
         <div><span>Abdelrahman / Product &amp; UX/UI designer</span><span>© 2026</span></div>
       </footer>
     </main>

@@ -7,11 +7,11 @@ const resolveLocale = (value: string): Locale => value === "en" ? "en" : "nl";
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const locale = resolveLocale((await params).locale);
   return locale === "en" ? {
-    title: { absolute: "Abdelrahman — Senior digital designer" },
+    title: { absolute: "Abdelrahman · Senior digital designer" },
     description: "I design clear, thoughtful digital experiences where strategy, human needs and visual craft come together.",
     alternates: { languages: { "nl-NL": "/nl", "en-GB": "/en" } },
   } : {
-    title: { absolute: "Abdelrahman — Senior digitaal ontwerper" },
+    title: { absolute: "Abdelrahman · Senior digitaal ontwerper" },
     description: "Ik ontwerp met alles wat ik onderweg leer: digitale producten op het snijvlak van strategie, menselijke waarde en doordachte vormgeving.",
     alternates: { languages: { "nl-NL": "/nl", "en-GB": "/en" } },
   };

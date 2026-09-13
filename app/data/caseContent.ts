@@ -47,7 +47,7 @@ export type EditorialCase = {
 export const editorialCases: Record<string, EditorialCase> = {
   "guidance-travel": {
     slug: "guidance-travel",
-    number: "04",
+    number: "07",
     name: "Guidance Travel",
     eyebrow: "High-trust travel experience",
     headline: "Redefining premium travel with Form Follows Function.",
@@ -119,7 +119,7 @@ export const editorialCases: Record<string, EditorialCase> = {
       { value: "01", label: "heldere route naar boeking" },
       { value: "0", label: "onnodige afleiding" },
     ],
-    next: { slug: "bayn-signal", name: "Bayn Signal" },
+    next: { slug: "ayn-al-hikmah", name: "Ayn Al-Hikmah" },
     prototype: "guidance",
   },
   "bayn-signal": {
@@ -196,12 +196,12 @@ export const editorialCases: Record<string, EditorialCase> = {
       { value: "2K+", label: "beoogde lokale lezers" },
       { value: "01", label: "persoonlijke lokale pulse" },
     ],
-    next: { slug: "hijaman-cups", name: "Hijama’N Cups" },
+    next: { slug: "atotz-detachering", name: "AtotZ Detachering" },
     prototype: "bayn",
   },
   "ayn-al-hikmah": {
     slug: "ayn-al-hikmah",
-    number: "03",
+    number: "08",
     name: "Ayn Al-Hikmah",
     eyebrow: "Books, scholars & learning paths",
     headline: "Filling the void for knowledge seekers leaving Medina.",
@@ -273,12 +273,12 @@ export const editorialCases: Record<string, EditorialCase> = {
       { value: "50+", label: "betrouwbare geleerden" },
       { value: "80+", label: "vormen van taalondersteuning" },
     ],
-    next: { slug: "guidance-travel", name: "Guidance Travel" },
+    next: { slug: "mirqa", name: "MIRQA" },
     prototype: "ayn",
   },
   "hijaman-cups": {
     slug: "hijaman-cups",
-    number: "06",
+    number: "04",
     name: "Hijama’N Cups",
     eyebrow: "Live client work · Framer",
     headline: "Turning traditional care into a calm, clear digital welcome.",
@@ -355,16 +355,16 @@ export const editorialCases: Record<string, EditorialCase> = {
       { value: "03", label: "talen in het welkom" },
       { value: "01", label: "directe route naar een afspraak" },
     ],
-    next: { slug: "atotz-detachering", name: "AtotZ Detachering" },
+    next: { slug: "bayn-signal", name: "Bayn Signal" },
     externalUrl: "https://hijamancups.com/",
     prototype: "hijaman",
   },
   "atotz-detachering": {
     slug: "atotz-detachering",
-    number: "07",
+    number: "06",
     name: "AtotZ Detachering",
     eyebrow: "Live client work · Framer",
-    headline: "Putting the right people in the right place — without the friction.",
+    headline: "Putting the right people in the right place, without the friction.",
     description:
       "Een scherpe, conversiegerichte Framer-website voor een zelfstandig detacheringsbureau dat menselijkheid en snelheid wil combineren.",
     heroBg: "#1c2a3a",
@@ -441,13 +441,13 @@ export const editorialCases: Record<string, EditorialCase> = {
       { value: "05", label: "dagen tot gemiddelde match" },
       { value: "08", label: "expertiseroutes op één platform" },
     ],
-    next: { slug: "oppas-by-chaima", name: "Oppas by Chaima" },
+    next: { slug: "guidance-travel", name: "Guidance Travel" },
     externalUrl: "https://atotzdetachering.nl/",
     prototype: "atotz",
   },
   "oppas-by-chaima": {
     slug: "oppas-by-chaima",
-    number: "08",
+    number: "02",
     name: "Oppas by Chaima",
     eyebrow: "Live client work · Web design & build",
     headline: "Turning a parent’s biggest question into calm digital trust.",
@@ -472,7 +472,7 @@ export const editorialCases: Record<string, EditorialCase> = {
     contextLead:
       "Ouders zoeken niet alleen iemand die een paar uur beschikbaar is. Ze zoeken rust: iemand die het ritme van thuis begrijpt, helder communiceert en zorgvuldig omgaat met wat voor hen het belangrijkst is.",
     contextBody:
-      "Oppas by Chaima richt zich op gezinnen met kinderen van 0 tot 12 jaar in Amsterdam en omgeving. De website moest tien jaar ervaring, een pedagogische basis en de praktische werkwijze vertalen naar een warme eerste kennismaking — zonder grote claims of commerciële druk.",
+      "Oppas by Chaima richt zich op gezinnen met kinderen van 0 tot 12 jaar in Amsterdam en omgeving. De website moest tien jaar ervaring, een pedagogische basis en de praktische werkwijze vertalen naar een warme eerste kennismaking, zonder grote claims of commerciële druk.",
     insightQuote:
       "Een ouder boekt geen oppasuur. Die geeft iemand tijdelijk een plek in het ritme van thuis.",
     insightBody:
@@ -519,7 +519,7 @@ export const editorialCases: Record<string, EditorialCase> = {
       "De live homepage naast de illustraties die het merk menselijk maken: één rustige route van eerste indruk naar werkwijze, ervaring en een vrijblijvende beschikbaarheidsvraag.",
     impactTitle: "Een persoonlijke dienst die online niet onpersoonlijk wordt.",
     impactBody: [
-      "De website maakt een moeilijk vergelijkbare keuze concreet. Ouders begrijpen wie Chaima is, hoe zij werkt, wat een oppasmoment kost en welke afspraken vooraf worden gemaakt — zonder eerst een lang gesprek te hoeven voeren.",
+      "De website maakt een moeilijk vergelijkbare keuze concreet. Ouders begrijpen wie Chaima is, hoe zij werkt, wat een oppasmoment kost en welke afspraken vooraf worden gemaakt, zonder eerst een lang gesprek te hoeven voeren.",
       "Voor Chaima vormt de site een digitale kennismaking die veel terugkerende vragen al zorgvuldig beantwoordt. Daardoor begint WhatsApp niet meer bij nul, maar bij een gezin dat al beter weet of de samenwerking past.",
     ],
     stats: [
@@ -527,7 +527,7 @@ export const editorialCases: Record<string, EditorialCase> = {
       { value: "0–12", label: "jaar als leeftijdsbereik" },
       { value: "04", label: "duidelijke stappen vóór de oppas" },
     ],
-    next: { slug: "mirqa", name: "MIRQA" },
+    next: { slug: "tareeqi", name: "Tareeqi" },
     externalUrl: "https://oppasbychaima.nl/",
     prototype: "oppas",
   },

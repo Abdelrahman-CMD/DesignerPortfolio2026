@@ -3,7 +3,7 @@ import { HomeExperience } from "./components/HomeExperience";
 import { LocalizedSurface } from "./i18n";
 
 export const metadata: Metadata = {
-  title: { absolute: "Abdelrahman — Senior digitaal ontwerper" },
+  title: { absolute: "Abdelrahman · Senior digitaal ontwerper" },
   description:
     "Ik ontwerp met alles wat ik onderweg leer: digitale producten op het snijvlak van strategie, menselijke waarde en doordachte vormgeving.",
 };

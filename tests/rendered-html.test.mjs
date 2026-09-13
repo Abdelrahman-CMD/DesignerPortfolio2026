@@ -29,7 +29,7 @@ test("server-renders the complete portfolio homepage", async () => {
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
 
   const html = await response.text();
-  assert.match(html, /Abdelrahman — Senior digitaal ontwerper/);
+  assert.match(html, /Abdelrahman · Senior digitaal ontwerper/);
   assert.match(html, /Productdesigner die complexiteit helder maakt/);
   assert.match(html, /Ik combineer productstrategie, UX-onderzoek en interfaceontwerp/);
   assert.match(html, /class="mind-hero-canvas"/);
@@ -44,20 +44,34 @@ test("server-renders the complete portfolio homepage", async () => {
   assert.equal((html.match(/class="manifesto-marker-stroke"/g) ?? []).length, 3);
   assert.match(html, /class="mind-brain-stage"/);
   assert.doesNotMatch(html, /mind-zone-motif/);
-  assert.match(html, /Gereedschap: Figma, Framer en AI/);
+  assert.match(html, /Synthese · Probleemkader · Succesmaatstaf/);
   assert.doesNotMatch(html, /hero-project-letter|hero-rule/);
   assert.match(html, /class="contact-postcard"/);
-  assert.match(html, /class="floating-contact"/);
+  assert.doesNotMatch(html, /class="floating-contact"/);
   assert.doesNotMatch(html, /class="manifesto-quarter-roll"/);
   assert.doesNotMatch(html, /manifesto-coin|manifesto-coin-edge|manifesto-coin-shadow/);
   assert.match(html, /mailto:dhr_abdelrahman@outlook\.com/);
   assert.match(html, /https:\/\/wa\.me\/31621572124/);
   assert.doesNotMatch(html, /instagram/i);
-  assert.equal((html.match(/class="link-icon"/g) ?? []).length, 16);
+  assert.equal((html.match(/class="link-icon"/g) ?? []).length, 15);
   assert.match(html, /class="method-horizontal"/);
   assert.doesNotMatch(html, /class="method-grid"/);
   assert.equal((html.match(/class="project-entry /g) ?? []).length, 8);
   assert.match(html, /class="project-grid"/);
+  const orderedProjects = [
+    "project-mirqa",
+    "project-oppasbychaima",
+    "project-tareeqi",
+    "project-hijaman-cups",
+    "project-bayn",
+    "project-atotz",
+    "project-guidance",
+    "project-ayn",
+  ];
+  assert.deepEqual(
+    orderedProjects.map((projectClass) => html.indexOf(projectClass)),
+    [...orderedProjects.map((projectClass) => html.indexOf(projectClass))].sort((a, b) => a - b),
+  );
   assert.equal((html.match(/class="project-parallax-media"/g) ?? []).length, 8);
   assert.match(html, /05<\/strong> Conceptprojecten/);
   assert.match(html, /03<\/strong> Klantprojecten/);
@@ -285,10 +299,12 @@ test("server-renders localized portfolio routes", async () => {
   const englishCaseHtml = await englishCase.text();
 
   assert.match(englishHtml, /data-locale="en"/);
-  assert.match(englishHtml, /href="\/en\/playground"/);
+  assert.doesNotMatch(englishHtml, /href="\/en\/playground"/);
+  assert.match(englishHtml, /href="#contact"/);
   assert.match(englishHtml, /aria-current="page" aria-label="English"/);
   assert.match(dutchHtml, /data-locale="nl"/);
-  assert.match(dutchHtml, /href="\/nl\/playground"/);
+  assert.doesNotMatch(dutchHtml, /href="\/nl\/playground"/);
+  assert.match(dutchHtml, /href="#contact"/);
   assert.match(englishCaseHtml, /data-locale="en"/);
   assert.match(englishCaseHtml, /class="tc-nav-actions"/);
   assert.match(i18nSource, /Everything I learn shifts my perspective/);

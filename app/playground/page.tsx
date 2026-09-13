@@ -6,13 +6,13 @@ export const metadata: Metadata = {
   title: "Playground",
   description: "Een atmosferische ruimte voor experimenten, schetsen en ideeën die nog niet in een case hoeven te passen.",
   openGraph: {
-    title: "Playground — Abdelrahman",
+    title: "Playground · Abdelrahman",
     description: "Een atmosferische ruimte voor experimenten, schetsen en ideeën in ontwikkeling.",
     images: [],
   },
   twitter: {
     card: "summary",
-    title: "Playground — Abdelrahman",
+    title: "Playground · Abdelrahman",
     description: "Een atmosferische ruimte voor experimenten, schetsen en ideeën in ontwikkeling.",
     images: [],
   },
