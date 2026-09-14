@@ -3,12 +3,14 @@
 import Image from "next/image";
 import { CSSProperties, useEffect, useLayoutEffect, useRef, useState } from "react";
 import ArrowUpRight from "lucide-react/icons/arrow-up-right";
+import Blocks from "lucide-react/icons/blocks";
 import BriefcaseBusiness from "lucide-react/icons/briefcase-business";
 import Figma from "lucide-react/icons/figma";
 import Framer from "lucide-react/icons/framer";
 import Linkedin from "lucide-react/icons/linkedin";
 import Mail from "lucide-react/icons/mail";
 import MessageCircle from "lucide-react/icons/message-circle";
+import Share2 from "lucide-react/icons/share-2";
 import Sparkles from "lucide-react/icons/sparkles";
 import UserRound from "lucide-react/icons/user-round";
 import Workflow from "lucide-react/icons/workflow";
@@ -35,27 +37,11 @@ const projects = [
   },
   {
     number: "02",
-    slug: "oppasbychaima",
-    name: "Oppas by Chaima",
-    title: "Thuiszorg vertalen naar rustig en geloofwaardig digitaal vertrouwen",
-    summary:
-      "Een warme website voor een pedagogisch opgeleide oppas, waarin thuisritme, duidelijke afspraken en oudervertrouwen samenkomen.",
-    services: "Positionering · UX/UI · Webontwerp en bouw",
-    category: "Klantproject",
-    status: "Online",
-    bg: "#f0e2ce",
-    ink: "#342d27",
-    image: "/projects/home/oppas-by-chaima-cover.webp",
-    imagePosition: "center",
-    href: "/cases/oppas-by-chaima",
-  },
-  {
-    number: "03",
     slug: "tareeqi",
     name: "Tareeqi",
     title: "Mekka en Medina ontdekken voorbij het voor de hand liggende",
     summary:
-      "Een lokaal gevoed kaartplatform dat pelgrims voorbij de bekende routes brengt, met rust, context en toegankelijkheid als kompas.",
+      "Een lokaal gevoed kaartplatform dat pelgrims voorbij de bekende routes brengt — met rust, context en toegankelijkheid als kompas.",
     services: "Strategie · UX/UI · Productconcept",
     category: "Conceptproject",
     status: "Zelf geïnitieerd",
@@ -66,20 +52,36 @@ const projects = [
     href: "/cases/tareeqi",
   },
   {
-    number: "04",
-    slug: "hijaman-cups",
-    name: "Hijama’N Cups",
-    title: "Traditionele zorg vertalen naar een rustige digitale ontvangst",
+    number: "03",
+    slug: "ayn",
+    name: "Ayn Al-Hikmah",
+    title: "Het gat vullen voor kenniszoekers die Medina verlaten",
     summary:
-      "Een warme Framer-website voor een zelfstandige behandelpraktijk, waarin uitleg, vertrouwen en laagdrempelig boeken samenkomen.",
-    services: "Strategie · UX/UI · Framer ontwerp en bouw",
-    category: "Klantproject",
-    status: "Online",
-    bg: "#dae5dd",
-    ink: "#0b4a20",
-    image: "/projects/home/hijaman-cups.webp",
+      "Een boekhandel en leeromgeving die boeken, geleerden en de structuur van studeren uit de Haramain dichterbij brengt.",
+    services: "Strategie · E-commerce · Leerervaring",
+    category: "Conceptproject",
+    status: "Zelf geïnitieerd",
+    bg: "#f2cf82",
+    ink: "#401818",
+    image: "/projects/home/ayn.webp",
     imagePosition: "center",
-    href: "/cases/hijaman-cups",
+    href: "/cases/ayn-al-hikmah",
+  },
+  {
+    number: "04",
+    slug: "guidance",
+    name: "Guidance Travel",
+    title: "Een functionele herdefinitie van hoogwaardige reizen",
+    summary:
+      "Een conversiegerichte reiservaring waarin elke keuze — van pakketfilter tot reflectie — het vertrouwen van de pelgrim versterkt.",
+    services: "Conversiestrategie · UX/UI · Webontwerp",
+    category: "Conceptproject",
+    status: "Zelf geïnitieerd",
+    bg: "#ff9e43",
+    ink: "#28231f",
+    image: "/projects/home/guidance.webp",
+    imagePosition: "center",
+    href: "/cases/guidance-travel",
   },
   {
     number: "05",
@@ -99,6 +101,22 @@ const projects = [
   },
   {
     number: "06",
+    slug: "hijaman-cups",
+    name: "Hijama’N Cups",
+    title: "Traditionele zorg vertalen naar een rustige digitale ontvangst",
+    summary:
+      "Een warme Framer-website voor een zelfstandige behandelpraktijk, waarin uitleg, vertrouwen en laagdrempelig boeken samenkomen.",
+    services: "Strategie · UX/UI · Framer ontwerp en bouw",
+    category: "Klantproject",
+    status: "Online",
+    bg: "#dae5dd",
+    ink: "#0b4a20",
+    image: "/projects/home/hijaman-cups.webp",
+    imagePosition: "center",
+    href: "/cases/hijaman-cups",
+  },
+  {
+    number: "07",
     slug: "atotz",
     name: "AtotZ Detachering",
     title: "De juiste mensen op de juiste plek, zonder onnodige drempels",
@@ -114,36 +132,20 @@ const projects = [
     href: "/cases/atotz-detachering",
   },
   {
-    number: "07",
-    slug: "guidance",
-    name: "Guidance Travel",
-    title: "Een functionele herdefinitie van hoogwaardige reizen",
-    summary:
-      "Een conversiegerichte reiservaring waarin elke keuze, van pakketfilter tot reflectie, het vertrouwen van de pelgrim versterkt.",
-    services: "Conversiestrategie · UX/UI · Webontwerp",
-    category: "Conceptproject",
-    status: "Zelf geïnitieerd",
-    bg: "#ff9e43",
-    ink: "#28231f",
-    image: "/projects/home/guidance.webp",
-    imagePosition: "center",
-    href: "/cases/guidance-travel",
-  },
-  {
     number: "08",
-    slug: "ayn",
-    name: "Ayn Al-Hikmah",
-    title: "Het gat vullen voor kenniszoekers die Medina verlaten",
+    slug: "oppasbychaima",
+    name: "Oppas by Chaima",
+    title: "Thuiszorg vertalen naar rustig en geloofwaardig digitaal vertrouwen",
     summary:
-      "Een boekhandel en leeromgeving die boeken, geleerden en de structuur van studeren uit de Haramain dichterbij brengt.",
-    services: "Strategie · E-commerce · Leerervaring",
-    category: "Conceptproject",
-    status: "Zelf geïnitieerd",
-    bg: "#f2cf82",
-    ink: "#401818",
-    image: "/projects/home/ayn.webp",
+      "Een warme website voor een pedagogisch opgeleide oppas, waarin thuisritme, duidelijke afspraken en oudervertrouwen samenkomen.",
+    services: "Positionering · UX/UI · Webontwerp en bouw",
+    category: "Klantproject",
+    status: "Online",
+    bg: "#f0e2ce",
+    ink: "#342d27",
+    image: "/projects/home/oppas-by-chaima-cover.webp",
     imagePosition: "center",
-    href: "/cases/ayn-al-hikmah",
+    href: "/cases/oppas-by-chaima",
   },
 ] as const;
 
@@ -172,7 +174,7 @@ const personalStory = [
     kicker: "Wie ik ben",
     title: "Ik breek het ijs. Niet de basis.",
     englishTitle: "Easy conversation. Serious foundations.",
-    body: "Ik ben Abdelrahman. Sociaal genoeg om snel aan tafel te komen, scherp genoeg om niet overal ja op te zeggen. Een goede klik geeft ruimte voor eerlijke vragen. Precies daar wordt het werk sterker van.",
+    body: "Ik ben Abdelrahman. Sociaal genoeg om snel aan tafel te komen, scherp genoeg om niet overal ja op te zeggen. Een goede klik geeft ruimte voor eerlijke vragen — precies waar het werk sterker van wordt.",
     image: "/about/web/portrait-studio.webp",
     alt: "Abdelrahman in zijn ontwerpstudio",
     position: "center 35%",
@@ -236,30 +238,231 @@ const clamp01 = (value: number) => Math.max(0, Math.min(1, value));
 function createStoryMosaic(
   canvas: HTMLCanvasElement,
   fullImage: HTMLElement,
+  source: string,
+  objectPosition: string,
   direction: number,
 ): StoryMosaicController {
   const stage = canvas.parentElement;
-  canvas.style.display = "none";
+  let gl: WebGLRenderingContext | null = null;
+  let program: WebGLProgram | null = null;
+  let texture: WebGLTexture | null = null;
+  let image: HTMLImageElement | null = null;
+  let revealProgress = 0;
+  let exitProgress = 0;
+  let disposed = false;
+  let supported = true;
+
+  const parsePosition = () => {
+    const values = objectPosition.trim().split(/\s+/);
+    const toFraction = (value: string | undefined, fallback: number) => {
+      if (!value || value === "center") return fallback;
+      if (value === "top" || value === "left") return 0;
+      if (value === "bottom" || value === "right") return 1;
+      const parsed = Number.parseFloat(value);
+      return Number.isFinite(parsed) ? clamp01(parsed / 100) : fallback;
+    };
+
+    return {
+      x: toFraction(values[0], 0.5),
+      y: toFraction(values[1], values[0]?.includes("%") ? 0.5 : 0.5),
+    };
+  };
+
+  const compileShader = (context: WebGLRenderingContext, type: number, sourceCode: string) => {
+    const shader = context.createShader(type);
+    if (!shader) return null;
+    context.shaderSource(shader, sourceCode);
+    context.compileShader(shader);
+    if (!context.getShaderParameter(shader, context.COMPILE_STATUS)) {
+      context.deleteShader(shader);
+      return null;
+    }
+    return shader;
+  };
+
+  const initialize = () => {
+    if (gl || !supported || disposed) return;
+    gl = canvas.getContext("webgl", {
+      alpha: true,
+      antialias: false,
+      depth: false,
+      premultipliedAlpha: true,
+      preserveDrawingBuffer: false,
+    });
+
+    if (!gl) {
+      supported = false;
+      canvas.classList.add("is-unsupported");
+      return;
+    }
+
+    const vertexShader = compileShader(gl, gl.VERTEX_SHADER, `
+      attribute vec2 aPosition;
+      varying vec2 vUv;
+      void main() {
+        vUv = aPosition * 0.5 + 0.5;
+        gl_Position = vec4(aPosition, 0.0, 1.0);
+      }
+    `);
+    const fragmentShader = compileShader(gl, gl.FRAGMENT_SHADER, `
+      precision mediump float;
+      uniform sampler2D uTexture;
+      uniform vec2 uResolution;
+      uniform vec2 uUvScale;
+      uniform vec2 uUvOffset;
+      uniform float uReveal;
+      uniform float uExit;
+      uniform float uDirection;
+      varying vec2 vUv;
+
+      float randomTile(vec2 tile) {
+        return fract(sin(dot(tile, vec2(12.9898, 78.233))) * 43758.5453);
+      }
+
+      void main() {
+        const float tileSize = 8.0;
+        vec2 pixel = vUv * uResolution;
+        vec2 tile = floor(pixel / tileSize);
+        vec2 tileCount = ceil(uResolution / tileSize);
+        vec2 normalizedTile = (tile + 0.5) / tileCount;
+        float horizontal = uDirection < 0.0 ? normalizedTile.x : 1.0 - normalizedTile.x;
+        float diagonal = (horizontal + (1.0 - normalizedTile.y)) * 0.5;
+        float noise = randomTile(tile);
+        float enterOrder = diagonal * 0.68 + noise * 0.2;
+        float leaveOrder = (1.0 - diagonal) * 0.68 + randomTile(tile + vec2(19.0)) * 0.2;
+        float assembled = smoothstep(enterOrder, enterOrder + 0.08, uReveal);
+        float remaining = 1.0 - smoothstep(leaveOrder, leaveOrder + 0.08, uExit);
+        vec2 imageUv = uUvOffset + vUv * uUvScale;
+        vec4 color = texture2D(uTexture, imageUv);
+        gl_FragColor = vec4(color.rgb, color.a * assembled * remaining);
+      }
+    `);
+
+    if (!vertexShader || !fragmentShader) {
+      supported = false;
+      canvas.classList.add("is-unsupported");
+      return;
+    }
+
+    program = gl.createProgram();
+    if (!program) {
+      supported = false;
+      return;
+    }
+    gl.attachShader(program, vertexShader);
+    gl.attachShader(program, fragmentShader);
+    gl.linkProgram(program);
+    gl.deleteShader(vertexShader);
+    gl.deleteShader(fragmentShader);
+
+    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+      supported = false;
+      canvas.classList.add("is-unsupported");
+      return;
+    }
+
+    const buffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+    gl.bufferData(
+      gl.ARRAY_BUFFER,
+      new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]),
+      gl.STATIC_DRAW,
+    );
+    gl.useProgram(program);
+    const position = gl.getAttribLocation(program, "aPosition");
+    gl.enableVertexAttribArray(position);
+    gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0);
+    gl.disable(gl.DEPTH_TEST);
+    gl.enable(gl.BLEND);
+    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+
+    image = new window.Image();
+    image.decoding = "async";
+    image.onload = () => {
+      if (!gl || !program || !image || disposed) return;
+      texture = gl.createTexture();
+      gl.bindTexture(gl.TEXTURE_2D, texture);
+      gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
+      draw();
+    };
+    image.src = source;
+  };
+
+  const draw = () => {
+    if (!gl || !program || !texture || !image || disposed) return;
+    const rect = canvas.getBoundingClientRect();
+    if (rect.width < 2 || rect.height < 2) return;
+    const pixelRatio = 1;
+    const width = Math.max(1, Math.round(rect.width * pixelRatio));
+    const height = Math.max(1, Math.round(rect.height * pixelRatio));
+    if (canvas.width !== width || canvas.height !== height) {
+      canvas.width = width;
+      canvas.height = height;
+    }
+
+    const canvasAspect = width / height;
+    const imageAspect = image.naturalWidth / image.naturalHeight;
+    const position = parsePosition();
+    let scaleX = 1;
+    let scaleY = 1;
+    let offsetX = 0;
+    let offsetY = 0;
+    if (imageAspect > canvasAspect) {
+      scaleX = canvasAspect / imageAspect;
+      offsetX = (1 - scaleX) * position.x;
+    } else {
+      scaleY = imageAspect / canvasAspect;
+      offsetY = (1 - scaleY) * (1 - position.y);
+    }
+
+    gl.viewport(0, 0, width, height);
+    gl.clearColor(0, 0, 0, 0);
+    gl.clear(gl.COLOR_BUFFER_BIT);
+    gl.useProgram(program);
+    gl.uniform2f(gl.getUniformLocation(program, "uResolution"), width, height);
+    gl.uniform2f(gl.getUniformLocation(program, "uUvScale"), scaleX, scaleY);
+    gl.uniform2f(gl.getUniformLocation(program, "uUvOffset"), offsetX, offsetY);
+    gl.uniform1f(gl.getUniformLocation(program, "uReveal"), revealProgress);
+    gl.uniform1f(gl.getUniformLocation(program, "uExit"), exitProgress);
+    gl.uniform1f(gl.getUniformLocation(program, "uDirection"), direction);
+    gl.drawArrays(gl.TRIANGLES, 0, 6);
+  };
 
   return {
     render(reveal, exit) {
-      const revealProgress = clamp01(reveal);
-      const exitProgress = clamp01(exit);
-      const hiddenEdge = (1 - revealProgress) * 100;
+      revealProgress = clamp01(reveal);
+      exitProgress = clamp01(exit);
       if (stage) stage.style.opacity = `${1 - exitProgress}`;
-      fullImage.style.opacity = `${revealProgress}`;
-      fullImage.style.clipPath = direction < 0
-        ? `inset(0 ${hiddenEdge}% 0 0)`
-        : `inset(0 0 0 ${hiddenEdge}%)`;
-      fullImage.style.transform = `scale(${1.025 - revealProgress * 0.025})`;
+      if ((revealProgress > 0 || exitProgress > 0) && !gl && supported) initialize();
+
+      if (!supported) {
+        fullImage.style.opacity = `${revealProgress * (1 - exitProgress)}`;
+        return;
+      }
+
+      const showFullImage = revealProgress >= 0.995 && exitProgress <= 0.001;
+      fullImage.style.opacity = showFullImage ? "1" : "0";
+      canvas.style.opacity = showFullImage ? "0" : "1";
+      draw();
     },
-    resize() {},
+    resize() {
+      draw();
+    },
     dispose() {
-      canvas.style.removeProperty("display");
-      fullImage.style.removeProperty("opacity");
-      fullImage.style.removeProperty("clip-path");
-      fullImage.style.removeProperty("transform");
-      stage?.style.removeProperty("opacity");
+      disposed = true;
+      if (gl && texture) gl.deleteTexture(texture);
+      if (gl && program) gl.deleteProgram(program);
+      const loseContext = gl?.getExtension("WEBGL_lose_context");
+      loseContext?.loseContext();
+      gl = null;
+      program = null;
+      texture = null;
+      image = null;
     },
   };
 }
@@ -267,35 +470,35 @@ function createStoryMosaic(
 const workingMethod = [
   {
     number: "01",
-    phase: "Kaderen",
-    title: "Maak de beslissing scherp.",
-    body: "Ik breng de briefing terug tot één gebruikersbeslissing, één zakelijk doel en de beperking die beide kan laten ontsporen.",
-    tools: "Synthese · Probleemkader · Succesmaatstaf",
-    annotation: "Een scherpe beslissing houdt de interface rustig.",
+    phase: "Sparren",
+    title: "De klik is geen bijzaak.",
+    body: "Een goed gesprek laat snel zien of we elkaar begrijpen én durven tegenspreken. We maken aannames zichtbaar en bepalen welke verandering de website werkelijk moet veroorzaken.",
+    tools: "Klantsessies · Workshops · Richting",
+    annotation: "Begin met de vraag — niet met het eindproduct.",
   },
   {
     number: "02",
-    phase: "Uittekenen",
-    title: "Maak de route zichtbaar.",
-    body: "Flows en vroege schermen leggen ontbrekende stappen bloot voordat visuele verfijning ze kostbaar maakt om te veranderen.",
-    tools: "Journey · User flow · Low-fi prototype",
-    annotation: "Eerst de route. Daarna de glans.",
+    phase: "Verdiepen",
+    title: "De context beslist mee.",
+    body: "Deskresearch, gesprekken en observaties brengen de vraag dichtbij. AI helpt patronen sneller toetsen en nieuwe vragen formuleren; het oordeel en de richting blijven menselijk.",
+    tools: "Deskresearch · Praktijkonderzoek · AI",
+    annotation: "AI versnelt het zoeken. Het oordeel blijft menselijk.",
   },
   {
     number: "03",
-    phase: "Bewijzen",
-    title: "Test wat kan breken.",
-    body: "Ik toets eerst de riskantste aanname: begrijpen mensen de route, vertrouwen ze de boodschap en vinden ze het juiste vervolg?",
-    tools: "Gesprekken · Taaktest · Gedragsdata",
-    annotation: "Bewijs het risico, niet ieder detail.",
+    phase: "Vormgeven",
+    title: "Maak het vroeg genoeg echt.",
+    body: "In Figma krijgt de ervaring structuur. In Framer of code wordt ze tastbaar en testbaar. AI versnelt varianten en uitvoering, zonder de ontwerpintentie over te nemen.",
+    tools: "Figma · Framer · Bouwen met AI-ondersteuning",
+    annotation: "Maak het vroeg voelbaar. Dan wordt feedback concreet.",
   },
   {
     number: "04",
-    phase: "Aanscherpen",
-    title: "Lever bewijs, geen decoratie.",
-    body: "Interface, content en uitvoering worden samen verfijnd. Na livegang kijk ik naar gebruikssignalen om te zien wat echt werkt.",
-    tools: "Designsystem · Handoff · QA · Meting",
-    annotation: "Mooi wordt waardevol zodra het werkt.",
+    phase: "Koers houden",
+    title: "Koers houden is ook ontwerpen.",
+    body: "Tijdens iedere fase kijken we samen: klopt de richting nog, begrijpen gebruikers dit en draagt iedere keuze bij aan het doel? Zo blijft de klant onderdeel van iedere ontwerpbeslissing.",
+    tools: "Prototypebeoordeling · Afstemming · Iteratie",
+    annotation: "Stem af. Stel bij. Houd samen koers.",
   },
 ] as const;
 
@@ -351,6 +554,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
   const root = useRef<HTMLElement>(null);
   const [activeMindZone, setActiveMindZone] = useState<string | null>(null);
   const [activeNav, setActiveNav] = useState("");
+  const [contactOpen, setContactOpen] = useState(false);
   const touchMindZone = mindZones.find((zone) => zone.id === activeMindZone) ?? mindZones[0];
 
   useEffect(() => {
@@ -440,6 +644,8 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
         ? createStoryMosaic(
           heroMosaicCanvas,
           heroFullImage,
+          "/about/hero-abdel-profile.png",
+          "right bottom",
           -1,
         )
         : null;
@@ -456,7 +662,6 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
       }
 
       if (!prefersReducedMotion) {
-        gsap.set(".mind-title-handwrite", { clipPath: "inset(0 100% 0 0)" });
         const intro = gsap.timeline({ defaults: { ease: "power4.out" } });
         intro
           .from(".site-header", {
@@ -483,11 +688,6 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
             ".mind-title-line > span",
             { yPercent: 112, duration: 0.4, stagger: 0.06 },
             "-=0.16",
-          )
-          .to(
-            ".mind-title-handwrite",
-            { clipPath: "inset(0 0% 0 0)", duration: 0.62, ease: "power2.inOut" },
-            "-=0.12",
           )
           .from(
             ".mind-hero-lede",
@@ -925,13 +1125,11 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
 
       if (route && routeSvg && basePath && progressPath && runner && stops.length > 0) {
         type Point = { x: number; y: number };
-        const routeLabels = locale === "en"
-          ? ["Who I am", "What I do", "Keep learning", "Outside work", "To process"]
-          : ["Wie ik ben", "Wat ik doe", "Blijf leren", "Buiten beeld", "Naar aanpak"];
         let routeLength = 0;
         let routeProgress = 0;
         let resizeFrame = 0;
         let dotDistances: number[] = [];
+        let routeSamples: Point[] = [];
 
         const createSmoothPath = (points: Point[]) => {
           if (points.length < 2) return "";
@@ -959,11 +1157,19 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
           const normalizedProgress = clamp01(progress);
           const visibleLength = normalizedProgress * routeLength;
           const runnerPoint = basePath.getPointAtLength(visibleLength);
-          progressPath.style.strokeDashoffset = `${routeLength - visibleLength}`;
+          const visibleSampleCount = Math.max(
+            1,
+            Math.ceil(normalizedProgress * Math.max(1, routeSamples.length - 1)),
+          );
+          const visibleSamples = routeSamples.slice(0, visibleSampleCount);
+          const partialPath = visibleSamples.length > 0
+            ? `M ${visibleSamples[0].x} ${visibleSamples[0].y}${visibleSamples
+              .slice(1)
+              .map((point) => ` L ${point.x} ${point.y}`)
+              .join("")} L ${runnerPoint.x} ${runnerPoint.y}`
+            : `M ${runnerPoint.x} ${runnerPoint.y}`;
+          progressPath.setAttribute("d", partialPath);
           gsap.set(runner, { x: runnerPoint.x - 7, y: runnerPoint.y - 7 });
-          const nextStopIndex = dotDistances.findIndex((distance) => visibleLength < distance - 8);
-          const nextLabel = routeLabels[nextStopIndex === -1 ? routeLabels.length - 1 : nextStopIndex];
-          if (runner.dataset.label !== nextLabel) runner.dataset.label = nextLabel;
 
           dotDistances.forEach((distance, index) => {
             const previousDistance = index === 0 ? 0 : dotDistances[index - 1];
@@ -1027,7 +1233,10 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
           basePath.setAttribute("d", pathData);
           progressPath.setAttribute("d", pathData);
           routeLength = basePath.getTotalLength();
-          progressPath.style.strokeDasharray = `${routeLength}`;
+          routeSamples = Array.from(
+            { length: Math.ceil(routeLength / 12) + 1 },
+            (_, index) => basePath.getPointAtLength(Math.min(routeLength, index * 12)),
+          );
           dotDistances = dotPoints.map(findClosestDistance);
           progressPath.style.opacity = "1";
           runner.style.opacity = "1";
@@ -1076,8 +1285,9 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
           (element): element is HTMLElement => Boolean(element),
         );
         const direction = storyIndex % 2 === 0 ? -1 : 1;
+        const story = personalStory[storyIndex];
         const mosaic = canvas && fullImage
-          ? createStoryMosaic(canvas, fullImage, direction)
+          ? createStoryMosaic(canvas, fullImage, story.image, story.position, direction)
           : null;
         let revealProgress = 0;
         let exitProgress = 0;
@@ -1238,7 +1448,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
         scrollTrigger: { trigger: ".contact", start: "top 74%", toggleActions: "play none none none", fastScrollEnd: true },
       });
 
-      gsap.from(".postcard-copy > *, .postcard-portrait, .postcard-brand, .postcard-stamp, .postcard-links", {
+      gsap.from(".postcard-copy > *, .postcard-portrait, .postcard-brand, .postcard-stamp, .postcard-links, .postcard-cta", {
         opacity: 0,
         y: 26,
         rotation: (index) => (index % 2 === 0 ? -1.2 : 1.2),
@@ -1264,12 +1474,21 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
       cleanupCaseTransitions();
       context.revert();
     };
-  }, [locale]);
+  }, []);
 
   const manifesto = locale === "en"
     ? "I make complex choices easier to understand. First define the problem. Then design a direction users understand and teams can build."
     : "Ik maak complexe keuzes begrijpelijk. Eerst het probleem scherp. Dan een richting die gebruikers begrijpen en teams kunnen bouwen.";
   const ringCopy = heroCtaRingCopy[locale];
+
+  const activateContact = () => {
+    if (window.matchMedia("(hover: none)").matches) {
+      setContactOpen((current) => !current);
+      return;
+    }
+
+    document.getElementById("contact")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   return (
     <main ref={root} className="site-shell">
@@ -1287,11 +1506,61 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
             <a href="#werk" aria-current={activeNav === "werk" ? "location" : undefined}><span className="link-icon" aria-hidden="true"><BriefcaseBusiness /></span><span>Werk</span></a>
             <a href="#over" aria-current={activeNav === "over" ? "location" : undefined}><span className="link-icon" aria-hidden="true"><UserRound /></span><span>Over</span></a>
             <a href="#aanpak" aria-current={activeNav === "aanpak" ? "location" : undefined}><span className="link-icon" aria-hidden="true"><Workflow /></span><span>Aanpak</span></a>
-            <a href="#contact" aria-current={activeNav === "contact" ? "location" : undefined}><span className="link-icon" aria-hidden="true"><Mail /></span><span>Contact</span></a>
+            <a href={localeHref("/playground", locale)}><span className="link-icon" aria-hidden="true"><Blocks /></span><span>Playground</span></a>
           </nav>
           <LanguageSwitcher locale={locale} />
         </div>
       </header>
+
+      <aside
+        className={`floating-contact${contactOpen ? " is-open" : ""}`}
+        aria-label="Direct contact"
+        onMouseEnter={() => {
+          if (window.matchMedia("(hover: hover)").matches) setContactOpen(true);
+        }}
+        onMouseLeave={() => {
+          if (window.matchMedia("(hover: hover)").matches) setContactOpen(false);
+        }}
+        onFocusCapture={() => setContactOpen(true)}
+        onBlurCapture={(event) => {
+          if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setContactOpen(false);
+        }}
+      >
+        <div className="floating-contact-links" id="floating-contact-links" aria-hidden={!contactOpen}>
+          <a href="https://www.linkedin.com/in/abdelrahman-ahmed-30896964/" target="_blank" rel="noreferrer" aria-label="Neem contact op via LinkedIn">
+            <Linkedin aria-hidden="true" />
+          </a>
+          <a href="mailto:dhr_abdelrahman@outlook.com" aria-label="Stuur Abdelrahman een e-mail">
+            <Mail aria-hidden="true" />
+          </a>
+          <a href="https://wa.me/31621572124" target="_blank" rel="noreferrer" aria-label="Neem contact op via WhatsApp">
+            <MessageCircle aria-hidden="true" />
+          </a>
+        </div>
+        <button
+          type="button"
+          className="floating-contact-trigger"
+          aria-expanded={contactOpen}
+          aria-controls="floating-contact-links"
+          aria-label="Open contactmogelijkheden"
+          onClick={activateContact}
+        >
+          <span className="contact-arch" aria-hidden="true">
+            {[..."CONTACT"].map((letter, index) => (
+              <span
+                style={{
+                  "--letter-angle": `${-60 + (index * 20)}deg`,
+                  "--letter-counter-angle": `${60 - (index * 20)}deg`,
+                } as CSSProperties}
+                key={`${letter}-${index}`}
+              >
+                {letter}
+              </span>
+            ))}
+          </span>
+          <Share2 className="contact-share-icon" aria-hidden="true" />
+        </button>
+      </aside>
 
       <section
         className="mind-hero"
@@ -1357,7 +1626,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
               <h1 id="hero-title" aria-label={locale === "en" ? "Product designer turning complexity into clarity." : "Productdesigner die complexiteit helder maakt."}>
                 <span className="mind-title-line"><span>{locale === "en" ? "Product designer" : "Productdesigner"}</span></span>
                 <span className="mind-title-line"><span>{locale === "en" ? "turning complexity" : "maakt complexiteit"}</span></span>
-                <span className="mind-title-line"><span>{locale === "en" ? "into" : "begrijpelijk en"} <em className="mind-title-handwrite">{locale === "en" ? "clarity." : "bruikbaar."}</em></span></span>
+                <span className="mind-title-line"><span>{locale === "en" ? "into" : "begrijpelijk en"} <em>{locale === "en" ? "clarity." : "bruikbaar."}</em></span></span>
               </h1>
               <p className="mind-hero-lede">
                 {locale === "en"
@@ -1686,10 +1955,10 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
             <path className="story-route-base" />
             <path className="story-route-progress" />
           </svg>
-          <span className="story-route-runner" data-label={locale === "en" ? "Who I am" : "Wie ik ben"} aria-hidden="true" />
+          <span className="story-route-runner" aria-hidden="true" />
           <div className="story-board-meta label" aria-hidden="true">
             <span>Personal field notes</span>
-            <span>01 / 04</span>
+            <span>01 — 04</span>
           </div>
           {personalStory.map((story, index) => (
             <article
@@ -1754,7 +2023,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
             <div className="method-horizontal-meta">
               <p className="label">Scrollroute · links naar rechts</p>
               <div className="method-progress" aria-hidden="true"><span /></div>
-              <p className="label">01 / 04</p>
+              <p className="label">01 — 04</p>
             </div>
             <div className="method-track">
               {workingMethod.map((step, index) => (
@@ -1804,7 +2073,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
           </div>
 
           <div className="postcard-copy">
-            <p className="label">Ansichtkaart / Amsterdam / 2026</p>
+            <p className="label">Ansichtkaart / Amsterdam — 2026</p>
             <h2><span>Even kijken</span><em>of het klikt?</em></h2>
             <p>Geen pitch nodig. Vertel wat er speelt; ik stel de vragen. Geeft het gesprek energie, dan plannen we koffie.</p>
           </div>
@@ -1820,6 +2089,10 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
           </figure>
 
           <p className="postcard-side-type" aria-hidden="true">BRENG DE VRAAG · TOETS DE KLIK</p>
+
+          <a className="postcard-cta" href="mailto:dhr_abdelrahman@outlook.com">
+            <span className="link-icon" aria-hidden="true"><Mail /></span><span>Leg je vraag op tafel</span>
+          </a>
 
           <div className="postcard-links" aria-label="Contactkanalen">
             <a href="mailto:dhr_abdelrahman@outlook.com"><span className="link-icon" aria-hidden="true"><Mail /></span><span>E-mail</span></a>

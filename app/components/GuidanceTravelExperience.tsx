@@ -111,12 +111,12 @@ export function GuidanceTravelExperience({ locale = "nl" }: { locale?: Locale })
       <nav className="tc-nav" aria-label={tx("Case navigatie")}>
         <a href={localeHref("/#werk", locale)}><ArrowLeft aria-hidden="true" /> {tx("Alle cases")}</a>
         <a className="tc-nav-brand" href={localeHref("/", locale)}>Abdelrahman / Product &amp; UX/UI designer</a>
-        <div className="tc-nav-actions"><span>07 / 08</span><LanguageSwitcher locale={locale} path="/cases/guidance-travel" /></div>
+        <div className="tc-nav-actions"><span>04 / 08</span><LanguageSwitcher locale={locale} path="/cases/guidance-travel" /></div>
       </nav>
 
       <header className="tc-hero">
         <div className="tc-hero-copy">
-          <p className="tc-hero-kicker">{locale === "en" ? "Case 07 · Research-led concept" : "Case 07 · Onderzoeksgericht concept"}</p>
+          <p className="tc-hero-kicker">{locale === "en" ? "Case 04 · Research-led concept" : "Case 04 · Onderzoeksgericht concept"}</p>
           <h1>
             <span className="tc-title-line"><span>Guidance Travel</span></span>
             <span className="tc-title-line tc-title-small"><span>{tx("De reis vroeg overgave.")}</span></span>
@@ -190,7 +190,7 @@ export function GuidanceTravelExperience({ locale = "nl" }: { locale?: Locale })
 
       <footer className="tc-footer">
         <p>{tx("Volgende case / Concept Solution")}</p>
-        <a href={localeHref("/cases/ayn-al-hikmah", locale)}><span>Ayn Al-Hikmah</span><ArrowUpRight aria-hidden="true" /></a>
+        <a href={localeHref("/cases/bayn-signal", locale)}><span>Bayn Signal</span><ArrowUpRight aria-hidden="true" /></a>
         <div><span>Abdelrahman / Product &amp; UX/UI designer</span><span>© 2026</span></div>
       </footer>
     </main>

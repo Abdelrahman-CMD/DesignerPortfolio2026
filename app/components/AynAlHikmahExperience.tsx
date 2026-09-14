@@ -37,7 +37,7 @@ const cards = [
     number: "01",
     eyebrow: "De observatie",
     title: "De kennisreis eindigt niet bij vertrek. De omgeving die haar draagt vaak wel.",
-    body: "Na een verblijf in Mekka of Medina blijven motivatie en intentie bestaan, maar verdwijnen toegang tot vertrouwde boeken, geleerden en het dagelijkse ritme van samen leren. Bestaande webshops lossen vooral de aankoop op, niet het volhouden.",
+    body: "Na een verblijf in Mekka of Medina blijven motivatie en intentie bestaan, maar verdwijnen toegang tot vertrouwde boeken, geleerden en het dagelijkse ritme van samen leren. Bestaande webshops lossen vooral de aankoop op — niet het volhouden.",
     note: "Het probleem was niet: waar koop ik een boek? Het was: hoe blijf ik thuis gericht leren?",
     image: "/projects/ayn-2026/laptop-home.webp",
     imageAlt: "Ayn Al-Hikmah landingspagina in een laptopmockup",
@@ -78,7 +78,7 @@ const cards = [
     eyebrow: "Het visuele systeem",
     title: "De rust van een bibliotheek, met warmte op ieder beslismoment.",
     body: "Bordeaux geeft de ervaring autoriteit zonder afstandelijk te worden. Cream en warm beige creëren leesruimte; mango markeert hulp en actie. Tajawal zet richting in de koppen, terwijl Lora langere uitleg bewust vertraagt.",
-    note: "Het systeem voelt inhoudelijk en menselijk, nooit als een generieke marktplaats.",
+    note: "Het systeem voelt inhoudelijk en menselijk — nooit als een generieke marktplaats.",
     image: "",
     imageAlt: "Ayn Al-Hikmah style guide",
     tone: "ayn-bordeaux",
@@ -123,18 +123,18 @@ export function AynAlHikmahExperience({ locale = "nl" }: { locale?: Locale }) {
       <nav className="tc-nav" aria-label={tx("Case navigatie")}>
         <a href={localeHref("/#werk", locale)}><ArrowLeft aria-hidden="true" /> {tx("Alle cases")}</a>
         <a className="tc-nav-brand" href={localeHref("/", locale)}>Abdelrahman / Product &amp; UX/UI designer</a>
-        <div className="tc-nav-actions"><span>08 / 08</span><LanguageSwitcher locale={locale} path="/cases/ayn-al-hikmah" /></div>
+        <div className="tc-nav-actions"><span>03 / 08</span><LanguageSwitcher locale={locale} path="/cases/ayn-al-hikmah" /></div>
       </nav>
 
       <header className="tc-hero">
         <div className="tc-hero-copy">
-          <p className="tc-hero-kicker">{locale === "en" ? "Case 08 · Self-initiated concept" : "Case 08 · Zelf geïnitieerd concept"}</p>
+          <p className="tc-hero-kicker">{tx("Case 03 · Zelf geïnitieerd concept")}</p>
           <h1>
             <span className="tc-title-line"><span>Ayn Al-Hikmah</span></span>
             <span className="tc-title-line tc-title-small"><span>{tx("Kennis meenemen.")}</span></span>
             <span className="tc-title-line tc-title-small"><span>{tx("Ook na Medina.")}</span></span>
           </h1>
-          <p className="tc-hero-summary">{tx("Een boekhandel en leeromgeving die authentieke boeken, betrouwbare geleerden en persoonlijke studiestructuur samenbrengt, voor kenniszoekers die thuis het ritme van Medina willen vasthouden.")}</p>
+          <p className="tc-hero-summary">{tx("Een boekhandel en leeromgeving die authentieke boeken, betrouwbare geleerden en persoonlijke studiestructuur samenbrengt — voor kenniszoekers die thuis het ritme van Medina willen vasthouden.")}</p>
           <dl className="tc-hero-meta">
             <div><dt>{tx("Vertrekpunt")}</dt><dd>{tx("Een gat tussen toegang en begeleiding")}</dd></div>
             <div><dt>{tx("Mijn rol")}</dt><dd>{tx("Concept · Strategie · UX/UI")}</dd></div>
@@ -205,7 +205,7 @@ export function AynAlHikmahExperience({ locale = "nl" }: { locale?: Locale }) {
 
       <footer className="tc-footer">
         <p>{tx("Volgende case / Conceptproject")}</p>
-        <a href={localeHref("/cases/mirqa", locale)}><span>MIRQA</span><ArrowUpRight aria-hidden="true" /></a>
+        <a href={localeHref("/cases/guidance-travel", locale)}><span>Guidance Travel</span><ArrowUpRight aria-hidden="true" /></a>
         <div><span>Abdelrahman / Product &amp; UX/UI designer</span><span>© 2026</span></div>
       </footer>
     </main>

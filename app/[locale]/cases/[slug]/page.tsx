@@ -45,7 +45,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const title = project?.name ?? slug.split("-").map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(" ");
   const description = caseDescriptions[slug]?.[locale] ?? project?.description ?? "Portfolio case study by Abdelrahman.";
   return {
-    title: `${title} · Case study`,
+    title: `${title} — Case study`,
     description,
     alternates: { languages: { "nl-NL": `/nl/cases/${slug}`, "en-GB": `/en/cases/${slug}` } },
   };

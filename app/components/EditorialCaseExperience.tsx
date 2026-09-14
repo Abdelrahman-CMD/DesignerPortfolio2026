@@ -43,7 +43,7 @@ const prototypeContent = {
     question: "Waar heb je vandaag behoefte aan?",
     options: ["Hijama", "Ontspanning", "Warmte"],
     results: {
-      Hijama: ["Wet Cupping", "€55 · 60–90 min"],
+      Hijama: ["Wet Cupping", "€55 · 60—90 min"],
       Ontspanning: ["Relax Massage", "€55 · 60 min"],
       Warmte: ["Hot Stone Massage", "€55 · 45 min"],
     },
@@ -176,7 +176,7 @@ export function EditorialCaseExperience({ project, locale = "nl" }: { project: E
       <header className="ec-hero">
         <div className="ec-hero-grid" aria-hidden="true" />
         <div className="ec-hero-copy">
-          <p className="section-kicker"><span className="section-kicker-pill">Case {project.number}</span> {tx(project.eyebrow)}</p>
+          <p className="section-kicker"><span>Case {project.number}</span> {tx(project.eyebrow)}</p>
           <h1>
             {(project.titleLines ?? [project.name]).map((line, index) => (
               <span className={`ec-title-line ec-title-line-${index + 1}`} key={line}><span>{line}</span></span>
@@ -368,7 +368,7 @@ export function EditorialCaseExperience({ project, locale = "nl" }: { project: E
 
       <footer className="ec-footer">
         <p className="section-kicker">
-          <span className="section-kicker-pill">{locale === "en" ? "Next" : "Volgende"}</span> {locale === "en" ? "case study" : "case"}
+          <span>{locale === "en" ? "Next" : "Volgende"}</span> {locale === "en" ? "case study" : "case"}
         </p>
         <a href={localeHref(`/cases/${project.next.slug}`, locale)}>
           <span>{project.next.name}</span><span aria-hidden="true">↗</span>

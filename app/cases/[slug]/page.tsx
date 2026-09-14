@@ -17,42 +17,42 @@ export async function generateMetadata({
   const { slug } = await params;
   if (slug === "mirqa") {
     return {
-      title: "MIRQA · Product case study",
+      title: "MIRQA — Product case study",
       description:
         "Een mobiele productcase in ontwikkeling die intentie vertaalt naar een haalbaar vertrek naar de moskee.",
     };
   }
   if (slug === "tareeqi") {
     return {
-      title: "Tareeqi · Case study",
+      title: "Tareeqi — Case study",
       description:
-        "Een zelf geïnitieerde case over het gat tussen generieke navigatie en lokale kennis in Mekka en Medina, vertaald naar een toetsbare digitale oplossingsrichting.",
+        "Een zelf geïnitieerde case over het gat tussen generieke navigatie en lokale kennis in Mekka en Medina — vertaald naar een toetsbare digitale oplossingsrichting.",
     };
   }
   if (slug === "guidance-travel") {
     return {
-      title: "Guidance Travel · Case study",
+      title: "Guidance Travel — Case study",
       description:
         "Een zelf geïnitieerde case over het vertalen van persoonlijke Hajj- en Umrahbegeleiding naar een rustige, toetsbare digitale beslisroute.",
     };
   }
   if (slug === "ayn-al-hikmah") {
     return {
-      title: "Ayn Al-Hikmah · Case study",
+      title: "Ayn Al-Hikmah — Case study",
       description:
         "Een zelf geïnitieerd platformconcept dat authentieke boeken, betrouwbare geleerden en persoonlijke leerpaden samenbrengt.",
     };
   }
   if (slug === "bayn-signal") {
     return {
-      title: "Bayn Signal · Case study",
+      title: "Bayn Signal — Case study",
       description:
         "Een zelf geïnitieerd lokaal kennisplatform dat nieuws, communitycontext en praktische vervolgstappen samenbrengt in één scanbare pulse.",
     };
   }
   if (slug === "hijaman-cups") {
     return {
-      title: "Hijama 'N Cups · Case study",
+      title: "Hijama 'N Cups — Case study",
       description:
         "Een klantcase over het vertalen van Nora's vertrouwde hijamapraktijk naar een warme, vindbare website met WhatsApp als persoonlijke route naar een afspraak.",
     };
@@ -60,7 +60,7 @@ export async function generateMetadata({
 
   const project = editorialCases[slug];
   return project
-    ? { title: `${project.name} · Case study`, description: project.description }
+    ? { title: `${project.name} — Case study`, description: project.description }
     : { title: "Case study" };
 }
 
