@@ -5599,11 +5599,6 @@ html.is-cta-captured a { cursor: none !important; }
   will-change: clip-path;
 }
 
-.story-photo-full,
-.story-photo-mosaic {
-  will-change: opacity;
-}
-
 .method-note {
   width: min(61vw, 46rem);
   min-height: clamp(31rem, 64svh, 38rem);

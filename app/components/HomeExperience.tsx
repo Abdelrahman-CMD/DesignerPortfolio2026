@@ -236,232 +236,30 @@ const clamp01 = (value: number) => Math.max(0, Math.min(1, value));
 function createStoryMosaic(
   canvas: HTMLCanvasElement,
   fullImage: HTMLElement,
-  source: string,
-  objectPosition: string,
   direction: number,
 ): StoryMosaicController {
   const stage = canvas.parentElement;
-  let gl: WebGLRenderingContext | null = null;
-  let program: WebGLProgram | null = null;
-  let texture: WebGLTexture | null = null;
-  let image: HTMLImageElement | null = null;
-  let revealProgress = 0;
-  let exitProgress = 0;
-  let disposed = false;
-  let supported = true;
-
-  const parsePosition = () => {
-    const values = objectPosition.trim().split(/\s+/);
-    const toFraction = (value: string | undefined, fallback: number) => {
-      if (!value || value === "center") return fallback;
-      if (value === "top" || value === "left") return 0;
-      if (value === "bottom" || value === "right") return 1;
-      const parsed = Number.parseFloat(value);
-      return Number.isFinite(parsed) ? clamp01(parsed / 100) : fallback;
-    };
-
-    return {
-      x: toFraction(values[0], 0.5),
-      y: toFraction(values[1], values[0]?.includes("%") ? 0.5 : 0.5),
-    };
-  };
-
-  const compileShader = (context: WebGLRenderingContext, type: number, sourceCode: string) => {
-    const shader = context.createShader(type);
-    if (!shader) return null;
-    context.shaderSource(shader, sourceCode);
-    context.compileShader(shader);
-    if (!context.getShaderParameter(shader, context.COMPILE_STATUS)) {
-      context.deleteShader(shader);
-      return null;
-    }
-    return shader;
-  };
-
-  const initialize = () => {
-    if (gl || !supported || disposed) return;
-    gl = canvas.getContext("webgl", {
-      alpha: true,
-      antialias: false,
-      depth: false,
-      premultipliedAlpha: true,
-      preserveDrawingBuffer: false,
-    });
-
-    if (!gl) {
-      supported = false;
-      canvas.classList.add("is-unsupported");
-      return;
-    }
-
-    const vertexShader = compileShader(gl, gl.VERTEX_SHADER, `
-      attribute vec2 aPosition;
-      varying vec2 vUv;
-      void main() {
-        vUv = aPosition * 0.5 + 0.5;
-        gl_Position = vec4(aPosition, 0.0, 1.0);
-      }
-    `);
-    const fragmentShader = compileShader(gl, gl.FRAGMENT_SHADER, `
-      precision mediump float;
-      uniform sampler2D uTexture;
-      uniform vec2 uResolution;
-      uniform vec2 uUvScale;
-      uniform vec2 uUvOffset;
-      uniform float uReveal;
-      uniform float uExit;
-      uniform float uDirection;
-      varying vec2 vUv;
-
-      float randomTile(vec2 tile) {
-        return fract(sin(dot(tile, vec2(12.9898, 78.233))) * 43758.5453);
-      }
-
-      void main() {
-        const float tileSize = 8.0;
-        vec2 pixel = vUv * uResolution;
-        vec2 tile = floor(pixel / tileSize);
-        vec2 tileCount = ceil(uResolution / tileSize);
-        vec2 normalizedTile = (tile + 0.5) / tileCount;
-        float horizontal = uDirection < 0.0 ? normalizedTile.x : 1.0 - normalizedTile.x;
-        float diagonal = (horizontal + (1.0 - normalizedTile.y)) * 0.5;
-        float noise = randomTile(tile);
-        float enterOrder = diagonal * 0.68 + noise * 0.2;
-        float leaveOrder = (1.0 - diagonal) * 0.68 + randomTile(tile + vec2(19.0)) * 0.2;
-        float assembled = smoothstep(enterOrder, enterOrder + 0.08, uReveal);
-        float remaining = 1.0 - smoothstep(leaveOrder, leaveOrder + 0.08, uExit);
-        vec2 imageUv = uUvOffset + vUv * uUvScale;
-        vec4 color = texture2D(uTexture, imageUv);
-        gl_FragColor = vec4(color.rgb, color.a * assembled * remaining);
-      }
-    `);
-
-    if (!vertexShader || !fragmentShader) {
-      supported = false;
-      canvas.classList.add("is-unsupported");
-      return;
-    }
-
-    program = gl.createProgram();
-    if (!program) {
-      supported = false;
-      return;
-    }
-    gl.attachShader(program, vertexShader);
-    gl.attachShader(program, fragmentShader);
-    gl.linkProgram(program);
-    gl.deleteShader(vertexShader);
-    gl.deleteShader(fragmentShader);
-
-    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-      supported = false;
-      canvas.classList.add("is-unsupported");
-      return;
-    }
-
-    const buffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
-    gl.bufferData(
-      gl.ARRAY_BUFFER,
-      new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]),
-      gl.STATIC_DRAW,
-    );
-    gl.useProgram(program);
-    const position = gl.getAttribLocation(program, "aPosition");
-    gl.enableVertexAttribArray(position);
-    gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0);
-    gl.disable(gl.DEPTH_TEST);
-    gl.enable(gl.BLEND);
-    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
-
-    image = new window.Image();
-    image.decoding = "async";
-    image.onload = () => {
-      if (!gl || !program || !image || disposed) return;
-      texture = gl.createTexture();
-      gl.bindTexture(gl.TEXTURE_2D, texture);
-      gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
-      draw();
-    };
-    image.src = source;
-  };
-
-  const draw = () => {
-    if (!gl || !program || !texture || !image || disposed) return;
-    const rect = canvas.getBoundingClientRect();
-    if (rect.width < 2 || rect.height < 2) return;
-    const pixelRatio = 1;
-    const width = Math.max(1, Math.round(rect.width * pixelRatio));
-    const height = Math.max(1, Math.round(rect.height * pixelRatio));
-    if (canvas.width !== width || canvas.height !== height) {
-      canvas.width = width;
-      canvas.height = height;
-    }
-
-    const canvasAspect = width / height;
-    const imageAspect = image.naturalWidth / image.naturalHeight;
-    const position = parsePosition();
-    let scaleX = 1;
-    let scaleY = 1;
-    let offsetX = 0;
-    let offsetY = 0;
-    if (imageAspect > canvasAspect) {
-      scaleX = canvasAspect / imageAspect;
-      offsetX = (1 - scaleX) * position.x;
-    } else {
-      scaleY = imageAspect / canvasAspect;
-      offsetY = (1 - scaleY) * (1 - position.y);
-    }
-
-    gl.viewport(0, 0, width, height);
-    gl.clearColor(0, 0, 0, 0);
-    gl.clear(gl.COLOR_BUFFER_BIT);
-    gl.useProgram(program);
-    gl.uniform2f(gl.getUniformLocation(program, "uResolution"), width, height);
-    gl.uniform2f(gl.getUniformLocation(program, "uUvScale"), scaleX, scaleY);
-    gl.uniform2f(gl.getUniformLocation(program, "uUvOffset"), offsetX, offsetY);
-    gl.uniform1f(gl.getUniformLocation(program, "uReveal"), revealProgress);
-    gl.uniform1f(gl.getUniformLocation(program, "uExit"), exitProgress);
-    gl.uniform1f(gl.getUniformLocation(program, "uDirection"), direction);
-    gl.drawArrays(gl.TRIANGLES, 0, 6);
-  };
+  canvas.style.display = "none";
 
   return {
     render(reveal, exit) {
-      revealProgress = clamp01(reveal);
-      exitProgress = clamp01(exit);
+      const revealProgress = clamp01(reveal);
+      const exitProgress = clamp01(exit);
+      const hiddenEdge = (1 - revealProgress) * 100;
       if (stage) stage.style.opacity = `${1 - exitProgress}`;
-      if ((revealProgress > 0 || exitProgress > 0) && !gl && supported) initialize();
-
-      if (!supported) {
-        fullImage.style.opacity = `${revealProgress * (1 - exitProgress)}`;
-        return;
-      }
-
-      const imageBlend = clamp01((revealProgress - 0.72) / 0.28);
-      const canvasBlend = 1 - clamp01((revealProgress - 0.84) / 0.16);
-      fullImage.style.opacity = `${imageBlend}`;
-      canvas.style.opacity = `${canvasBlend}`;
-      draw();
+      fullImage.style.opacity = `${revealProgress}`;
+      fullImage.style.clipPath = direction < 0
+        ? `inset(0 ${hiddenEdge}% 0 0)`
+        : `inset(0 0 0 ${hiddenEdge}%)`;
+      fullImage.style.transform = `scale(${1.025 - revealProgress * 0.025})`;
     },
-    resize() {
-      draw();
-    },
+    resize() {},
     dispose() {
-      disposed = true;
-      if (gl && texture) gl.deleteTexture(texture);
-      if (gl && program) gl.deleteProgram(program);
-      const loseContext = gl?.getExtension("WEBGL_lose_context");
-      loseContext?.loseContext();
-      gl = null;
-      program = null;
-      texture = null;
-      image = null;
+      canvas.style.removeProperty("display");
+      fullImage.style.removeProperty("opacity");
+      fullImage.style.removeProperty("clip-path");
+      fullImage.style.removeProperty("transform");
+      stage?.style.removeProperty("opacity");
     },
   };
 }
@@ -642,8 +440,6 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
         ? createStoryMosaic(
           heroMosaicCanvas,
           heroFullImage,
-          "/about/hero-abdel-profile.png",
-          "right bottom",
           -1,
         )
         : null;
@@ -1136,7 +932,6 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
         let routeProgress = 0;
         let resizeFrame = 0;
         let dotDistances: number[] = [];
-        let routeSamples: Point[] = [];
 
         const createSmoothPath = (points: Point[]) => {
           if (points.length < 2) return "";
@@ -1164,21 +959,11 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
           const normalizedProgress = clamp01(progress);
           const visibleLength = normalizedProgress * routeLength;
           const runnerPoint = basePath.getPointAtLength(visibleLength);
-          const visibleSampleCount = Math.max(
-            1,
-            Math.ceil(normalizedProgress * Math.max(1, routeSamples.length - 1)),
-          );
-          const visibleSamples = routeSamples.slice(0, visibleSampleCount);
-          const partialPath = visibleSamples.length > 0
-            ? `M ${visibleSamples[0].x} ${visibleSamples[0].y}${visibleSamples
-              .slice(1)
-              .map((point) => ` L ${point.x} ${point.y}`)
-              .join("")} L ${runnerPoint.x} ${runnerPoint.y}`
-            : `M ${runnerPoint.x} ${runnerPoint.y}`;
-          progressPath.setAttribute("d", partialPath);
+          progressPath.style.strokeDashoffset = `${routeLength - visibleLength}`;
           gsap.set(runner, { x: runnerPoint.x - 7, y: runnerPoint.y - 7 });
           const nextStopIndex = dotDistances.findIndex((distance) => visibleLength < distance - 8);
-          runner.dataset.label = routeLabels[nextStopIndex === -1 ? routeLabels.length - 1 : nextStopIndex];
+          const nextLabel = routeLabels[nextStopIndex === -1 ? routeLabels.length - 1 : nextStopIndex];
+          if (runner.dataset.label !== nextLabel) runner.dataset.label = nextLabel;
 
           dotDistances.forEach((distance, index) => {
             const previousDistance = index === 0 ? 0 : dotDistances[index - 1];
@@ -1242,10 +1027,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
           basePath.setAttribute("d", pathData);
           progressPath.setAttribute("d", pathData);
           routeLength = basePath.getTotalLength();
-          routeSamples = Array.from(
-            { length: Math.ceil(routeLength / 12) + 1 },
-            (_, index) => basePath.getPointAtLength(Math.min(routeLength, index * 12)),
-          );
+          progressPath.style.strokeDasharray = `${routeLength}`;
           dotDistances = dotPoints.map(findClosestDistance);
           progressPath.style.opacity = "1";
           runner.style.opacity = "1";
@@ -1294,9 +1076,8 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
           (element): element is HTMLElement => Boolean(element),
         );
         const direction = storyIndex % 2 === 0 ? -1 : 1;
-        const story = personalStory[storyIndex];
         const mosaic = canvas && fullImage
-          ? createStoryMosaic(canvas, fullImage, story.image, story.position, direction)
+          ? createStoryMosaic(canvas, fullImage, direction)
           : null;
         let revealProgress = 0;
         let exitProgress = 0;
