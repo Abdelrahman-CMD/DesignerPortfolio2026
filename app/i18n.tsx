@@ -717,7 +717,12 @@ export function LocalizedSurface({ children, locale, respectPreference = false }
       if (!translated) return;
       const leading = original.match(/^\s*/)?.[0] ?? "";
       const trailing = original.match(/\s*$/)?.[0] ?? "";
-      node.textContent = `${leading}${translated}${trailing}`;
+      const next = `${leading}${translated}${trailing}`;
+      // Zonder deze vergelijking schrijft een vertaling die gelijk is aan de bron
+      // (bijv. "Status") dezelfde waarde terug. Dat telt nog steeds als mutatie,
+      // waardoor de observer hieronder zichzelf eindeloos opnieuw triggert.
+      if (next === original) return;
+      node.textContent = next;
     };
 
     const translateElement = (element: Element) => {
@@ -746,18 +751,37 @@ export function LocalizedSurface({ children, locale, respectPreference = false }
 
     localiseTree(surface);
 
+    const observerOptions: MutationObserverInit = {
+      subtree: true,
+      childList: true,
+      characterData: true,
+      attributes: true,
+      attributeFilter: ["aria-label", "alt", "title", "placeholder", "href"],
+    };
+
+    // De callback past zelf de DOM aan. Zonder pauzeren zou elke eigen wijziging
+    // de observer opnieuw laten vuren en de main thread blokkeren.
+    let applying = false;
     const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (mutation.type === "characterData") translateTextNode(mutation.target);
-        if (mutation.type === "attributes" && mutation.target instanceof Element) translateElement(mutation.target);
-        mutation.addedNodes.forEach((node) => {
-          if (node.nodeType === Node.TEXT_NODE) translateTextNode(node);
-          if (node instanceof Element) localiseTree(node);
+      if (applying) return;
+      applying = true;
+      observer.disconnect();
+      try {
+        mutations.forEach((mutation) => {
+          if (mutation.type === "characterData") translateTextNode(mutation.target);
+          if (mutation.type === "attributes" && mutation.target instanceof Element) translateElement(mutation.target);
+          mutation.addedNodes.forEach((node) => {
+            if (node.nodeType === Node.TEXT_NODE) translateTextNode(node);
+            if (node instanceof Element) localiseTree(node);
+          });
         });
-      });
+      } finally {
+        observer.observe(surface, observerOptions);
+        applying = false;
+      }
     });
 
-    observer.observe(surface, { subtree: true, childList: true, characterData: true, attributes: true, attributeFilter: ["aria-label", "alt", "title", "placeholder", "href"] });
+    observer.observe(surface, observerOptions);
 
     requestAnimationFrame(() => window.dispatchEvent(new Event("resize")));
     return () => observer.disconnect();

@@ -321,3 +321,14 @@ test("server-renders localized portfolio routes", async () => {
   assert.match(i18nSource, /A personal service that still feels personal online/);
   assert.doesNotMatch(i18nSource, /Direction remains human work|if we click\?|fitting package faster/);
 });
+
+test("keeps the localized mutation observer from retriggering itself", async () => {
+  const i18nSource = await readFile(new URL("../app/i18n.tsx", import.meta.url), "utf8");
+
+  assert.match(i18nSource, /const next = `\$\{leading\}\$\{translated\}\$\{trailing\}`;/);
+  assert.match(i18nSource, /if \(next === original\) return;/);
+  assert.match(i18nSource, /const observerOptions: MutationObserverInit = \{/);
+  assert.match(i18nSource, /let applying = false;/);
+  assert.match(i18nSource, /observer\.disconnect\(\);/);
+  assert.match(i18nSource, /observer\.observe\(surface, observerOptions\);/);
+});

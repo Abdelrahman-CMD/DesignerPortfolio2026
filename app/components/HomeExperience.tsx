@@ -554,7 +554,6 @@ const mindZones = [
 
 export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
   const root = useRef<HTMLElement>(null);
-  const motionLocale = useRef(locale);
   const [activeMindZone, setActiveMindZone] = useState<string | null>(null);
   const [activeNav, setActiveNav] = useState("");
   const touchMindZone = mindZones.find((zone) => zone.id === activeMindZone) ?? mindZones[0];
@@ -1133,7 +1132,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
 
       if (route && routeSvg && basePath && progressPath && runner && stops.length > 0) {
         type Point = { x: number; y: number };
-        const routeLabels = motionLocale.current === "en"
+        const routeLabels = locale === "en"
           ? ["Studio", "Making", "Learning", "Living", "Approach"]
           : ["Studio", "Maken", "Leren", "Leven", "Aanpak"];
         let routeLength = 0;
@@ -1487,7 +1486,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
       cleanupCaseTransitions();
       context.revert();
     };
-  }, []);
+  }, [locale]);
 
   const manifesto = locale === "en"
     ? "I make complex choices easier to understand. First define the problem. Then design a direction users understand and teams can build."
