@@ -48,7 +48,7 @@ const cards = [
     number: "02",
     eyebrow: "De marktkans",
     title: "Een discovery-laag tussen de generieke kaart en lokale kennis.",
-    body: "Het gat zit tussen ‘waar is iets?’ en ‘waarom past deze plek bij mij, vandaag?’. Tareeqi ordent lokale aanwijzingen op intentie, gezelschap en tempo — precies de context die een gewone kaart niet kent.",
+    body: "Het gat zit tussen ‘waar is iets?’ en ‘waarom past deze plek bij mij, vandaag?’. Tareeqi ordent lokale aanwijzingen op intentie, gezelschap en tempo. Precies die context kent een gewone kaart niet.",
     note: "Niet nóg een reisgids. Een contextuele routegenoot.",
     image: "/projects/tareeqi-2026/laptop-detail.webp",
     imageAlt: "Tareeqi interactieve kaart in een laptopmockup",
@@ -132,12 +132,12 @@ export function CaseExperience({ locale = "nl" }: { locale?: Locale }) {
       <nav className="tc-nav" aria-label={tx("Case navigatie")}>
         <a href={localeHref("/#werk", locale)}><ArrowLeft aria-hidden="true" /> {tx("Alle cases")}</a>
         <a className="tc-nav-brand" href={localeHref("/", locale)}>Abdelrahman / Product &amp; UX/UI designer</a>
-        <div className="tc-nav-actions"><span>02 / 08</span><LanguageSwitcher locale={locale} path="/cases/tareeqi" /></div>
+        <div className="tc-nav-actions"><span>03 / 08</span><LanguageSwitcher locale={locale} path="/cases/tareeqi" /></div>
       </nav>
 
       <header className="tc-hero">
         <div className="tc-hero-copy">
-          <p className="tc-hero-kicker">{locale === "en" ? "Case 02 · Qualitative concept" : "Case 02 · Kwalitatief concept"}</p>
+          <p className="tc-hero-kicker">{locale === "en" ? "Case 03 · Qualitative concept" : "Case 03 · Kwalitatief concept"}</p>
           <h1>
             <span className="tc-title-line"><span>Tareeqi</span></span>
             <span className="tc-title-line tc-title-small"><span>{tx("De route was duidelijk.")}</span></span>
@@ -261,7 +261,7 @@ export function CaseExperience({ locale = "nl" }: { locale?: Locale }) {
 
       <footer className="tc-footer">
         <p>{tx("Volgende case / Concept Solution")}</p>
-        <a href={localeHref("/cases/ayn-al-hikmah", locale)}><span>Ayn Al-Hikmah</span><ArrowUpRight aria-hidden="true" /></a>
+        <a href={localeHref("/cases/hijaman-cups", locale)}><span>Hijama&apos;N Cups</span><ArrowUpRight aria-hidden="true" /></a>
         <div><span>Abdelrahman / Product &amp; UX/UI designer</span><span>© 2026</span></div>
       </footer>
     </main>

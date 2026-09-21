@@ -43,7 +43,7 @@ const prototypeContent = {
     question: "Waar heb je vandaag behoefte aan?",
     options: ["Hijama", "Ontspanning", "Warmte"],
     results: {
-      Hijama: ["Wet Cupping", "€55 · 60—90 min"],
+      Hijama: ["Wet Cupping", "€55 · 60–90 min"],
       Ontspanning: ["Relax Massage", "€55 · 60 min"],
       Warmte: ["Hot Stone Massage", "€55 · 45 min"],
     },

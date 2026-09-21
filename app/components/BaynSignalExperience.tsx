@@ -79,7 +79,7 @@ const cards = [
     eyebrow: "Het visuele systeem",
     title: "Een kalme informatielaag met groen als teken van richting en vertrouwen.",
     body: "Deep Green verankert de identiteit en geeft acties voldoende contrast. Signal Green markeert actuele informatie; Light Sage en Warm Beige houden lange artikelen luchtig. De typografie blijft helder en compact, zodat inhoud altijd vóór decoratie komt.",
-    note: "De visuele stem voelt lokaal en behulpzaam — niet journalistiek afstandelijk of sociaal-medialuid.",
+    note: "De visuele stem voelt lokaal en behulpzaam, niet journalistiek afstandelijk of sociaal-medialuid.",
     image: "",
     imageAlt: "Bayn Signal style guide",
     tone: "bayn-deep",
@@ -210,7 +210,7 @@ export function BaynSignalExperience({ locale = "nl" }: { locale?: Locale }) {
 
       <footer className="tc-footer">
         <p>{tx("Volgende case / Klantproject")}</p>
-        <a href={localeHref("/cases/hijaman-cups", locale)}><span>Hijama&apos;N Cups</span><ArrowUpRight aria-hidden="true" /></a>
+        <a href={localeHref("/cases/atotz-detachering", locale)}><span>AtotZ Detachering</span><ArrowUpRight aria-hidden="true" /></a>
         <div><span>Abdelrahman / Product &amp; UX/UI designer</span><span>© 2026</span></div>
       </footer>
     </main>

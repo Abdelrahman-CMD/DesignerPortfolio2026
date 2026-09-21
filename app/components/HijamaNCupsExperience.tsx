@@ -40,7 +40,7 @@ const cards = [
   {
     number: "03",
     eyebrow: "De conversiekeuze",
-    title: "Boeken moest voelen als contact leggen — niet als een formulier invullen.",
+    title: "Boeken moest voelen als contact leggen, niet als een formulier invullen.",
     body: "Nora wilde afspraken bewust laagdrempelig houden. Iedere behandeling leidt daarom naar een specifieke WhatsApp-route, zodat de bezoeker meteen de juiste context meeneemt en Nora persoonlijk kan afstemmen voordat er een afspraak staat.",
     note: "Eén herkenbare handeling verbindt oriëntatie, vertrouwen en persoonlijk contact.",
     image: "/projects/hijama-2026/phones.webp",
@@ -164,12 +164,12 @@ export function HijamaNCupsExperience({ locale = "nl" }: { locale?: Locale }) {
       <nav className="tc-nav" aria-label={tx("Case navigatie")}>
         <a href={localeHref("/#werk", locale)}><ArrowLeft aria-hidden="true" /> {tx("Alle cases")}</a>
         <a className="tc-nav-brand" href={localeHref("/", locale)}>Abdelrahman / Product &amp; UX/UI designer</a>
-        <div className="tc-nav-actions"><span>06 / 08</span><LanguageSwitcher locale={locale} path="/cases/hijaman-cups" /></div>
+        <div className="tc-nav-actions"><span>04 / 08</span><LanguageSwitcher locale={locale} path="/cases/hijaman-cups" /></div>
       </nav>
 
       <header className="tc-hero">
         <div className="tc-hero-copy">
-          <p className="tc-hero-kicker">{tx("Case 06 · Klantproject")}</p>
+          <p className="tc-hero-kicker">{tx("Case 04 · Klantproject")}</p>
           <h1>
             <span className="tc-title-line"><span>Hijama ’N Cups</span></span>
             <span className="tc-title-line tc-title-small"><span>{tx("Vertrouwen voelen.")}</span></span>
@@ -260,7 +260,7 @@ export function HijamaNCupsExperience({ locale = "nl" }: { locale?: Locale }) {
 
       <footer className="tc-footer">
         <p>{tx("Volgende case / Klantproject")}</p>
-        <a href={localeHref("/cases/atotz-detachering", locale)}><span>AtotZ</span><ArrowUpRight aria-hidden="true" /></a>
+        <a href={localeHref("/cases/bayn-signal", locale)}><span>Bayn Signal</span><ArrowUpRight aria-hidden="true" /></a>
         <div><span>Abdelrahman / Product &amp; UX/UI designer</span><span>© 2026</span></div>
       </footer>
     </main>

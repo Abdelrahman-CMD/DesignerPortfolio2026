@@ -66,7 +66,7 @@ const clientStories: Record<ClientSlug, ClientStory> = {
   "hijaman-cups": {
     theme: "hijama",
     hero: {
-      kicker: copy("Case 06 · Live klantproject", "Case 06 · Live client project"),
+      kicker: copy("Case 04 · Live klantproject", "Case 04 · Live client project"),
       lines: [
         copy("Hijama ’N Cups", "Hijama ’N Cups"),
         copy("Van mond-tot-mond.", "From word of mouth."),
@@ -108,7 +108,7 @@ const clientStories: Record<ClientSlug, ClientStory> = {
         eyebrow: copy("De informatiearchitectuur", "The information architecture"),
         title: copy("Elke behandeling kreeg een eigen antwoord op dezelfde twijfel.", "Every treatment answered the same uncertainty in its own way."),
         body: copy("Prijs, duur, aanpak, voorbereiding en nazorg staan per behandeling bij elkaar. De bezoeker hoeft geen vaktaal te kennen en kan vanuit een concrete behoefte rustig door naar een passende behandeling.", "Price, duration, approach, preparation and aftercare sit together for each treatment. Visitors do not need specialist language and can move calmly from a need to a suitable option."),
-        note: copy("De navigatie volgt de vraag van de bezoeker — niet de structuur van de praktijk.", "The navigation follows the visitor’s question, not the practice’s organisation chart."),
+        note: copy("De navigatie volgt de vraag van de bezoeker, niet de structuur van de praktijk.", "The navigation follows the visitor’s question, not the practice’s organisation chart."),
         tone: "hijama-mint",
         image: "/projects/hijama-2026/tablets.webp",
         imageAlt: copy("Behandelingen en veelgestelde vragen van Hijama ’N Cups op tablets", "Hijama ’N Cups treatments and FAQs on tablets"),
@@ -130,7 +130,7 @@ const clientStories: Record<ClientSlug, ClientStory> = {
         eyebrow: copy("De gemeten bewijslaag", "The measured evidence layer"),
         title: copy("De architectuur werd niet alleen gebouwd. Ze wordt gevonden en gebruikt.", "The architecture was not only built. It is being found and used."),
         body: copy("Search Console en recente site-analytics laten organische zichtbaarheid, inhoudelijke verdieping en een uitgesproken mobiele context zien. De publieke audit bevestigt daarnaast dat alle dertien sitemap-URL’s bereikbaar zijn.", "Search Console and recent site analytics show organic visibility, deeper content exploration and a distinctly mobile context. The public audit also confirms that all thirteen sitemap URLs are reachable."),
-        note: copy("Geen toegeschreven boekingen zonder CTA-tracking — wel controleerbaar bewijs van bereik en gebruik.", "No attributed bookings without CTA tracking — but verifiable evidence of reach and use."),
+        note: copy("Geen toegeschreven boekingen zonder CTA-tracking. Wel controleerbaar bewijs van bereik en gebruik.", "No attributed bookings without CTA tracking, but there is verifiable evidence of reach and use."),
         tone: "hijama-deep",
         metrics: true,
       },
@@ -143,7 +143,7 @@ const clientStories: Record<ClientSlug, ClientStory> = {
     ],
     metricContext: copy("52 unieke bezoekers genereerden recent 145 paginaweergaven: 2,8 per bezoeker. Diensten, Over Nora, Wet Cupping en FAQ stonden bij de meest bekeken routes.", "52 unique visitors recently generated 145 pageviews: 2.8 per visitor. Services, About Nora, Wet Cupping and FAQs ranked among the most-viewed routes."),
     deepDive: [
-      { number: "05", eyebrow: copy("Publieke audit", "Public audit"), title: copy("13 van 13 pagina’s bereikbaar", "13 of 13 pages reachable"), body: copy("Iedere sitemap-URL gaf een succesvolle respons en bevatte een unieke titel, description, canonical, social metadata en één H1.", "Every sitemap URL returned successfully and included a unique title, description, canonical, social metadata and one H1."), note: copy("De audit bewijst technische levering en crawlbaarheid — geen zoekpositiegarantie.", "The audit proves technical delivery and crawlability, not guaranteed rankings.") },
+      { number: "05", eyebrow: copy("Publieke audit", "Public audit"), title: copy("13 van 13 pagina’s bereikbaar", "13 of 13 pages reachable"), body: copy("Iedere sitemap-URL gaf een succesvolle respons en bevatte een unieke titel, description, canonical, social metadata en één H1.", "Every sitemap URL returned successfully and included a unique title, description, canonical, social metadata and one H1."), note: copy("De audit bewijst technische levering en crawlbaarheid, maar garandeert geen zoekpositie.", "The audit proves technical delivery and crawlability, but does not guarantee rankings.") },
       { number: "06", eyebrow: copy("Gedrag", "Behaviour"), title: copy("Bezoekers verdiepen zich verder dan de entree", "Visitors move beyond the entrance"), body: copy("De 145 paginaweergaven bij 52 unieke bezoekers laten zien dat behandelingen en vertrouwenscontent daadwerkelijk worden geopend.", "145 pageviews from 52 unique visitors show that treatment and trust content is actively explored."), note: copy("Gemiddeld 2,8 paginaweergaven per unieke bezoeker in de gemeten 30 dagen.", "An average of 2.8 pageviews per unique visitor during the measured 30 days.") },
       { number: "07", eyebrow: copy("Grens van het bewijs", "Evidence boundary"), title: copy("WhatsApp is bereikbaar, maar nog niet doorgemeten", "WhatsApp is reachable, but not yet measured"), body: copy("Zonder eventtracking kan ik geen klik-, aanvraag- of boekingsconversie aan het ontwerp toeschrijven.", "Without event tracking, I cannot attribute click, enquiry or booking conversion to the design."), note: copy("Een eerlijke grens maakt de gemeten resultaten geloofwaardiger.", "An honest boundary makes the measured results more credible.") },
     ],
@@ -159,7 +159,7 @@ const clientStories: Record<ClientSlug, ClientStory> = {
       ],
     },
     contribution: {
-      title: copy("Een persoonlijke praktijk werd een vindbare digitale route — zonder haar menselijke karakter kwijt te raken.", "A personal practice became a discoverable digital journey without losing its human character."),
+      title: copy("Een persoonlijke praktijk werd een vindbare digitale route zonder haar menselijke karakter kwijt te raken.", "A personal practice became a discoverable digital journey without losing its human character."),
       paragraphs: [
         copy("Ik bracht positionering, content, informatiearchitectuur en responsive interface samen in Figma en bouwde de uiteindelijke website in Framer.", "I combined positioning, content, information architecture and responsive interface design in Figma, then built the final website in Framer."),
         copy("De resultaten tonen organisch bereik en inhoudelijk gebruik. Ze schrijven bewust geen afspraken of omzet toe zolang WhatsApp-conversies niet worden gemeten.", "The results demonstrate organic reach and content use. They deliberately do not attribute appointments or revenue while WhatsApp conversions remain untracked."),
@@ -170,9 +170,9 @@ const clientStories: Record<ClientSlug, ClientStory> = {
   "atotz-detachering": {
     theme: "atotz",
     hero: {
-      kicker: copy("Case 07 · Live klantproject", "Case 07 · Live client project"),
+      kicker: copy("Case 06 · Live klantproject", "Case 06 · Live client project"),
       lines: [copy("AtotZ", "AtotZ"), copy("Van sectorvraag.", "From sector need."), copy("Naar gericht contact.", "To focused contact.")],
-      summary: copy("Een compacte recruitmentwebsite die meerdere sectoren en doelgroepen binnen één duidelijke merkroute houdt. Search Console toont inmiddels vroege organische zichtbaarheid; de publieke audit bewijst de structuur en conversiearchitectuur — nog niet het aantal leads.", "A compact recruitment website that keeps multiple sectors and audiences within one clear brand journey. Search Console now shows early organic visibility; the public audit proves the structure and conversion architecture — not lead volume yet."),
+      summary: copy("Een compacte recruitmentwebsite die meerdere sectoren en doelgroepen binnen één duidelijke merkroute houdt. Search Console toont inmiddels vroege organische zichtbaarheid. De publieke audit bewijst de structuur en conversiearchitectuur, maar nog niet het aantal leads.", "A compact recruitment website that keeps multiple sectors and audiences within one clear brand journey. Search Console now shows early organic visibility. The public audit proves the structure and conversion architecture, but not lead volume yet."),
       meta: [
         { label: copy("Uitdaging", "Challenge"), value: copy("Meerdere sectoren zonder versnippering", "Multiple sectors without fragmentation") },
         { label: copy("Mijn rol", "My role"), value: copy("Positionering · UX/UI · Framer", "Positioning · UX/UI · Framer") },
@@ -210,7 +210,7 @@ const clientStories: Record<ClientSlug, ClientStory> = {
         number: "03", eyebrow: copy("De conversiearchitectuur", "The conversion architecture"),
         title: copy("Iedere sector neemt zijn eigen context mee naar WhatsApp.", "Every sector carries its own context into WhatsApp."),
         body: copy("De publieke audit vond tien bron-gelabelde instroomroutes en twaalf unieke WhatsApp-doelen. Vooraf ingevulde berichten maken duidelijk vanuit welke behoefte iemand contact zoekt, zonder een zwaar formulier op te leggen.", "The public audit found ten source-tagged entry routes and twelve unique WhatsApp targets. Pre-filled messages clarify the need behind each enquiry without imposing a heavy form."),
-        note: copy("Dit bewijst de route — niet hoeveel leads erdoorheen kwamen.", "This proves the route, not how many leads moved through it."),
+        note: copy("Dit bewijst de route, niet hoeveel leads erdoorheen kwamen.", "This proves the route, not how many leads moved through it."),
         tone: "atotz-navy", image: "/projects/live/atotz-site-mobile.png",
         imageAlt: copy("Mobiele AtotZ-website met directe contactroutes", "Mobile AtotZ website with direct contact routes"),
         annotation: copy("context reist mee tot in het gesprek ↗", "context travels into the conversation ↗"),
@@ -219,7 +219,7 @@ const clientStories: Record<ClientSlug, ClientStory> = {
         number: "04", eyebrow: copy("De gemeten bewijslaag", "The measured evidence layer"),
         title: copy("De site bouwt zichtbaarheid op; de klik verdient nu de aandacht.", "The site is building visibility; earning the click is the next task."),
         body: copy("De gedeelde Search Console-weergave over drie maanden toont 2,24K vertoningen, 15 klikken, 0,7% CTR en een gemiddelde positie van 18,6. Dat bewijst dat Google de propositie vertoont, maar nog niet dat de zoekresultaattekst genoeg relevante bezoeken wint.", "The shared three-month Search Console view shows 2.24K impressions, 15 clicks, a 0.7% CTR and an average position of 18.6. This proves Google is surfacing the proposition, but not yet that the search snippet earns enough relevant visits."),
-        note: copy("Volgende stap: titels, descriptions en sectorspecifieke landingsrelevantie aanscherpen — daarna CTR opnieuw meten.", "Next: sharpen titles, descriptions and sector-specific landing relevance, then measure CTR again."),
+        note: copy("Volgende stap: titels, descriptions en sectorspecifieke landingsrelevantie aanscherpen. Daarna meten we de CTR opnieuw.", "Next: sharpen titles, descriptions and sector-specific landing relevance, then measure CTR again."),
         tone: "atotz-teal", metrics: true,
       },
     ],
@@ -232,7 +232,7 @@ const clientStories: Record<ClientSlug, ClientStory> = {
     metricContext: copy("De publieke audit vult dit aan: 10 gelabelde instroomroutes, 12 unieke WhatsApp-doelen, Organization- en FAQ-data, 33 van 36 lazy-loaded beelden, 11 toegankelijk benoemde formulierelementen en geen kapotte beelden of mobiele overflow.", "The public audit adds 10 tagged entry routes, 12 unique WhatsApp targets, Organisation and FAQ data, 33 of 36 lazy-loaded images, 11 accessibly named form controls, and no broken images or mobile overflow."),
     deepDive: [
       { number: "05", eyebrow: copy("Publieke audit", "Public audit"), title: copy("Een gerichte leadroute is aantoonbaar gebouwd", "A focused lead journey is demonstrably built"), body: copy("Sectorlinks gebruiken eigen context en herkenbare bronlabels. Daardoor kan het gesprek inhoudelijker beginnen en blijft latere attributie technisch mogelijk.", "Sector links use their own context and identifiable source labels. This lets the conversation start with more substance and keeps later attribution technically possible."), note: copy("Mogelijkheid tot attributie is nog geen bewezen conversie.", "The ability to attribute is not yet proven conversion.") },
-      { number: "06", eyebrow: copy("Zoekintentie", "Search intent"), title: copy("Bouwtermen leveren minimaal 817 vertoningen op — nog zonder klik.", "Construction terms generate at least 817 impressions — but no clicks yet."), body: copy("Alleen al de vijf zichtbare bouwgerelateerde zoekopdrachten in de gedeelde top tien tellen samen 817 vertoningen. Dat laat een relevante zoekvraag zien, maar de getoonde rijen registreerden nog geen klikken.", "The five visible construction-related queries in the shared top ten total 817 impressions. That reveals relevant search demand, but the displayed rows had not yet registered clicks."), note: copy("Dit is een optimalisatiesignaal, geen conversieresultaat: hogere posities en een scherpere snippet moeten de volgende meting verbeteren.", "This is an optimisation signal, not a conversion outcome: higher rankings and a sharper snippet should improve the next measurement.") },
+      { number: "06", eyebrow: copy("Zoekintentie", "Search intent"), title: copy("Bouwtermen leveren minimaal 817 vertoningen op, nog zonder klik.", "Construction terms generate at least 817 impressions, but no clicks yet."), body: copy("Alleen al de vijf zichtbare bouwgerelateerde zoekopdrachten in de gedeelde top tien tellen samen 817 vertoningen. Dat laat een relevante zoekvraag zien, maar de getoonde rijen registreerden nog geen klikken.", "The five visible construction-related queries in the shared top ten total 817 impressions. That reveals relevant search demand, but the displayed rows had not yet registered clicks."), note: copy("Dit is een optimalisatiesignaal, geen conversieresultaat: hogere posities en een scherpere snippet moeten de volgende meting verbeteren.", "This is an optimisation signal, not a conversion outcome: higher rankings and a sharper snippet should improve the next measurement.") },
       { number: "07", eyebrow: copy("Open bewijsruimte", "Open evidence gap"), title: copy("Vindbaarheid is bewezen; commerciële impact nog niet.", "Discoverability is proven; commercial impact is not yet."), body: copy("Search Console bewijst vertoningen en klikken, maar koppelt die niet aan aanvragen, plaatsingen, omzet of tijdswinst. Die resultaten voeg ik pas toe wanneer de klant ze bevestigt.", "Search Console proves impressions and clicks, but does not connect them to enquiries, placements, revenue or time saved. I will only add those outcomes once the client confirms them."), note: copy("Eerst bewijs. Dan pas een resultaatheadline.", "Evidence first. Only then an outcome headline.") },
     ],
     proof: {
@@ -258,7 +258,7 @@ const clientStories: Record<ClientSlug, ClientStory> = {
   "oppas-by-chaima": {
     theme: "oppas",
     hero: {
-      kicker: copy("Case 08 · Live klantproject", "Case 08 · Live client project"),
+      kicker: copy("Case 02 · Live klantproject", "Case 02 · Live client project"),
       lines: [copy("Oppas by Chaima", "Oppas by Chaima"), copy("Eerst vertrouwen.", "Trust first."), copy("Dan pas boeken.", "Then book.")],
       summary: copy("Een warme, drietalige kennismaking voor ouders die niet zomaar beschikbaarheid zoeken, maar iemand tijdelijk toelaten tot het ritme van thuis.", "A warm, trilingual introduction for parents who are not simply checking availability, but inviting someone into the rhythm of home."),
       meta: [
@@ -281,7 +281,7 @@ const clientStories: Record<ClientSlug, ClientStory> = {
         number: "01", eyebrow: copy("De echte keuze", "The real decision"),
         title: copy("Een ouder boekt geen oppasuur. Die vertrouwt iemand het ritme van thuis toe.", "A parent does not book an hour of childcare. They entrust someone with the rhythm of home."),
         body: copy("De website moest veel meer doen dan beschikbaarheid tonen. Chaima’s pedagogische achtergrond, ervaring en manier van communiceren moesten al vóór de kennismaking voelbaar worden.", "The website had to do far more than show availability. Chaima’s educational background, experience and way of communicating needed to feel tangible before the introduction."),
-        note: copy("Vertrouwen werd de informatiearchitectuur — niet alleen de uitstraling.", "Trust became the information architecture, not just the visual mood."),
+        note: copy("Vertrouwen werd de informatiearchitectuur, niet alleen de uitstraling.", "Trust became the information architecture, not just the visual mood."),
         tone: "oppas-paper", image: "/projects/home/oppas-by-chaima-cover.webp",
         imageAlt: copy("Warme illustratie van een oppas die met twee kinderen leest", "Warm illustration of a babysitter reading with two children"),
         annotation: copy("het gevoel van thuis, vóór het eerste gesprek", "the feeling of home, before the first conversation"),
@@ -321,7 +321,7 @@ const clientStories: Record<ClientSlug, ClientStory> = {
     metricContext: copy("Alle drie taalpagina’s gaven een succesvolle respons, met eigen taalcode, canonical en social metadata. Alle zeven gecontroleerde afbeeldingen hebben een ingevulde alt-tekst.", "All three language pages returned successfully, with their own language code, canonical and social metadata. All seven checked images have non-empty alt text."),
     deepDive: [
       { number: "05", eyebrow: copy("Publieke audit", "Public audit"), title: copy("Drie talen, technisch als drie echte ingangen", "Three languages built as three real entrances"), body: copy("De Nederlandse, Engelse en Franse pagina’s hebben ieder correcte taalinstellingen, unieke metadata en structured data voor LocalBusiness, Person en ContactPoint.", "The Dutch, English and French pages each have correct language settings, unique metadata and structured data for LocalBusiness, Person and ContactPoint."), note: copy("Lokalisatie zit in de structuur, niet alleen in de vertaalde woorden.", "Localisation lives in the structure, not just the translated words.") },
-      { number: "06", eyebrow: copy("Toegankelijke levering", "Accessible delivery"), title: copy("Beelden, bediening en mobiele layout blijven bruikbaar", "Images, controls and mobile layout remain usable"), body: copy("De audit vond geen ontbrekende alt-teksten, geen onbenoemde bediening, geen kapotte afbeeldingen en geen horizontale overflow.", "The audit found no missing alt text, unnamed controls, broken images or horizontal overflow."), note: copy("Dit zijn sterke toegankelijkheidssignalen — geen volledige WCAG-certificering.", "These are strong accessibility signals, not full WCAG certification.") },
+      { number: "06", eyebrow: copy("Toegankelijke levering", "Accessible delivery"), title: copy("Beelden, bediening en mobiele layout blijven bruikbaar", "Images, controls and mobile layout remain usable"), body: copy("De audit vond geen ontbrekende alt-teksten, geen onbenoemde bediening, geen kapotte afbeeldingen en geen horizontale overflow.", "The audit found no missing alt text, unnamed controls, broken images or horizontal overflow."), note: copy("Dit zijn sterke toegankelijkheidssignalen, geen volledige WCAG-certificering.", "These are strong accessibility signals, not full WCAG certification.") },
       { number: "07", eyebrow: copy("Resultaatgrens", "Outcome boundary"), title: copy("€2K+ is boekingswaarde, geen winstclaim", "€2K+ is booking value, not a profit claim"), body: copy("Het resultaat is door de eigenaar gedeeld en wordt daarom als klantgerapporteerd gepresenteerd. Kosten, marge en afzonderlijke acquisitiebronnen zijn niet beoordeeld.", "The result was shared by the owner and is therefore presented as client-reported. Costs, margin and individual acquisition sources were not assessed."), note: copy("Precies formuleren maakt het resultaat sterker, niet kleiner.", "Precise wording makes the result stronger, not smaller.") },
     ],
     proof: {
