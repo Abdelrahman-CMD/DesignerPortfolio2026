@@ -1706,10 +1706,15 @@ html.is-cta-captured a { cursor: none !important; }
   position: absolute;
   inset: 0;
   border: 0;
-  background: transparent;
+  background:
+    radial-gradient(circle at 35% 30%, color-mix(in srgb, #fffaf0 42%, transparent), transparent 52%),
+    color-mix(in srgb, var(--zone-color) 76%, transparent);
   opacity: 0;
+  mix-blend-mode: multiply;
+  transform: translateZ(0);
   transition: opacity var(--motion-standard) var(--ease-premium), filter var(--motion-standard) var(--ease-premium);
   pointer-events: auto;
+  will-change: opacity;
 }
 
 .mind-zone-curiosity .mind-zone-surface { clip-path: polygon(8% 2%, 83% 0, 100% 25%, 94% 70%, 70% 100%, 7% 91%, 0 32%); }
@@ -1725,7 +1730,7 @@ html.is-cta-captured a { cursor: none !important; }
 .mind-zone:hover .mind-zone-surface,
 .mind-zone:focus-visible .mind-zone-surface,
 .mind-zone.is-active .mind-zone-surface {
-  opacity: 1;
+  opacity: 0.68;
   filter: none;
 }
 
@@ -1803,7 +1808,7 @@ html.is-cta-captured a { cursor: none !important; }
 
 .mind-annotation-panel strong {
   margin-top: var(--space-1);
-  color: var(--zone-color);
+  color: color-mix(in srgb, var(--zone-color) 72%, var(--zone-ink));
   font-family: var(--hand);
   font-size: clamp(1.25rem, 1.5vw, 1.72rem);
   font-weight: 400;
@@ -5395,23 +5400,23 @@ html.is-cta-captured a { cursor: none !important; }
     color: var(--ink);
     font: 700 0.66rem/1 var(--sans);
   }
-  .mind-touch-tab.is-active {
-    border-color: var(--zone-color);
-    background: var(--zone-color);
-    color: #fffdf8;
-  }
-  .mind-touch-detail {
+.mind-touch-tab.is-active {
+  border-color: var(--zone-color);
+  background: var(--zone-color);
+  color: var(--zone-ink);
+}
+.mind-touch-detail {
     min-height: 8.5rem;
     padding: 1rem;
     border: 1px solid color-mix(in srgb, var(--zone-color) 46%, transparent);
     border-radius: 1rem;
-    background: color-mix(in srgb, #f9f6f0 90%, var(--zone-color) 10%);
+    background: color-mix(in srgb, #f9f6f0 86%, var(--zone-color) 14%);
   }
-  .mind-touch-kicker { display: block; color: color-mix(in srgb, var(--zone-color) 72%, var(--ink)); }
+  .mind-touch-kicker { display: block; color: color-mix(in srgb, var(--zone-color) 68%, var(--zone-ink)); }
   .mind-touch-detail strong {
     display: block;
     margin-top: 0.5rem;
-    color: var(--zone-color);
+    color: color-mix(in srgb, var(--zone-color) 68%, var(--zone-ink));
     font-family: var(--hand);
     font-size: 1.55rem;
     font-weight: 400;
@@ -7685,5 +7690,140 @@ html.is-cta-captured a { cursor: none !important; }
 @media (prefers-reduced-motion: reduce) {
   .mind-title-handwrite {
     clip-path: none !important;
+  }
+}
+
+/* Final art direction pass: calmer compositing, one colour language, steadier scroll rhythm. */
+.mind-hero-content,
+.mind-hero-visual,
+.project-visual,
+.project-parallax-media,
+.project-card-copy,
+.story-photo,
+.story-stop-copy,
+.method-pin,
+.method-track,
+.method-note,
+.contact-postcard {
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
+.project-visual,
+.story-photo-stage,
+.method-note,
+.contact-postcard {
+  contain: layout paint style;
+}
+
+.project-entry {
+  scroll-margin-top: 12svh;
+}
+
+.mind-zone-surface {
+  background:
+    radial-gradient(circle at 35% 30%, color-mix(in srgb, #fffaf0 38%, transparent), transparent 54%),
+    color-mix(in srgb, var(--zone-color) 78%, transparent);
+  opacity: 0;
+}
+
+.mind-zone:hover .mind-zone-surface,
+.mind-zone:focus-visible .mind-zone-surface,
+.mind-zone.is-active .mind-zone-surface {
+  opacity: 0.72;
+}
+
+.mind-annotation-panel::before {
+  background: color-mix(in srgb, var(--zone-color) 78%, var(--zone-ink));
+}
+
+.mind-annotation-panel strong,
+.mind-touch-detail strong {
+  color: color-mix(in srgb, var(--zone-color) 66%, var(--zone-ink));
+}
+
+.mind-touch-tab.is-active {
+  border-color: color-mix(in srgb, var(--zone-color) 82%, var(--zone-ink));
+  background: var(--zone-color);
+  color: var(--zone-ink);
+}
+
+.mind-touch-detail {
+  border-color: color-mix(in srgb, var(--zone-color) 48%, transparent);
+  background: color-mix(in srgb, #f9f6f0 84%, var(--zone-color) 16%);
+}
+
+.mind-touch-kicker {
+  color: color-mix(in srgb, var(--zone-color) 58%, var(--zone-ink));
+}
+
+.story-route-progress {
+  stroke: color-mix(in srgb, var(--story-accent, #c9653d) 72%, #b83225);
+}
+
+.story-route-runner {
+  border-color: color-mix(in srgb, var(--story-accent, #c9653d) 72%, #b83225);
+  box-shadow: 0 0 0 6px color-mix(in srgb, var(--story-accent, #c9653d) 24%, transparent);
+}
+
+.story-route-runner::after,
+.story-margin-note,
+.story-stop-copy h3 {
+  color: color-mix(in srgb, var(--story-accent, #c9653d) 62%, #8a3023);
+}
+
+.story-stop-dot.is-current {
+  box-shadow:
+    0 8px 0 rgba(47, 43, 38, 0.11),
+    0 0 0 8px color-mix(in srgb, var(--story-accent, #c9653d) 24%, transparent);
+}
+
+.story-stop-dot-fill,
+.story-stop-copy::before {
+  background: color-mix(in srgb, var(--story-accent, #c9653d) 78%, #f8f3e9);
+}
+
+.story-photo-full,
+.story-photo-mosaic,
+.mind-hero-base,
+.mind-hero-mosaic {
+  image-rendering: auto;
+}
+
+.method-title-indent {
+  color: #e9a08b;
+}
+
+.method-progress span {
+  background: #e9a08b;
+}
+
+.method-note {
+  background: var(--method-note-color);
+}
+
+.method-note-1,
+.method-note-2,
+.method-note-3,
+.method-note-4 {
+  background: var(--method-note-color);
+}
+
+.method-note-number,
+.method-note aside {
+  color: color-mix(in srgb, var(--method-note-color) 46%, #4b241d);
+}
+
+.method-note-tape {
+  background: color-mix(in srgb, var(--method-note-color) 42%, rgba(255, 253, 246, 0.82));
+}
+
+@media (min-width: 721px) {
+  .story-stop {
+    min-height: 124vh;
+  }
+
+  .method-horizontal {
+    margin-top: calc(var(--space-15) + 4svh);
   }
 }

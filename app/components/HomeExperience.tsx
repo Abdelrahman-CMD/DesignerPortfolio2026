@@ -226,6 +226,14 @@ const personalStory = [
   },
 ] as const;
 
+const directionPalette = {
+  focus: "#f1cf82",
+  route: "#e9a08b",
+  proof: "#b8d5d8",
+  care: "#cad9a7",
+  craft: "#c9653d",
+} as const;
+
 type StoryMosaicController = {
   render: (reveal: number, exit: number) => void;
   resize: () => void;
@@ -477,6 +485,7 @@ const workingMethod = [
     body: "Ik breng de briefing terug tot één gebruikersbeslissing, één zakelijk doel en de beperking die beide kan laten ontsporen.",
     tools: "Synthese · Probleemkader · Succesmaatstaf",
     annotation: "Een scherpe beslissing houdt de interface rustig.",
+    color: directionPalette.focus,
   },
   {
     number: "02",
@@ -485,6 +494,7 @@ const workingMethod = [
     body: "Flows en vroege schermen leggen ontbrekende stappen bloot voordat visuele verfijning ze kostbaar maakt om te veranderen.",
     tools: "Journey · User flow · Low-fi prototype",
     annotation: "Eerst de route. Daarna de glans.",
+    color: directionPalette.route,
   },
   {
     number: "03",
@@ -493,6 +503,7 @@ const workingMethod = [
     body: "Ik toets eerst de riskantste aanname: begrijpen mensen de route, vertrouwen ze de boodschap en vinden ze het juiste vervolg?",
     tools: "Gesprekken · Taaktest · Gedragsdata",
     annotation: "Bewijs het risico, niet ieder detail.",
+    color: directionPalette.proof,
   },
   {
     number: "04",
@@ -501,6 +512,7 @@ const workingMethod = [
     body: "Interface, content en uitvoering worden samen verfijnd. Na livegang kijk ik naar gebruikssignalen om te zien wat echt werkt.",
     tools: "Designsystem · Handoff · QA · Meting",
     annotation: "Mooi wordt waardevol zodra het werkt.",
+    color: directionPalette.care,
   },
 ] as const;
 
@@ -512,7 +524,8 @@ const mindZones = [
     title: "De echte vraag vinden",
     detail:
       "Aandacht, afweging en vooruitdenken brengen aannames terug tot de vraag die er echt toe doet.",
-    color: "#7b4b0d",
+    color: directionPalette.focus,
+    ink: "#342d27",
   },
   {
     id: "connections",
@@ -521,7 +534,8 @@ const mindZones = [
     title: "Context bij elkaar brengen",
     detail:
       "Losse signalen, perspectieven en ruimtelijke context worden één samenhangend beeld.",
-    color: "#b83225",
+    color: directionPalette.route,
+    ink: "#342d27",
   },
   {
     id: "source",
@@ -530,7 +544,8 @@ const mindZones = [
     title: "Herinnering als springplank",
     detail:
       "Ervaring, taal en associaties vormen de bron waaruit onverwachte ideeën kunnen ontstaan.",
-    color: "#6c9f5e",
+    color: directionPalette.care,
+    ink: "#23351f",
   },
   {
     id: "structure",
@@ -539,7 +554,8 @@ const mindZones = [
     title: "Patronen zichtbaar maken",
     detail:
       "Visuele informatie wordt herkend, geordend en vertaald naar een ontwerp zonder ruis.",
-    color: "#546c75",
+    color: directionPalette.proof,
+    ink: "#20363b",
   },
   {
     id: "direction",
@@ -548,7 +564,8 @@ const mindZones = [
     title: "Van gedachte naar realiteit",
     detail:
       "Intentie wordt verfijnd tot ritme, timing en een uitvoering die precies op haar doel landt.",
-    color: "#a26852",
+    color: directionPalette.craft,
+    ink: "#fff8f0",
   },
 ] as const;
 
@@ -588,6 +605,11 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
     let cleanupCaseTransitions = () => {};
 
     const context = gsap.context(() => {
+      ScrollTrigger.config({
+        ignoreMobileResize: true,
+        limitCallbacks: true,
+      });
+
       const header = root.current?.querySelector<HTMLElement>(".site-header");
       let previousScroll = window.scrollY;
       let headerVisible = true;
@@ -843,29 +865,29 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
 
       if (!prefersReducedMotion && supportsHeroParallax) {
         gsap.to(".mind-hero-content", {
-          opacity: 0.14,
-          yPercent: -13,
-          scale: 0.945,
+          opacity: 0.32,
+          yPercent: -9,
+          scale: 0.965,
           transformOrigin: "center top",
           ease: "none",
           scrollTrigger: {
             trigger: ".mind-hero",
             start: "58% center",
             end: "bottom top",
-            scrub: true,
+            scrub: 1.1,
           },
         });
 
         gsap.to(".mind-hero-visual", {
-          yPercent: -6,
-          scale: 0.975,
-          opacity: 0.28,
+          yPercent: -4,
+          scale: 0.985,
+          opacity: 0.42,
           ease: "none",
           scrollTrigger: {
             trigger: ".mind-hero",
             start: "top top",
             end: "bottom top",
-            scrub: true,
+            scrub: 1.15,
           },
         });
       }
@@ -877,9 +899,9 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
         ease: "power2.out",
         scrollTrigger: {
           trigger: ".manifesto-copy",
-          start: "top 78%",
-          end: "bottom 62%",
-          scrub: 0.65,
+          start: "top 82%",
+          end: "bottom 56%",
+          scrub: 0.95,
         },
       });
 
@@ -893,8 +915,8 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
           scrollTrigger: {
             trigger: word,
             start: "top 76%",
-            end: "bottom 61%",
-            scrub: 0.45,
+            end: "bottom 58%",
+            scrub: 0.75,
           },
         });
       });
@@ -978,6 +1000,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
               trigger: entry,
               start: "top 86%",
               toggleActions: "play none none none",
+              once: true,
               fastScrollEnd: true,
             },
           });
@@ -993,7 +1016,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
               trigger: entry,
               start: "top bottom",
               end: "bottom top",
-              scrub: 0.65,
+              scrub: 1.1,
             },
           });
         }
@@ -1008,6 +1031,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
               trigger: entry,
               start: "top 82%",
               toggleActions: "play none none none",
+              once: true,
               fastScrollEnd: true,
             },
           });
@@ -1181,7 +1205,12 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
           progressPath.setAttribute("d", partialPath);
           gsap.set(runner, { x: runnerPoint.x - 7, y: runnerPoint.y - 7 });
           const upcomingStop = dotDistances.findIndex((distance) => visibleLength < distance - 12);
+          const routeIndex = Math.max(
+            0,
+            Math.min(stops.length - 1, upcomingStop === -1 ? stops.length - 1 : upcomingStop),
+          );
           runner.dataset.label = routeLabels[upcomingStop === -1 ? routeLabels.length - 1 : upcomingStop];
+          route.style.setProperty("--story-accent", workingMethod[routeIndex]?.color ?? directionPalette.craft);
 
           dotDistances.forEach((distance, index) => {
             const previousDistance = index === 0 ? 0 : dotDistances[index - 1];
@@ -1266,9 +1295,9 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
 
         ScrollTrigger.create({
           trigger: route,
-          start: "top 68%",
-          end: "bottom 72%",
-          scrub: true,
+          start: "top 74%",
+          end: "bottom 64%",
+          scrub: 1.05,
           onUpdate: (self) => {
             routeProgress = self.progress;
             drawRoute(routeProgress);
@@ -1312,9 +1341,9 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
         const revealTimeline = gsap.timeline({
           scrollTrigger: {
             trigger: stop,
-            start: "top 90%",
-            end: "48% 57%",
-            scrub: 0.75,
+            start: "top 92%",
+            end: "56% 55%",
+            scrub: 1,
             onUpdate: (self) => {
               revealProgress = self.progress;
               mosaic?.render(revealProgress, exitProgress);
@@ -1358,7 +1387,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
               trigger: stop,
               start: "top bottom",
               end: "bottom top",
-              scrub: true,
+              scrub: 1.15,
             },
           });
         }
@@ -1375,14 +1404,14 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
 
         gsap.to(copyElements, {
           autoAlpha: 0.14,
-          y: -50,
+          y: -34,
           stagger: 0.025,
           ease: "power2.in",
           scrollTrigger: {
             trigger: stop,
-            start: "75% 46%",
-            end: "bottom 5%",
-            scrub: true,
+            start: "82% 46%",
+            end: "bottom 4%",
+            scrub: 1,
           },
         });
       });
@@ -1422,11 +1451,11 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
           scrollTrigger: {
             trigger: methodPin,
             start: "top top",
-            end: () => `+=${getMethodDistance() + window.innerHeight * 0.35}`,
+            end: () => `+=${getMethodDistance() + window.innerHeight * 0.68}`,
             pin: true,
-            scrub: 0.65,
+            scrub: 1.05,
             invalidateOnRefresh: true,
-            anticipatePin: 1,
+            anticipatePin: 1.5,
           },
         });
 
@@ -1673,7 +1702,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
                     key={zone.id}
                     type="button"
                     className={`mind-zone mind-zone-${zone.id}${isActive ? " is-active" : ""}`}
-                    style={{ "--zone-color": zone.color } as CSSProperties}
+                    style={{ "--zone-color": zone.color, "--zone-ink": zone.ink } as CSSProperties}
                     aria-pressed={isActive}
                     aria-label={`${zone.number} ${zoneLabel}: ${zoneTitle}. ${zoneDetail}`}
                     onPointerEnter={(event) => {
@@ -1716,7 +1745,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
                   <span
                     className={`mind-annotation-panel${isActive ? " is-active" : ""}`}
                     data-zone={zone.id}
-                    style={{ "--zone-color": zone.color } as CSSProperties}
+                    style={{ "--zone-color": zone.color, "--zone-ink": zone.ink } as CSSProperties}
                     aria-hidden={!isActive}
                     key={`annotation-${zone.id}`}
                   >
@@ -1782,7 +1811,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
                       key={`touch-${zone.id}`}
                       type="button"
                       className={`mind-touch-tab${isActive ? " is-active" : ""}`}
-                      style={{ "--zone-color": zone.color } as CSSProperties}
+                      style={{ "--zone-color": zone.color, "--zone-ink": zone.ink } as CSSProperties}
                       aria-pressed={isActive}
                       aria-controls="mind-touch-detail"
                       aria-label={`${zone.number} ${translateText(locale, zone.label)}`}
@@ -1796,7 +1825,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
               <div
                 className="mind-touch-detail"
                 id="mind-touch-detail"
-                style={{ "--zone-color": touchMindZone.color } as CSSProperties}
+                style={{ "--zone-color": touchMindZone.color, "--zone-ink": touchMindZone.ink } as CSSProperties}
                 aria-live="polite"
               >
                 <span className="mind-touch-kicker label">
@@ -1951,6 +1980,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
               style={{
                 "--dot-x": story.dotX,
                 "--dot-mobile-x": story.dotMobileX,
+                "--story-accent": workingMethod[index]?.color ?? directionPalette.craft,
               } as CSSProperties}
             >
               <div className="story-stop-dot" aria-hidden="true">
@@ -2011,7 +2041,11 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
             </div>
             <div className="method-track">
               {workingMethod.map((step, index) => (
-                <article className={`method-note method-note-${index + 1}`} key={step.number}>
+                <article
+                  className={`method-note method-note-${index + 1}`}
+                  key={step.number}
+                  style={{ "--method-note-color": step.color } as CSSProperties}
+                >
                   <span className="method-note-tape" aria-hidden="true" />
                   <header>
                     <span className="method-note-number">{step.number}</span>
