@@ -25,13 +25,14 @@ export function revealCaseEvidence(root: HTMLElement = document.body) {
   items.forEach((item) => {
     gsap.from(item, {
       autoAlpha: 0,
-      y: 36,
-      duration: 0.72,
+      y: 28,
+      duration: 0.86,
       ease: "power3.out",
       scrollTrigger: {
         trigger: item,
-        start: "top 88%",
+        start: "top 90%",
         toggleActions: once,
+        once: true,
         fastScrollEnd: true,
       },
     });
@@ -46,9 +47,9 @@ export function revealCaseEvidence(root: HTMLElement = document.body) {
         ease: "none",
         scrollTrigger: {
           trigger: line.closest(".tc-journey"),
-          start: "top 74%",
-          end: "center 44%",
-          scrub: 0.45,
+          start: "top 80%",
+          end: "center 42%",
+          scrub: 0.85,
         },
       },
     );
@@ -77,9 +78,9 @@ export function revealCaseCard(card: HTMLElement, shell: HTMLElement) {
         ease: "none",
         scrollTrigger: {
           trigger: shell,
-          start: "top 15%",
-          end: "top -42%",
-          scrub: 0.55,
+          start: "top 18%",
+          end: "top -52%",
+          scrub: 0.95,
           invalidateOnRefresh: true,
         },
       },
@@ -97,6 +98,7 @@ export function revealCaseCard(card: HTMLElement, shell: HTMLElement) {
       trigger: shell,
       start: "top 86%",
       toggleActions: once,
+      once: true,
       fastScrollEnd: true,
     },
   });
@@ -109,6 +111,11 @@ export function initCaseMotion(root: HTMLElement, options: CaseMotionOptions = {
   const cleanups: Array<() => void> = [];
 
   const context = gsap.context(() => {
+    ScrollTrigger.config({
+      ignoreMobileResize: true,
+      limitCallbacks: true,
+    });
+
     const revealTargets = elements<HTMLElement>(root,
       ".tc-nav, .tc-hero-kicker, .tc-title-line > span, .tc-hero-summary, .tc-hero-meta, .tc-hero-media, .cc-hero-note, .tc-snapshot > header > *, .tc-snapshot-grid > *, .tc-premise h2, .tc-premise-notes, .tc-proof-heading > *, .tc-proof-frame, .tc-contribution > *, .tc-footer > *",
     );
@@ -127,14 +134,17 @@ export function initCaseMotion(root: HTMLElement, options: CaseMotionOptions = {
       return;
     }
 
+    const heroNote = root.querySelector<HTMLElement>(".cc-hero-note");
     const intro = gsap.timeline({ defaults: { ease: "power4.out" } });
     intro
       .from(".tc-nav", { autoAlpha: 0, y: -18, duration: 0.32 })
       .from(".tc-hero-kicker", { autoAlpha: 0, y: 14, duration: 0.3 }, "-=0.08")
-      .from(".tc-title-line > span", { yPercent: 112, duration: 0.62, stagger: 0.065 }, "-=0.16")
-      .from(".tc-hero-summary, .tc-hero-meta", { autoAlpha: 0, y: 22, duration: 0.48, stagger: 0.09 }, "-=0.34")
-      .from(".tc-hero-media", { autoAlpha: 0, xPercent: 12, scale: 0.975, duration: 0.86 }, "-=0.48")
-      .from(".cc-hero-note", { autoAlpha: 0, rotate: -4, y: 16, duration: 0.46 }, "-=0.22");
+      .from(".tc-title-line > span", { yPercent: 112, duration: 0.72, stagger: 0.075 }, "-=0.14")
+      .from(".tc-hero-summary, .tc-hero-meta", { autoAlpha: 0, y: 20, duration: 0.58, stagger: 0.1 }, "-=0.36")
+      .from(".tc-hero-media", { autoAlpha: 0, xPercent: 9, scale: 0.985, duration: 0.96 }, "-=0.5");
+    if (heroNote) {
+      intro.from(heroNote, { autoAlpha: 0, rotate: -4, y: 16, duration: 0.46 }, "-=0.22");
+    }
     intro.timeScale(1 / durationScale);
 
     const heroImage = root.querySelector<HTMLElement>(".tc-hero-media > img:first-child");
@@ -146,7 +156,7 @@ export function initCaseMotion(root: HTMLElement, options: CaseMotionOptions = {
           trigger: root.querySelector(".tc-hero"),
           start: "top top",
           end: "bottom top",
-          scrub: 0.55,
+          scrub: 1.05,
         },
       });
     }
@@ -156,19 +166,19 @@ export function initCaseMotion(root: HTMLElement, options: CaseMotionOptions = {
       gsap.from(snapshot.querySelectorAll(":scope > header > *"), {
         autoAlpha: 0,
         y: 26,
-        duration: 0.62 * durationScale,
+        duration: 0.72 * durationScale,
         stagger: 0.11,
         ease: "power3.out",
-        scrollTrigger: { trigger: snapshot, start: "top 84%", toggleActions: once, fastScrollEnd: true },
+        scrollTrigger: { trigger: snapshot, start: "top 86%", toggleActions: once, once: true, fastScrollEnd: true },
       });
       gsap.from(snapshot.querySelectorAll(".tc-snapshot-grid > *"), {
         autoAlpha: 0,
-        y: 44,
-        scale: 0.965,
-        duration: 0.72 * durationScale,
+        y: 34,
+        scale: 0.975,
+        duration: 0.86 * durationScale,
         stagger: 0.12,
         ease: "back.out(1.25)",
-        scrollTrigger: { trigger: snapshot, start: "top 78%", toggleActions: once, fastScrollEnd: true },
+        scrollTrigger: { trigger: snapshot, start: "top 82%", toggleActions: once, once: true, fastScrollEnd: true },
       });
     }
 
@@ -177,10 +187,10 @@ export function initCaseMotion(root: HTMLElement, options: CaseMotionOptions = {
       gsap.from(premise.querySelectorAll("h2, .tc-premise-notes"), {
         autoAlpha: 0,
         y: 38,
-        duration: 0.78 * durationScale,
+        duration: 0.86 * durationScale,
         stagger: 0.12,
         ease: "power3.out",
-        scrollTrigger: { trigger: premise, start: "top 82%", toggleActions: once, fastScrollEnd: true },
+        scrollTrigger: { trigger: premise, start: "top 84%", toggleActions: once, once: true, fastScrollEnd: true },
       });
     }
 
@@ -198,11 +208,11 @@ export function initCaseMotion(root: HTMLElement, options: CaseMotionOptions = {
       if (media) {
         gsap.from(media, {
           autoAlpha: 0,
-          y: 38,
-          scale: 0.985,
-          duration: 0.84 * durationScale,
+          y: 30,
+          scale: 0.99,
+          duration: 0.92 * durationScale,
           ease: "power3.out",
-          scrollTrigger: { trigger: shell, start: "top 78%", toggleActions: once, fastScrollEnd: true },
+          scrollTrigger: { trigger: shell, start: "top 80%", toggleActions: once, once: true, fastScrollEnd: true },
         });
 
         const screens = media.querySelectorAll<HTMLElement>(".tc-mirqa-screen");
@@ -252,7 +262,7 @@ export function initCaseMotion(root: HTMLElement, options: CaseMotionOptions = {
             trigger: nextShell,
             start: "top bottom",
             end: "top 12%",
-            scrub: 0.45,
+            scrub: 0.95,
             invalidateOnRefresh: true,
           },
         });
@@ -265,7 +275,7 @@ export function initCaseMotion(root: HTMLElement, options: CaseMotionOptions = {
               trigger: nextShell,
               start: "top bottom",
               end: "top 12%",
-              scrub: 0.45,
+              scrub: 0.95,
               invalidateOnRefresh: true,
             },
           });
@@ -277,21 +287,21 @@ export function initCaseMotion(root: HTMLElement, options: CaseMotionOptions = {
       gsap.from(heading.children, {
         autoAlpha: 0,
         y: 26,
-        duration: 0.62 * durationScale,
+        duration: 0.72 * durationScale,
         stagger: 0.1,
         ease: "power3.out",
-        scrollTrigger: { trigger: heading, start: "top 84%", toggleActions: once, fastScrollEnd: true },
+        scrollTrigger: { trigger: heading, start: "top 86%", toggleActions: once, once: true, fastScrollEnd: true },
       });
     });
 
     elements<HTMLElement>(root, ".tc-proof-frame").forEach((frame, index) => {
       gsap.from(frame, {
         autoAlpha: 0,
-        y: 34,
+        y: 28,
         rotate: index % 2 === 0 ? -0.55 : 0.55,
-        duration: 0.72 * durationScale,
+        duration: 0.82 * durationScale,
         ease: "power3.out",
-        scrollTrigger: { trigger: frame, start: "top 86%", toggleActions: once, fastScrollEnd: true },
+        scrollTrigger: { trigger: frame, start: "top 88%", toggleActions: once, once: true, fastScrollEnd: true },
       });
     });
 
@@ -300,10 +310,10 @@ export function initCaseMotion(root: HTMLElement, options: CaseMotionOptions = {
       gsap.from(contribution.children, {
         autoAlpha: 0,
         y: 28,
-        duration: 0.62 * durationScale,
+        duration: 0.76 * durationScale,
         stagger: 0.105,
         ease: "power3.out",
-        scrollTrigger: { trigger: contribution, start: "top 82%", toggleActions: once, fastScrollEnd: true },
+        scrollTrigger: { trigger: contribution, start: "top 84%", toggleActions: once, once: true, fastScrollEnd: true },
       });
     }
 

@@ -7827,3 +7827,205 @@ html.is-cta-captured a { cursor: none !important; }
     margin-top: calc(var(--space-15) + 4svh);
   }
 }
+
+/* Case detail art direction pass: one editorial rhythm from overview to deep dive. */
+.tc-page,
+.editorial-case {
+  --case-reading-line: color-mix(in srgb, currentColor 18%, transparent);
+  --case-note-paper: color-mix(in srgb, var(--summary-paper, #f9f6f0) 82%, #ffffff);
+}
+
+.tc-hero,
+.ec-hero,
+.tc-snapshot,
+.ec-snapshot,
+.tc-evidence,
+.tc-proof,
+.ec-context,
+.ec-concept,
+.ec-system,
+.ec-gallery,
+.ec-impact {
+  scroll-margin-top: 6rem;
+}
+
+.tc-hero-media,
+.ec-featured,
+.tc-card,
+.tc-proof-media,
+.ec-shot-media,
+.ec-prototype,
+.tc-snapshot-grid > :is(div, article),
+.ec-snapshot-grid > div {
+  backface-visibility: hidden;
+  contain: layout paint style;
+  transform-style: preserve-3d;
+}
+
+.tc-hero-media,
+.ec-featured {
+  box-shadow: 0 2.4rem 5.5rem color-mix(in srgb, var(--summary-ink, #2d2a26) 16%, transparent);
+}
+
+.tc-hero-media::after,
+.ec-featured::after,
+.tc-card-media::after,
+.tc-proof-media::after,
+.ec-shot-media::after {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  border: 1px solid rgba(255, 255, 255, 0.26);
+  box-shadow: inset 0 0 4rem rgba(35, 28, 22, 0.045);
+  content: "";
+  pointer-events: none;
+}
+
+.tc-hero-media figcaption,
+.ec-featured figcaption {
+  background: color-mix(in srgb, var(--summary-paper, #f9f6f0) 86%, transparent);
+  color: color-mix(in srgb, var(--summary-ink, #2d2a26) 86%, transparent);
+}
+
+.tc-card-shell {
+  min-height: 140svh;
+}
+
+.tc-card-shell + .tc-card-shell {
+  margin-top: -15svh;
+}
+
+.tc-card {
+  top: calc(7.5vh + var(--tc-stack-offset));
+  height: calc(85svh - var(--tc-stack-offset));
+  box-shadow:
+    0 -1.1rem 2.4rem rgba(45, 42, 38, 0.1),
+    0 2.2rem 4.4rem rgba(45, 42, 38, 0.14);
+}
+
+.tc-card::before {
+  position: absolute;
+  z-index: 4;
+  top: clamp(1.25rem, 2.4vw, 2.4rem);
+  right: clamp(1.25rem, 2.4vw, 2.4rem);
+  width: clamp(3rem, 5vw, 5.5rem);
+  height: 1.25rem;
+  background: color-mix(in srgb, var(--card-bg) 52%, rgba(255, 253, 246, 0.86));
+  box-shadow: 0 0.2rem 0.45rem rgba(36, 29, 23, 0.08);
+  content: "";
+  opacity: 0.82;
+  transform: rotate(3deg);
+}
+
+.tc-card-index,
+.tc-card-note {
+  border-color: color-mix(in srgb, currentColor 34%, transparent);
+}
+
+.tc-card-note,
+.tc-deep-dive-grid > article blockquote,
+.tc-evidence-handnote,
+.ec-insight-quote {
+  color: color-mix(in srgb, var(--card-ink, currentColor) 78%, var(--summary-accent, currentColor));
+}
+
+.tc-feature-row span,
+.tc-premise-notes span,
+.cc-card-tags span,
+.method-stack-chip {
+  transition: background var(--motion-standard) var(--ease-premium), transform var(--motion-standard) var(--ease-premium);
+}
+
+.tc-feature-row span {
+  background: color-mix(in srgb, var(--card-bg) 76%, #ffffff);
+}
+
+.tc-snapshot-grid > :is(div, article),
+.ec-snapshot-grid > div {
+  box-shadow: 0.65rem 1.15rem 2.6rem rgba(56, 45, 35, 0.12);
+}
+
+.tc-proof-grid,
+.ec-shot-grid {
+  align-items: start;
+}
+
+.tc-proof-frame:nth-child(odd),
+.ec-shot:nth-child(odd) {
+  transform: rotate(-0.35deg);
+}
+
+.tc-proof-frame:nth-child(even),
+.ec-shot:nth-child(even) {
+  transform: rotate(0.35deg);
+}
+
+.tc-proof-frame figcaption,
+.ec-shot figcaption {
+  color: color-mix(in srgb, var(--summary-ink, currentColor) 68%, transparent);
+}
+
+.tc-evidence-status,
+.ec-live-dot {
+  box-shadow: 0.35rem 0.45rem 0 color-mix(in srgb, var(--summary-accent, currentColor) 18%, transparent);
+}
+
+.tc-journey-line {
+  stroke: color-mix(in srgb, var(--summary-accent, var(--tc-brown)) 64%, var(--tc-ink));
+}
+
+.tc-journey-stages li::before {
+  box-shadow: 0 0 0 0.42rem color-mix(in srgb, var(--summary-accent, var(--tc-brown)) 16%, transparent);
+}
+
+.tc-contribution,
+.ec-impact {
+  background-image:
+    linear-gradient(color-mix(in srgb, currentColor 5%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, currentColor 5%, transparent) 1px, transparent 1px);
+  background-size: var(--case-grid-size) var(--case-grid-size);
+}
+
+.tc-footer > a,
+.ec-footer > a {
+  text-wrap: balance;
+}
+
+@media (min-width: 721px) {
+  .tc-page :is(.tc-snapshot, .tc-evidence, .tc-proof),
+  .editorial-case :is(.ec-snapshot, .ec-concept, .ec-system, .ec-gallery, .ec-impact) {
+    padding-top: max(14svh, var(--space-10));
+    padding-bottom: max(14svh, var(--space-10));
+  }
+
+  .tc-card-copy {
+    padding-right: clamp(2.4rem, 4vw, 5rem);
+  }
+}
+
+@media (max-width: 720px) {
+  .tc-card-shell,
+  .tc-card-shell:last-child {
+    min-height: 124svh;
+  }
+
+  .tc-card-shell + .tc-card-shell {
+    margin-top: -8svh;
+  }
+
+  .tc-card::before {
+    top: 0.75rem;
+    right: 0.9rem;
+    width: 3.2rem;
+    height: 0.85rem;
+  }
+
+  .tc-proof-frame,
+  .tc-proof-frame:nth-child(odd),
+  .tc-proof-frame:nth-child(even),
+  .ec-shot,
+  .ec-shot:nth-child(odd),
+  .ec-shot:nth-child(even) {
+    transform: none;
+  }
+}

@@ -80,45 +80,50 @@ export function EditorialCaseExperience({ project, locale = "nl" }: { project: E
     gsap.registerPlugin(ScrollTrigger);
 
     const context = gsap.context(() => {
+      ScrollTrigger.config({
+        ignoreMobileResize: true,
+        limitCallbacks: true,
+      });
+
       const intro = gsap.timeline({ defaults: { ease: "power4.out" } });
       intro
         .from(".ec-nav", { opacity: 0, y: -16, duration: 0.34 })
         .from(".ec-title-line > span", {
           yPercent: 115,
-          duration: 0.56,
-          stagger: 0.05,
+          duration: 0.68,
+          stagger: 0.065,
         }, "-=0.18")
         .from(".ec-hero-copy > p, .ec-meta", {
           opacity: 0,
-          y: 24,
-          duration: 0.38,
-          stagger: 0.05,
+          y: 20,
+          duration: 0.54,
+          stagger: 0.08,
         }, "-=0.3")
         .from(".ec-featured", {
           opacity: 0,
-          y: 80,
-          scale: 0.96,
-          duration: 0.72,
+          y: 58,
+          scale: 0.975,
+          duration: 0.9,
         }, "-=0.42");
 
       gsap.to(".ec-featured", {
-        yPercent: -10,
+        yPercent: -7,
         ease: "none",
         scrollTrigger: {
           trigger: ".ec-hero",
           start: "40% center",
           end: "bottom top",
-          scrub: true,
+          scrub: 1.05,
         },
       });
 
       gsap.utils.toArray<HTMLElement>(".ec-reveal").forEach((element) => {
         gsap.from(element, {
           opacity: 0,
-          y: 52,
-          duration: 0.9,
+          y: 34,
+          duration: 0.96,
           ease: "power3.out",
-          scrollTrigger: { trigger: element, start: "top 84%" },
+          scrollTrigger: { trigger: element, start: "top 88%", toggleActions: "play none none none", once: true, fastScrollEnd: true },
         });
       });
 
@@ -126,13 +131,13 @@ export function EditorialCaseExperience({ project, locale = "nl" }: { project: E
         const image = element.querySelector("img");
         if (!image) return;
         gsap.fromTo(image, { yPercent: -3 }, {
-          yPercent: 7,
+          yPercent: 5,
           ease: "none",
           scrollTrigger: {
             trigger: element,
             start: "top bottom",
             end: "bottom top",
-            scrub: true,
+            scrub: 1.05,
           },
         });
       });
@@ -142,7 +147,7 @@ export function EditorialCaseExperience({ project, locale = "nl" }: { project: E
         transformOrigin: "left",
         duration: 1.1,
         ease: "power3.inOut",
-        scrollTrigger: { trigger: ".ec-insight-quote", start: "top 75%" },
+        scrollTrigger: { trigger: ".ec-insight-quote", start: "top 78%", toggleActions: "play none none none", once: true },
       });
     }, root);
 
