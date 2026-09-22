@@ -733,16 +733,28 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
             {
               xPercent: 104,
               opacity: 0.12,
-              duration: 0.75,
+              duration: 0.86,
               ease: "power3.inOut",
             },
             "-=0.5",
+          )
+          .fromTo(
+            ".mind-hero-mosaic",
+            { filter: "blur(18px)", scale: 1.035 },
+            { filter: "blur(0px)", scale: 1, duration: 0.86, ease: "power2.out" },
+            "<",
+          )
+          .fromTo(
+            ".mind-hero-base",
+            { filter: "blur(12px)", scale: 1.018 },
+            { filter: "blur(0px)", scale: 1, duration: 0.82, ease: "power2.out" },
+            "<+0.12",
           )
           .to(
             heroReveal,
             {
               progress: 1,
-              duration: 0.78,
+              duration: 0.86,
               ease: "power2.out",
               onUpdate: () => heroMosaic?.render(heroReveal.progress, 0),
             },

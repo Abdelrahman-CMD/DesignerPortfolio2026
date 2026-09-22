@@ -1387,12 +1387,14 @@ a:focus-visible > .link-icon svg * {
   z-index: 1;
   object-fit: contain;
   object-position: right bottom;
-  will-change: transform;
+  will-change: transform, filter, opacity;
 }
 
 .mind-hero-mosaic {
   z-index: 1;
   pointer-events: none;
+  transform-origin: right bottom;
+  will-change: transform, filter, opacity;
 }
 
 .mind-hero-mosaic.is-unsupported { display: none; }
