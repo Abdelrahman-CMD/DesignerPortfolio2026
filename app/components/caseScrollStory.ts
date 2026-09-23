@@ -57,30 +57,36 @@ export function revealCaseEvidence(root: HTMLElement = document.body) {
 }
 
 export function revealCaseCard(card: HTMLElement, shell: HTMLElement) {
-  const lines = card.querySelectorAll<HTMLElement>(".tc-mask > span");
+  const copyItems = card.querySelectorAll<HTMLElement>(
+    ".tc-card-index, .tc-card-eyebrow, .tc-mask, .cc-card-tags, .cc-metric-board > *",
+  );
+  const maskLines = card.querySelectorAll<HTMLElement>(".tc-mask > span");
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   if (reduceMotion) {
-    gsap.set(lines, { autoAlpha: 1, yPercent: 0 });
+    gsap.set(copyItems, { autoAlpha: 1, y: 0 });
+    gsap.set(maskLines, { autoAlpha: 1, yPercent: 0 });
     return;
   }
 
   const isDesktop = window.matchMedia("(min-width: 721px)").matches;
 
+  gsap.set(maskLines, { clearProps: "transform" });
+
   if (isDesktop) {
     gsap.fromTo(
-      lines,
-      { autoAlpha: 0, yPercent: 108 },
+      copyItems,
+      { autoAlpha: 0, y: 16 },
       {
         autoAlpha: 1,
-        yPercent: 0,
-        stagger: 0.18,
+        y: 0,
+        stagger: 0,
         ease: "none",
         scrollTrigger: {
           trigger: shell,
-          start: "top 18%",
-          end: "top -52%",
-          scrub: 0.95,
+          start: "top 148%",
+          end: "top 124%",
+          scrub: 0.75,
           invalidateOnRefresh: true,
         },
       },
@@ -88,12 +94,12 @@ export function revealCaseCard(card: HTMLElement, shell: HTMLElement) {
     return;
   }
 
-  gsap.from(lines, {
+  gsap.from(copyItems, {
     autoAlpha: 0,
-    yPercent: 108,
+    y: 16,
     duration: 0.62,
-    stagger: 0.07,
-    ease: "power4.out",
+    stagger: 0.055,
+    ease: "power2.out",
     scrollTrigger: {
       trigger: shell,
       start: "top 86%",
@@ -227,30 +233,6 @@ export function initCaseMotion(root: HTMLElement, options: CaseMotionOptions = {
             scrollTrigger: { trigger: shell, start: "top 69%", toggleActions: once, fastScrollEnd: true },
           });
         }
-      }
-
-      const tags = card.querySelectorAll<HTMLElement>(".cc-card-tags > span");
-      if (tags.length) {
-        gsap.from(tags, {
-          autoAlpha: 0,
-          y: 12,
-          duration: 0.38 * durationScale,
-          stagger: 0.055,
-          ease: "power2.out",
-          scrollTrigger: { trigger: shell, start: "top 44%", toggleActions: once, fastScrollEnd: true },
-        });
-      }
-
-      const metricRows = card.querySelectorAll<HTMLElement>(".cc-metric-board dl > div");
-      if (metricRows.length) {
-        gsap.from(metricRows, {
-          autoAlpha: 0,
-          y: 20,
-          duration: 0.52 * durationScale,
-          stagger: 0.095,
-          ease: "power3.out",
-          scrollTrigger: { trigger: shell, start: "top 48%", toggleActions: once, fastScrollEnd: true },
-        });
       }
 
       if (nextShell) {
