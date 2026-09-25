@@ -686,79 +686,87 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
 
       if (!prefersReducedMotion) {
         gsap.set(".mind-title-handwrite", { clipPath: "inset(0 100% 0 0)" });
-        const intro = gsap.timeline({ defaults: { ease: "power4.out" } });
+        gsap.set(".mind-hero-photo-slide", {
+          clipPath: "inset(0 0 0 100%)",
+          xPercent: 14,
+          opacity: 0.18,
+        });
+        gsap.set(".mind-hero-mosaic", { filter: "blur(26px)", scale: 1.08, opacity: 1 });
+        gsap.set(".mind-hero-base", { filter: "blur(18px)", scale: 1.045, opacity: 0 });
+
+        const intro = gsap.timeline({
+          defaults: { ease: "power4.out" },
+        });
         intro
-          .from(".site-header", {
-            autoAlpha: 0,
-            y: -16,
-            duration: 0.28,
-          })
-          .from(
-            ".mind-hero-meta span",
-            { autoAlpha: 0, y: 10, duration: 0.24, stagger: 0.05 },
-            "-=0.06",
-          )
           .from(
             ".mind-hero-canvas",
-            { clipPath: "inset(0 0 100% 0)", duration: 0.36, ease: "power3.inOut" },
-            "-=0.18",
+            { autoAlpha: 0, duration: 0.28, ease: "power2.out" },
           )
           .from(
             ".mind-hero-kicker",
-            { autoAlpha: 0, y: 12, duration: 0.24 },
-            "-=0.18",
+            { autoAlpha: 0, y: 12, duration: 0.34 },
+            "-=0.08",
           )
           .from(
             ".mind-title-line > span",
-            { yPercent: 112, duration: 0.4, stagger: 0.06 },
-            "-=0.16",
+            { yPercent: 112, duration: 0.86, stagger: 0.085 },
+            "-=0.18",
+          )
+          .to(
+            ".mind-hero-photo-slide",
+            {
+              clipPath: "inset(0 0 0 0%)",
+              xPercent: 0,
+              opacity: 1,
+              duration: 1.18,
+              ease: "power4.inOut",
+            },
+            "-=0.72",
           )
           .to(
             ".mind-title-handwrite",
-            { clipPath: "inset(0 0% 0 0)", duration: 0.62, ease: "power2.inOut" },
-            "-=0.1",
-          )
-          .from(
-            ".mind-hero-lede",
-            { autoAlpha: 0, y: 15, duration: 0.28 },
-            "-=0.2",
-          )
-          .from(
-            ".mind-hero-actions",
-            { autoAlpha: 0, y: 12, duration: 0.24 },
-            "-=0.18",
-          )
-          .from(
-            ".mind-hero-photo-slide",
-            {
-              xPercent: 104,
-              opacity: 0.12,
-              duration: 1.24,
-              ease: "power3.inOut",
-            },
-            "-=0.5",
-          )
-          .fromTo(
-            ".mind-hero-mosaic",
-            { filter: "blur(22px)", scale: 1.045 },
-            { filter: "blur(0px)", scale: 1, duration: 1.16, ease: "power2.out" },
-            "<+0.42",
-          )
-          .fromTo(
-            ".mind-hero-base",
-            { filter: "blur(16px)", scale: 1.024 },
-            { filter: "blur(0px)", scale: 1, duration: 1.02, ease: "power2.out" },
-            "<+0.2",
+            { clipPath: "inset(0 0% 0 0)", duration: 0.72, ease: "power3.inOut" },
+            "-=0.48",
           )
           .to(
             heroReveal,
             {
               progress: 1,
-              duration: 1.16,
-              ease: "power2.inOut",
+              duration: 1.24,
+              ease: "power3.inOut",
               onUpdate: () => heroMosaic?.render(heroReveal.progress, 0),
             },
+            "-=0.82",
+          )
+          .to(
+            ".mind-hero-mosaic",
+            { filter: "blur(0px)", scale: 1, duration: 1.18, ease: "power3.out" },
             "<",
+          )
+          .to(
+            ".mind-hero-base",
+            { filter: "blur(0px)", scale: 1, opacity: 1, duration: 1.04, ease: "power3.out" },
+            "<+0.34",
+          )
+          .from(
+            ".mind-hero-lede",
+            { autoAlpha: 0, y: 18, duration: 0.48 },
+            "-=0.62",
+          )
+          .from(
+            ".mind-hero-meta span",
+            { autoAlpha: 0, y: 12, duration: 0.42, stagger: 0.06 },
+            "-=0.32",
+          )
+          .from(
+            ".site-header",
+            { autoAlpha: 0, y: -18, duration: 0.46 },
+            "-=0.36",
+          )
+          .from(
+            ".mind-hero-actions",
+            { autoAlpha: 0, y: 18, duration: 0.5 },
+            "-=0.28",
           );
       }
 

@@ -197,7 +197,8 @@ test("uses bounded raster assets on the homepage and case pages", async () => {
   assert.doesNotMatch(homeSource, /\/about\/hero-profile-cutout-v2\.webp/);
   assert.doesNotMatch(homeSource, /mind-portrait-foreground-(glasses|ear)/);
   assert.doesNotMatch(homeSource, /\/about\/brain-color\.svg/);
-  assert.match(homeSource, /xPercent: 104/);
+  assert.match(homeSource, /clipPath: "inset\(0 0 0 100%\)"/);
+  assert.match(homeSource, /xPercent: 14/);
   assert.match(homeSource, /nl: new Set\(\["probleem", "gebruikers", "bouwen"\]\)/);
   assert.match(homeSource, /en: new Set\(\["problem", "users", "build"\]\)/);
   assert.match(homeSource, /\/about\/web\/fatherhood\.webp/);
