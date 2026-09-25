@@ -1402,6 +1402,36 @@ a:focus-visible > .link-icon svg * {
 
 .mind-hero-mosaic.is-unsupported { display: none; }
 
+@media (prefers-reduced-motion: no-preference) {
+  .mind-hero[data-hero-motion="pending"] .mind-title-handwrite {
+    clip-path: inset(0 100% 0 0);
+  }
+
+  .mind-hero[data-hero-motion="pending"] .mind-hero-photo-slide {
+    clip-path: inset(0 0 0 100%);
+    opacity: 0.18;
+    will-change: clip-path, transform, opacity;
+  }
+
+  .mind-hero[data-hero-motion="pending"] .mind-hero-mosaic {
+    opacity: 1;
+    filter: blur(16px);
+    transform: scale(1.055);
+    will-change: filter, transform, opacity;
+  }
+
+  .mind-hero[data-hero-motion="pending"] .mind-hero-base {
+    opacity: 0;
+    filter: blur(10px);
+    transform: scale(1.025);
+    will-change: opacity, filter, transform;
+  }
+}
+
+.mind-hero[data-hero-motion="ready"] :is(.mind-hero-photo-slide, .mind-hero-mosaic, .mind-hero-base) {
+  will-change: auto;
+}
+
 .mind-brain-stage {
   position: absolute;
   z-index: 2;
