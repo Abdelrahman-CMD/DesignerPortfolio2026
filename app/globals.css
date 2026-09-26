@@ -1403,6 +1403,35 @@ a:focus-visible > .link-icon svg * {
 .mind-hero-mosaic.is-unsupported { display: none; }
 
 @media (prefers-reduced-motion: no-preference) {
+  .mind-hero[data-hero-motion="pending"] .mind-hero-title {
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  .mind-hero[data-hero-motion="pending"] .mind-title-line > span {
+    transform: translate3d(0, 118%, 0);
+    will-change: transform;
+  }
+
+  .mind-hero[data-hero-motion="ready"] .mind-hero-title {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .mind-hero[data-hero-motion="ready"] .mind-title-line > span {
+    transform: translate3d(0, 0, 0);
+    transition: transform 0.78s cubic-bezier(0.25, 1, 0.5, 1);
+    will-change: auto;
+  }
+
+  .mind-hero[data-hero-motion="ready"] .mind-title-line:nth-child(2) > span {
+    transition-delay: 65ms;
+  }
+
+  .mind-hero[data-hero-motion="ready"] .mind-title-line:nth-child(3) > span {
+    transition-delay: 130ms;
+  }
+
   .mind-hero[data-hero-motion="pending"] .mind-title-handwrite {
     clip-path: inset(0 100% 0 0);
   }

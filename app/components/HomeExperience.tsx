@@ -713,10 +713,15 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
             { autoAlpha: 0, y: 12, duration: 0.34 },
             "-=0.08",
           )
-          .from(
-            ".mind-title-line > span",
-            { yPercent: 112, duration: 0.78, stagger: 0.065 },
+          .call(
+            () => heroSection?.setAttribute("data-hero-motion", "ready"),
+            undefined,
             "-=0.18",
+          )
+          .to(
+            ".mind-hero-title",
+            { "--hero-title-progress": 1, duration: 0.78 },
+            "<",
           )
           .to(
             ".mind-hero-photo-slide",
@@ -1663,7 +1668,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
 
             <header className="mind-hero-copy">
               <p className="mind-hero-kicker label">{locale === "en" ? "Product designer · UX/UI · Amsterdam" : "Productdesigner · UX/UI · Amsterdam"}</p>
-              <h1 id="hero-title" aria-label={locale === "en" ? "Product designer turning complexity into clarity." : "Productdesigner die complexiteit helder maakt."}>
+              <h1 className="mind-hero-title" id="hero-title" aria-label={locale === "en" ? "Product designer turning complexity into clarity." : "Productdesigner die complexiteit helder maakt."}>
                 <span className="mind-title-line"><span>{locale === "en" ? "Product designer" : "Productdesigner"}</span></span>
                 <span className="mind-title-line"><span>{locale === "en" ? "turning complexity" : "maakt complexiteit"}</span></span>
                 <span className="mind-title-line"><span>{locale === "en" ? "into" : "begrijpelijk en"} <em className="mind-title-handwrite">{locale === "en" ? "clarity." : "bruikbaar."}</em></span></span>
