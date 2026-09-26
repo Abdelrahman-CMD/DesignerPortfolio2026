@@ -610,6 +610,13 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
         limitCallbacks: true,
       });
 
+      const motion = {
+        ease: "power4.out",
+        softEase: "power3.out",
+        revealDuration: 0.86,
+        sectionStagger: 0.13,
+      };
+
       const header = root.current?.querySelector<HTMLElement>(".site-header");
       let previousScroll = window.scrollY;
       let headerVisible = true;
@@ -935,18 +942,39 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
         });
       }
 
-      gsap.from(".manifesto-word", {
-        opacity: 0.12,
-        y: 18,
-        stagger: 0.035,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: ".manifesto-copy",
-          start: "top 82%",
-          end: "bottom 56%",
-          scrub: 0.95,
-        },
-      });
+      if (!prefersReducedMotion) {
+        gsap.from(".manifesto-word", {
+          autoAlpha: 0,
+          y: 28,
+          filter: "blur(5px)",
+          stagger: { each: 0.018, from: "start" },
+          duration: 0.72,
+          ease: motion.softEase,
+          clearProps: "filter,transform,opacity,visibility",
+          scrollTrigger: {
+            trigger: ".manifesto-copy",
+            start: "top 78%",
+            toggleActions: "play none none none",
+            once: true,
+            fastScrollEnd: true,
+          },
+        });
+
+        gsap.from(".manifesto-aside > *", {
+          autoAlpha: 0,
+          y: 22,
+          duration: 0.72,
+          stagger: 0.12,
+          ease: motion.softEase,
+          scrollTrigger: {
+            trigger: ".manifesto",
+            start: "top 66%",
+            toggleActions: "play none none none",
+            once: true,
+            fastScrollEnd: true,
+          },
+        });
+      }
 
       gsap.utils.toArray<HTMLElement>(".manifesto-marker").forEach((word) => {
         const stroke = word.querySelector<HTMLElement>(".manifesto-marker-stroke");
@@ -1011,73 +1039,91 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
 
       const showcaseHeading = root.current?.querySelector<HTMLElement>(".showcase-heading");
       if (showcaseHeading && !prefersReducedMotion) {
-        gsap.from(showcaseHeading.querySelectorAll(":scope > *"), {
-          autoAlpha: 0,
-          y: 30,
-          duration: 0.68,
-          stagger: 0.1,
-          ease: "power3.out",
+        const showcaseTimeline = gsap.timeline({
           scrollTrigger: {
             trigger: showcaseHeading,
-            start: "top 84%",
+            start: "top 80%",
             toggleActions: "play none none none",
+            once: true,
             fastScrollEnd: true,
           },
         });
+        showcaseTimeline
+          .from(showcaseHeading.querySelector(".section-kicker"), {
+            autoAlpha: 0,
+            y: 16,
+            duration: 0.48,
+            ease: motion.softEase,
+          })
+          .from(".showcase-title-line > span", {
+            yPercent: 118,
+            duration: 0.9,
+            ease: motion.ease,
+          }, "-=0.16")
+          .from(showcaseHeading.querySelector(".showcase-heading-copy p"), {
+            autoAlpha: 0,
+            y: 24,
+            duration: motion.revealDuration,
+            ease: motion.softEase,
+          }, "-=0.38")
+          .from(showcaseHeading.querySelectorAll(".showcase-index span"), {
+            autoAlpha: 0,
+            y: 18,
+            duration: 0.62,
+            stagger: 0.08,
+            ease: motion.softEase,
+          }, "-=0.44");
       }
 
       gsap.utils.toArray<HTMLElement>(".project-entry").forEach((entry) => {
         const visual = entry.querySelector<HTMLElement>(".project-visual");
         const media = entry.querySelector<HTMLElement>(".project-parallax-media");
 
-        if (visual && !prefersReducedMotion) {
-          gsap.fromTo(visual, {
-            autoAlpha: 0.72,
-            y: 46,
-          }, {
-            autoAlpha: 1,
-            y: 0,
-            duration: 0.9,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: entry,
-              start: "top 86%",
-              toggleActions: "play none none none",
-              once: true,
-              fastScrollEnd: true,
-            },
-          });
-        }
-
         if (media && supportsHeroParallax && !prefersReducedMotion) {
           gsap.fromTo(media, {
-            yPercent: -7,
+            yPercent: -4,
           }, {
-            yPercent: 7,
+            yPercent: 5,
             ease: "none",
             scrollTrigger: {
               trigger: entry,
               start: "top bottom",
               end: "bottom top",
-              scrub: 1.1,
+              scrub: 1.25,
             },
           });
         }
 
         if (!prefersReducedMotion) {
-          gsap.from(entry.querySelector(".project-card-copy"), {
-            autoAlpha: 0,
-            y: 20,
-            duration: 0.65,
-            ease: "power2.out",
+          const projectTimeline = gsap.timeline({
             scrollTrigger: {
               trigger: entry,
-              start: "top 82%",
+              start: "top 84%",
               toggleActions: "play none none none",
               once: true,
               fastScrollEnd: true,
             },
           });
+          if (visual) {
+            projectTimeline.fromTo(visual, {
+              autoAlpha: 0,
+              y: 48,
+              scale: 0.985,
+            }, {
+              autoAlpha: 1,
+              y: 0,
+              scale: 1,
+              duration: 0.92,
+              ease: motion.ease,
+            });
+          }
+          projectTimeline.from(entry.querySelectorAll(".project-card-copy > *"), {
+            autoAlpha: 0,
+            y: 18,
+            duration: 0.58,
+            stagger: 0.065,
+            ease: motion.softEase,
+          }, visual ? "-=0.42" : 0);
         }
       });
 
@@ -1396,27 +1442,27 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
         revealTimeline
           .fromTo(copyElements, {
             autoAlpha: 0,
-            y: 55,
-            rotation: direction * 1.5,
+            y: 34,
+            rotation: direction * 0.65,
           }, {
             autoAlpha: 1,
             y: 0,
             rotation: 0,
-            stagger: 0.08,
-            ease: "power3.out",
-            duration: 0.65,
-          }, 0.16)
+            stagger: 0.11,
+            ease: motion.softEase,
+            duration: 0.72,
+          }, 0.1)
           .fromTo(ephemera, {
             autoAlpha: 0,
-            scale: 0.7,
-            rotation: direction * 14,
+            scale: 0.82,
+            rotation: direction * 7,
           }, {
             autoAlpha: 1,
             scale: 1,
             rotation: 0,
-            ease: "back.out(1.5)",
-            duration: 0.45,
-          }, 0.35);
+            ease: motion.ease,
+            duration: 0.52,
+          }, 0.42);
 
         if (photo) {
           gsap.fromTo(photo, {
@@ -1446,13 +1492,13 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
         });
 
         gsap.to(copyElements, {
-          autoAlpha: 0.14,
-          y: -34,
-          stagger: 0.025,
+          autoAlpha: 0.28,
+          y: -24,
+          stagger: 0.018,
           ease: "power2.in",
           scrollTrigger: {
             trigger: stop,
-            start: "82% 46%",
+            start: "86% 44%",
             end: "bottom 4%",
             scrub: 1,
           },
@@ -1468,21 +1514,31 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
         mosaicControllers.forEach((controller) => controller.dispose());
       };
 
-      gsap.from(".method-title-line > span", {
-        yPercent: 112,
-        duration: 0.76,
-        stagger: 0.09,
-        ease: "power4.out",
-        scrollTrigger: { trigger: ".method-intro", start: "top 82%", toggleActions: "play none none none", fastScrollEnd: true },
-      });
-
-      gsap.from(".method-intro-copy", {
-        opacity: 0,
-        y: 40,
-        duration: 0.85,
-        ease: "power3.out",
-        scrollTrigger: { trigger: ".method-intro-copy", start: "top 82%", toggleActions: "play none none none", fastScrollEnd: true },
-      });
+      if (!prefersReducedMotion) {
+        const methodIntro = gsap.timeline({
+          scrollTrigger: { trigger: ".method-intro", start: "top 78%", toggleActions: "play none none none", once: true, fastScrollEnd: true },
+        });
+        methodIntro
+          .from(".method-intro .section-kicker", {
+            autoAlpha: 0,
+            y: 16,
+            duration: 0.48,
+            ease: motion.softEase,
+          })
+          .from(".method-title-line > span", {
+            yPercent: 118,
+            duration: 0.88,
+            stagger: motion.sectionStagger,
+            ease: motion.ease,
+          }, "-=0.14")
+          .from(".method-intro-copy > *", {
+            autoAlpha: 0,
+            y: 24,
+            duration: 0.72,
+            stagger: 0.09,
+            ease: motion.softEase,
+          }, "-=0.36");
+      }
 
       const methodPin = root.current?.querySelector<HTMLElement>(".method-pin");
       const methodTrack = root.current?.querySelector<HTMLElement>(".method-track");
@@ -1511,41 +1567,41 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
           }, 0);
       }
 
-      gsap.from(".method-stack-chip", {
-        opacity: 0,
-        scale: 0.65,
-        y: 36,
-        rotation: (index) => (index % 2 === 0 ? -8 : 8),
-        stagger: { each: 0.06, from: "random" },
-        duration: 0.7,
-        ease: "back.out(1.6)",
-        scrollTrigger: { trigger: ".method-stack", start: "top 78%", toggleActions: "play none none none", fastScrollEnd: true },
-      });
+      if (!prefersReducedMotion) {
+        gsap.from(".method-stack-chip", {
+          opacity: 0,
+          scale: 0.86,
+          y: 24,
+          rotation: (index) => (index % 2 === 0 ? -2 : 2),
+          stagger: { each: 0.045, from: "start" },
+          duration: 0.58,
+          ease: motion.ease,
+          scrollTrigger: { trigger: ".method-stack", start: "top 78%", toggleActions: "play none none none", fastScrollEnd: true },
+        });
+      }
 
-      gsap.from(".contact-postcard", {
-        opacity: 0,
-        y: 82,
-        scale: 0.955,
-        rotation: -1.8,
-        duration: 1.15,
-        ease: "power4.out",
-        scrollTrigger: { trigger: ".contact", start: "top 74%", toggleActions: "play none none none", fastScrollEnd: true },
-      });
-
-      gsap.from(".postcard-copy > *, .postcard-portrait, .postcard-brand, .postcard-stamp, .postcard-links", {
-        opacity: 0,
-        y: 26,
-        rotation: (index) => (index % 2 === 0 ? -1.2 : 1.2),
-        duration: 0.8,
-        stagger: 0.07,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: ".contact-postcard",
-          start: "top 66%",
-          toggleActions: "play none none none",
-          fastScrollEnd: true,
-        },
-      });
+      if (!prefersReducedMotion) {
+        const contactTimeline = gsap.timeline({
+          scrollTrigger: { trigger: ".contact", start: "top 74%", toggleActions: "play none none none", once: true, fastScrollEnd: true },
+        });
+        contactTimeline
+          .from(".contact-postcard", {
+            autoAlpha: 0,
+            y: 74,
+            scale: 0.965,
+            rotation: -1.4,
+            duration: 1.02,
+            ease: motion.ease,
+          })
+          .from(".postcard-brand, .postcard-copy > *, .postcard-portrait, .postcard-stamp, .postcard-links", {
+            autoAlpha: 0,
+            y: 22,
+            rotation: (index) => (index % 2 === 0 ? -0.8 : 0.8),
+            duration: 0.68,
+            stagger: 0.075,
+            ease: motion.softEase,
+          }, "-=0.52");
+      }
     }, root);
 
     return () => {
@@ -1909,7 +1965,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
         <header className="showcase-heading">
           <p className="section-kicker"><span>01</span> Projecten</p>
           <div className="showcase-heading-copy">
-            <h2 id="work-title">Geselecteerd werk</h2>
+            <h2 id="work-title"><span className="showcase-title-line"><span>Geselecteerd werk</span></span></h2>
             <p>
               Vijf zelf geïnitieerde concepten tonen hoe ik kansen in een niche ontdek
               en vertaal naar een heldere digitale richting. Drie live klantprojecten

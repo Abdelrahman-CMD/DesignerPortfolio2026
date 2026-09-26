@@ -2146,6 +2146,17 @@ html.is-cta-captured a { cursor: none !important; }
   text-wrap: balance;
 }
 
+.showcase-title-line {
+  display: block;
+  overflow: hidden;
+  padding: 0.12em 0 0.22em;
+}
+
+.showcase-title-line > span {
+  display: block;
+  will-change: transform;
+}
+
 .showcase-heading-copy p {
   width: min(35rem, 82%);
   margin: var(--space-5) 0 0 auto;
