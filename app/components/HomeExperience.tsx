@@ -698,6 +698,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
         });
         gsap.set(".mind-hero-mosaic", { filter: "blur(16px)", scale: 1.055, opacity: 1 });
         gsap.set(".mind-hero-base", { filter: "blur(10px)", scale: 1.025, opacity: 0 });
+        gsap.set(".mind-title-line > span", { yPercent: 118 });
 
         const intro = gsap.timeline({
           defaults: { ease: "power4.out" },
@@ -718,9 +719,20 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
             undefined,
             "-=0.18",
           )
-          .to(
+          .set(
             ".mind-hero-title",
-            { "--hero-title-progress": 1, duration: 0.78 },
+            { autoAlpha: 1 },
+            "<",
+          )
+          .to(
+            ".mind-title-line > span",
+            {
+              yPercent: 0,
+              duration: 0.92,
+              stagger: 0.075,
+              ease: "power4.out",
+              clearProps: "transform",
+            },
             "<",
           )
           .to(
