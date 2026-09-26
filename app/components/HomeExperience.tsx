@@ -698,7 +698,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
         });
         gsap.set(".mind-hero-mosaic", { filter: "blur(16px)", scale: 1.055, opacity: 1 });
         gsap.set(".mind-hero-base", { filter: "blur(10px)", scale: 1.025, opacity: 0 });
-        gsap.set(".mind-title-line > span", { yPercent: 118 });
+        gsap.set(".mind-title-line > span", { y: "1.24em" });
 
         const intro = gsap.timeline({
           defaults: { ease: "power4.out" },
@@ -717,7 +717,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
           .call(
             () => heroSection?.setAttribute("data-hero-motion", "ready"),
             undefined,
-            "-=0.18",
+            "+=0.08",
           )
           .set(
             ".mind-hero-title",
@@ -727,9 +727,9 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
           .to(
             ".mind-title-line > span",
             {
-              yPercent: 0,
-              duration: 0.92,
-              stagger: 0.075,
+              y: 0,
+              duration: 1.02,
+              stagger: 0.16,
               ease: "power4.out",
               clearProps: "transform",
             },
@@ -744,12 +744,12 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
               duration: 1.08,
               ease: "power4.inOut",
             },
-            "-=0.66",
+            "-=0.42",
           )
           .to(
             ".mind-title-handwrite",
-            { clipPath: "inset(0 0% 0 0)", duration: 0.72, ease: "power3.inOut" },
-            "-=0.48",
+            { clipPath: "inset(0 0% 0 0)", duration: 0.82, ease: "power3.inOut" },
+            "-=0.34",
           )
           .to(
             heroReveal,

@@ -1409,7 +1409,7 @@ a:focus-visible > .link-icon svg * {
   }
 
   .mind-hero[data-hero-motion="pending"] .mind-title-line > span {
-    transform: translate3d(0, 118%, 0);
+    transform: translate3d(0, 1.24em, 0);
     will-change: transform;
   }
 
@@ -1522,7 +1522,7 @@ a:focus-visible > .link-icon svg * {
 .case-title-line {
   display: block;
   overflow: hidden;
-  padding: 0 0 0.18em;
+  padding: 0.16em 0 0.24em;
 }
 
 .mind-title-line > span,
@@ -7591,8 +7591,8 @@ html.is-cta-captured a { cursor: none !important; }
 .method-title-line {
   margin-top: -0.14em;
   margin-bottom: -0.16em;
-  padding-top: 0.18em;
-  padding-bottom: 0.22em;
+  padding-top: 0.24em;
+  padding-bottom: 0.3em;
 }
 
 :is(h1, h2, h3, h4).tc-mask,
