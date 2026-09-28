@@ -366,7 +366,7 @@ export function ClientCaseExperience({ project, locale = "nl" }: { project: Edit
   } as CSSProperties;
 
   return (
-    <main ref={root} className={`tc-page tc-page-client tc-page-${story.theme}`} style={pageStyle} data-motion-project={project.slug}>
+    <main ref={root} className={`tc-page tc-page-client tc-page-${story.theme}`} style={pageStyle} data-motion-project={project.slug} data-case-motion="pending">
       <a className="skip-link" href="#client-case-content">{locale === "en" ? "Skip to the case study" : "Ga naar de case"}</a>
 
       <nav className="tc-nav" aria-label={locale === "en" ? "Case study navigation" : "Case navigatie"}>
@@ -388,7 +388,7 @@ export function ClientCaseExperience({ project, locale = "nl" }: { project: Edit
             {story.hero.meta.map((item) => <div key={item.label.nl}><dt>{pick(locale, item.label)}</dt><dd>{pick(locale, item.value)}</dd></div>)}
           </dl>
         </div>
-        <figure className="tc-hero-media" style={{ viewTransitionName: "case-hero" } as CSSProperties}>
+        <figure className="tc-hero-media">
           <Image src={story.hero.image} alt={pick(locale, story.hero.imageAlt)} fill priority sizes="(max-width: 760px) 100vw, 58vw" />
           <span className="cc-hero-note">{pick(locale, story.hero.annotation)}</span>
           <figcaption>{pick(locale, story.hero.caption)}</figcaption>

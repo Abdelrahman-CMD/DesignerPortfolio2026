@@ -122,11 +122,18 @@ export function initCaseMotion(root: HTMLElement, options: CaseMotionOptions = {
       limitCallbacks: true,
     });
 
-    const revealTargets = elements<HTMLElement>(root,
-      ".tc-nav, .tc-hero-kicker, .tc-title-line > span, .tc-hero-summary, .tc-hero-meta, .tc-hero-media, .cc-hero-note, .tc-snapshot > header > *, .tc-snapshot-grid > *, .tc-premise h2, .tc-premise-notes, .tc-proof-heading > *, .tc-proof-frame, .tc-contribution > *, .tc-footer > *",
+    const heroIntroTargets = elements<HTMLElement>(root,
+      ".tc-nav, .tc-hero-kicker, .tc-title-line > span, .tc-hero-summary, .tc-hero-meta, .tc-hero-media, .cc-hero-note",
     );
+    const revealTargets = [
+      ...heroIntroTargets,
+      ...elements<HTMLElement>(root,
+        ".tc-snapshot > header > *, .tc-snapshot-grid > *, .tc-premise h2, .tc-premise-notes, .tc-proof-heading > *, .tc-proof-frame, .tc-contribution > *, .tc-footer > *",
+      ),
+    ];
 
     if (reduceMotion) {
+      root.setAttribute("data-case-motion", "ready");
       gsap.set(revealTargets, { clearProps: "all", autoAlpha: 1, x: 0, y: 0, xPercent: 0, yPercent: 0, scale: 1 });
       gsap.set(elements<HTMLElement>(root, ".tc-mask > span, .tc-mirqa-screen, .cc-card-tags > span, .cc-metric-board > *"), {
         clearProps: "all",
@@ -141,15 +148,23 @@ export function initCaseMotion(root: HTMLElement, options: CaseMotionOptions = {
     }
 
     const heroNote = root.querySelector<HTMLElement>(".cc-hero-note");
+    gsap.set(".tc-nav", { autoAlpha: 0, y: -18 });
+    gsap.set(".tc-hero-kicker", { autoAlpha: 0, y: 14 });
+    gsap.set(".tc-title-line > span", { yPercent: 118 });
+    gsap.set(".tc-hero-summary, .tc-hero-meta", { autoAlpha: 0, y: 20 });
+    gsap.set(".tc-hero-media", { autoAlpha: 0, xPercent: 6, scale: 0.985 });
+    if (heroNote) gsap.set(heroNote, { autoAlpha: 0, rotate: -3, y: 16 });
+    root.setAttribute("data-case-motion", "ready");
+
     const intro = gsap.timeline({ defaults: { ease: "power4.out" } });
     intro
-      .from(".tc-nav", { autoAlpha: 0, y: -18, duration: 0.32 })
-      .from(".tc-hero-kicker", { autoAlpha: 0, y: 14, duration: 0.3 }, "-=0.08")
-      .from(".tc-title-line > span", { yPercent: 112, duration: 0.72, stagger: 0.075 }, "-=0.14")
-      .from(".tc-hero-summary, .tc-hero-meta", { autoAlpha: 0, y: 20, duration: 0.58, stagger: 0.1 }, "-=0.36")
-      .from(".tc-hero-media", { autoAlpha: 0, xPercent: 9, scale: 0.985, duration: 0.96 }, "-=0.5");
+      .to(".tc-nav", { autoAlpha: 1, y: 0, duration: 0.34 })
+      .to(".tc-hero-kicker", { autoAlpha: 1, y: 0, duration: 0.34 }, "-=0.08")
+      .to(".tc-title-line > span", { yPercent: 0, duration: 0.9, stagger: 0.12, clearProps: "transform" }, "+=0.02")
+      .to(".tc-hero-summary, .tc-hero-meta", { autoAlpha: 1, y: 0, duration: 0.66, stagger: 0.12 }, "-=0.38")
+      .to(".tc-hero-media", { autoAlpha: 1, xPercent: 0, scale: 1, duration: 1.02 }, "-=0.48");
     if (heroNote) {
-      intro.from(heroNote, { autoAlpha: 0, rotate: -4, y: 16, duration: 0.46 }, "-=0.22");
+      intro.to(heroNote, { autoAlpha: 1, rotate: 0, y: 0, duration: 0.48 }, "-=0.22");
     }
     intro.timeScale(1 / durationScale);
 
@@ -340,14 +355,6 @@ export function initCaseMotion(root: HTMLElement, options: CaseMotionOptions = {
       });
     });
 
-    const hero = root.querySelector<HTMLElement>(".tc-hero-media");
-    const removeSharedHero = () => {
-      if (hero) hero.style.viewTransitionName = "none";
-    };
-    elements<HTMLAnchorElement>(root, "a[href]").forEach((link) => {
-      link.addEventListener("click", removeSharedHero);
-      cleanups.push(() => link.removeEventListener("click", removeSharedHero));
-    });
   }, root);
 
   return () => {

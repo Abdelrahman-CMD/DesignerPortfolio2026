@@ -93,14 +93,35 @@ export function HijamaNCupsExperience({ locale = "nl" }: { locale?: Locale }) {
   const tx = (value: string) => translateText(locale, value);
   useLayoutEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const context = gsap.context(() => {
-      const intro = gsap.timeline({ defaults: { ease: "power4.out" } });
-      intro
-        .from(".tc-nav", { opacity: 0, y: -18, duration: 0.32 })
-        .from(".tc-hero-kicker", { opacity: 0, y: 16, duration: 0.28 }, "-=0.08")
-        .from(".tc-title-line > span", { yPercent: 112, duration: 0.52, stagger: 0.05 }, "-=0.16")
-        .from(".tc-hero-summary, .tc-hero-meta", { opacity: 0, y: 24, duration: 0.38, stagger: 0.05 }, "-=0.32")
-        .from(".tc-hero-media", { opacity: 0, xPercent: 16, scale: 0.97, duration: 0.78 }, "-=0.46");
+      if (reduceMotion) {
+        root.current?.setAttribute("data-case-motion", "ready");
+        gsap.set(".tc-nav, .tc-hero-kicker, .tc-title-line > span, .tc-hero-summary, .tc-hero-meta, .tc-hero-media", {
+          clearProps: "all",
+          autoAlpha: 1,
+          x: 0,
+          y: 0,
+          xPercent: 0,
+          yPercent: 0,
+          scale: 1,
+        });
+      } else {
+        gsap.set(".tc-nav", { autoAlpha: 0, y: -18 });
+        gsap.set(".tc-hero-kicker", { autoAlpha: 0, y: 14 });
+        gsap.set(".tc-title-line > span", { yPercent: 118 });
+        gsap.set(".tc-hero-summary, .tc-hero-meta", { autoAlpha: 0, y: 20 });
+        gsap.set(".tc-hero-media", { autoAlpha: 0, xPercent: 6, scale: 0.985 });
+        root.current?.setAttribute("data-case-motion", "ready");
+
+        const intro = gsap.timeline({ defaults: { ease: "power4.out" } });
+        intro
+          .to(".tc-nav", { autoAlpha: 1, y: 0, duration: 0.34 })
+          .to(".tc-hero-kicker", { autoAlpha: 1, y: 0, duration: 0.34 }, "-=0.08")
+          .to(".tc-title-line > span", { yPercent: 0, duration: 0.9, stagger: 0.12, clearProps: "transform" }, "+=0.02")
+          .to(".tc-hero-summary, .tc-hero-meta", { autoAlpha: 1, y: 0, duration: 0.66, stagger: 0.12 }, "-=0.38")
+          .to(".tc-hero-media", { autoAlpha: 1, xPercent: 0, scale: 1, duration: 1.02 }, "-=0.48");
+      }
 
       gsap.to(".tc-hero-media img", {
         yPercent: -7,
@@ -159,7 +180,7 @@ export function HijamaNCupsExperience({ locale = "nl" }: { locale?: Locale }) {
   }, []);
 
   return (
-    <main ref={root} className="tc-page tc-page-hijama">
+    <main ref={root} className="tc-page tc-page-hijama" data-case-motion="pending">
       <a className="skip-link" href="#hijama-content">{tx("Ga naar de case")}</a>
       <nav className="tc-nav" aria-label={tx("Case navigatie")}>
         <a href={localeHref("/#werk", locale)}><ArrowLeft aria-hidden="true" /> {tx("Alle cases")}</a>

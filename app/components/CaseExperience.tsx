@@ -126,7 +126,7 @@ export function CaseExperience({ locale = "nl" }: { locale?: Locale }) {
   }, []);
 
   return (
-    <main ref={root} className="tc-page" data-motion-project="tareeqi">
+    <main ref={root} className="tc-page" data-motion-project="tareeqi" data-case-motion="pending">
       <a className="skip-link" href="#tareeqi-content">{tx("Ga naar de case")}</a>
 
       <nav className="tc-nav" aria-label={tx("Case navigatie")}>
@@ -150,7 +150,7 @@ export function CaseExperience({ locale = "nl" }: { locale?: Locale }) {
             <div><dt>{tx("Status")}</dt><dd>{tx("Toetsbare oplossingsrichting")}</dd></div>
           </dl>
         </div>
-        <figure className="tc-hero-media" style={{ viewTransitionName: "case-hero" } as CSSProperties}>
+        <figure className="tc-hero-media">
           <Image
             src="/projects/tareeqi-2026/hero-laptops.webp"
             alt={tx("Tareeqi websiteconcept op twee laptops")}

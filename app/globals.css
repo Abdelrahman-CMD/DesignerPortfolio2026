@@ -281,6 +281,22 @@
   text-transform: uppercase;
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  .tc-page[data-case-motion="pending"] :is(.tc-nav, .tc-hero-kicker, .tc-hero-summary, .tc-hero-meta, .tc-hero-media, .cc-hero-note) {
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  .tc-page[data-case-motion="pending"] .tc-title-line > span {
+    transform: translate3d(0, 118%, 0);
+    will-change: transform;
+  }
+
+  .tc-page[data-case-motion="ready"] :is(.tc-nav, .tc-hero-kicker, .tc-hero-summary, .tc-hero-meta, .tc-hero-media, .cc-hero-note) {
+    visibility: visible;
+  }
+}
+
 .tc-premise {
   display: grid;
   min-height: 78svh;
@@ -7476,50 +7492,7 @@ html.is-cta-captured a { cursor: none !important; }
   .tc-journey-line { stroke-dashoffset: 0 !important; }
 }
 
-/* Motion thesis: discovery → interpretation → decision → evidence. */
-@view-transition {
-  navigation: auto;
-}
-
-::view-transition-group(root) {
-  animation-duration: 0.62s;
-  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-::view-transition-old(root) {
-  animation: portfolio-page-out 0.42s cubic-bezier(0.4, 0, 1, 1) both;
-}
-
-::view-transition-new(root) {
-  animation: portfolio-page-in 0.62s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-::view-transition-group(case-hero) {
-  z-index: 20;
-  overflow: clip;
-  border-radius: 0.35rem;
-  animation-duration: 0.86s;
-  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-::view-transition-old(case-hero),
-::view-transition-new(case-hero) {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  overflow: clip;
-}
-
-@keyframes portfolio-page-out {
-  to { opacity: 0; filter: blur(3px); transform: scale(0.995); }
-}
-
-@keyframes portfolio-page-in {
-  from { opacity: 0; filter: blur(5px); transform: translateY(8px); }
-  to { opacity: 1; filter: blur(0); transform: translateY(0); }
-}
-
-.project-visual[data-transition-media],
+.project-visual,
 .tc-hero-media,
 .tc-snapshot-grid > *,
 .tc-proof-frame,
@@ -7537,15 +7510,6 @@ html.is-cta-captured a { cursor: none !important; }
     scroll-behavior: auto !important;
     transition-delay: 0ms !important;
     transition-duration: 0.01ms !important;
-  }
-
-  ::view-transition-group(root),
-  ::view-transition-old(root),
-  ::view-transition-new(root),
-  ::view-transition-group(case-hero),
-  ::view-transition-old(case-hero),
-  ::view-transition-new(case-hero) {
-    animation: none !important;
   }
 
   .mind-hero-content,

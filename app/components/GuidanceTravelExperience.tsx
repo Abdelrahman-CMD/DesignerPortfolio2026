@@ -106,7 +106,7 @@ export function GuidanceTravelExperience({ locale = "nl" }: { locale?: Locale })
   }, []);
 
   return (
-    <main ref={root} className="tc-page tc-page-guidance" data-motion-project="guidance-travel">
+    <main ref={root} className="tc-page tc-page-guidance" data-motion-project="guidance-travel" data-case-motion="pending">
       <a className="skip-link" href="#guidance-content">{tx("Ga naar de case")}</a>
       <nav className="tc-nav" aria-label={tx("Case navigatie")}>
         <a href={localeHref("/#werk", locale)}><ArrowLeft aria-hidden="true" /> {tx("Alle cases")}</a>
@@ -129,7 +129,7 @@ export function GuidanceTravelExperience({ locale = "nl" }: { locale?: Locale })
             <div><dt>{tx("Status")}</dt><dd>{tx("Toetsbaar serviceconcept")}</dd></div>
           </dl>
         </div>
-        <figure className="tc-hero-media" style={{ viewTransitionName: "case-hero" } as CSSProperties}>
+        <figure className="tc-hero-media">
           <Image src="/projects/guidance-2026/hero-laptops.webp" alt={tx("Guidance Travel websiteconcept op een laptop")} fill priority sizes="(max-width: 760px) 100vw, 58vw" />
           <figcaption>Responsive service concept / Hajj &amp; Umrah</figcaption>
         </figure>

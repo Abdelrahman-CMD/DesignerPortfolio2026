@@ -602,7 +602,6 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
     let cleanupHeroCta = () => {};
     let cleanupHeroMosaic = () => {};
     let cleanupCaseCursor = () => {};
-    let cleanupCaseTransitions = () => {};
 
     const context = gsap.context(() => {
       ScrollTrigger.config({
@@ -1127,45 +1126,6 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
         }
       });
 
-      const caseLinks = root.current
-        ? Array.from(root.current.querySelectorAll<HTMLAnchorElement>(".project-card-link[data-case-transition]"))
-        : [];
-      let transitionReset = 0;
-
-      const prepareCaseTransition = (event: MouseEvent) => {
-        if (
-          prefersReducedMotion
-          || event.defaultPrevented
-          || event.button !== 0
-          || event.metaKey
-          || event.ctrlKey
-          || event.shiftKey
-          || event.altKey
-          || !CSS.supports("view-transition-name: case-hero")
-        ) return;
-
-        const link = event.currentTarget as HTMLAnchorElement;
-        const visual = link.querySelector<HTMLElement>("[data-transition-media]");
-        if (!visual) return;
-
-        caseLinks.forEach((caseLink) => {
-          const caseVisual = caseLink.querySelector<HTMLElement>("[data-transition-media]");
-          if (caseVisual) caseVisual.style.viewTransitionName = "none";
-        });
-        visual.style.viewTransitionName = "case-hero";
-
-        window.clearTimeout(transitionReset);
-        transitionReset = window.setTimeout(() => {
-          visual.style.viewTransitionName = "none";
-        }, 1400);
-      };
-
-      caseLinks.forEach((link) => link.addEventListener("click", prepareCaseTransition));
-      cleanupCaseTransitions = () => {
-        window.clearTimeout(transitionReset);
-        caseLinks.forEach((link) => link.removeEventListener("click", prepareCaseTransition));
-      };
-
       const showcaseSection = root.current?.querySelector<HTMLElement>(".showcase");
       const caseCursor = showcaseSection?.querySelector<HTMLElement>(".case-cursor");
       const fineCasePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
@@ -1611,7 +1571,6 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
       cleanupHeroCta();
       cleanupHeroMosaic();
       cleanupCaseCursor();
-      cleanupCaseTransitions();
       context.revert();
     };
   }, [locale]);
@@ -1994,9 +1953,8 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
                 aria-label={`Bekijk de case ${project.name}`}
                 data-cursor-bg={project.bg}
                 data-cursor-ink={project.ink}
-                data-case-transition
               >
-                <div className="project-visual" data-transition-media>
+                <div className="project-visual">
                   <div className="project-parallax-media">
                     <Image
                       src={project.image}

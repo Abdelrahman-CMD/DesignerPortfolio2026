@@ -248,7 +248,7 @@ export function MirqaExperience({ locale = "nl" }: { locale?: Locale }) {
   }, []);
 
   return (
-    <main ref={root} className="tc-page tc-page-mirqa" data-motion-project="mirqa">
+    <main ref={root} className="tc-page tc-page-mirqa" data-motion-project="mirqa" data-case-motion="pending">
       <a className="skip-link" href="#mirqa-content">{locale === "en" ? "Skip to the case study" : "Ga naar de case"}</a>
 
       <nav className="tc-nav" aria-label={locale === "en" ? "Case study navigation" : "Case navigatie"}>
@@ -270,7 +270,7 @@ export function MirqaExperience({ locale = "nl" }: { locale?: Locale }) {
             {copy.meta.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}
           </dl>
         </div>
-        <figure className="tc-hero-media" style={{ viewTransitionName: "case-hero" } as CSSProperties}>
+        <figure className="tc-hero-media">
           <Image src="/projects/mirqa/mirqa-case-hero.webp" alt={copy.heroAlt} fill priority sizes="(max-width: 760px) 100vw, 58vw" />
           <figcaption>{copy.heroCaption}</figcaption>
         </figure>
