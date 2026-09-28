@@ -292,6 +292,11 @@
     will-change: transform;
   }
 
+  .editorial-case[data-case-motion="pending"] .ec-title-line > span {
+    transform: translate3d(0, 2.2em, 0);
+    will-change: transform;
+  }
+
   .tc-page[data-case-motion="ready"] :is(.tc-nav, .tc-hero-kicker, .tc-hero-summary, .tc-hero-meta, .tc-hero-media, .cc-hero-note) {
     visibility: visible;
   }

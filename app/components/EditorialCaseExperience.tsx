@@ -85,13 +85,17 @@ export function EditorialCaseExperience({ project, locale = "nl" }: { project: E
         limitCallbacks: true,
       });
 
+      gsap.set(".ec-title-line > span", { y: "2.2em" });
+      root.current?.setAttribute("data-case-motion", "ready");
+
       const intro = gsap.timeline({ defaults: { ease: "power4.out" } });
       intro
         .from(".ec-nav", { opacity: 0, y: -16, duration: 0.34 })
-        .from(".ec-title-line > span", {
-          yPercent: 115,
+        .to(".ec-title-line > span", {
+          y: 0,
           duration: 0.68,
           stagger: 0.065,
+          clearProps: "transform",
         }, "-=0.18")
         .from(".ec-hero-copy > p, .ec-meta", {
           opacity: 0,
@@ -169,7 +173,7 @@ export function EditorialCaseExperience({ project, locale = "nl" }: { project: E
   } as CSSProperties;
 
   return (
-    <main ref={root} className={`editorial-case editorial-case-${project.prototype}`} style={style}>
+    <main ref={root} className={`editorial-case editorial-case-${project.prototype}`} style={style} data-case-motion="pending">
       <a className="skip-link" href="#case-story">{tx("Ga naar de case")}</a>
 
       <nav className="ec-nav" aria-label={tx("Case navigatie")}>
