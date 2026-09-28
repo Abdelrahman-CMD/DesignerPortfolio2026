@@ -288,7 +288,7 @@
   }
 
   .tc-page[data-case-motion="pending"] .tc-title-line > span {
-    transform: translate3d(0, 118%, 0);
+    transform: translate3d(0, 2.2em, 0);
     will-change: transform;
   }
 
