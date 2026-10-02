@@ -7,7 +7,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const host =
     requestHeaders.get("x-forwarded-host") ??
     requestHeaders.get("host") ??
-    "muminstudio.com";
+    "abdelrahman.nl";
   const protocol =
     requestHeaders.get("x-forwarded-proto") ??
     (host.includes("localhost") ? "http" : "https");
