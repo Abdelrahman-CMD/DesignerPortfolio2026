@@ -778,6 +778,18 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
             "<+0.34",
           )
           .from(
+            ".mind-brain-dot",
+            {
+              autoAlpha: 0,
+              scale: 0.68,
+              duration: 0.44,
+              stagger: 0.08,
+              ease: "back.out(1.6)",
+              transformOrigin: "50% 50%",
+            },
+            "-=0.38",
+          )
+          .from(
             ".mind-hero-lede",
             { autoAlpha: 0, y: 18, duration: 0.48 },
             "-=0.62",

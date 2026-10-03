@@ -5374,8 +5374,22 @@ html.is-cta-captured a { cursor: none !important; }
     transform: none;
   }
   .hero-cta-container { min-width: 11.25rem; min-height: 3.35rem; }
-  .mind-hero-visual { position: relative; width: 100%; grid-column: 1; grid-row: 3; aspect-ratio: 4 / 5; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-  .mind-hero-base { object-fit: contain !important; object-position: right bottom !important; }
+  /* Het portret wordt op de kraag afgesneden in plaats van verkleind: de foto
+     houdt haar eigen verhouding en vult de breedte, terwijl het vlak eromheen
+     korter is dan de foto hoog is. Daardoor blijven de percentages van de
+     breintekening en haar punten exact staan — die rekenen tegen deze strook,
+     niet tegen het zichtbare vlak. 1.06 toont de bovenste 68%, tot net onder
+     de kraag. */
+  .mind-hero-visual { position: relative; width: 100%; grid-column: 1; grid-row: 3; aspect-ratio: 1.06; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .mind-hero-photo-slide {
+    top: 0;
+    right: 0;
+    bottom: auto;
+    width: min(100cqw, 52rem);
+    max-height: none;
+    aspect-ratio: 2124 / 2948;
+  }
+  .mind-hero-base { object-fit: contain !important; object-position: right top !important; }
   .golden-ratio-detail {
     z-index: 0;
     top: 29rem;
