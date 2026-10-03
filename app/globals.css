@@ -1808,18 +1808,25 @@ html.is-cta-captured a { cursor: none !important; }
   opacity: 0;
 }
 
+.mind-zone-dot { display: none; }
+
 .mind-zone-mobile-copy { display: none; }
 
 .mind-annotation-panel {
   position: absolute;
   z-index: 8;
   display: flex;
-  width: clamp(9rem, 12vw, 12rem);
+  width: clamp(10rem, 13.5vw, 13rem);
   flex-direction: column;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  box-shadow: none;
+  /* De annotatie ligt over de hero-foto, waarvan de helderheid per plek
+     verschilt. Een eigen vlak is de enige manier om de tekst overal leesbaar
+     te houden: met alleen een donkerdere kleur haal je het contrast op de
+     lichte delen wel en op de donkere niet. */
+  padding: 0.8rem 0.9rem 0.85rem;
+  border: 1px solid color-mix(in srgb, var(--zone-color) 44%, transparent);
+  border-radius: 0.9rem;
+  background: color-mix(in srgb, #f9f6f0 92%, var(--zone-color));
+  box-shadow: 0 10px 30px -18px rgba(41, 39, 35, 0.5);
   opacity: 0;
   pointer-events: none;
   transform: translateY(var(--space-1)) scale(0.98);
@@ -1875,7 +1882,9 @@ html.is-cta-captured a { cursor: none !important; }
 
 .mind-annotation-panel strong {
   margin-top: var(--space-1);
-  color: color-mix(in srgb, var(--zone-color) 72%, var(--zone-ink));
+  /* Overwegend inkt met een vleug zonekleur: zo blijft de kleur herkenbaar
+     terwijl elke zone minstens 5,2:1 haalt op zijn eigen kaartachtergrond. */
+  color: color-mix(in srgb, var(--zone-ink) 70%, var(--zone-color));
   font-family: var(--hand);
   font-size: clamp(1.25rem, 1.5vw, 1.72rem);
   font-weight: 400;
@@ -5144,7 +5153,46 @@ html.is-cta-captured a { cursor: none !important; }
     outline: 2px solid #b83225;
     outline-offset: 3px;
   }
-  .mind-zone-layer { display: none; }
+  /* Op een aanraakscherm bestaat hover niet, maar de koppeling tussen een
+     hersendeel en een principe is juist de waarde van dit element. In plaats
+     van de laag te verbergen worden de regio's genummerde raakdoelen van
+     2,75rem, verankerd op het midden van hun eigen vorm. De tekst verschijnt
+     in de kaart eronder, die al een aria-live-gebied is. */
+  .mind-zone-layer { display: block; }
+  .mind-touch-tabs { display: none; }
+
+  .mind-zone {
+    width: 2.75rem;
+    height: 2.75rem;
+    margin: -1.375rem 0 0 -1.375rem;
+  }
+
+  .mind-zone-surface { display: none; }
+
+  .mind-zone-dot {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    place-items: center;
+    border: 1px solid color-mix(in srgb, var(--ink) 22%, transparent);
+    border-radius: 999px;
+    background: color-mix(in srgb, #f9f6f0 76%, transparent);
+    color: var(--ink);
+    font: 700 0.64rem/1 var(--sans);
+  }
+
+  .mind-zone.is-active .mind-zone-dot {
+    border-color: var(--zone-color);
+    background: var(--zone-color);
+    color: #fffdf8;
+  }
+
+  .mind-zone-curiosity { top: 10.9%; left: calc(28% + var(--brain-shift-x)); }
+  .mind-zone-connections { top: 10.05%; left: calc(51.45% + var(--brain-shift-x)); }
+  .mind-zone-source { top: 18.35%; left: calc(37.2% + var(--brain-shift-x)); }
+  .mind-zone-structure { top: 19.3%; left: calc(58% + var(--brain-shift-x)); }
+  .mind-zone-direction { top: 25.8%; left: calc(51.4% + var(--brain-shift-x)); }
+
   .mind-touch-explorer {
     position: absolute;
     z-index: 10;
@@ -5321,7 +5369,46 @@ html.is-cta-captured a { cursor: none !important; }
     opacity: 0.1;
   }
   .mind-annotation-panel { display: none; }
-  .mind-zone-layer { display: none; }
+  /* Op een aanraakscherm bestaat hover niet, maar de koppeling tussen een
+     hersendeel en een principe is juist de waarde van dit element. In plaats
+     van de laag te verbergen worden de regio's genummerde raakdoelen van
+     2,75rem, verankerd op het midden van hun eigen vorm. De tekst verschijnt
+     in de kaart eronder, die al een aria-live-gebied is. */
+  .mind-zone-layer { display: block; }
+  .mind-touch-tabs { display: none; }
+
+  .mind-zone {
+    width: 2.75rem;
+    height: 2.75rem;
+    margin: -1.375rem 0 0 -1.375rem;
+  }
+
+  .mind-zone-surface { display: none; }
+
+  .mind-zone-dot {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    place-items: center;
+    border: 1px solid color-mix(in srgb, var(--ink) 22%, transparent);
+    border-radius: 999px;
+    background: color-mix(in srgb, #f9f6f0 76%, transparent);
+    color: var(--ink);
+    font: 700 0.64rem/1 var(--sans);
+  }
+
+  .mind-zone.is-active .mind-zone-dot {
+    border-color: var(--zone-color);
+    background: var(--zone-color);
+    color: #fffdf8;
+  }
+
+  .mind-zone-curiosity { top: 10.9%; left: calc(28% + var(--brain-shift-x)); }
+  .mind-zone-connections { top: 10.05%; left: calc(51.45% + var(--brain-shift-x)); }
+  .mind-zone-source { top: 18.35%; left: calc(37.2% + var(--brain-shift-x)); }
+  .mind-zone-structure { top: 19.3%; left: calc(58% + var(--brain-shift-x)); }
+  .mind-zone-direction { top: 25.8%; left: calc(51.4% + var(--brain-shift-x)); }
+
   .mind-touch-explorer {
     position: relative;
     display: grid;
@@ -5452,7 +5539,46 @@ html.is-cta-captured a { cursor: none !important; }
 }
 
 @media (hover: none) and (min-width: 981px), (pointer: coarse) and (min-width: 981px) {
-  .mind-zone-layer { display: none; }
+  /* Op een aanraakscherm bestaat hover niet, maar de koppeling tussen een
+     hersendeel en een principe is juist de waarde van dit element. In plaats
+     van de laag te verbergen worden de regio's genummerde raakdoelen van
+     2,75rem, verankerd op het midden van hun eigen vorm. De tekst verschijnt
+     in de kaart eronder, die al een aria-live-gebied is. */
+  .mind-zone-layer { display: block; }
+  .mind-touch-tabs { display: none; }
+
+  .mind-zone {
+    width: 2.75rem;
+    height: 2.75rem;
+    margin: -1.375rem 0 0 -1.375rem;
+  }
+
+  .mind-zone-surface { display: none; }
+
+  .mind-zone-dot {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    place-items: center;
+    border: 1px solid color-mix(in srgb, var(--ink) 22%, transparent);
+    border-radius: 999px;
+    background: color-mix(in srgb, #f9f6f0 76%, transparent);
+    color: var(--ink);
+    font: 700 0.64rem/1 var(--sans);
+  }
+
+  .mind-zone.is-active .mind-zone-dot {
+    border-color: var(--zone-color);
+    background: var(--zone-color);
+    color: #fffdf8;
+  }
+
+  .mind-zone-curiosity { top: 10.9%; left: calc(28% + var(--brain-shift-x)); }
+  .mind-zone-connections { top: 10.05%; left: calc(51.45% + var(--brain-shift-x)); }
+  .mind-zone-source { top: 18.35%; left: calc(37.2% + var(--brain-shift-x)); }
+  .mind-zone-structure { top: 19.3%; left: calc(58% + var(--brain-shift-x)); }
+  .mind-zone-direction { top: 25.8%; left: calc(51.4% + var(--brain-shift-x)); }
+
   .mind-touch-explorer {
     position: absolute;
     z-index: 10;
