@@ -3,6 +3,7 @@ import { PlaygroundExperience } from "../components/PlaygroundExperience";
 import { LocalizedSurface } from "../i18n";
 
 export const metadata: Metadata = {
+  robots: { index: false, follow: true },
   title: "Playground",
   description: "Een atmosferische ruimte voor experimenten, schetsen en ideeën die nog niet in een case hoeven te passen.",
   openGraph: {

@@ -28,7 +28,10 @@ const alternates = (path: string) => ({
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
-  const paths = ["", "/playground", ...SLUGS.map((slug) => `/cases/${slug}`)];
+  // De playground staat bewust op noindex, dus hij hoort hier niet in:
+  // een sitemap die pagina's aandraagt die je niet geindexeerd wilt hebben,
+  // geeft tegenstrijdige signalen.
+  const paths = ["", ...SLUGS.map((slug) => `/cases/${slug}`)];
 
   return LOCALES.flatMap((locale) =>
     paths.map((path) => ({
