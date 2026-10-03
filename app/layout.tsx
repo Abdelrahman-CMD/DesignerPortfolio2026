@@ -36,6 +36,14 @@ export async function generateMetadata(): Promise<Metadata> {
         },
       ],
     },
+    icons: {
+      icon: [
+        { url: "/favicon.svg", type: "image/svg+xml" },
+        { url: "/favicon.ico", sizes: "any" },
+      ],
+      apple: "/apple-touch-icon.png",
+    },
+    manifest: "/site.webmanifest",
     twitter: {
       card: "summary_large_image",
       title: "Ik ontwerp met alles wat ik onderweg leer.",

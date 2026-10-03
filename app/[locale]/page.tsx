@@ -16,10 +16,12 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       url: "/en",
       locale: "en_GB",
       alternateLocale: ["nl_NL"],
+      images: [{ url: "/og-mind-hero.jpg", width: 1672, height: 941, alt: "Abdelrahman, product designer in Amsterdam" }],
     },
     twitter: {
       title: "I design with everything I learn along the way.",
       description: "Websites don't come from a fixed formula. See how Abdelrahman learns, chooses a direction and builds together.",
+      images: ["/og-mind-hero.jpg"],
     },
   } : {
     title: { absolute: "Abdelrahman · Senior digitaal ontwerper" },
@@ -31,6 +33,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       url: "/nl",
       locale: "nl_NL",
       alternateLocale: ["en_GB"],
+      images: [{ url: "/og-mind-hero.jpg", width: 1672, height: 941, alt: "Abdelrahman, productontwerper in Amsterdam" }],
     },
   };
 }
