@@ -1,6 +1,13 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { headers } from "next/headers";
 import "./globals.css";
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f6f1e8" },
+    { media: "(prefers-color-scheme: dark)", color: "#292723" },
+  ],
+};
 
 export async function generateMetadata(): Promise<Metadata> {
   const requestHeaders = await headers();

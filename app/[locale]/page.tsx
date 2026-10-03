@@ -53,6 +53,8 @@ const personSchema = (locale: Locale) => ({
     : "Productontwerper die complexiteit begrijpelijk maakt, op het snijvlak van strategie, onderzoek en interfaceontwerp.",
   address: { "@type": "PostalAddress", addressLocality: "Amsterdam", addressCountry: "NL" },
   knowsLanguage: ["nl", "en"],
+  email: "mailto:dhr_abdelrahman@outlook.com",
+  sameAs: ["https://www.linkedin.com/in/abdelrahman-ahmed-30896964/"],
 });
 
 export default async function LocalizedHome({ params }: { params: Promise<{ locale: string }> }) {
