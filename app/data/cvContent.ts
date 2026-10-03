@@ -274,6 +274,5 @@ export const cvContact = {
   rijen: [
     { label: { nl: "E-mail", en: "Email" }, waarde: "dhr_abdelrahman@outlook.com", href: "mailto:dhr_abdelrahman@outlook.com" },
     { label: { nl: "Telefoon", en: "Phone" }, waarde: "+31 6 21 57 21 24", href: "tel:+31621572124" },
-    { label: { nl: "Design Portfolio", en: "Design portfolio" }, waarde: "Op aanvraag", href: "mailto:dhr_abdelrahman@outlook.com?subject=Design%20Portfolio%20aanvraag" },
   ],
 };
