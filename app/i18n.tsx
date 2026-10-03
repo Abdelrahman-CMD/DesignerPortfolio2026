@@ -787,5 +787,5 @@ export function LocalizedSurface({ children, locale, respectPreference = false }
     return () => observer.disconnect();
   }, [locale, respectPreference]);
 
-  return <div className="localized-surface" data-locale={locale} ref={root}>{children}</div>;
+  return <div className="localized-surface" lang={locale} data-locale={locale} ref={root}>{children}</div>;
 }
