@@ -156,6 +156,7 @@ export function CvExperience({ locale }: { locale: Locale }) {
         <div className="cv-grid-3">
           {cvZoek.items.map((item, i) => (
             <div className="cv-card" key={`zoek-${i}`}>
+              <p className="cv-card-label label">{t(item.label, locale)}</p>
               <h3>{t(item.titel, locale)}</h3>
               <p>{t(item.tekst, locale)}</p>
             </div>

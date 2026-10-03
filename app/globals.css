@@ -9016,18 +9016,24 @@ html.is-cta-captured a { cursor: none !important; }
 .cv-grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .cv-grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 
+/* Geen omlijnde vakken: de rest van de site werkt met haarlijnen en witruimte,
+   en een rij afgeronde dozen vloekt daarmee. Een lijn bovenaan groepeert net
+   zo goed en houdt de bladspiegel rustig. */
 .cv-card {
-  padding: var(--space-4);
-  border: 1px solid var(--line);
-  border-radius: 1rem;
-  background: var(--cream);
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-3) 0 0;
+  border-top: 1px solid var(--ink);
 }
+
+.cv-card-label { margin: 0 0 var(--space-2); color: var(--ink-soft); }
 
 .cv-card h3 {
   margin: 0 0 var(--space-2);
   font-family: var(--serif);
-  font-size: 1.16rem;
+  font-size: 1.24rem;
   font-weight: 400;
+  line-height: 1.2;
 }
 
 .cv-card p { margin: 0; color: var(--ink-soft); line-height: 1.6; }

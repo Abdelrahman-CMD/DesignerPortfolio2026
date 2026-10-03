@@ -261,9 +261,9 @@ export const cvZoek = {
   titel: { nl: "Wat ik zoek.", en: "What I am looking for." },
   intro: { nl: "Een functie waar mijn dubbele achtergrond meerwaarde heeft, in een omgeving die bij me past. Samen met mijn jobcoach verken ik welke richting het beste aansluit op wat ik in deze fase wil opbouwen.", en: "A role where my dual background adds value, in an environment that fits me. Together with my job coach I am exploring which direction best matches what I want to build in this phase." },
   items: [
-    { titel: { nl: "Snijvlak digitaal en organisatie", en: "Digital meets organisation" }, tekst: { nl: "Type rol", en: "Type of role" } },
-    { titel: { nl: "Hybride of remote", en: "Hybrid or remote" }, tekst: { nl: "Een hybride rol waar ontwerpdenken en operationeel inzicht samenkomen. Bij organisaties die waarde zien in de combinatie van denken en doen.", en: "A hybrid role where design thinking and operational insight come together. At organisations that value the combination of thinking and doing." } },
-    { titel: { nl: "Mensen en proces", en: "People and process" }, tekst: { nl: "Werkomgeving", en: "Work setting" } },
+    { label: { nl: "Type rol", en: "Type of role" }, titel: { nl: "Snijvlak digitaal en organisatie", en: "Digital meets organisation" }, tekst: { nl: "Een hybride rol waar ontwerpdenken en operationeel inzicht samenkomen. Bij organisaties die waarde zien in de combinatie van denken en doen.", en: "A hybrid role where design thinking and operational insight come together. At organisations that value the combination of thinking and doing." } },
+    { label: { nl: "Werkomgeving", en: "Work setting" }, titel: { nl: "Hybride of remote", en: "Hybrid or remote" }, tekst: { nl: "Werkzaamheden binnen een digitale context. Een mix van thuiswerk en kantoor, of volledig remote. Reistijd tot ongeveer 20 minuten.", en: "Work within a digital context. A mix of home and office, or fully remote. Commuting time up to around 20 minutes." } },
+    { label: { nl: "Wat ik meebreng", en: "What I bring" }, titel: { nl: "Mensen en proces", en: "People and process" }, tekst: { nl: "Een gestructureerde aanpak, sterke communicatie, en oog voor de mensen om me heen. Ik krijg energie van het begeleiden van collega's in hun ontwikkeling en het bouwen van teams die elkaar versterken.", en: "A structured approach, strong communication, and an eye for the people around me. I gain energy from guiding colleagues in their development and building teams that strengthen each other." } },
   ],
 };
 
