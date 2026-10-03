@@ -1784,6 +1784,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
                     }}
                   >
                     <span className="mind-zone-surface" aria-hidden="true" />
+                      <span className="mind-zone-dot" aria-hidden="true">{zone.number}</span>
                     <span className="mind-zone-mobile-copy">
                       <span className="mind-zone-mobile-kicker label">{zone.number} / {zoneLabel}</span>
                       <strong>{zoneTitle}</strong>
