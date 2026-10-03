@@ -5164,7 +5164,10 @@ html.is-cta-captured a { cursor: none !important; }
   .mind-zone {
     width: 2.75rem;
     height: 2.75rem;
+    /* De basisregel laat alleen de uitgeknipte vorm klikken; die is hier
+       verborgen, dus het raakdoel verhuist naar de knop zelf. */
     margin: -1.375rem 0 0 -1.375rem;
+    pointer-events: auto;
   }
 
   .mind-zone-surface { display: none; }
@@ -5380,7 +5383,10 @@ html.is-cta-captured a { cursor: none !important; }
   .mind-zone {
     width: 2.75rem;
     height: 2.75rem;
+    /* De basisregel laat alleen de uitgeknipte vorm klikken; die is hier
+       verborgen, dus het raakdoel verhuist naar de knop zelf. */
     margin: -1.375rem 0 0 -1.375rem;
+    pointer-events: auto;
   }
 
   .mind-zone-surface { display: none; }
@@ -5550,7 +5556,10 @@ html.is-cta-captured a { cursor: none !important; }
   .mind-zone {
     width: 2.75rem;
     height: 2.75rem;
+    /* De basisregel laat alleen de uitgeknipte vorm klikken; die is hier
+       verborgen, dus het raakdoel verhuist naar de knop zelf. */
     margin: -1.375rem 0 0 -1.375rem;
+    pointer-events: auto;
   }
 
   .mind-zone-surface { display: none; }
@@ -5896,7 +5905,6 @@ html.is-cta-captured a { cursor: none !important; }
 .ec-deep-dive .ec-context { padding-top: 12vh; }
 
 @media (max-width: 720px) {
-  .mind-touch-explorer { display: none; }
   .mind-hero-lede { font-size: 1rem; line-height: 1.55; }
   .mind-touch-detail p { font-size: 1rem; line-height: 1.55; }
   .showcase { padding-top: var(--space-8); padding-bottom: var(--space-10); }
