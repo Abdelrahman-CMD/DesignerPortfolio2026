@@ -11,7 +11,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     description: locale === "en"
       ? "An atmospheric space for experiments, sketches and ideas before they need to become a finished case study."
       : "Een atmosferische ruimte voor experimenten, schetsen en ideeën die nog niet in een case hoeven te passen.",
-    alternates: { languages: { "nl-NL": "/nl/playground", "en-GB": "/en/playground" } },
+    alternates: { canonical: `/${locale}/playground`, languages: { "nl-NL": "/nl/playground", "en-GB": "/en/playground", "x-default": "/nl/playground" } },
   };
 }
 

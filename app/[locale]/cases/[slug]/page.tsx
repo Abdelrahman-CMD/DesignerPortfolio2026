@@ -47,7 +47,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   return {
     title: `${title} · Case study`,
     description,
-    alternates: { languages: { "nl-NL": `/nl/cases/${slug}`, "en-GB": `/en/cases/${slug}` } },
+    alternates: { canonical: `/${locale}/cases/${slug}`, languages: { "nl-NL": `/nl/cases/${slug}`, "en-GB": `/en/cases/${slug}`, "x-default": `/nl/cases/${slug}` } },
   };
 }
 
