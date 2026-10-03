@@ -31,7 +31,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // De playground staat bewust op noindex, dus hij hoort hier niet in:
   // een sitemap die pagina's aandraagt die je niet geindexeerd wilt hebben,
   // geeft tegenstrijdige signalen.
-  const paths = ["", ...SLUGS.map((slug) => `/cases/${slug}`)];
+  const paths = ["", "/cv", ...SLUGS.map((slug) => `/cases/${slug}`)];
 
   return LOCALES.flatMap((locale) =>
     paths.map((path) => ({

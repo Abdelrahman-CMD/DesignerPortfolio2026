@@ -54,7 +54,10 @@ test("server-renders the complete portfolio homepage", async () => {
   assert.match(html, /mailto:dhr_abdelrahman@outlook\.com/);
   assert.match(html, /https:\/\/wa\.me\/31621572124/);
   assert.doesNotMatch(html, /instagram/i);
-  assert.equal((html.match(/class="link-icon"/g) ?? []).length, 15);
+  // 15 bestaande kanalen plus de twee cv-knoppen: boven in de navigatie en
+  // onderaan in de postkaart, als herhaling.
+  assert.equal((html.match(/class="link-icon"/g) ?? []).length, 17);
+  assert.equal((html.match(/href="\/nl\/cv"/g) ?? []).length, 2);
   assert.match(html, /class="mind-title-handwrite"/);
   assert.match(html, /class="story-route-runner" data-label="Studio"/);
   assert.match(html, /href="#contact"/);

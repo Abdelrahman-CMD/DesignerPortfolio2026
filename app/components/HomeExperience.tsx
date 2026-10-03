@@ -4,6 +4,7 @@ import Image from "next/image";
 import { CSSProperties, useEffect, useLayoutEffect, useRef, useState } from "react";
 import ArrowUpRight from "lucide-react/icons/arrow-up-right";
 import BriefcaseBusiness from "lucide-react/icons/briefcase-business";
+import FileText from "lucide-react/icons/file-text";
 import Figma from "lucide-react/icons/figma";
 import Framer from "lucide-react/icons/framer";
 import Linkedin from "lucide-react/icons/linkedin";
@@ -1613,6 +1614,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
             <a href="#over" aria-current={activeNav === "over" ? "location" : undefined}><span className="link-icon" aria-hidden="true"><UserRound /></span><span>Over</span></a>
             <a href="#aanpak" aria-current={activeNav === "aanpak" ? "location" : undefined}><span className="link-icon" aria-hidden="true"><Workflow /></span><span>Aanpak</span></a>
             <a href="#contact" aria-current={activeNav === "contact" ? "location" : undefined}><span className="link-icon" aria-hidden="true"><Mail /></span><span>Contact</span></a>
+            <a href={localeHref("/cv", locale)}><span className="link-icon" aria-hidden="true"><FileText /></span><span>CV</span></a>
           </nav>
           <LanguageSwitcher locale={locale} />
         </div>
@@ -2204,6 +2206,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
             <a href="mailto:dhr_abdelrahman@outlook.com"><span className="link-icon" aria-hidden="true"><Mail /></span><span>E-mail</span></a>
             <a href="https://www.linkedin.com/in/abdelrahman-ahmed-30896964/" target="_blank" rel="noreferrer"><span className="link-icon" aria-hidden="true"><Linkedin /></span><span>LinkedIn</span></a>
             <a href="https://wa.me/31621572124" target="_blank" rel="noreferrer"><span className="link-icon" aria-hidden="true"><MessageCircle /></span><span>WhatsApp</span></a>
+              <a href={localeHref("/cv", locale)}><span className="link-icon" aria-hidden="true"><FileText /></span><span>CV</span></a>
           </div>
 
           <div className="postcard-stamp" aria-hidden="true">
