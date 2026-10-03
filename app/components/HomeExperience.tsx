@@ -573,6 +573,7 @@ const mindZones = [
 export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
   const root = useRef<HTMLElement>(null);
   const [activeMindZone, setActiveMindZone] = useState<string | null>(null);
+  const [isMindTouchReady, setIsMindTouchReady] = useState(false);
   const [activeNav, setActiveNav] = useState("");
   const touchMindZone = mindZones.find((zone) => zone.id === activeMindZone) ?? mindZones[0];
 
@@ -590,6 +591,32 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
     syncTouchState();
     touchHero.addEventListener("change", syncTouchState);
     return () => touchHero.removeEventListener("change", syncTouchState);
+  }, []);
+
+  useEffect(() => {
+    const mobileHero = window.matchMedia("(max-width: 720px)");
+    const touchExplorer = root.current?.querySelector<HTMLElement>(".mind-touch-explorer");
+
+    if (!touchExplorer || !mobileHero.matches) {
+      setIsMindTouchReady(true);
+      return;
+    }
+
+    setIsMindTouchReady(false);
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsMindTouchReady(entry.isIntersecting);
+      },
+      {
+        rootMargin: "0px 0px -18% 0px",
+        threshold: 0.18,
+      },
+    );
+
+    observer.observe(touchExplorer);
+
+    return () => observer.disconnect();
   }, []);
 
   useLayoutEffect(() => {
@@ -1653,6 +1680,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
         data-nav-theme="light"
         data-active-zone={activeMindZone ?? "idle"}
         data-hero-motion="pending"
+        data-touch-ready={isMindTouchReady ? "true" : "false"}
         aria-labelledby="hero-title"
       >
         <div className="mind-hero-content">

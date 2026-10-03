@@ -9065,3 +9065,53 @@ html.is-cta-captured a { cursor: none !important; }
   .cv-entry { grid-template-columns: 1fr; gap: var(--space-2); }
   .cv-shell { padding: var(--space-8) var(--space-2) var(--space-12); }
 }
+
+/* Mobile hero reading order: introduce the promise first, then the mind map. */
+@media (max-width: 720px) {
+  .mind-hero-canvas {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .mind-hero-copy {
+    grid-column: 1;
+    grid-row: 1;
+    padding-bottom: var(--space-3);
+  }
+
+  .mind-hero-actions {
+    grid-column: 1;
+    grid-row: 2;
+    margin: 0 0 var(--space-4);
+  }
+
+  .mind-hero-visual {
+    grid-column: 1;
+    grid-row: 3;
+    margin-top: 0;
+  }
+
+  .mind-touch-explorer {
+    grid-column: 1;
+    grid-row: 4;
+    margin-top: var(--space-2);
+  }
+
+  .mind-touch-detail {
+    min-height: 8.75rem;
+  }
+
+  .mind-brain-dots {
+    pointer-events: none;
+    opacity: 0.72;
+    transition:
+      opacity var(--motion-standard) var(--ease-premium),
+      filter var(--motion-standard) var(--ease-premium);
+  }
+
+  .mind-hero[data-touch-ready="true"] .mind-brain-dots {
+    pointer-events: auto;
+    opacity: 1;
+  }
+}
