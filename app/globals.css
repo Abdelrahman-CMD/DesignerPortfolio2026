@@ -1423,40 +1423,79 @@ a:focus-visible > .link-icon svg * {
 
 .mind-hero-mosaic.is-unsupported { display: none; }
 
+/* Pre-hydration lock voor de hero-intro.
+   Elk element dat de intro-timeline animeert krijgt zijn startpositie hier,
+   zodat die al bij de eerste paint staat in plaats van pas na hydration.
+   Alles hangt achter html[data-js="on"], gezet door het inline script in de
+   layout: blijft de bundel weg, dan gaat de vlag op "off" en staat de hero
+   gewoon volledig in beeld. De waarden hieronder zijn een-op-een gelijk aan
+   de gsap.set()-calls in HomeExperience.tsx - wijzig ze altijd samen. */
 @media (prefers-reduced-motion: no-preference) {
-  .mind-hero[data-hero-motion="pending"] .mind-hero-title {
-    visibility: hidden;
+  html[data-js="on"] .site-header[data-header-motion="pending"] {
+    opacity: 0;
+    transform: translate3d(0, -18px, 0);
+  }
+
+  html[data-js="on"] .mind-hero[data-hero-motion="pending"] .mind-hero-canvas {
     opacity: 0;
   }
 
-  .mind-hero[data-hero-motion="pending"] .mind-title-line > span {
+  html[data-js="on"] .mind-hero[data-hero-motion="pending"] .mind-hero-kicker {
+    opacity: 0;
+    transform: translate3d(0, 12px, 0);
+  }
+
+  html[data-js="on"] .mind-hero[data-hero-motion="pending"] .mind-hero-lede {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+  }
+
+  html[data-js="on"] .mind-hero[data-hero-motion="pending"] .mind-hero-meta span {
+    opacity: 0;
+    transform: translate3d(0, 12px, 0);
+  }
+
+  html[data-js="on"] .mind-hero[data-hero-motion="pending"] .mind-hero-actions {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+  }
+
+  html[data-js="on"] .mind-hero[data-hero-motion="pending"] .mind-brain-dot {
+    opacity: 0;
+    transform: scale(0.68);
+  }
+
+  html[data-js="on"] .mind-hero[data-hero-motion="pending"] .mind-hero-title {
+    opacity: 0;
+  }
+
+  html[data-js="on"] .mind-hero[data-hero-motion="pending"] .mind-title-line > span {
     transform: translate3d(0, 1.24em, 0);
     will-change: transform;
   }
 
   .mind-hero[data-hero-motion="ready"] .mind-hero-title {
-    visibility: visible;
     opacity: 1;
   }
 
-  .mind-hero[data-hero-motion="pending"] .mind-title-handwrite {
+  html[data-js="on"] .mind-hero[data-hero-motion="pending"] .mind-title-handwrite {
     clip-path: inset(0 100% 0 0);
   }
 
-  .mind-hero[data-hero-motion="pending"] .mind-hero-photo-slide {
+  html[data-js="on"] .mind-hero[data-hero-motion="pending"] .mind-hero-photo-slide {
     clip-path: inset(0 0 0 100%);
     opacity: 0.18;
     will-change: clip-path, transform, opacity;
   }
 
-  .mind-hero[data-hero-motion="pending"] .mind-hero-mosaic {
+  html[data-js="on"] .mind-hero[data-hero-motion="pending"] .mind-hero-mosaic {
     opacity: 1;
     filter: blur(16px);
     transform: scale(1.055);
     will-change: filter, transform, opacity;
   }
 
-  .mind-hero[data-hero-motion="pending"] .mind-hero-base {
+  html[data-js="on"] .mind-hero[data-hero-motion="pending"] .mind-hero-base {
     opacity: 0;
     filter: blur(10px);
     transform: scale(1.025);

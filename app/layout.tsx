@@ -61,6 +61,16 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
+/* Loopt blokkerend als eerste node in de body, dus vóór de eerste paint.
+   data-js="on" activeert de pre-hydration lock in globals.css. Komt de
+   client-bundel niet binnen, dan zet de timer de vlag op "off" en staat de
+   hero alsnog volledig in beeld; HomeExperience wist de timer zodra de
+   intro-timeline draait. */
+const heroMotionGate =
+  '(function(){var d=document.documentElement;d.dataset.js="on";'
+  + 'window.__heroMotionFallback=window.setTimeout(function(){'
+  + 'd.dataset.js="off";d.dataset.heroFallback="fired";},2600);})();';
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -68,7 +78,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="nl">
-      <body>{children}</body>
+      <body>
+        <script dangerouslySetInnerHTML={{ __html: heroMotionGate }} />
+        {children}
+      </body>
     </html>
   );
 }

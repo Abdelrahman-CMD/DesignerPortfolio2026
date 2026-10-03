@@ -698,6 +698,25 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
       const heroMosaicCanvas = root.current?.querySelector<HTMLCanvasElement>(".mind-hero-mosaic");
       const heroFullImage = root.current?.querySelector<HTMLElement>(".mind-hero-base");
       const heroSection = root.current?.querySelector<HTMLElement>(".mind-hero");
+      const siteHeader = root.current?.querySelector<HTMLElement>(".site-header");
+      const markHeroReady = () => {
+        heroSection?.setAttribute("data-hero-motion", "ready");
+        siteHeader?.setAttribute("data-header-motion", "ready");
+      };
+
+      // Het inline script in de layout houdt de startposities vast vóór de
+      // eerste paint en zet na 2,6s een noodrem, zodat de hero nooit leeg
+      // blijft hangen als deze bundel wegblijft. Hier is hij er wél, dus de
+      // noodrem kan uit. Was hij al afgegaan, dan staat de hero compleet in
+      // beeld: dan niet alsnog animeren, want dan ziet de bezoeker alles een
+      // tweede keer verdwijnen en terugkomen.
+      const motionFallback = window as unknown as { __heroMotionFallback?: number };
+      if (motionFallback.__heroMotionFallback !== undefined) {
+        window.clearTimeout(motionFallback.__heroMotionFallback);
+        motionFallback.__heroMotionFallback = undefined;
+      }
+      const skipHeroIntro = prefersReducedMotion
+        || document.documentElement.dataset.heroFallback === "fired";
       const heroMosaic = heroMosaicCanvas && heroFullImage
         ? createStoryMosaic(
           heroMosaicCanvas,
@@ -707,7 +726,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
           -1,
         )
         : null;
-      const heroReveal = { progress: prefersReducedMotion ? 1 : 0 };
+      const heroReveal = { progress: skipHeroIntro ? 1 : 0 };
 
       if (heroMosaic) {
         const resizeHeroMosaic = () => heroMosaic.resize();
@@ -719,11 +738,11 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
         };
       }
 
-      if (prefersReducedMotion) {
-        heroSection?.setAttribute("data-hero-motion", "ready");
+      if (skipHeroIntro) {
+        markHeroReady();
       }
 
-      if (!prefersReducedMotion) {
+      if (!skipHeroIntro) {
         gsap.set(".mind-title-handwrite", { clipPath: "inset(0 100% 0 0)" });
         gsap.set(".mind-hero-photo-slide", {
           clipPath: "inset(0 0 0 100%)",
@@ -733,23 +752,31 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
         gsap.set(".mind-hero-mosaic", { filter: "blur(16px)", scale: 1.055, opacity: 1 });
         gsap.set(".mind-hero-base", { filter: "blur(10px)", scale: 1.025, opacity: 0 });
         gsap.set(".mind-title-line > span", { y: "1.24em" });
+        // Gelijk aan de pre-hydration lock in globals.css: wijzig ze samen.
+        gsap.set(".site-header", { autoAlpha: 0, y: -18 });
+        gsap.set(".mind-hero-canvas", { autoAlpha: 0 });
+        gsap.set(".mind-hero-kicker", { autoAlpha: 0, y: 12 });
+        gsap.set(".mind-hero-lede", { autoAlpha: 0, y: 18 });
+        gsap.set(".mind-hero-meta span", { autoAlpha: 0, y: 12 });
+        gsap.set(".mind-hero-actions", { autoAlpha: 0, y: 18 });
+        gsap.set(".mind-brain-dot", { autoAlpha: 0, scale: 0.68, transformOrigin: "50% 50%" });
 
         const intro = gsap.timeline({
           defaults: { ease: "power4.out" },
-          onComplete: () => heroSection?.setAttribute("data-hero-motion", "ready"),
+          onComplete: markHeroReady,
         });
         intro
-          .from(
+          .to(
             ".mind-hero-canvas",
-            { autoAlpha: 0, duration: 0.28, ease: "power2.out" },
+            { autoAlpha: 1, duration: 0.28, ease: "power2.out" },
           )
-          .from(
+          .to(
             ".mind-hero-kicker",
-            { autoAlpha: 0, y: 12, duration: 0.34 },
+            { autoAlpha: 1, y: 0, duration: 0.34 },
             "-=0.08",
           )
           .call(
-            () => heroSection?.setAttribute("data-hero-motion", "ready"),
+            markHeroReady,
             undefined,
             "+=0.08",
           )
@@ -805,36 +832,35 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
             { filter: "blur(0px)", scale: 1, opacity: 1, duration: 0.9, ease: "power3.out" },
             "<+0.34",
           )
-          .from(
+          .to(
             ".mind-brain-dot",
             {
-              autoAlpha: 0,
-              scale: 0.68,
+              autoAlpha: 1,
+              scale: 1,
               duration: 0.44,
               stagger: 0.08,
               ease: "back.out(1.6)",
-              transformOrigin: "50% 50%",
             },
             "-=0.38",
           )
-          .from(
+          .to(
             ".mind-hero-lede",
-            { autoAlpha: 0, y: 18, duration: 0.48 },
+            { autoAlpha: 1, y: 0, duration: 0.48 },
             "-=0.62",
           )
-          .from(
+          .to(
             ".mind-hero-meta span",
-            { autoAlpha: 0, y: 12, duration: 0.42, stagger: 0.06 },
+            { autoAlpha: 1, y: 0, duration: 0.42, stagger: 0.06 },
             "-=0.32",
           )
-          .from(
+          .to(
             ".site-header",
-            { autoAlpha: 0, y: -18, duration: 0.46 },
+            { autoAlpha: 1, y: 0, duration: 0.46 },
             "-=0.36",
           )
-          .from(
+          .to(
             ".mind-hero-actions",
-            { autoAlpha: 0, y: 18, duration: 0.5 },
+            { autoAlpha: 1, y: 0, duration: 0.5 },
             "-=0.28",
           );
       }
@@ -1630,7 +1656,12 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
         Ga naar het werk
       </a>
 
-      <header className="site-header" data-theme="light" aria-label="Hoofdnavigatie">
+      <header
+        className="site-header"
+        data-theme="light"
+        data-header-motion="pending"
+        aria-label="Hoofdnavigatie"
+      >
         <a className="site-mark" href="#top" aria-label="Naar boven">
           <span>A</span>
           <span className="site-mark-copy">Abdelrahman<br />{locale === "en" ? "Product & UX/UI designer" : "Product- & UX/UI-designer"}</span>
