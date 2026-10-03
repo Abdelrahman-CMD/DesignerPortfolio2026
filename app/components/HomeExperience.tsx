@@ -1668,7 +1668,6 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
                     src="/about/brain-default.svg"
                     alt=""
                     fill
-                    priority
                     unoptimized
                     sizes="(max-width: 720px) 42vw, 18vw"
                   />
