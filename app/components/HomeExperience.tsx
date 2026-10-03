@@ -1680,6 +1680,29 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
                     />
                   ))}
                 </div>
+
+                <div className="mind-brain-dots">
+                  {mindZones.map((zone) => {
+                    const zoneLabel = translateText(locale, zone.label);
+                    const zoneTitle = translateText(locale, zone.title);
+
+                    return (
+                      <button
+                        key={`dot-${zone.id}`}
+                        type="button"
+                        data-zone={zone.id}
+                        className={`mind-brain-dot${activeMindZone === zone.id ? " is-active" : ""}`}
+                        style={{ "--zone-color": zone.color } as CSSProperties}
+                        aria-pressed={activeMindZone === zone.id}
+                        aria-controls="mind-touch-detail"
+                        aria-label={`${zone.number} ${zoneLabel}: ${zoneTitle}`}
+                        onClick={() => setActiveMindZone(zone.id)}
+                      >
+                        {zone.number}
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
             </div>
 
@@ -1784,7 +1807,6 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
                     }}
                   >
                     <span className="mind-zone-surface" aria-hidden="true" />
-                      <span className="mind-zone-dot" aria-hidden="true">{zone.number}</span>
                     <span className="mind-zone-mobile-copy">
                       <span className="mind-zone-mobile-kicker label">{zone.number} / {zoneLabel}</span>
                       <strong>{zoneTitle}</strong>

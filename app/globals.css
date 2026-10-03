@@ -1485,6 +1485,56 @@ a:focus-visible > .link-icon svg * {
 
 .mind-brain-default { opacity: 1; }
 
+/* Deze laag deelt bewust de geometrie van .mind-brain-stage hierboven: de
+   zonelaag voor hover hangt in een ander ouder-element, waardoor haar
+   percentages op smalle schermen naast de tekening landen. De percentages
+   hieronder zijn de gemeten middelpunten van elke zone binnen de tekening. */
+.mind-brain-dots {
+  position: absolute;
+  z-index: 6;
+  top: 2.3745%;
+  left: calc(12.7119% + var(--brain-shift-x));
+  display: none;
+  width: 49.1525%;
+  aspect-ratio: 261 / 233;
+  pointer-events: none;
+}
+
+.mind-brain-dot {
+  position: absolute;
+  display: grid;
+  width: 2.75rem;
+  height: 2.75rem;
+  margin: -1.375rem 0 0 -1.375rem;
+  padding: 0;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--ink) 22%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, #f9f6f0 82%, transparent);
+  color: var(--ink);
+  font: 700 0.64rem/1 var(--sans);
+  cursor: pointer;
+  pointer-events: auto;
+  transition: background var(--motion-standard) var(--ease-premium), border-color var(--motion-standard) var(--ease-premium), color var(--motion-standard) var(--ease-premium);
+}
+
+.mind-brain-dot.is-active {
+  border-color: var(--zone-color);
+  background: var(--zone-color);
+  color: #fffdf8;
+}
+
+.mind-brain-dot:focus-visible {
+  outline: 2px solid var(--zone-color);
+  outline-offset: 2px;
+}
+
+.mind-brain-dot[data-zone="curiosity"] { top: 26.97%; left: 19.98%; }
+.mind-brain-dot[data-zone="connections"] { top: 24.28%; left: 67.69%; }
+.mind-brain-dot[data-zone="source"] { top: 50.53%; left: 38.69%; }
+.mind-brain-dot[data-zone="structure"] { top: 53.54%; left: 81.01%; }
+.mind-brain-dot[data-zone="direction"] { top: 74.1%; left: 67.58%; }
+
 .mind-brain-region {
   position: absolute;
   inset: 0;
@@ -1807,8 +1857,6 @@ html.is-cta-captured a { cursor: none !important; }
   box-shadow: none;
   opacity: 0;
 }
-
-.mind-zone-dot { display: none; }
 
 .mind-zone-mobile-copy { display: none; }
 
@@ -5153,48 +5201,13 @@ html.is-cta-captured a { cursor: none !important; }
     outline: 2px solid #b83225;
     outline-offset: 3px;
   }
-  /* Op een aanraakscherm bestaat hover niet, maar de koppeling tussen een
-     hersendeel en een principe is juist de waarde van dit element. In plaats
-     van de laag te verbergen worden de regio's genummerde raakdoelen van
-     2,75rem, verankerd op het midden van hun eigen vorm. De tekst verschijnt
-     in de kaart eronder, die al een aria-live-gebied is. */
-  .mind-zone-layer { display: block; }
+  /* Hover bestaat niet op een aanraakscherm, maar de koppeling tussen een
+     hersendeel en een principe is juist de waarde van dit element. De
+     hovervormen gaan weg; genummerde punten in het vlak van de tekening nemen
+     het over. De kaart eronder is al een aria-live-gebied. */
+  .mind-zone-layer { display: none; }
+  .mind-brain-dots { display: block; }
   .mind-touch-tabs { display: none; }
-
-  .mind-zone {
-    width: 2.75rem;
-    height: 2.75rem;
-    /* De basisregel laat alleen de uitgeknipte vorm klikken; die is hier
-       verborgen, dus het raakdoel verhuist naar de knop zelf. */
-    margin: -1.375rem 0 0 -1.375rem;
-    pointer-events: auto;
-  }
-
-  .mind-zone-surface { display: none; }
-
-  .mind-zone-dot {
-    display: grid;
-    width: 100%;
-    height: 100%;
-    place-items: center;
-    border: 1px solid color-mix(in srgb, var(--ink) 22%, transparent);
-    border-radius: 999px;
-    background: color-mix(in srgb, #f9f6f0 76%, transparent);
-    color: var(--ink);
-    font: 700 0.64rem/1 var(--sans);
-  }
-
-  .mind-zone.is-active .mind-zone-dot {
-    border-color: var(--zone-color);
-    background: var(--zone-color);
-    color: #fffdf8;
-  }
-
-  .mind-zone-curiosity { top: 10.9%; left: calc(28% + var(--brain-shift-x)); }
-  .mind-zone-connections { top: 10.05%; left: calc(51.45% + var(--brain-shift-x)); }
-  .mind-zone-source { top: 18.35%; left: calc(37.2% + var(--brain-shift-x)); }
-  .mind-zone-structure { top: 19.3%; left: calc(58% + var(--brain-shift-x)); }
-  .mind-zone-direction { top: 25.8%; left: calc(51.4% + var(--brain-shift-x)); }
 
   .mind-touch-explorer {
     position: absolute;
@@ -5372,48 +5385,13 @@ html.is-cta-captured a { cursor: none !important; }
     opacity: 0.1;
   }
   .mind-annotation-panel { display: none; }
-  /* Op een aanraakscherm bestaat hover niet, maar de koppeling tussen een
-     hersendeel en een principe is juist de waarde van dit element. In plaats
-     van de laag te verbergen worden de regio's genummerde raakdoelen van
-     2,75rem, verankerd op het midden van hun eigen vorm. De tekst verschijnt
-     in de kaart eronder, die al een aria-live-gebied is. */
-  .mind-zone-layer { display: block; }
+  /* Hover bestaat niet op een aanraakscherm, maar de koppeling tussen een
+     hersendeel en een principe is juist de waarde van dit element. De
+     hovervormen gaan weg; genummerde punten in het vlak van de tekening nemen
+     het over. De kaart eronder is al een aria-live-gebied. */
+  .mind-zone-layer { display: none; }
+  .mind-brain-dots { display: block; }
   .mind-touch-tabs { display: none; }
-
-  .mind-zone {
-    width: 2.75rem;
-    height: 2.75rem;
-    /* De basisregel laat alleen de uitgeknipte vorm klikken; die is hier
-       verborgen, dus het raakdoel verhuist naar de knop zelf. */
-    margin: -1.375rem 0 0 -1.375rem;
-    pointer-events: auto;
-  }
-
-  .mind-zone-surface { display: none; }
-
-  .mind-zone-dot {
-    display: grid;
-    width: 100%;
-    height: 100%;
-    place-items: center;
-    border: 1px solid color-mix(in srgb, var(--ink) 22%, transparent);
-    border-radius: 999px;
-    background: color-mix(in srgb, #f9f6f0 76%, transparent);
-    color: var(--ink);
-    font: 700 0.64rem/1 var(--sans);
-  }
-
-  .mind-zone.is-active .mind-zone-dot {
-    border-color: var(--zone-color);
-    background: var(--zone-color);
-    color: #fffdf8;
-  }
-
-  .mind-zone-curiosity { top: 10.9%; left: calc(28% + var(--brain-shift-x)); }
-  .mind-zone-connections { top: 10.05%; left: calc(51.45% + var(--brain-shift-x)); }
-  .mind-zone-source { top: 18.35%; left: calc(37.2% + var(--brain-shift-x)); }
-  .mind-zone-structure { top: 19.3%; left: calc(58% + var(--brain-shift-x)); }
-  .mind-zone-direction { top: 25.8%; left: calc(51.4% + var(--brain-shift-x)); }
 
   .mind-touch-explorer {
     position: relative;
@@ -5545,48 +5523,13 @@ html.is-cta-captured a { cursor: none !important; }
 }
 
 @media (hover: none) and (min-width: 981px), (pointer: coarse) and (min-width: 981px) {
-  /* Op een aanraakscherm bestaat hover niet, maar de koppeling tussen een
-     hersendeel en een principe is juist de waarde van dit element. In plaats
-     van de laag te verbergen worden de regio's genummerde raakdoelen van
-     2,75rem, verankerd op het midden van hun eigen vorm. De tekst verschijnt
-     in de kaart eronder, die al een aria-live-gebied is. */
-  .mind-zone-layer { display: block; }
+  /* Hover bestaat niet op een aanraakscherm, maar de koppeling tussen een
+     hersendeel en een principe is juist de waarde van dit element. De
+     hovervormen gaan weg; genummerde punten in het vlak van de tekening nemen
+     het over. De kaart eronder is al een aria-live-gebied. */
+  .mind-zone-layer { display: none; }
+  .mind-brain-dots { display: block; }
   .mind-touch-tabs { display: none; }
-
-  .mind-zone {
-    width: 2.75rem;
-    height: 2.75rem;
-    /* De basisregel laat alleen de uitgeknipte vorm klikken; die is hier
-       verborgen, dus het raakdoel verhuist naar de knop zelf. */
-    margin: -1.375rem 0 0 -1.375rem;
-    pointer-events: auto;
-  }
-
-  .mind-zone-surface { display: none; }
-
-  .mind-zone-dot {
-    display: grid;
-    width: 100%;
-    height: 100%;
-    place-items: center;
-    border: 1px solid color-mix(in srgb, var(--ink) 22%, transparent);
-    border-radius: 999px;
-    background: color-mix(in srgb, #f9f6f0 76%, transparent);
-    color: var(--ink);
-    font: 700 0.64rem/1 var(--sans);
-  }
-
-  .mind-zone.is-active .mind-zone-dot {
-    border-color: var(--zone-color);
-    background: var(--zone-color);
-    color: #fffdf8;
-  }
-
-  .mind-zone-curiosity { top: 10.9%; left: calc(28% + var(--brain-shift-x)); }
-  .mind-zone-connections { top: 10.05%; left: calc(51.45% + var(--brain-shift-x)); }
-  .mind-zone-source { top: 18.35%; left: calc(37.2% + var(--brain-shift-x)); }
-  .mind-zone-structure { top: 19.3%; left: calc(58% + var(--brain-shift-x)); }
-  .mind-zone-direction { top: 25.8%; left: calc(51.4% + var(--brain-shift-x)); }
 
   .mind-touch-explorer {
     position: absolute;
