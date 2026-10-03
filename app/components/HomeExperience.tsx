@@ -636,6 +636,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
         ignoreMobileResize: true,
         limitCallbacks: true,
       });
+      const touchHeroVisual = window.matchMedia("(max-width: 980px), (hover: none), (pointer: coarse)").matches;
 
       const motion = {
         ease: "power4.out",
@@ -761,6 +762,54 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
         gsap.set(".mind-hero-actions", { autoAlpha: 0, y: 18 });
         gsap.set(".mind-brain-dot", { autoAlpha: 0, scale: 0.68, transformOrigin: "50% 50%" });
 
+        const revealHeroVisual = () => {
+          const visual = gsap.timeline({ defaults: { ease: "power4.out" } });
+          visual
+            .to(
+              ".mind-hero-photo-slide",
+              {
+                clipPath: "inset(0 0 0 0%)",
+                xPercent: 0,
+                opacity: 1,
+                duration: 1.08,
+                ease: "power4.inOut",
+              },
+            )
+            .to(
+              heroReveal,
+              {
+                progress: 1,
+                duration: 1.12,
+                ease: "power3.inOut",
+                onUpdate: () => heroMosaic?.render(heroReveal.progress, 0),
+              },
+              "-=0.82",
+            )
+            .to(
+              ".mind-hero-mosaic",
+              { filter: "blur(0px)", scale: 1, duration: 1.04, ease: "power3.out" },
+              "<",
+            )
+            .to(
+              ".mind-hero-base",
+              { filter: "blur(0px)", scale: 1, opacity: 1, duration: 0.9, ease: "power3.out" },
+              "<+0.34",
+            )
+            .to(
+              ".mind-brain-dot",
+              {
+                autoAlpha: 1,
+                scale: 1,
+                duration: 0.44,
+                stagger: 0.08,
+                ease: "back.out(1.6)",
+              },
+              "-=0.38",
+            );
+
+          return visual;
+        };
+
         const intro = gsap.timeline({
           defaults: { ease: "power4.out" },
           onComplete: markHeroReady,
@@ -796,52 +845,14 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
             },
             "<",
           )
-          .to(
-            ".mind-hero-photo-slide",
-            {
-              clipPath: "inset(0 0 0 0%)",
-              xPercent: 0,
-              opacity: 1,
-              duration: 1.08,
-              ease: "power4.inOut",
-            },
+          .add(
+            touchHeroVisual ? gsap.timeline() : revealHeroVisual(),
             "-=0.42",
           )
           .to(
             ".mind-title-handwrite",
             { clipPath: "inset(0 0% 0 0)", duration: 0.82, ease: "power3.inOut" },
             "-=0.34",
-          )
-          .to(
-            heroReveal,
-            {
-              progress: 1,
-              duration: 1.12,
-              ease: "power3.inOut",
-              onUpdate: () => heroMosaic?.render(heroReveal.progress, 0),
-            },
-            "-=0.82",
-          )
-          .to(
-            ".mind-hero-mosaic",
-            { filter: "blur(0px)", scale: 1, duration: 1.04, ease: "power3.out" },
-            "<",
-          )
-          .to(
-            ".mind-hero-base",
-            { filter: "blur(0px)", scale: 1, opacity: 1, duration: 0.9, ease: "power3.out" },
-            "<+0.34",
-          )
-          .to(
-            ".mind-brain-dot",
-            {
-              autoAlpha: 1,
-              scale: 1,
-              duration: 0.44,
-              stagger: 0.08,
-              ease: "back.out(1.6)",
-            },
-            "-=0.38",
           )
           .to(
             ".mind-hero-lede",
@@ -863,6 +874,15 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
             { autoAlpha: 1, y: 0, duration: 0.5 },
             "-=0.28",
           );
+
+        if (touchHeroVisual) {
+          ScrollTrigger.create({
+            trigger: ".mind-hero-visual",
+            start: "top 78%",
+            once: true,
+            onEnter: () => revealHeroVisual(),
+          });
+        }
       }
 
       const heroCtaStage = root.current?.querySelector<HTMLElement>(".hero-cta-stage");
