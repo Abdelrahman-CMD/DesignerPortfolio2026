@@ -1,0 +1,24 @@
+# Bestanden met een hash in hun naam veranderen nooit van inhoud, dus die mogen
+# een jaar blijven staan. Deze regel stond in de door vinext gegenereerde versie
+# van dit bestand; omdat een eigen _headers die vervangt, hoort hij hier.
+/_next/static/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Afbeeldingen in public/ hebben geen hash in hun naam, dus een jaar is te lang:
+# vervang je een foto onder dezelfde naam, dan blijven bezoekers de oude zien.
+# Een maand vangt herhaalbezoek op en houdt de doorlooptijd overzichtelijk.
+/about/*
+  Cache-Control: public, max-age=2592000
+
+/projects/*
+  Cache-Control: public, max-age=2592000
+
+/og-mind-hero.jpg
+  Cache-Control: public, max-age=2592000
+
+# Iconen wisselen zelden, maar een week houdt een merkwijziging hanteerbaar.
+/favicon.svg
+  Cache-Control: public, max-age=604800
+
+/apple-touch-icon.png
+  Cache-Control: public, max-age=604800
