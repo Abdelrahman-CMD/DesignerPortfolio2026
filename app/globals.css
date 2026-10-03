@@ -5271,6 +5271,9 @@ html.is-cta-captured a { cursor: none !important; }
     font-size: 0.72rem;
     line-height: 1.48;
   }
+  @media (min-width: 721px) {
+    .mind-touch-explorer { display: none; }
+  }
   .manifesto { grid-template-columns: 1fr 4fr; }
   .manifesto-copy { grid-column: 2; }
   .manifesto-aside { grid-column: 2; margin-left: auto; }
@@ -5593,6 +5596,7 @@ html.is-cta-captured a { cursor: none !important; }
     line-height: 1;
   }
   .mind-touch-detail p { margin: 0.75rem 0 0; color: #4b4742; font-size: 0.76rem; line-height: 1.48; }
+  .mind-touch-explorer { display: none; }
   .mind-hero-actions { right: var(--space-3); left: auto; transform: none; }
   .hero-cta-stage { width: auto; height: auto; }
   .hero-cta-container {
