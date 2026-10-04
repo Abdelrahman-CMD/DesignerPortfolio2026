@@ -153,7 +153,10 @@ export function BaynSignalExperience({ locale = "nl" }: { locale?: Locale }) {
       </header>
 
       <section className="tc-snapshot" id="bayn-content" aria-labelledby="bayn-snapshot-title">
-        <header><p>{tx("De case in 30 seconden")}</p><h2 id="bayn-snapshot-title">{tx("Probleem. Oplossing. Volgende stap.")}</h2></header>
+        <header>
+          <p>{locale === "en" ? "The assumption that needs testing" : "Welke aanname getest moet worden"}</p>
+          <h2 id="bayn-snapshot-title">{locale === "en" ? "Signal. Context. Next test." : "Signaal. Context. Volgende toets."}</h2>
+        </header>
         <div className="tc-snapshot-grid">
           <article><span>{tx("Probleem")}</span><p>{tx(cards[0].note)}</p></article>
           <article><span>{tx("Oplossing")}</span><p>{tx(cards[2].note)}</p></article>
@@ -163,7 +166,7 @@ export function BaynSignalExperience({ locale = "nl" }: { locale?: Locale }) {
 
       <CaseResearchEvidence variant="bayn" locale={locale} />
 
-      <section className="tc-deck" aria-label={tx("Bayn Signal oplossingsverhaal in drie beslissingen")}>
+      <section className="tc-deck" aria-label={locale === "en" ? "Bayn Signal platform hypothesis in three choices" : "Bayn Signal platformhypothese in drie keuzes"}>
         {cards.slice(0, 3).map((card, index) => (
           <article className={`tc-card-shell tc-tone-${card.tone}`} id={`chapter-${card.number}`} key={card.number} style={{ "--tc-index": index + 1 } as CSSProperties}>
             <div className="tc-card">
@@ -206,7 +209,7 @@ export function BaynSignalExperience({ locale = "nl" }: { locale?: Locale }) {
       </section>
 
       <section className="tc-contribution">
-        <p>{tx("Mijn bijdrage")}</p>
+        <p>{locale === "en" ? "My role / hypothesis boundary" : "Mijn rol / grens van de hypothese"}</p>
         <div><h2>{tx("Van informatie-overload naar een lokale pulse die betekenis vóór volume plaatst.")}</h2><p>{tx("Ik vertaalde de nichekans naar positionering, contentarchitectuur, signaalhiërarchie en een responsive interfacesysteem. Omdat dit een conceptproject is, presenteer ik geen verzonnen impactcijfers; de case maakt juist zichtbaar welke aannames rond relevantie, vertrouwen en gedrag met echte gebruikers getoetst moeten worden.")}</p></div>
       </section>
 

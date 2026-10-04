@@ -138,7 +138,10 @@ export function GuidanceTravelExperience({ locale = "nl" }: { locale?: Locale })
       </header>
 
       <section className="tc-snapshot" id="guidance-content" aria-labelledby="guidance-snapshot-title">
-        <header><p>{tx("De case in 30 seconden")}</p><h2 id="guidance-snapshot-title">{tx("Probleem. Oplossing. Volgende stap.")}</h2></header>
+        <header>
+          <p>{locale === "en" ? "What the research already showed" : "Wat het onderzoek al liet zien"}</p>
+          <h2 id="guidance-snapshot-title">{locale === "en" ? "Uncertainty. Guidance. Validation." : "Onzekerheid. Begeleiding. Toetsing."}</h2>
+        </header>
         <div className="tc-snapshot-grid">
           <article><span>{tx("Probleem")}</span><p>{tx(cards[0].note)}</p></article>
           <article><span>{tx("Oplossing")}</span><p>{tx(cards[2].note)}</p></article>
@@ -148,7 +151,7 @@ export function GuidanceTravelExperience({ locale = "nl" }: { locale?: Locale })
 
       <CaseResearchEvidence variant="guidance" locale={locale} />
 
-      <section className="tc-deck" aria-label={tx("Guidance Travel oplossingsverhaal in drie beslissingen")}>
+      <section className="tc-deck" aria-label={locale === "en" ? "Guidance Travel service concept in three choices" : "Guidance Travel serviceconcept in drie keuzes"}>
         {cards.slice(0, 3).map((card, index) => (
           <article className={`tc-card-shell tc-tone-${card.tone}`} id={`chapter-${card.number}`} key={card.number} style={{ "--tc-index": index + 1 } as CSSProperties}>
             <div className="tc-card">
@@ -186,7 +189,7 @@ export function GuidanceTravelExperience({ locale = "nl" }: { locale?: Locale })
       </section>
 
       <section className="tc-contribution">
-        <p>{tx("Mijn bijdrage")}</p>
+        <p>{locale === "en" ? "My role / research to route" : "Mijn rol / van onderzoek naar route"}</p>
         <div><h2>{tx("Van een markt vol pakketten naar een dienst die al vóór vertrek vertrouwen begint op te bouwen.")}</h2><p>{tx("Ik heb de marktfrictie vertaald naar positionering, informatiehiërarchie, keuzehulp en een responsive systeem. Het resultaat claimt geen verzonnen conversiewinst; het maakt precies zichtbaar welke aannames met echte reizigers getoetst moeten worden.")}</p></div>
       </section>
 

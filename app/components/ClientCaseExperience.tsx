@@ -362,6 +362,28 @@ export function ClientCaseExperience({ project, locale = "nl" }: { project: Edit
 
   if (!story) return null;
 
+  const snapshotLabels: Record<ClientStory["theme"], { kicker: LocalCopy; title: LocalCopy; storyLabel: LocalCopy; contribution: LocalCopy }> = {
+    hijama: {
+      kicker: copy("Wat de praktijk online moest bewijzen", "What the practice had to prove online"),
+      title: copy("Uitleg. Vertrouwen. Contact.", "Clarity. Trust. Contact."),
+      storyLabel: copy("Hijama 'N Cups vertrouwensroute", "Hijama 'N Cups trust journey"),
+      contribution: copy("Mijn rol / meetbare grens", "My role / evidence boundary"),
+    },
+    atotz: {
+      kicker: copy("Wat de sectorsite moest oplossen", "What the sector site had to solve"),
+      title: copy("Herkennen. Kiezen. Gericht reageren.", "Recognise. Choose. Respond with context."),
+      storyLabel: copy("AtotZ sectorsiteverhaal", "AtotZ sector-site story"),
+      contribution: copy("Mijn rol / leveringsbewijs", "My role / delivery evidence"),
+    },
+    oppas: {
+      kicker: copy("Wat ouders eerst moesten voelen", "What parents needed to feel first"),
+      title: copy("Vertrouwen. Ritme. Beschikbaarheid.", "Trust. Rhythm. Availability."),
+      storyLabel: copy("Oppas by Chaima vertrouwensroute", "Oppas by Chaima trust journey"),
+      contribution: copy("Mijn rol / klantgerapporteerd resultaat", "My role / client-reported result"),
+    },
+  };
+  const caseLabels = snapshotLabels[story.theme];
+
   const pageStyle = {
     "--client-accent": project.accent,
   } as CSSProperties;
@@ -404,15 +426,15 @@ export function ClientCaseExperience({ project, locale = "nl" }: { project: Edit
 
       <section className="tc-snapshot" id="client-case-content" aria-labelledby={`${project.slug}-snapshot-title`}>
         <header>
-          <p>{locale === "en" ? "The case in 30 seconds" : "De case in 30 seconden"}</p>
-          <h2 id={`${project.slug}-snapshot-title`}>{locale === "en" ? "Problem. Solution. Evidence." : "Probleem. Oplossing. Bewijs."}</h2>
+          <p>{pick(locale, caseLabels.kicker)}</p>
+          <h2 id={`${project.slug}-snapshot-title`}>{pick(locale, caseLabels.title)}</h2>
         </header>
         <div className="tc-snapshot-grid">
           {story.snapshot.map((item) => <article key={item.label.nl}><span>{pick(locale, item.label)}</span><p>{pick(locale, item.value)}</p></article>)}
         </div>
       </section>
 
-      <section className="tc-deck" aria-label={locale === "en" ? `${project.name} story in four decisions` : `${project.name} in vier beslissingen`}>
+      <section className="tc-deck" aria-label={pick(locale, caseLabels.storyLabel)}>
         {story.cards.map((card, index) => (
           <article className={`tc-card-shell tc-tone-${card.tone}`} id={`chapter-${card.number}`} key={card.number} style={{ "--tc-index": index + 1 } as CSSProperties}>
             <div className="tc-card">
@@ -476,7 +498,7 @@ export function ClientCaseExperience({ project, locale = "nl" }: { project: Edit
       </section>
 
       <section className="tc-contribution">
-        <p>{locale === "en" ? "My contribution / evidence" : "Mijn bijdrage / bewijs"}</p>
+        <p>{pick(locale, caseLabels.contribution)}</p>
         <div>
           <h2>{pick(locale, story.contribution.title)}</h2>
           {story.contribution.paragraphs.map((paragraph) => <p key={paragraph.nl}>{pick(locale, paragraph)}</p>)}

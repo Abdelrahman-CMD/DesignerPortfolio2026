@@ -150,7 +150,10 @@ export function AynAlHikmahExperience({ locale = "nl" }: { locale?: Locale }) {
       </header>
 
       <section className="tc-snapshot" id="ayn-content" aria-labelledby="ayn-snapshot-title">
-        <header><p>{tx("De case in 30 seconden")}</p><h2 id="ayn-snapshot-title">{tx("Probleem. Oplossing. Volgende stap.")}</h2></header>
+        <header>
+          <p>{locale === "en" ? "What has to keep working after Medina" : "Wat na Medina overeind moet blijven"}</p>
+          <h2 id="ayn-snapshot-title">{locale === "en" ? "Access. Guidance. Return." : "Toegang. Begeleiding. Terugkeer."}</h2>
+        </header>
         <div className="tc-snapshot-grid">
           <article><span>{tx("Probleem")}</span><p>{tx(cards[0].note)}</p></article>
           <article><span>{tx("Oplossing")}</span><p>{tx(cards[2].note)}</p></article>
@@ -158,7 +161,7 @@ export function AynAlHikmahExperience({ locale = "nl" }: { locale?: Locale }) {
         </div>
       </section>
 
-      <section className="tc-deck" aria-label={tx("Ayn Al-Hikmah oplossingsverhaal in drie beslissingen")}>
+      <section className="tc-deck" aria-label={locale === "en" ? "Ayn Al-Hikmah learning-commerce concept in three choices" : "Ayn Al-Hikmah leercommerceconcept in drie keuzes"}>
         {cards.slice(0, 3).map((card, index) => (
           <article className={`tc-card-shell tc-tone-${card.tone}`} id={`chapter-${card.number}`} key={card.number} style={{ "--tc-index": index + 1 } as CSSProperties}>
             <div className="tc-card">
@@ -201,7 +204,7 @@ export function AynAlHikmahExperience({ locale = "nl" }: { locale?: Locale }) {
       </section>
 
       <section className="tc-contribution">
-        <p>{tx("Mijn bijdrage")}</p>
+        <p>{locale === "en" ? "My role / concept to validate" : "Mijn rol / concept om te toetsen"}</p>
         <div><h2>{tx("Van een webshop voor boeken naar een omgeving die kennis helpt landen, groeien en doorgaan.")}</h2><p>{tx("Ik vertaalde de nichekans naar positionering, servicearchitectuur, informatiehiërarchie en een responsive interface. Omdat dit een conceptproject is, presenteer ik geen verzonnen impactcijfers; de case maakt juist helder welke aannames met kenniszoekers getoetst moeten worden.")}</p></div>
       </section>
 

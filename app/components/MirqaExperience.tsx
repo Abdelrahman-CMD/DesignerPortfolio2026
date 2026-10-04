@@ -103,7 +103,10 @@ const content = {
       "Moskee kiezen / kaart",
       "Moskee kiezen / lijst",
     ],
-    contributionKicker: "Mijn bijdrage",
+    snapshotKicker: "De producthypothese",
+    snapshotTitle: "Intentie. Vertrek. Toetsing.",
+    storyLabel: "MIRQA producthypothese in drie keuzes",
+    contributionKicker: "Mijn rol / te toetsen waarde",
     contributionTitle:
       "Van een persoonlijke observatie naar een mobiele producthypothese die klaar is om in de praktijk te toetsen.",
     contributionBody:
@@ -200,7 +203,10 @@ const content = {
       "Choosing a mosque / map",
       "Choosing a mosque / list",
     ],
-    contributionKicker: "My contribution",
+    snapshotKicker: "The product hypothesis",
+    snapshotTitle: "Intention. Departure. Validation.",
+    storyLabel: "MIRQA product hypothesis in three choices",
+    contributionKicker: "My role / value to validate",
     contributionTitle:
       "From a personal observation to a mobile product hypothesis that is ready to be tested in context.",
     contributionBody:
@@ -280,8 +286,8 @@ export function MirqaExperience({ locale = "nl" }: { locale?: Locale }) {
 
       <section className="tc-snapshot" id="mirqa-content" aria-labelledby="mirqa-snapshot-title">
         <header>
-          <p>{locale === "en" ? "The 30-second case" : "De case in 30 seconden"}</p>
-          <h2 id="mirqa-snapshot-title">{locale === "en" ? "Problem. Solution. Next step." : "Probleem. Oplossing. Volgende stap."}</h2>
+          <p>{copy.snapshotKicker}</p>
+          <h2 id="mirqa-snapshot-title">{copy.snapshotTitle}</h2>
         </header>
         <div className="tc-snapshot-grid">
           <div><span>{locale === "en" ? "Problem" : "Probleem"}</span><p>{copy.cards[0].note}</p></div>
@@ -290,7 +296,7 @@ export function MirqaExperience({ locale = "nl" }: { locale?: Locale }) {
         </div>
       </section>
 
-      <section className="tc-deck" aria-label={locale === "en" ? "MIRQA product story in three decisions" : "MIRQA productverhaal in drie beslissingen"}>
+      <section className="tc-deck" aria-label={copy.storyLabel}>
         {copy.cards.slice(0, 3).map((card, index) => (
           <article className={`tc-card-shell tc-tone-${card.tone}`} id={`chapter-${index + 1}`} key={card.eyebrow} style={{ "--tc-index": index + 1 } as CSSProperties}>
             <div className="tc-card">

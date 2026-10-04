@@ -216,8 +216,8 @@ export function HijamaNCupsExperience({ locale = "nl" }: { locale?: Locale }) {
 
       <section className="tc-snapshot" id="hijama-content" aria-labelledby="hijama-snapshot-title">
         <header>
-          <p>{tx("De case in 30 seconden")}</p>
-          <h2 id="hijama-snapshot-title">{tx("Probleem. Oplossing. Volgende stap.")}</h2>
+          <p>{locale === "en" ? "What first-time visitors needed" : "Wat nieuwe bezoekers nodig hadden"}</p>
+          <h2 id="hijama-snapshot-title">{locale === "en" ? "Explanation. Trust. Personal contact." : "Uitleg. Vertrouwen. Persoonlijk contact."}</h2>
         </header>
         <div className="tc-snapshot-grid">
           <div><span>{tx("Probleem")}</span><p>{tx(cards[0].note)}</p></div>
@@ -226,7 +226,7 @@ export function HijamaNCupsExperience({ locale = "nl" }: { locale?: Locale }) {
         </div>
       </section>
 
-      <section className="tc-deck" aria-label={tx("Hijama 'N Cups oplossingsverhaal in drie beslissingen")}>
+      <section className="tc-deck" aria-label={locale === "en" ? "Hijama 'N Cups trust journey in three choices" : "Hijama 'N Cups vertrouwensroute in drie keuzes"}>
         {cards.slice(0, 3).map((card, index) => (
           <article className={`tc-card-shell tc-tone-${card.tone}`} id={`chapter-${card.number}`} key={card.number} style={{ "--tc-index": index + 1 } as CSSProperties}>
             <div className="tc-card">
@@ -276,7 +276,7 @@ export function HijamaNCupsExperience({ locale = "nl" }: { locale?: Locale }) {
       </section>
 
       <section className="tc-contribution">
-        <p>{tx("Mijn bijdrage")}</p>
+        <p>{locale === "en" ? "My role / live delivery" : "Mijn rol / live levering"}</p>
         <div>
           <h2>{tx("Van mond-tot-mondvertrouwen naar een digitale praktijk die Nora’s eigen manier van werken bewaart.")}</h2>
           <p>{tx("Ik bracht positionering, content, informatiearchitectuur en interface samen in Figma en bouwde de uiteindelijke ervaring in Framer. De website staat live en maakt Nora’s aanbod vindbaar en begrijpelijk. Zonder gekoppelde analytics schrijf ik geen conversie-impact toe; Google Search Console, WhatsApp-kliks en aanvraagkwaliteit zijn de logische volgende bewijslaag.")}</p>

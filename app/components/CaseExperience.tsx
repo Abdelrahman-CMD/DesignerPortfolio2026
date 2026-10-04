@@ -165,7 +165,10 @@ export function CaseExperience({ locale = "nl" }: { locale?: Locale }) {
       </header>
 
       <section className="tc-snapshot" id="tareeqi-content" aria-labelledby="tc-snapshot-title">
-        <header><p>{tx("De case in 30 seconden")}</p><h2 id="tc-snapshot-title">{tx("Probleem. Oplossing. Volgende stap.")}</h2></header>
+        <header>
+          <p>{locale === "en" ? "What the route was missing" : "Wat de route nog miste"}</p>
+          <h2 id="tc-snapshot-title">{locale === "en" ? "Stories. Local knowledge. Validation." : "Verhalen. Lokale kennis. Toetsing."}</h2>
+        </header>
         <div className="tc-snapshot-grid">
           <article><span>{tx("Probleem")}</span><p>{tx(cards[0].note)}</p></article>
           <article><span>{tx("Oplossing")}</span><p>{tx(cards[2].note)}</p></article>
@@ -175,7 +178,7 @@ export function CaseExperience({ locale = "nl" }: { locale?: Locale }) {
 
       <CaseResearchEvidence variant="tareeqi" locale={locale} />
 
-      <section className="tc-deck" aria-label={tx("Tareeqi oplossingsverhaal in drie beslissingen")}>
+      <section className="tc-deck" aria-label={locale === "en" ? "Tareeqi discovery concept in three choices" : "Tareeqi discoveryconcept in drie keuzes"}>
         {cards.slice(0, 3).map((card, index) => (
           <article
             className={`tc-card-shell tc-tone-${card.tone}`}
@@ -254,7 +257,7 @@ export function CaseExperience({ locale = "nl" }: { locale?: Locale }) {
       </section>
 
       <section className="tc-contribution">
-        <p>{tx("Mijn bijdrage")}</p>
+        <p>{locale === "en" ? "My role / concept evidence" : "Mijn rol / conceptbewijs"}</p>
         <div>
           <h2>{tx("Niet aantonen dat ik een interface kan maken. Aantonen dat ik een onbenutte vraag kan vinden en vertalen naar een toetsbaar systeem.")}</h2>
           <p>{tx("De waarde van Tareeqi zit voor mij in de verbinding tussen observatie, positionering en uitvoering. Ik heb de kans afgebakend, de kernfuncties geprioriteerd, het responsive systeem ontworpen en zichtbaar gemaakt welke aannames nog validatie nodig hebben.")}</p>

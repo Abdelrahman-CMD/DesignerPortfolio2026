@@ -215,8 +215,8 @@ export function EditorialCaseExperience({ project, locale = "nl" }: { project: E
       <article id="case-story">
         <section className="ec-snapshot" aria-labelledby={`${project.slug}-snapshot-title`}>
           <header>
-            <p className="section-kicker"><span>01</span> {locale === "en" ? "The 30-second case" : "De case in 30 seconden"}</p>
-            <h2 id={`${project.slug}-snapshot-title`}>{locale === "en" ? "Problem. Solution. Outcome or next step." : "Probleem. Oplossing. Resultaat of volgende stap."}</h2>
+            <p className="section-kicker"><span>01</span> {locale === "en" ? "The project in context" : "Het project in context"}</p>
+            <h2 id={`${project.slug}-snapshot-title`}>{locale === "en" ? "Tension. Direction. Evidence or next test." : "Spanning. Richting. Bewijs of volgende toets."}</h2>
           </header>
           <div className="ec-snapshot-grid">
             <div><span>{locale === "en" ? "Problem" : "Probleem"}</span><p>{tx(project.contextLead)}</p></div>
