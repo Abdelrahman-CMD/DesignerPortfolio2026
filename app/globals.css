@@ -5336,6 +5336,16 @@ html.is-cta-captured a { cursor: none !important; }
   .postcard-links { flex-wrap: wrap; }
 }
 
+/* Tussen 721 en 809px staat de volledige tekstnavigatie aan, maar past de
+   taalschakelaar er net niet meer naast: bij 721px liep hij 72px buiten beeld
+   en knipte .site-shell (overflow-x: clip) hem stil af. De merktekst naast het
+   logo is 120px breed en verdwijnt onder 721px toch al, dus die regel loopt
+   hier simpelweg 89px door. */
+@media (min-width: 721px) and (max-width: 809px) {
+  .site-mark-copy { display: none; }
+  .site-header-actions { gap: 0.45rem; }
+}
+
 @media (max-width: 720px) {
   .site-header { gap: var(--space-1); padding: var(--space-1); }
   .site-header-actions { gap: 0.35rem; }
@@ -8916,7 +8926,7 @@ html.is-cta-captured a { cursor: none !important; }
    doorlopen. */
 
 .cv-shell {
-  min-height: 100vh;
+  min-height: 100svh;
   padding: var(--space-12) var(--space-4) var(--space-15);
   background: var(--paper);
   color: var(--ink);

@@ -143,7 +143,7 @@ export function HijamaNCupsExperience({ locale = "nl" }: { locale?: Locale }) {
             scale: 0.985,
             duration: 0.9,
             ease: "power3.out",
-            scrollTrigger: { trigger: shell, start: "top 70%", toggleActions: "play none none reverse" },
+            scrollTrigger: { trigger: shell, start: "top 70%", toggleActions: "play none none none", once: true },
           });
         }
         if (nextShell) {
