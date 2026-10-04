@@ -282,7 +282,7 @@
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .tc-page[data-case-motion="pending"] :is(.tc-nav, .tc-hero-kicker, .tc-hero-summary, .tc-hero-meta, .tc-hero-media, .cc-hero-note) {
+  .tc-page[data-case-motion="pending"] :is(.tc-nav, .tc-hero-kicker, .tc-hero-summary, .tc-hero-live, .tc-hero-meta, .tc-hero-media, .cc-hero-note) {
     visibility: hidden;
     opacity: 0;
   }
@@ -297,7 +297,7 @@
     will-change: transform;
   }
 
-  .tc-page[data-case-motion="ready"] :is(.tc-nav, .tc-hero-kicker, .tc-hero-summary, .tc-hero-meta, .tc-hero-media, .cc-hero-note) {
+  .tc-page[data-case-motion="ready"] :is(.tc-nav, .tc-hero-kicker, .tc-hero-summary, .tc-hero-live, .tc-hero-meta, .tc-hero-media, .cc-hero-note) {
     visibility: visible;
   }
 }

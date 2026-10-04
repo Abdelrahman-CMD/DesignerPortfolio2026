@@ -123,7 +123,7 @@ export function initCaseMotion(root: HTMLElement, options: CaseMotionOptions = {
     });
 
     const heroIntroTargets = elements<HTMLElement>(root,
-      ".tc-nav, .tc-hero-kicker, .tc-title-line > span, .tc-hero-summary, .tc-hero-meta, .tc-hero-media, .cc-hero-note",
+      ".tc-nav, .tc-hero-kicker, .tc-title-line > span, .tc-hero-summary, .tc-hero-live, .tc-hero-meta, .tc-hero-media, .cc-hero-note",
     );
     const revealTargets = [
       ...heroIntroTargets,
@@ -151,7 +151,7 @@ export function initCaseMotion(root: HTMLElement, options: CaseMotionOptions = {
     gsap.set(".tc-nav", { autoAlpha: 0, y: -18 });
     gsap.set(".tc-hero-kicker", { autoAlpha: 0, y: 14 });
     gsap.set(".tc-title-line > span", { y: "2.2em" });
-    gsap.set(".tc-hero-summary, .tc-hero-meta", { autoAlpha: 0, y: 20 });
+    gsap.set(".tc-hero-summary, .tc-hero-live, .tc-hero-meta", { autoAlpha: 0, y: 20 });
     gsap.set(".tc-hero-media", { autoAlpha: 0, xPercent: 6, scale: 0.985 });
     if (heroNote) gsap.set(heroNote, { autoAlpha: 0, rotate: -3, y: 16 });
     root.setAttribute("data-case-motion", "ready");
@@ -161,7 +161,7 @@ export function initCaseMotion(root: HTMLElement, options: CaseMotionOptions = {
       .to(".tc-nav", { autoAlpha: 1, y: 0, duration: 0.34 })
       .to(".tc-hero-kicker", { autoAlpha: 1, y: 0, duration: 0.34 }, "-=0.08")
       .to(".tc-title-line > span", { y: 0, duration: 0.9, stagger: 0.12, clearProps: "transform" }, "+=0.02")
-      .to(".tc-hero-summary, .tc-hero-meta", { autoAlpha: 1, y: 0, duration: 0.66, stagger: 0.12 }, "-=0.38")
+      .to(".tc-hero-summary, .tc-hero-live, .tc-hero-meta", { autoAlpha: 1, y: 0, duration: 0.66, stagger: 0.12 }, "-=0.38")
       .to(".tc-hero-media", { autoAlpha: 1, xPercent: 0, scale: 1, duration: 1.02 }, "-=0.48");
     if (heroNote) {
       intro.to(heroNote, { autoAlpha: 1, rotate: 0, y: 0, duration: 0.48 }, "-=0.22");
