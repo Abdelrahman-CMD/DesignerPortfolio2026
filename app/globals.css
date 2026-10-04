@@ -9164,3 +9164,32 @@ html.is-cta-captured a { cursor: none !important; }
     opacity: 1;
   }
 }
+
+
+/* Client case repair, telefoon: onder 721px staat .tc-hero-media absoluut
+   onderin de hero (bottom: -4vh), zodat het beeld over de herotekst valt. Bij
+   de korte conceptcase-titels past dat; de klantcases hebben een klantnaam
+   plus twee statementregels en botsen wel. Gemeten overlap op 393px: Oppas
+   128px, Hijama'N Cups 102px, AtotZ 49px - telkens de onderste titelregel die
+   onder het beeld verdwijnt. Zelfde oplossing als het desktopblok hierboven:
+   het beeld onder de tekst laten meelopen in plaats van eroverheen. */
+@media (max-width: 720px) {
+  .tc-page-client .tc-hero {
+    display: block;
+    min-height: auto;
+  }
+
+  .tc-page-client .tc-hero-copy {
+    min-height: auto;
+    padding-bottom: var(--space-4);
+  }
+
+  .tc-page-client .tc-hero-media {
+    position: relative;
+    inset: auto;
+    width: auto;
+    height: auto;
+    min-height: 56svh;
+    margin: 0 var(--space-2) var(--space-5);
+  }
+}
