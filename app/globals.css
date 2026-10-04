@@ -9202,3 +9202,61 @@ html.is-cta-captured a { cursor: none !important; }
     margin: 0 var(--space-2) var(--space-5);
   }
 }
+
+
+/* QA-ronde na de meting op 360 en 393. */
+
+/* 1. De live-link hoort bij de titel, niet pas op 95% van de pagina.
+   Subtiel: tekstkleur, dunne onderlijn, pijl die meeschuift bij hover. */
+.tc-hero-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: var(--space-3);
+  padding-bottom: 0.15rem;
+  border-bottom: 1px solid color-mix(in srgb, currentColor 38%, transparent);
+  color: inherit;
+  font-size: 0.92rem;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  transition: border-color var(--motion-standard) var(--ease-premium);
+}
+
+.tc-hero-live svg {
+  width: 0.95rem;
+  height: 0.95rem;
+  transition: transform var(--motion-standard) var(--ease-premium);
+}
+
+.tc-hero-live:hover { border-bottom-color: currentColor; }
+.tc-hero-live:hover svg { transform: translate(0.12rem, -0.12rem); }
+
+@media (max-width: 720px) {
+  /* 2. De post-its stonden versprongen met margin-top 2.4rem op de tweede en
+     -1.2rem op de derde. Naast elkaar is dat een losse stapel; onder elkaar
+     levert het ongelijke gaten op van 89px en daarna 32px. Op telefoonbreedte
+     dus gelijke tussenruimte, de lichte rotatie blijft staan. */
+  .tc-snapshot-grid > :is(div, article):nth-child(2),
+  .tc-snapshot-grid > :is(div, article):nth-child(3),
+  .ec-snapshot-grid > div:nth-child(2),
+  .ec-snapshot-grid > div:nth-child(3) {
+    margin-top: 0;
+  }
+
+  /* 3. Het bewijsregister stond in twee kolommen van 171px, waardoor labels
+     over drie tot vier regels braken. Onder elkaar leest het als een lijst. */
+  .cc-metric-board dl {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* 4. De uitklapsectie had 80px lucht boven en onder, waardoor er onder de
+     dichte samenvatting een leeg vlak stond. */
+  .tc-deep-dive {
+    padding: var(--space-5) var(--page-gutter) var(--space-5);
+  }
+
+  .tc-hero-live {
+    margin-top: var(--space-2);
+    font-size: 0.88rem;
+  }
+}

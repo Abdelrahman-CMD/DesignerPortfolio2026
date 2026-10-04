@@ -97,7 +97,7 @@ export function HijamaNCupsExperience({ locale = "nl" }: { locale?: Locale }) {
     const context = gsap.context(() => {
       if (reduceMotion) {
         root.current?.setAttribute("data-case-motion", "ready");
-        gsap.set(".tc-nav, .tc-hero-kicker, .tc-title-line > span, .tc-hero-summary, .tc-hero-meta, .tc-hero-media", {
+        gsap.set(".tc-nav, .tc-hero-kicker, .tc-title-line > span, .tc-hero-summary, .tc-hero-live, .tc-hero-meta, .tc-hero-media", {
           clearProps: "all",
           autoAlpha: 1,
           x: 0,
@@ -110,7 +110,7 @@ export function HijamaNCupsExperience({ locale = "nl" }: { locale?: Locale }) {
         gsap.set(".tc-nav", { autoAlpha: 0, y: -18 });
         gsap.set(".tc-hero-kicker", { autoAlpha: 0, y: 14 });
         gsap.set(".tc-title-line > span", { y: "2.2em" });
-        gsap.set(".tc-hero-summary, .tc-hero-meta", { autoAlpha: 0, y: 20 });
+        gsap.set(".tc-hero-summary, .tc-hero-live, .tc-hero-meta", { autoAlpha: 0, y: 20 });
         gsap.set(".tc-hero-media", { autoAlpha: 0, xPercent: 6, scale: 0.985 });
         root.current?.setAttribute("data-case-motion", "ready");
 
@@ -119,7 +119,7 @@ export function HijamaNCupsExperience({ locale = "nl" }: { locale?: Locale }) {
           .to(".tc-nav", { autoAlpha: 1, y: 0, duration: 0.34 })
           .to(".tc-hero-kicker", { autoAlpha: 1, y: 0, duration: 0.34 }, "-=0.08")
           .to(".tc-title-line > span", { y: 0, duration: 0.9, stagger: 0.12, clearProps: "transform" }, "+=0.02")
-          .to(".tc-hero-summary, .tc-hero-meta", { autoAlpha: 1, y: 0, duration: 0.66, stagger: 0.12 }, "-=0.38")
+          .to(".tc-hero-summary, .tc-hero-live, .tc-hero-meta", { autoAlpha: 1, y: 0, duration: 0.66, stagger: 0.12 }, "-=0.38")
           .to(".tc-hero-media", { autoAlpha: 1, xPercent: 0, scale: 1, duration: 1.02 }, "-=0.48");
       }
 
@@ -197,6 +197,9 @@ export function HijamaNCupsExperience({ locale = "nl" }: { locale?: Locale }) {
             <span className="tc-title-line tc-title-small"><span>{tx("Contact durven.")}</span></span>
           </h1>
           <p className="tc-hero-summary">{tx("Een warme digitale praktijk voor Nora: haar expertise, behandelingen en antwoorden helder bij elkaar, met WhatsApp als persoonlijke en laagdrempelige route naar een afspraak.")}</p>
+          <a className="tc-hero-live" href="https://hijamancups.com/" target="_blank" rel="noreferrer">
+            {tx("Bekijk de live website")} <ArrowUpRight aria-hidden="true" />
+          </a>
           <dl className="tc-hero-meta">
             <div><dt>{tx("Opdracht")}</dt><dd>{tx("Een professionele digitale plek claimen")}</dd></div>
             <div><dt>{tx("Mijn rol")}</dt><dd>{tx("Strategie · UX/UI · Figma · Framer")}</dd></div>

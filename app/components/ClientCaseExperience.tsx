@@ -384,6 +384,11 @@ export function ClientCaseExperience({ project, locale = "nl" }: { project: Edit
             ))}
           </h1>
           <p className="tc-hero-summary">{pick(locale, story.hero.summary)}</p>
+          {project.externalUrl ? (
+            <a className="tc-hero-live" href={project.externalUrl} target="_blank" rel="noreferrer">
+              {locale === "en" ? "View the live website" : "Bekijk de live website"} <ArrowUpRight aria-hidden="true" />
+            </a>
+          ) : null}
           <dl className="tc-hero-meta">
             {story.hero.meta.map((item) => <div key={item.label.nl}><dt>{pick(locale, item.label)}</dt><dd>{pick(locale, item.value)}</dd></div>)}
           </dl>
