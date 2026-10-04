@@ -16,6 +16,7 @@ import { LanguageSwitcher, Locale, localeHref, translateText } from "../i18n";
 import { CaseDeepDive } from "./CaseDeepDive";
 import { revealCaseCard } from "./caseScrollStory";
 
+import { CaseNavMotion } from "./CaseNavMotion";
 const cards = [
   {
     number: "01",
@@ -182,6 +183,7 @@ export function HijamaNCupsExperience({ locale = "nl" }: { locale?: Locale }) {
   return (
     <main ref={root} className="tc-page tc-page-hijama" data-case-motion="pending">
       <a className="skip-link" href="#hijama-content">{tx("Ga naar de case")}</a>
+      <CaseNavMotion />
       <nav className="tc-nav" aria-label={tx("Case navigatie")}>
         <a href={localeHref("/#werk", locale)}><ArrowLeft aria-hidden="true" /> {tx("Alle cases")}</a>
         <a className="tc-nav-brand" href={localeHref("/", locale)}>Abdelrahman / Product &amp; UX/UI designer</a>

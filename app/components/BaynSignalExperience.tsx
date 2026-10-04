@@ -16,6 +16,7 @@ import { CaseResearchEvidence } from "./CaseResearchEvidence";
 import { CaseStyleGuide, type CaseStyleGuideData } from "./CaseStyleGuide";
 import { initCaseMotion } from "./caseScrollStory";
 
+import { CaseNavMotion } from "./CaseNavMotion";
 const styleGuide: CaseStyleGuideData = {
   project: "Bayn Signal",
   logo: "/projects/bayn-2026/logo.webp",
@@ -123,6 +124,7 @@ export function BaynSignalExperience({ locale = "nl" }: { locale?: Locale }) {
   return (
     <main ref={root} className="tc-page tc-page-bayn" data-motion-project="bayn-signal" data-case-motion="pending">
       <a className="skip-link" href="#bayn-content">{tx("Ga naar de case")}</a>
+      <CaseNavMotion />
       <nav className="tc-nav" aria-label={tx("Case navigatie")}>
         <a href={localeHref("/#werk", locale)}><ArrowLeft aria-hidden="true" /> {tx("Alle cases")}</a>
         <a className="tc-nav-brand" href={localeHref("/", locale)}>Abdelrahman / Product &amp; UX/UI designer</a>

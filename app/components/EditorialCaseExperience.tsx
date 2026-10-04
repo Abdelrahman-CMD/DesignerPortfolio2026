@@ -7,6 +7,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import type { EditorialCase } from "../data/caseContent";
 import { LanguageSwitcher, Locale, localeHref, translateText } from "../i18n";
 
+import { CaseNavMotion } from "./CaseNavMotion";
 const prototypeContent = {
   guidance: {
     label: "Journey matcher",
@@ -176,6 +177,7 @@ export function EditorialCaseExperience({ project, locale = "nl" }: { project: E
     <main ref={root} className={`editorial-case editorial-case-${project.prototype}`} style={style} data-case-motion="pending">
       <a className="skip-link" href="#case-story">{tx("Ga naar de case")}</a>
 
+      <CaseNavMotion />
       <nav className="ec-nav" aria-label={tx("Case navigatie")}>
         <a href={localeHref("/#werk", locale)} className="case-back"><span aria-hidden="true">←</span> {tx("Alle cases")}</a>
         <a href={localeHref("/", locale)} className="case-brand">Abdelrahman / Product &amp; UX/UI designer</a>

@@ -16,6 +16,7 @@ import { CaseResearchEvidence } from "./CaseResearchEvidence";
 import { CaseStyleGuide, type CaseStyleGuideData } from "./CaseStyleGuide";
 import { initCaseMotion } from "./caseScrollStory";
 
+import { CaseNavMotion } from "./CaseNavMotion";
 const tareeqiStyleGuide: CaseStyleGuideData = {
   project: "Tareeqi",
   logo: "/projects/tareeqi-2026/logo.webp",
@@ -129,6 +130,7 @@ export function CaseExperience({ locale = "nl" }: { locale?: Locale }) {
     <main ref={root} className="tc-page" data-motion-project="tareeqi" data-case-motion="pending">
       <a className="skip-link" href="#tareeqi-content">{tx("Ga naar de case")}</a>
 
+      <CaseNavMotion />
       <nav className="tc-nav" aria-label={tx("Case navigatie")}>
         <a href={localeHref("/#werk", locale)}><ArrowLeft aria-hidden="true" /> {tx("Alle cases")}</a>
         <a className="tc-nav-brand" href={localeHref("/", locale)}>Abdelrahman / Product &amp; UX/UI designer</a>

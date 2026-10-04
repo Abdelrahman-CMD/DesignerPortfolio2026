@@ -11,6 +11,7 @@ import { LanguageSwitcher, Locale, localeHref } from "../i18n";
 import { CaseDeepDive } from "./CaseDeepDive";
 import { initCaseMotion } from "./caseScrollStory";
 
+import { CaseNavMotion } from "./CaseNavMotion";
 const content = {
   nl: {
     navCount: "01 / 08",
@@ -251,6 +252,7 @@ export function MirqaExperience({ locale = "nl" }: { locale?: Locale }) {
     <main ref={root} className="tc-page tc-page-mirqa" data-motion-project="mirqa" data-case-motion="pending">
       <a className="skip-link" href="#mirqa-content">{locale === "en" ? "Skip to the case study" : "Ga naar de case"}</a>
 
+      <CaseNavMotion />
       <nav className="tc-nav" aria-label={locale === "en" ? "Case study navigation" : "Case navigatie"}>
         <a href={localeHref("/#werk", locale)}><ArrowLeft aria-hidden="true" /> {locale === "en" ? "All case studies" : "Alle cases"}</a>
         <a className="tc-nav-brand" href={localeHref("/", locale)}>Abdelrahman / Product &amp; UX/UI designer</a>

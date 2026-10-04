@@ -15,6 +15,7 @@ import { CaseDeepDive } from "./CaseDeepDive";
 import { CaseStyleGuide, type CaseStyleGuideData } from "./CaseStyleGuide";
 import { initCaseMotion } from "./caseScrollStory";
 
+import { CaseNavMotion } from "./CaseNavMotion";
 const styleGuide: CaseStyleGuideData = {
   project: "Ayn Al-Hikmah",
   logo: "/projects/ayn-2026/logo.webp",
@@ -120,6 +121,7 @@ export function AynAlHikmahExperience({ locale = "nl" }: { locale?: Locale }) {
   return (
     <main ref={root} className="tc-page tc-page-ayn" data-motion-project="ayn-al-hikmah" data-case-motion="pending">
       <a className="skip-link" href="#ayn-content">{tx("Ga naar de case")}</a>
+      <CaseNavMotion />
       <nav className="tc-nav" aria-label={tx("Case navigatie")}>
         <a href={localeHref("/#werk", locale)}><ArrowLeft aria-hidden="true" /> {tx("Alle cases")}</a>
         <a className="tc-nav-brand" href={localeHref("/", locale)}>Abdelrahman / Product &amp; UX/UI designer</a>

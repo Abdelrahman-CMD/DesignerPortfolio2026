@@ -9,6 +9,7 @@ import { LanguageSwitcher, Locale, localeHref } from "../i18n";
 import { CaseDeepDive } from "./CaseDeepDive";
 import { initCaseMotion } from "./caseScrollStory";
 
+import { CaseNavMotion } from "./CaseNavMotion";
 type LocalCopy = { nl: string; en: string };
 type ClientSlug = "hijaman-cups" | "atotz-detachering" | "oppas-by-chaima";
 
@@ -369,6 +370,7 @@ export function ClientCaseExperience({ project, locale = "nl" }: { project: Edit
     <main ref={root} className={`tc-page tc-page-client tc-page-${story.theme}`} style={pageStyle} data-motion-project={project.slug} data-case-motion="pending">
       <a className="skip-link" href="#client-case-content">{locale === "en" ? "Skip to the case study" : "Ga naar de case"}</a>
 
+      <CaseNavMotion />
       <nav className="tc-nav" aria-label={locale === "en" ? "Case study navigation" : "Case navigatie"}>
         <a href={localeHref("/#werk", locale)}><ArrowLeft aria-hidden="true" /> {locale === "en" ? "All case studies" : "Alle cases"}</a>
         <a className="tc-nav-brand" href={localeHref("/", locale)}>Abdelrahman / Product &amp; UX/UI designer</a>
