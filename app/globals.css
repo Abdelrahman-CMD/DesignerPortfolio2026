@@ -9166,25 +9166,34 @@ html.is-cta-captured a { cursor: none !important; }
 }
 
 
-/* Client case repair, telefoon: onder 721px staat .tc-hero-media absoluut
-   onderin de hero (bottom: -4vh), zodat het beeld over de herotekst valt. Bij
-   de korte conceptcase-titels past dat; de klantcases hebben een klantnaam
-   plus twee statementregels en botsen wel. Gemeten overlap op 393px: Oppas
-   128px, Hijama'N Cups 102px, AtotZ 49px - telkens de onderste titelregel die
-   onder het beeld verdwijnt. Zelfde oplossing als het desktopblok hierboven:
-   het beeld onder de tekst laten meelopen in plaats van eroverheen. */
+/* Case hero repair, telefoon: onder 721px staat .tc-hero-media absoluut
+   onderin de hero (bottom: -4vh, z-index: 4), zodat het beeld over de
+   tekstkolom valt. Dat raakt elke casepagina, op twee manieren.
+
+   Bij de klantcases verdwijnt de onderste titelregel eronder: gemeten op
+   393px 128px bij Oppas, 102px bij Hijama'N Cups, 49px bij AtotZ.
+
+   Bij de conceptcases blijft de titel vrij, maar ligt het complete
+   .tc-hero-meta-blok eronder - elementFromPoint geeft op elk van die regels
+   de hero-img terug. Zo waren "Vertrekpunt", "Mijn rol" en "Status"
+   onzichtbaar op Mirqa, Bayn Signal, Guidance Travel, Tareeqi en Ayn
+   Al-Hikmah: juist de regels die vertellen wat de bezoeker aan die case heeft.
+
+   Zelfde oplossing als het desktopblok hierboven ("Client case repair: keep
+   hero media below the intro"), nu voor alle cases op telefoonbreedte: het
+   beeld loopt onder de tekst mee in plaats van eroverheen. */
 @media (max-width: 720px) {
-  .tc-page-client .tc-hero {
+  .tc-page .tc-hero {
     display: block;
     min-height: auto;
   }
 
-  .tc-page-client .tc-hero-copy {
+  .tc-page .tc-hero-copy {
     min-height: auto;
     padding-bottom: var(--space-4);
   }
 
-  .tc-page-client .tc-hero-media {
+  .tc-page .tc-hero-media {
     position: relative;
     inset: auto;
     width: auto;
