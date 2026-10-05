@@ -39,7 +39,7 @@ export const cvOver = {
     { nl: "Ik zoek nu een rol waar deze combinatie tot zijn recht komt. Functies op het snijvlak van digitaal, communicatie en organisatie.", en: "I am now looking for a role where this combination comes into its own. Positions at the intersection of digital, communication and organisation." },
     { nl: "Daarnaast blijf ik mezelf in design ontwikkelen. Ik volg het vak op de voet, lees veel over recente ontwikkelingen, en gebruik wat ik leer in praktische projecten voor mensen in mijn directe omgeving als die mijn hulp kunnen gebruiken. Het houdt mijn vaardigheden scherp en mijn nieuwsgierigheid wakker.", en: "Alongside that, I keep developing myself in design. I follow the field closely, read widely about recent developments, and apply what I learn in practical projects for people around me who can use my help. It keeps my skills sharp and my curiosity awake." },
   ],
-  portret: { nl: "Portret van Abdel Ahmed aan zijn werkbureau", en: "Portrait of Abdel Ahmed at his desk" },
+  portret: { nl: "Portret van Abdelrahman Ahmed aan zijn werkbureau", en: "Portrait of Abdelrahman Ahmed at his desk" },
   interesses: [
     { nl: "Lezen", en: "Reading" },
     { nl: "Reizen", en: "Travel" },
@@ -48,7 +48,7 @@ export const cvOver = {
     { nl: "Tech", en: "Tech" },
   ],
   details: [
-    { label: { nl: "Naam", en: "Name" }, waarde: { nl: "Abdel Ahmed", en: "Abdel Ahmed" } },
+    { label: { nl: "Naam", en: "Name" }, waarde: { nl: "Abdelrahman Ahmed", en: "Abdelrahman Ahmed" } },
     { label: { nl: "Locatie", en: "Location" }, waarde: { nl: "Amsterdam", en: "Amsterdam" } },
     { label: { nl: "Geboortejaar", en: "Year of birth" }, waarde: { nl: "1995", en: "1995" } },
     { label: { nl: "Rijbewijs", en: "Driving licence" }, waarde: { nl: "B", en: "B" } },
@@ -310,5 +310,5 @@ export const cvContact = {
 
 export const cvFooter = {
   regel: { nl: "Bedankt voor het lezen.", en: "Thank you for reading." },
-  meta: { nl: "© 2026 Abdel Ahmed · Curriculum Vitae", en: "© 2026 Abdel Ahmed · Curriculum Vitae" },
+  meta: { nl: "© 2026 Abdelrahman Ahmed · Curriculum Vitae", en: "© 2026 Abdelrahman Ahmed · Curriculum Vitae" },
 };
