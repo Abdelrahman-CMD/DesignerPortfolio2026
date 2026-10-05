@@ -646,7 +646,7 @@ body:has(.cvx[data-theme="dark"]) { background: #131b26; }
   color: var(--ink-mute);
 }
 @media (max-width: 900px){
-.cvx .about-grid{ grid-template-columns: 1fr; gap: var(--s-8) }
+.cvx .about-grid{ grid-template-columns: minmax(0, 1fr); gap: var(--s-8) }
 }
 .cvx .timeline{
   display: flex;
@@ -1120,8 +1120,23 @@ body:has(.cvx[data-theme="dark"]) { background: #131b26; }
 /* ── Aanvullingen voor de portfolio-versie ─────────────────────────────── */
 .cvx { min-height: 100svh; }
 .cvx section[id] { scroll-margin-top: 72px; }
-.cvx .nav-start { display: flex; align-items: center; gap: 18px; min-width: 0; }
+.cvx .nav-start { display: flex; flex: 1 1 auto; align-items: center; gap: 18px; min-width: 0; margin-right: var(--s-4); }
+.cvx .nav-back { flex-shrink: 0; }
+.cvx .nav-links { flex-shrink: 0; }
 .cvx .brand { white-space: nowrap; }
+/* De naam krimpt mee met de ruimte die naast de knoppen overblijft:
+   Abdelrahman Ahmed, dan Abdel Ahmed, dan A.A. De knoppen blijven altijd staan. */
+.cvx .brand-slot { flex: 1 1 auto; min-width: 0; container-type: inline-size; }
+.cvx .brand .name-mid,
+.cvx .brand .name-short { display: none; }
+@container (max-width: 197px) {
+  .cvx .brand .name-full { display: none; }
+  .cvx .brand .name-mid { display: inline; }
+}
+@container (max-width: 133px) {
+  .cvx .brand .name-mid { display: none; }
+  .cvx .brand .name-short { display: inline; }
+}
 /* Met de terugknop erbij is er minder ruimte dan op het losse cv: de
    tekstlinks wijken eerder, zodat de volledige naam op één regel blijft. */
 @media (max-width: 1040px) {
@@ -1166,7 +1181,6 @@ body:has(.cvx[data-theme="dark"]) { background: #131b26; }
 .cvx .lang-pill a:hover { color: var(--accent); }
 .cvx .lang-pill a[aria-current="page"] { background: var(--ink); color: var(--bg); }
 @media (max-width: 768px) {
-  .cvx .brand { display: none; }
   .cvx .nav-back { height: 34px; }
   .cvx .lang-pill { height: 34px; }
   .cvx .nav-linkedin { display: none; }
@@ -1174,6 +1188,18 @@ body:has(.cvx[data-theme="dark"]) { background: #131b26; }
 @media (max-width: 420px) {
   .cvx .nav-back span { display: none; }
   .cvx .nav-back { width: 34px; padding: 0; justify-content: center; }
+  .cvx .nav-start { gap: 12px; }
+}
+/* Heel smalle telefoons: alles iets dichter op elkaar en de stip valt weg,
+   zodat A.A. naast alle knoppen past. */
+@media (max-width: 360px) {
+  .cvx .nav-inner { padding-left: 12px; padding-right: 10px; }
+  .cvx .nav-icons { gap: 4px; }
+  .cvx .nav-start { gap: 8px; margin-right: 8px; }
+  .cvx .lang-pill a { padding: 0 7px; }
+}
+@container (max-width: 50px) {
+  .cvx .brand .dot { display: none; }
 }
 @media print {
   .cvx .lang-pill, .cvx .nav-start { display: none !important; }

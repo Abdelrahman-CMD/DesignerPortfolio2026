@@ -214,10 +214,14 @@ export function CvExperience({ locale }: { locale: Locale }) {
               <ArrowLeft size={15} aria-hidden="true" />
               <span>Portfolio</span>
             </a>
-            <a className="brand" href="#cv-main" aria-label={nl ? "Abdelrahman Ahmed · naar boven" : "Abdelrahman Ahmed · back to top"}>
-              <span className="dot" />
-              <span>Abdelrahman Ahmed</span>
-            </a>
+            <div className="brand-slot">
+              <a className="brand" href="#cv-main" aria-label={nl ? "Abdelrahman Ahmed · naar boven" : "Abdelrahman Ahmed · back to top"}>
+                <span className="dot" />
+                <span className="name-full">Abdelrahman Ahmed</span>
+                <span className="name-mid" aria-hidden="true">Abdel Ahmed</span>
+                <span className="name-short" aria-hidden="true">A.A.</span>
+              </a>
+            </div>
           </div>
           <nav className="nav-links" aria-label={nl ? "CV-navigatie" : "CV navigation"}>
             <a href="#over">{nl ? "Over" : "About"}</a>
