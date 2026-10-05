@@ -1121,6 +1121,12 @@ body:has(.cvx[data-theme="dark"]) { background: #131b26; }
 .cvx { min-height: 100svh; }
 .cvx section[id] { scroll-margin-top: 72px; }
 .cvx .nav-start { display: flex; align-items: center; gap: 18px; min-width: 0; }
+.cvx .brand { white-space: nowrap; }
+/* Met de terugknop erbij is er minder ruimte dan op het losse cv: de
+   tekstlinks wijken eerder, zodat de volledige naam op één regel blijft. */
+@media (max-width: 1040px) {
+  .cvx .nav-links > a { display: none; }
+}
 .cvx .nav-back {
   display: inline-flex;
   align-items: center;
