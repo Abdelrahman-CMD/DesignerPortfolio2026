@@ -440,6 +440,47 @@
 .tc-page-mirqa .tc-card-media > img:first-child { background: #fff; object-fit: contain; }
 .tc-card-logo { position: absolute !important; z-index: 3; right: var(--space-3) !important; bottom: var(--space-3) !important; left: auto !important; width: min(16rem, 38%) !important; height: auto !important; padding: var(--space-1); border-radius: var(--space-1); background: rgba(249,246,240,0.92); object-fit: contain !important; }
 
+.tc-page-atotz .tc-hero-media img {
+  object-fit: cover;
+  object-position: center 42%;
+  transform: none;
+}
+
+.tc-page-atotz .tc-card-media {
+  background:
+    linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0.04)),
+    rgba(255,255,255,0.18);
+}
+
+.tc-page-atotz .tc-card-shell:nth-child(2) .tc-card-media,
+.tc-page-atotz .tc-card-shell:nth-child(3) .tc-card-media {
+  display: grid;
+  place-items: center;
+  padding: clamp(1.25rem, 3vw, 3rem);
+}
+
+.tc-page-atotz .tc-card-shell:nth-child(2) .tc-card-media > img:first-child,
+.tc-page-atotz .tc-card-shell:nth-child(3) .tc-card-media > img:first-child {
+  position: relative !important;
+  width: min(92%, 34rem) !important;
+  height: auto !important;
+  max-height: 82% !important;
+  border: 1px solid rgba(20,31,44,0.14);
+  border-radius: 1.1rem;
+  box-shadow: 0 1.4rem 3rem rgba(20,31,44,0.18);
+  object-fit: contain;
+  object-position: center;
+  transform: none;
+}
+
+.tc-page-atotz .tc-card-shell:nth-child(3) .tc-card-media > img:first-child {
+  width: min(78%, 24rem) !important;
+}
+
+.tc-page-atotz .tc-card:hover .tc-card-media > img:first-child {
+  transform: none;
+}
+
 .tc-feature-row { display: flex; flex-wrap: wrap; gap: var(--space-1); margin-top: var(--space-3); }
 .tc-system-caption { margin: var(--space-3) 0 0; font-size: 0.72rem; line-height: 1.45; opacity: 0.74; }
 .tc-style-card-media { padding: clamp(0.75rem, 1.7vw, 1.75rem); background: rgba(255,255,255,0.18); }
@@ -491,6 +532,31 @@
 .tc-proof-media img { object-fit: cover; object-position: top; transition: object-position 1.4s var(--ease-premium), transform var(--motion-standard) var(--ease-premium); will-change: object-position; }
 .tc-page-mirqa .tc-proof-media { aspect-ratio: 1226 / 976; background: #fff; }
 .tc-page-mirqa .tc-proof-media img { object-fit: contain; }
+.tc-page-atotz .tc-proof-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.tc-page-atotz .tc-proof-media {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 4 / 5;
+  padding: clamp(0.5rem, 1vw, 1rem);
+  border-color: rgba(20,31,44,0.15);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.78), rgba(246,247,248,0.9)),
+    #eef1f3;
+}
+.tc-page-atotz .tc-proof-media img {
+  position: relative !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain;
+  object-position: center;
+  transform: none;
+  will-change: auto;
+}
+.tc-page-atotz .tc-proof-frame:hover .tc-proof-media img {
+  object-position: center;
+  transform: none;
+  transition: none;
+}
 .tc-proof-frame:hover .tc-proof-media img { object-position: bottom; transform: scale(1.01); transition: object-position 24s cubic-bezier(0.37, 0, 0.63, 1), transform var(--motion-standard) var(--ease-premium); }
 .tc-proof-frame figcaption { padding: var(--space-1) 0 var(--space-3); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; }
 

@@ -269,10 +269,9 @@ test("renders the three live client cases as measured scroll stories", async () 
   assert.match(hijamaHtml, /2m56/);
   assert.match(atotzHtml, /2\.24K/);
   assert.match(atotzHtml, /18\.6/);
-  assert.match(atotzHtml, /0\.7%/);
-  assert.match(atotzHtml, /817/);
-  assert.match(englishAtotzHtml, /Construction terms generate at least 817 impressions/);
-  assert.match(englishAtotzHtml, /client-shared three-month Google Search Console view/);
+  assert.match(atotzHtml, /De aanvragen komen binnen/);
+  assert.match(englishAtotzHtml, /The enquiries are coming in/);
+  assert.match(englishAtotzHtml, /average position 18\.6/);
   assert.match(oppasHtml, /€2K\+/);
   assert.match(oppasHtml, /Door eigenaar gerapporteerd/);
   assert.match(englishOppasHtml, /Owner-reported/);
