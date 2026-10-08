@@ -8297,6 +8297,168 @@ html.is-cta-captured a { cursor: none !important; }
   }
 }
 
+/* Round 2 case signatures: one distinct editorial proof treatment per case. */
+.tc-page[data-motion-project="tareeqi"] .tc-proof {
+  background-image:
+    radial-gradient(circle at 22% 24%, color-mix(in srgb, var(--tc-brown) 10%, transparent) 0 0.42rem, transparent 0.46rem),
+    radial-gradient(circle at 76% 68%, color-mix(in srgb, #385944 14%, transparent) 0 0.34rem, transparent 0.38rem),
+    linear-gradient(color-mix(in srgb, var(--tc-ink) 5%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--tc-ink) 5%, transparent) 1px, transparent 1px);
+  background-size: auto, auto, 3.2rem 3.2rem, 3.2rem 3.2rem;
+}
+
+.tc-page[data-motion-project="tareeqi"] .tc-proof-frame:nth-child(2) .tc-proof-media,
+.tc-page[data-motion-project="tareeqi"] .tc-proof-frame:nth-child(3) .tc-proof-media {
+  border-radius: 999px 999px 0.2rem 0.2rem;
+}
+
+.tc-page[data-motion-project="tareeqi"] .tc-proof-frame figcaption::before {
+  width: 0.55rem;
+  height: 0.55rem;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  content: "";
+  opacity: 0.58;
+}
+
+.tc-page-guidance .tc-proof {
+  background:
+    linear-gradient(90deg, color-mix(in srgb, #ff9e43 18%, transparent) 0 0.42rem, transparent 0.42rem),
+    var(--tc-paper);
+}
+
+.tc-page-guidance .tc-proof-frame {
+  padding: clamp(0.6rem, 1vw, 1rem);
+  border: 1px solid color-mix(in srgb, #1e1e1e 11%, transparent);
+  background: color-mix(in srgb, #fff6ee 72%, white);
+  box-shadow: 0 1.4rem 3rem rgba(30, 30, 30, 0.09);
+}
+
+.tc-page-guidance .tc-proof-media {
+  box-shadow: none;
+}
+
+.tc-page-guidance .tc-proof-frame figcaption::before {
+  content: "0" counter(guidance-proof);
+  counter-increment: guidance-proof;
+  color: #ff7f1f;
+  font-weight: 800;
+}
+
+.tc-page-guidance .tc-proof-grid {
+  counter-reset: guidance-proof;
+}
+
+.tc-page-bayn .tc-proof {
+  background:
+    linear-gradient(135deg, color-mix(in srgb, #13433a 10%, transparent), transparent 42%),
+    #eaf0e9;
+}
+
+.tc-page-bayn .tc-proof-media {
+  border-color: color-mix(in srgb, #13433a 22%, transparent);
+  border-radius: 0.8rem;
+  background: #f5f1e8;
+}
+
+.tc-page-bayn .tc-proof-frame figcaption {
+  width: fit-content;
+  margin-top: var(--space-1);
+  padding: 0.55rem 0.85rem;
+  border: 1px solid color-mix(in srgb, #13433a 22%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, #f5f1e8 82%, white);
+}
+
+.tc-page-bayn .tc-proof-frame figcaption::after {
+  display: none;
+}
+
+.tc-page-ayn .tc-proof {
+  background:
+    linear-gradient(180deg, color-mix(in srgb, #401818 7%, transparent), transparent 34%),
+    #fff3e9;
+}
+
+.tc-page-ayn .tc-proof-frame {
+  padding: clamp(0.7rem, 1.2vw, 1.15rem);
+  border: 1px solid color-mix(in srgb, #401818 14%, transparent);
+  border-radius: 0.2rem 1.2rem 1.2rem 0.2rem;
+  background: #ffeed5;
+  box-shadow:
+    inset 0.6rem 0 0 color-mix(in srgb, #401818 18%, transparent),
+    0 1.4rem 3.2rem rgba(64, 24, 24, 0.1);
+}
+
+.tc-page-ayn .tc-proof-media {
+  box-shadow: none;
+}
+
+.tc-page-mirqa .tc-proof {
+  background:
+    radial-gradient(circle at 50% 18%, color-mix(in srgb, #c9653d 13%, transparent), transparent 24rem),
+    #f4ece2;
+}
+
+.tc-page-mirqa .tc-proof-grid {
+  position: relative;
+}
+
+.tc-page-mirqa .tc-proof-grid::before {
+  position: absolute;
+  top: 50%;
+  right: 8%;
+  left: 8%;
+  height: 1px;
+  background: color-mix(in srgb, #211c18 20%, transparent);
+  content: "";
+}
+
+.tc-page-mirqa .tc-proof-frame {
+  position: relative;
+  z-index: 1;
+}
+
+.tc-page-mirqa .tc-proof-media {
+  border-radius: 1.6rem;
+  box-shadow: 0 1.2rem 3rem rgba(33, 28, 24, 0.12);
+}
+
+.tc-page-hijama .tc-proof {
+  background:
+    radial-gradient(circle at 82% 14%, color-mix(in srgb, #288e47 11%, transparent), transparent 18rem),
+    #f7f7f2;
+}
+
+.tc-page-hijama .tc-proof-frame figcaption::before {
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 999px;
+  background: #288e47;
+  content: "";
+  opacity: 0.72;
+}
+
+.tc-page-oppas .tc-proof-frame figcaption {
+  font-family: var(--hand);
+  font-size: clamp(1.25rem, 1.8vw, 1.75rem);
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.tc-page-oppas .tc-proof-frame figcaption::after {
+  transform: rotate(-2deg);
+}
+
+.tc-page-atotz .tc-proof-frame figcaption {
+  color: color-mix(in srgb, #142236 72%, transparent);
+}
+
+.tc-page-atotz .tc-proof-frame figcaption::after {
+  opacity: 0.32;
+}
+
 .tc-evidence-status,
 .ec-live-dot {
   box-shadow: 0.35rem 0.45rem 0 color-mix(in srgb, var(--summary-accent, currentColor) 18%, transparent);
