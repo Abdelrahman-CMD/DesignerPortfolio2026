@@ -6,9 +6,11 @@ import BookOpen from "lucide-react/icons/book-open";
 import Coffee from "lucide-react/icons/coffee";
 import Download from "lucide-react/icons/download";
 import Mail from "lucide-react/icons/mail";
+import Moon from "lucide-react/icons/moon";
 import Monitor from "lucide-react/icons/monitor";
 import Palette from "lucide-react/icons/palette";
 import Plane from "lucide-react/icons/plane";
+import Sun from "lucide-react/icons/sun";
 import { Locale, localeHref } from "../i18n";
 import {
   CvRol,
@@ -245,7 +247,7 @@ export function CvExperience({ locale }: { locale: Locale }) {
                 <a href={localeHref("/cv", "en")} aria-current={nl ? undefined : "page"} onClick={(e) => wisselTaal("en", e)}>EN</a>
               </span>
               <button className="theme-toggle" type="button" onClick={wisselThema} aria-label={nl ? "Wissel licht/donker thema" : "Toggle light/dark theme"}>
-                <span aria-hidden="true">{theme === "dark" ? "☀" : "☾"}</span>
+                {theme === "dark" ? <Sun size={16} aria-hidden="true" /> : <Moon size={16} aria-hidden="true" />}
               </button>
             </span>
           </nav>
