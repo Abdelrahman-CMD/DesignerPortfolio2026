@@ -240,13 +240,12 @@ const clientStories: Record<ClientSlug, ClientStory> = {
     ],
     proof: {
       kicker: copy("Bewijsbeelden / echte projectsporen", "Evidence frames / real project traces"),
-      title: copy("De route is zichtbaar: onepager, WhatsApp en Search Console.", "The journey is visible: one-pager, WhatsApp and Search Console."),
-      intro: copy("Deze beelden tonen niet alleen hoe de website eruitzag, maar ook hoe contact werd voorbereid en hoe de eerste vindbaarheid zichtbaar werd.", "These frames show not only what the website looked like, but also how contact was prepared and how early discoverability became visible."),
+      title: copy("De route is zichtbaar: positionering, sectorroutes en contactflow.", "The journey is visible: positioning, sector routes and contact flow."),
+      intro: copy("Deze frames tonen de belangrijkste ontwerpbeslissingen: eerst vertrouwen opbouwen, daarna herkenning bieden en de vraag met context naar WhatsApp brengen.", "These frames show the key design decisions: build trust first, then create recognition and carry the enquiry with context into WhatsApp."),
       frames: [
-        { src: "/projects/live/atotz/bewijs-1-onepager.png", alt: copy("De volledige AtotZ-onepager als doorlopende strook, met aanwijzingen bij de belofte, de sectoren en de contactroute", "The full AtotZ one-pager as a continuous strip, annotated at the promise, the sectors and the contact route"), caption: copy("Eén pagina, hele propositie", "One page, whole proposition") },
-        { src: "/projects/live/atotz/bewijs-2-sectoren.png", alt: copy("Drie sectorkaarten van de live site - onderwijs, IT en freelancers - elk met een knop die WhatsApp opent", "Three sector cards from the live site - education, IT and freelancers - each with a button that opens WhatsApp"), caption: copy("Acht sectoren, acht ingangen", "Eight sectors, eight entry points") },
-        { src: "/projects/live/atotz/bewijs-3-search-console.png", alt: copy("Het prestatiepaneel van Google Search Console met 15 klikken, 2,24K vertoningen, 0,7% doorklikratio en gemiddelde positie 18,6", "The Google Search Console performance panel showing 15 clicks, 2.24K impressions, 0.7% click-through rate and average position 18.6"), caption: copy("Gemeten zichtbaarheid, geen conversies", "Measured visibility, not conversions") },
-        { src: "/projects/live/atotz/bewijs-4-citaat.png", alt: copy("Twee zinnen van de opdrachtgevers: het proces is goed doordacht en loopt synchroon met hun doelen, en de aanvragen komen binnen", "Two sentences from the owners: the process is well considered and runs in sync with their goals, and the enquiries are coming in"), caption: copy("De opdrachtgevers, in eigen woorden", "The owners, in their own words") },
+        { src: "/projects/live/atotz/bewijs-1-positionering.jpg", alt: copy("AtotZ positioneringsframe met de hero en de belofte Eerst vertrouwen. Dan contact.", "AtotZ positioning frame showing the hero and the promise Trust first. Then contact."), caption: copy("Positionering", "Positioning") },
+        { src: "/projects/live/atotz/bewijs-2-sectorroutes.jpg", alt: copy("AtotZ sectorroutesframe met sectorkaarten voor herkenning en keuze", "AtotZ sector routes frame with sector cards for recognition and choice"), caption: copy("Sectorroutes", "Sector routes") },
+        { src: "/projects/live/atotz/bewijs-3-contactflow.jpg", alt: copy("AtotZ contactflowframe met de WhatsApp-route van sectorherkenning naar voorbereid bericht", "AtotZ contact flow frame showing the WhatsApp route from sector recognition to prepared message"), caption: copy("Contactflow", "Contact flow") },
       ],
     },
     contribution: {

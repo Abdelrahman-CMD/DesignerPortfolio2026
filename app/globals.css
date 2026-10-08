@@ -8241,6 +8241,55 @@ html.is-cta-captured a { cursor: none !important; }
   color: color-mix(in srgb, var(--summary-ink, currentColor) 68%, transparent);
 }
 
+.tc-page-atotz .tc-proof-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1rem, 2vw, 2.25rem);
+  margin-top: clamp(4rem, 9svh, 7rem);
+}
+
+.tc-page-atotz .tc-proof-frame {
+  grid-column: auto;
+  margin-top: 0;
+  transform: none;
+}
+
+.tc-page-atotz .tc-proof-media {
+  aspect-ratio: 4965 / 3351;
+  padding: 0;
+  border-radius: 0.7rem;
+  background: #ebebeb;
+}
+
+.tc-page-atotz .tc-proof-media img {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
+  object-position: center;
+}
+
+@media (max-width: 760px) {
+  .tc-page-atotz .tc-proof-grid {
+    display: flex;
+    width: calc(100% + var(--space-2));
+    gap: var(--space-2);
+    padding-right: var(--space-2);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .tc-page-atotz .tc-proof-grid::-webkit-scrollbar { display: none; }
+
+  .tc-page-atotz .tc-proof-frame {
+    width: 86vw;
+    flex: 0 0 86vw;
+    scroll-snap-align: start;
+  }
+}
+
 .tc-evidence-status,
 .ec-live-dot {
   box-shadow: 0.35rem 0.45rem 0 color-mix(in srgb, var(--summary-accent, currentColor) 18%, transparent);
