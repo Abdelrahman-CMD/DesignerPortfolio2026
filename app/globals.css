@@ -5450,17 +5450,11 @@ html.is-cta-captured a { cursor: none !important; }
   }
   .language-switcher { gap: 0.12rem; padding: 0.2rem; }
   .language-switcher a { min-width: 2.25rem; min-height: 2.75rem; padding: 0 0.35rem; }
-  .language-switcher a > span:last-child {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-  }
+  /* Hier stond een visually-hidden-regel op span:last-child. Die klopte toen
+     elke knop twee spans had - een vlagje plus het label - en het label op
+     mobiel wegviel. Sinds de knoppen alleen nog "NL" en "EN" bevatten is dat
+     label ook de laatste span, en verborg deze regel het enige dat er stond:
+     twee lege pillen. De tekst hoort hier gewoon te blijven staan. */
   .floating-contact {
     right: 0.7rem;
     bottom: 0.7rem;
@@ -5802,7 +5796,15 @@ html.is-cta-captured a { cursor: none !important; }
     white-space: nowrap;
     border: 0;
   }
-  .language-switcher a { min-width: 2.1rem; padding: 0 0.25rem; }
+  /* Op 320px staan de drie koppen in de header samen 309px breed binnen 304px
+     ruimte, en knipte .site-shell (overflow-x: clip) de EN-knop er stil af.
+     Sinds de taalknoppen hun tekst weer tonen kost die balk meer ruimte, dus
+     de navigatieknoppen gaan hier een slag smaller. Gemeten op 320 en 360. */
+  .language-switcher { gap: 0.1rem; padding: 0.15rem; }
+  .language-switcher a { min-width: 2.1rem; padding: 0 0.2rem; }
+  .top-nav { gap: 0.1rem; padding: 0.2rem; }
+  .top-nav a { width: 2.05rem; min-width: 2.05rem; }
+  .site-header-actions { gap: 0.25rem; }
   .mind-hero { padding-top: 5rem; }
   .mind-hero-copy { padding: var(--space-4) 0 var(--space-3); }
   .mind-hero h1 { font-size: clamp(2.85rem, 13vw, 3.15rem); line-height: 0.9; }

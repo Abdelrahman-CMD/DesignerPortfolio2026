@@ -413,3 +413,17 @@ test("keeps the work connected to the person in structured data", async () => {
   assert.equal(list.itemListElement[0].position, 1);
   assert.match(list.itemListElement[0].url, /\/nl\/cases\//);
 });
+
+test("keeps NL and EN readable in the language switcher", async () => {
+  const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
+
+  // De knoppen hadden ooit een vlagje plus een label; op mobiel verdween het
+  // label met een visually-hidden-regel op span:last-child. Sinds de knoppen
+  // alleen nog tekst bevatten verbergt die regel het enige dat er staat, en
+  // zie je twee lege pillen. Komt hij terug, dan faalt deze test.
+  assert.doesNotMatch(css, /\.language-switcher a > span:last-child\s*\{/);
+
+  const html = await (await render("/nl")).text();
+  assert.match(html, /<span>NL<\/span>/);
+  assert.match(html, /<span>EN<\/span>/);
+});
