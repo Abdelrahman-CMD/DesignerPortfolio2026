@@ -5489,7 +5489,7 @@ html.is-cta-captured a { cursor: none !important; }
   .mind-hero-canvas::after { display: none; }
   .mind-hero-copy { position: relative; top: auto; left: auto; grid-row: 1; width: 100%; padding: var(--space-6) 0 var(--space-4); }
   .mind-hero-kicker { margin-bottom: 1.5rem; }
-  .mind-hero h1 { max-width: 100%; font-size: clamp(3.15rem, 14.5vw, 5.3rem); line-height: 0.88; }
+  .mind-hero h1 { max-width: 100%; font-size: clamp(3.15rem, 13.8vw, 5.3rem); line-height: 0.88; }
   .mind-title-line:nth-child(2) { padding-left: 0; }
   .mind-title-line:nth-child(3) { padding-left: 10%; }
   .mind-hero-lede { max-width: 24rem; margin: var(--space-2) 0 0 9%; font-size: var(--type-label); line-height: 1.52; }
