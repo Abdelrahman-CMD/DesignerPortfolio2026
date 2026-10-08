@@ -235,9 +235,9 @@ export function CaseExperience({ locale = "nl" }: { locale?: Locale }) {
 
       <section className="tc-proof" aria-labelledby="tc-proof-title">
         <header className="tc-proof-heading">
-          <p>{tx("Geselecteerde schermen / snel te beoordelen")}</p>
+          <p>{locale === "en" ? "Route frames / local context" : "Routebeelden / lokale context"}</p>
           <h2 id="tc-proof-title">{tx("Eén systeem.")}<br />{tx("Drie formaten.")}<br /><em>{tx("Vier kernschermen.")}</em></h2>
-          <p>{tx("Vier representatieve schermen tonen de belangrijkste ervaring. De volledige exports blijven op verzoek beschikbaar.")}</p>
+          <p>{locale === "en" ? "Four representative frames show how discovery moves from landing page to map and story. The full exports remain available on request." : "Vier representatieve schermen tonen hoe ontdekking beweegt van landingspagina naar kaart en verhaal. De volledige exports blijven op verzoek beschikbaar."}</p>
         </header>
         <div className="tc-proof-grid">
           {proofFrames.slice(0, 4).map((frame, index) => (

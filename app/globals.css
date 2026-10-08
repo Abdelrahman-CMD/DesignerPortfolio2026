@@ -6482,17 +6482,29 @@ html.is-cta-captured a { cursor: none !important; }
 
 .tc-proof-frame figcaption {
   display: flex;
+  align-items: center;
   justify-content: space-between;
+  gap: var(--space-1);
   padding: var(--space-2) 0;
   border-top: 1px solid color-mix(in srgb, currentColor 20%, transparent);
+  font-family: var(--sans);
+  letter-spacing: 0.08em;
 }
 
 .tc-proof-frame figcaption::after {
-  content: "↗";
-  transition: transform var(--motion-standard) var(--ease-premium);
+  width: clamp(1.7rem, 4vw, 3.6rem);
+  height: 1px;
+  background: currentColor;
+  content: "";
+  opacity: 0.42;
+  transform-origin: right center;
+  transition: transform var(--motion-standard) var(--ease-premium), opacity var(--motion-standard) var(--ease-premium);
 }
 
-.tc-proof-frame:hover figcaption::after { transform: translate(0.3rem, -0.3rem); }
+.tc-proof-frame:hover figcaption::after {
+  opacity: 0.72;
+  transform: scaleX(1.16);
+}
 
 .tc-contribution {
   position: relative;

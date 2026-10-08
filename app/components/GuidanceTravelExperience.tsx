@@ -179,9 +179,9 @@ export function GuidanceTravelExperience({ locale = "nl" }: { locale?: Locale })
 
       <section className="tc-proof" aria-labelledby="guidance-proof-title">
         <header className="tc-proof-heading">
-          <p>{tx("Geselecteerde schermen / snel te beoordelen")}</p>
+          <p>{locale === "en" ? "Travel route / decision moments" : "Reisroute / beslismomenten"}</p>
           <h2 id="guidance-proof-title">{tx("Eén reislogica.")}<br />{tx("Drie formaten.")}<br /><em>{tx("Vier kernschermen.")}</em></h2>
-          <p>{tx("Vier representatieve schermen tonen de beslisroute. De volledige responsive uitwerking blijft op verzoek beschikbaar.")}</p>
+          <p>{locale === "en" ? "Four representative frames show how intention, package choice and guidance stay connected across the responsive experience." : "Vier representatieve schermen tonen hoe intentie, pakketkeuze en begeleiding verbonden blijven in de responsive ervaring."}</p>
         </header>
         <div className="tc-proof-grid">
           {proofFrames.slice(0, 4).map((frame, index) => <figure className="tc-proof-frame" key={frame.label}><div className="tc-proof-media"><Image src={frame.src} alt={locale === "en" ? `Responsive Guidance Travel interface ${index + 1}` : `${frame.label} van Guidance Travel`} fill sizes="(max-width: 760px) 86vw, 44vw" /></div><figcaption>{tx(frame.label)}</figcaption></figure>)}
