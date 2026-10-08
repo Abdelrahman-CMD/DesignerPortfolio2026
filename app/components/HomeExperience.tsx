@@ -2310,7 +2310,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
         <article className="contact-postcard">
           <div className="postcard-brand">
             <span className="postcard-monogram">A</span>
-            <p>Abdelrahman<br />Senior digitaal ontwerper</p>
+            <p>Abdelrahman<br />Product &amp; UX/UI designer</p>
           </div>
 
           <div className="postcard-copy">

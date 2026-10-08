@@ -159,7 +159,6 @@ const english: Record<string, string> = {
   Prototypen: "Prototyping",
   Afstemming: "Alignment",
   "Gereedschap versnelt. Richting blijft mensenwerk.": "Tools help us move faster. People still set the direction.",
-  "Senior digitaal ontwerper": "Senior digital designer",
   "Ansichtkaart / Amsterdam / 2026": "Postcard / Amsterdam / 2026",
   "Even kijken": "Curious whether",
   "of het klikt?": "we’d work well together?",

@@ -29,7 +29,10 @@ test("server-renders the complete portfolio homepage", async () => {
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
 
   const html = await response.text();
-  assert.match(html, /Abdelrahman · Senior digitaal ontwerper/);
+  assert.match(html, /Product &amp; UX\/UI designer in Amsterdam · Abdelrahman Ahmed/);
+  // "Senior" is uit de metadata gehaald: het is een claim over jezelf waar
+  // niemand op zoekt. Deze regel houdt hem eruit.
+  assert.doesNotMatch(html, /Senior digitaal ontwerper|Senior digital designer/);
   assert.match(html, /Productdesigner die complexiteit helder maakt/);
   assert.match(html, /Ik combineer productstrategie, UX-onderzoek en interfaceontwerp/);
   assert.match(html, /class="mind-hero-canvas"/);
@@ -342,4 +345,71 @@ test("keeps the localized mutation observer from retriggering itself", async () 
   assert.match(i18nSource, /let applying = false;/);
   assert.match(i18nSource, /observer\.disconnect\(\);/);
   assert.match(i18nSource, /observer\.observe\(surface, observerOptions\);/);
+});
+
+test("answers unknown case slugs with a real 404, not an empty page", async () => {
+  // Hiervoor gaf elke verzonnen slug een pagina met status 200 en een titel
+  // als "Xyz123 · Case study", met een canonical naar zichzelf. Google telt
+  // dat als soft 404 en gaat elke verkeerd gespelde link indexeren.
+  for (const pathname of [
+    "/nl/cases/bestaat-niet",
+    "/en/cases/bestaat-niet",
+    "/cases/bestaat-niet",
+  ]) {
+    const response = await render(pathname);
+    assert.equal(response.status, 404, `${pathname} hoort een 404 te geven`);
+  }
+
+  // En de cases die wel bestaan blijven gewoon werken.
+  for (const pathname of [
+    "/nl/cases/atotz-detachering",
+    "/en/cases/hijaman-cups",
+    "/cases/mirqa",
+  ]) {
+    const response = await render(pathname);
+    assert.equal(response.status, 200, `${pathname} hoort te blijven werken`);
+  }
+});
+
+test("redirects the slug people would logically spell", async () => {
+  // hijaman-cups heeft zestien maanden geschiedenis bij Google, dus die URL
+  // blijft. Wie "hijama-n-cups" intypt gaat er permanent naartoe.
+  const response = await render("/nl/cases/hijama-n-cups");
+  assert.equal(response.status, 308);
+  assert.equal(response.headers.get("location"), "/nl/cases/hijaman-cups");
+});
+
+test("gives every sitemap entry a date that does not move", async () => {
+  const first = await (await render("/sitemap.xml")).text();
+  await new Promise((resolve) => setTimeout(resolve, 1100));
+  const second = await (await render("/sitemap.xml")).text();
+
+  const dates = (xml) => xml.match(/<lastmod>[^<]+<\/lastmod>/g) ?? [];
+  assert.ok(dates(first).length > 0, "de sitemap hoort lastmod-datums te hebben");
+  // Stond hier new Date(), dan verschilden twee ophaalacties van elkaar en
+  // leerde Google dat deze datums niets betekenen.
+  assert.deepEqual(dates(first), dates(second));
+  assert.doesNotMatch(first, new RegExp(`<loc>[^<]*/playground</loc>`));
+});
+
+test("keeps the work connected to the person in structured data", async () => {
+  const html = await (await render("/nl")).text();
+  const block = html.match(/<script type="application\/ld\+json">(.*?)<\/script>/s);
+  assert.ok(block, "de homepage hoort structuurdata te bevatten");
+
+  const graph = JSON.parse(block[1])["@graph"];
+  const types = graph.map((node) => node["@type"]);
+  assert.deepEqual(types, ["ProfilePage", "Person", "ItemList"]);
+
+  const person = graph.find((node) => node["@type"] === "Person");
+  assert.equal(person.jobTitle, "Product & UX/UI designer");
+  assert.doesNotMatch(JSON.stringify(person), /Senior/);
+
+  // De acht cases horen als één lijst aan hem vast te hangen, niet als acht
+  // losse pagina's die toevallig op hetzelfde domein staan.
+  const list = graph.find((node) => node["@type"] === "ItemList");
+  assert.equal(list.numberOfItems, 8);
+  assert.equal(list.itemListElement.length, 8);
+  assert.equal(list.itemListElement[0].position, 1);
+  assert.match(list.itemListElement[0].url, /\/nl\/cases\//);
 });
