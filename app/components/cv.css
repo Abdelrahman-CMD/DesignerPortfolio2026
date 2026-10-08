@@ -12,7 +12,7 @@ body:has(.cvx[data-theme="dark"]) { background: #131b26; }
 .cvx{
   
   --f-display: "Fraunces", Georgia, serif;
-  --f-body: "Inter Tight", system-ui, sans-serif;
+  --f-body: "Inter", system-ui, sans-serif;
   --f-mono: "JetBrains Mono", ui-monospace, monospace;
 
   

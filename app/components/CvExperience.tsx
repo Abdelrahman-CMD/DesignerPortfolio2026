@@ -30,7 +30,7 @@ import {
 import "./cv.css";
 
 const FONTS =
-  "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Inter+Tight:wght@300..600&family=JetBrains+Mono:wght@400;500&display=swap";
+  "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap";
 
 const t = (waarde: CvTekst, locale: Locale) => (locale === "en" ? waarde.en || waarde.nl : waarde.nl);
 
