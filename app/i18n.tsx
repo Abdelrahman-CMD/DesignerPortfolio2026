@@ -673,10 +673,24 @@ export function LanguageSwitcher({ locale, path = "/", tone = "light" }: { local
   return (
     <div className={`language-switcher language-switcher-${tone}`} role="group" aria-label={locale === "en" ? "Choose language" : "Kies taal"}>
       <a data-language-option href={localeHref(path, "nl")} aria-current={locale === "nl" ? "page" : undefined} aria-label="Nederlands" lang="nl" onClick={(event) => switchLocale("nl", event)}>
-        <span aria-hidden="true">🇳🇱</span><span>NL</span>
+        <span className="language-glyph" aria-hidden="true">
+          <svg viewBox="0 0 24 24" focusable="false">
+            <path d="M5 7h14" />
+            <path d="M5 12h14" />
+            <path d="M5 17h14" />
+          </svg>
+        </span>
+        <span>NL</span>
       </a>
       <a data-language-option href={localeHref(path, "en")} aria-current={locale === "en" ? "page" : undefined} aria-label="English" lang="en" onClick={(event) => switchLocale("en", event)}>
-        <span aria-hidden="true">🇬🇧</span><span>EN</span>
+        <span className="language-glyph" aria-hidden="true">
+          <svg viewBox="0 0 24 24" focusable="false">
+            <path d="M7 7h10" />
+            <path d="M7 12h10" />
+            <path d="M7 17h6" />
+          </svg>
+        </span>
+        <span>EN</span>
       </a>
     </div>
   );
