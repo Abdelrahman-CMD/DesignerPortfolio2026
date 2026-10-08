@@ -1150,7 +1150,7 @@ img {
   align-items: center;
   gap: var(--space-1);
   min-height: 2.75rem;
-  padding: var(--space-1) var(--space-2) var(--space-1) var(--space-1);
+  padding: var(--space-1) var(--space-2);
   border: 1px solid var(--nav-border);
   border-radius: 999px;
   background: var(--nav-shell);
@@ -1162,16 +1162,15 @@ img {
   text-transform: uppercase;
 }
 
-.site-mark > span:first-child {
-  display: grid;
-  width: 2.4rem;
-  height: 2.4rem;
-  place-items: center;
-  border: 1px solid currentColor;
-  border-radius: 50%;
-  font-family: var(--serif);
-  font-size: var(--type-lead);
-  font-style: italic;
+/* Het merk is een getekend gebaar; een cirkel eromheen zou ertegenin werken,
+   dus die is weg. 2.05rem is geen rond getal maar een gemeten maat: daarmee
+   komt de pil op dezelfde 50.8px als .top-nav en de taalschakelaar ernaast.
+   Pas je de padding van .site-mark aan, meet dit dan opnieuw. */
+.site-mark-logo {
+  width: auto;
+  height: 2.05rem;
+  display: block;
+  flex: none;
 }
 
 .top-nav {
@@ -1515,11 +1514,6 @@ a:focus-visible > .link-icon svg * {
     opacity: 0;
   }
 
-  html[data-js="on"] .mind-hero[data-hero-motion="pending"] .mind-hero-kicker {
-    opacity: 0;
-    transform: translate3d(0, 12px, 0);
-  }
-
   html[data-js="on"] .mind-hero[data-hero-motion="pending"] .mind-hero-lede {
     opacity: 0;
     transform: translate3d(0, 18px, 0);
@@ -1682,11 +1676,6 @@ a:focus-visible > .link-icon svg * {
   top: 16.5%;
   left: 2.6%;
   width: min(42%, 40rem);
-}
-
-.mind-hero-kicker {
-  margin: 0 0 var(--space-4);
-  color: var(--ink);
 }
 
 .mind-hero h1 {
@@ -1896,7 +1885,6 @@ html.is-cta-captured a { cursor: none !important; }
 @media (min-width: 721px) and (max-height: 820px) {
   .mind-hero { height: 100svh; min-height: 100svh; padding-top: 6rem; padding-bottom: var(--space-2); }
   .mind-hero-copy { top: 8.5%; }
-  .mind-hero-kicker { margin-bottom: var(--space-2); }
   .mind-hero h1 { font-size: clamp(3.5rem, 5vw, 5rem); }
   .mind-hero-lede {
     max-width: 24rem;
@@ -5294,7 +5282,6 @@ html.is-cta-captured a { cursor: none !important; }
   .mind-hero-canvas { overflow: hidden; }
   .mind-hero h1 { font-size: clamp(3rem, 6.1vw, 4.2rem); line-height: 0.91; }
   .mind-hero-copy { top: 10%; left: 0; width: 43%; }
-  .mind-hero-kicker { margin-bottom: var(--space-2); }
   .mind-hero-lede { max-width: 20rem; margin: var(--space-2) 0 0 6%; font-size: var(--type-label); }
   .mind-hero-visual { right: 0; left: auto; width: 55%; }
   .mind-hero-actions { right: auto; bottom: 0; left: 0; transform: none; }
@@ -5425,12 +5412,13 @@ html.is-cta-captured a { cursor: none !important; }
   .postcard-links { flex-wrap: wrap; }
 }
 
-/* Tussen 721 en 809px staat de volledige tekstnavigatie aan, maar past de
-   taalschakelaar er net niet meer naast: bij 721px liep hij 72px buiten beeld
-   en knipte .site-shell (overflow-x: clip) hem stil af. De merktekst naast het
-   logo is 120px breed en verdwijnt onder 721px toch al, dus die regel loopt
-   hier simpelweg 89px door. */
-@media (min-width: 721px) and (max-width: 809px) {
+/* Tussen 721 en 859px staat de volledige tekstnavigatie aan, maar past de
+   naam naast het logo er niet bij: de drie blokken in de header meten samen
+   768px en de koptekst houdt 32px marge over, dus onder 832px raken de pil en
+   de navigatie elkaar. De naam verdwijnt onder 721px toch al, dus die regel
+   loopt hier door tot er echt ruimte is. 859 in plaats van 832 houdt een
+   zichtbare tussenruimte over in plaats van een naad. */
+@media (min-width: 721px) and (max-width: 859px) {
   .site-mark-copy { display: none; }
   .site-header-actions { gap: 0.45rem; }
 }
@@ -5439,8 +5427,11 @@ html.is-cta-captured a { cursor: none !important; }
   .site-header { gap: var(--space-1); padding: var(--space-1); }
   .site-header-actions { gap: 0.35rem; }
   .site-mark-copy { display: none; }
-  .site-mark { min-height: 2.75rem; padding: 0.25rem; }
-  .site-mark > span:first-child { width: 2.35rem; height: 2.35rem; }
+  /* 3.375rem is de gemeten hoogte van .top-nav hiernaast (0.25rem padding +
+     2.75rem linkhoogte + randen). Zonder deze regel stond de pil 10px lager
+     dan de navigatie ernaast. */
+  .site-mark { min-height: 3.375rem; padding: 0.25rem 0.5rem; }
+  .site-mark-logo { height: 1.75rem; }
   .top-nav { gap: 0.25rem; padding: 0.25rem; font-size: var(--type-micro); letter-spacing: 0.04em; }
   .top-nav a { width: 2.5rem; min-width: 2.5rem; min-height: 2.75rem; justify-content: center; padding: 0; }
   .top-nav .link-icon { width: 1rem; margin: 0; opacity: 1; transform: none; }
@@ -5497,7 +5488,6 @@ html.is-cta-captured a { cursor: none !important; }
   .mind-hero-canvas { display: grid; min-height: 0; flex: none; margin-top: 0; container-type: inline-size; }
   .mind-hero-canvas::after { display: none; }
   .mind-hero-copy { position: relative; top: auto; left: auto; grid-row: 1; width: 100%; padding: var(--space-6) 0 var(--space-4); }
-  .mind-hero-kicker { margin-bottom: 1.5rem; }
   .mind-hero h1 { max-width: 100%; font-size: clamp(3.15rem, 13.8vw, 5.3rem); line-height: 0.88; }
   .mind-title-line:nth-child(2) { padding-left: 0; }
   .mind-title-line:nth-child(3) { padding-left: 10%; }
@@ -5815,7 +5805,6 @@ html.is-cta-captured a { cursor: none !important; }
   .language-switcher a { min-width: 2.1rem; padding: 0 0.25rem; }
   .mind-hero { padding-top: 5rem; }
   .mind-hero-copy { padding: var(--space-4) 0 var(--space-3); }
-  .mind-hero-kicker { margin-bottom: var(--space-2); }
   .mind-hero h1 { font-size: clamp(2.85rem, 13vw, 3.15rem); line-height: 0.9; }
   .mind-hero-lede { margin-top: var(--space-1); font-size: var(--type-label); line-height: 1.45; }
 }
@@ -7767,7 +7756,6 @@ html.is-cta-captured a { cursor: none !important; }
   .mind-hero-photo-slide,
   .mind-title-line > span,
   .mind-hero-meta span,
-  .mind-hero-kicker,
   .mind-hero-lede,
   .mind-hero-actions,
   .manifesto-word,

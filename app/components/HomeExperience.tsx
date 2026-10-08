@@ -766,7 +766,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
         gsap.set(".mind-hero-mosaic", { filter: "blur(0px)", scale: 1, opacity: 1 });
         gsap.set(".mind-hero-base", { filter: "blur(0px)", scale: 1, opacity: 1 });
         gsap.set(".mind-title-line > span", { y: 0 });
-        gsap.set(".mind-hero-canvas, .mind-hero-kicker, .mind-hero-lede, .mind-hero-actions", { autoAlpha: 1, y: 0 });
+        gsap.set(".mind-hero-canvas, .mind-hero-lede, .mind-hero-actions", { autoAlpha: 1, y: 0 });
         gsap.set(".mind-hero-meta span, .mind-brain-dot", { autoAlpha: 1, y: 0, scale: 1 });
       }
 
@@ -783,7 +783,6 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
         // Gelijk aan de pre-hydration lock in globals.css: wijzig ze samen.
         gsap.set(".site-header", { autoAlpha: 0, y: -18 });
         gsap.set(".mind-hero-canvas", { autoAlpha: 0 });
-        gsap.set(".mind-hero-kicker", { autoAlpha: 0, y: 12 });
         gsap.set(".mind-hero-lede", { autoAlpha: 0, y: 18 });
         gsap.set(".mind-hero-meta span", { autoAlpha: 0, y: 12 });
         gsap.set(".mind-hero-actions", { autoAlpha: 0, y: 18 });
@@ -848,11 +847,6 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
           .to(
             ".mind-hero-canvas",
             { autoAlpha: 1, duration: 0.28, ease: "power2.out" },
-          )
-          .to(
-            ".mind-hero-kicker",
-            { autoAlpha: 1, y: 0, duration: 0.34 },
-            "-=0.08",
           )
           .call(
             markHeroReady,
@@ -1726,8 +1720,22 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
         aria-label="Hoofdnavigatie"
       >
         <a className="site-mark" href="#top" aria-label="Naar boven">
-          <span>A</span>
-          <span className="site-mark-copy">Abdelrahman<br />{locale === "en" ? "Product & UX/UI designer" : "Product- & UX/UI-designer"}</span>
+          {/* unoptimized omdat het een svg is: er valt niets te herschalen en
+              de optimizer laat 'm toch ongemoeid. Breedte en hoogte zijn de
+              viewBox van het merk, zodat de pil zijn maat al heeft voordat het
+              bestand binnen is; de css bepaalt de weergavegrootte. priority
+              omdat de pil bovenaan staat en niet mag nakomen. */}
+          <Image
+            className="site-mark-logo"
+            src="/merk.svg"
+            alt=""
+            width={1737}
+            height={1472}
+            unoptimized
+            priority
+            draggable={false}
+          />
+          <span className="site-mark-copy">Abdelrahman</span>
         </a>
         <div className="site-header-actions">
           <nav className="top-nav" aria-label="Portfolio tabs">
@@ -1781,7 +1789,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
           <div className="mind-hero-meta label" aria-label="Portfolio metadata">
             <span>Portfolio / 2026</span>
             <span>{locale === "en" ? "Product strategy / UX/UI" : "Productstrategie / UX/UI"}</span>
-            <span>{locale === "en" ? "Digital products / websites" : "Digitale producten / websites"}</span>
+            <span>Amsterdam</span>
           </div>
 
           <div className="mind-hero-canvas">
@@ -1852,7 +1860,6 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
             </div>
 
             <header className="mind-hero-copy">
-              <p className="mind-hero-kicker label">{locale === "en" ? "Product designer · UX/UI · Amsterdam" : "Productdesigner · UX/UI · Amsterdam"}</p>
               <h1 className="mind-hero-title" id="hero-title" aria-label={locale === "en" ? "Product designer turning complexity into clarity." : "Productdesigner die complexiteit helder maakt."}>
                 <span className="mind-title-line"><span>{locale === "en" ? "Product designer" : "Productdesigner"}</span></span>
                 <span className="mind-title-line"><span>{locale === "en" ? "turning complexity" : "maakt complexiteit"}</span></span>

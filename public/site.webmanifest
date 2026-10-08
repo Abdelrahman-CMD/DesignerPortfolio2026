@@ -1,0 +1,16 @@
+{
+  "name": "Abdelrahman · Senior digitaal ontwerper",
+  "short_name": "Abdelrahman",
+  "description": "Websites met een stevig fundament, een beweeglijke aanpak en ruimte voor een eerlijk gesprek.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f6f1e8",
+  "theme_color": "#f6f1e8",
+  "icons": [
+    { "src": "/favicon.svg", "type": "image/svg+xml", "sizes": "any" },
+    { "src": "/icon-192.png", "type": "image/png", "sizes": "192x192" },
+    { "src": "/icon-512.png", "type": "image/png", "sizes": "512x512" },
+    { "src": "/icon-512-maskable.png", "type": "image/png", "sizes": "512x512", "purpose": "maskable" }
+  ]
+}
