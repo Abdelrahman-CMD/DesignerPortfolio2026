@@ -570,6 +570,24 @@ const mindZones = [
   },
 ] as const;
 
+const homeMotionStorageKey = "portfolio:home-motion-seen:v1";
+
+function hasSeenHomeMotion() {
+  try {
+    return window.localStorage.getItem(homeMotionStorageKey) === "true";
+  } catch {
+    return false;
+  }
+}
+
+function rememberHomeMotion() {
+  try {
+    window.localStorage.setItem(homeMotionStorageKey, "true");
+  } catch {
+    // Storage can be unavailable in strict privacy modes; keep the site functional.
+  }
+}
+
 export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
   const root = useRef<HTMLElement>(null);
   const [activeMindZone, setActiveMindZone] = useState<string | null>(null);
@@ -622,6 +640,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
   useLayoutEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const seenHomeMotion = hasSeenHomeMotion();
     const supportsHeroParallax = window.matchMedia("(min-width: 721px)").matches;
 
     let cleanupStoryRoute = () => {};
@@ -717,6 +736,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
         motionFallback.__heroMotionFallback = undefined;
       }
       const skipHeroIntro = prefersReducedMotion
+        || seenHomeMotion
         || document.documentElement.dataset.heroFallback === "fired";
       const heroMosaic = heroMosaicCanvas && heroFullImage
         ? createStoryMosaic(
@@ -741,6 +761,14 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
 
       if (skipHeroIntro) {
         markHeroReady();
+        gsap.set(".site-header", { autoAlpha: 1, y: 0 });
+        gsap.set(".mind-title-handwrite", { clipPath: "inset(0 0% 0 0)" });
+        gsap.set(".mind-hero-photo-slide", { clipPath: "inset(0 0 0 0%)", xPercent: 0, opacity: 1 });
+        gsap.set(".mind-hero-mosaic", { filter: "blur(0px)", scale: 1, opacity: 1 });
+        gsap.set(".mind-hero-base", { filter: "blur(0px)", scale: 1, opacity: 1 });
+        gsap.set(".mind-title-line > span", { y: 0 });
+        gsap.set(".mind-hero-canvas, .mind-hero-kicker, .mind-hero-lede, .mind-hero-actions", { autoAlpha: 1, y: 0 });
+        gsap.set(".mind-hero-meta span, .mind-brain-dot", { autoAlpha: 1, y: 0, scale: 1 });
       }
 
       if (!skipHeroIntro) {
@@ -812,7 +840,10 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
 
         const intro = gsap.timeline({
           defaults: { ease: "power4.out" },
-          onComplete: markHeroReady,
+          onComplete: () => {
+            markHeroReady();
+            rememberHomeMotion();
+          },
         });
         intro
           .to(
@@ -998,7 +1029,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
         };
       }
 
-      if (!prefersReducedMotion && supportsHeroParallax) {
+      if (!prefersReducedMotion && !seenHomeMotion && supportsHeroParallax) {
         gsap.to(".mind-hero-content", {
           opacity: 0.32,
           yPercent: -9,
@@ -1027,7 +1058,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
         });
       }
 
-      if (!prefersReducedMotion) {
+      if (!prefersReducedMotion && !seenHomeMotion) {
         gsap.from(".manifesto-word", {
           autoAlpha: 0,
           y: 28,
@@ -1065,6 +1096,11 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
         const stroke = word.querySelector<HTMLElement>(".manifesto-marker-stroke");
         if (!stroke) return;
 
+        if (seenHomeMotion) {
+          gsap.set(stroke, { clipPath: "inset(0 0% 0 0)" });
+          return;
+        }
+
         gsap.fromTo(stroke, { clipPath: "inset(0 100% 0 0)" }, {
           clipPath: "inset(0 0% 0 0)",
           ease: "power2.inOut",
@@ -1079,7 +1115,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
 
       const quarterWord = root.current?.querySelector<HTMLElement>('[data-marker-word="kwartje"]');
       const quarter = quarterWord?.querySelector<HTMLElement>(".manifesto-quarter-roll");
-      if (quarterWord && quarter) {
+      if (quarterWord && quarter && !seenHomeMotion) {
         const quarterTimeline = gsap.timeline({ paused: true });
 
         quarterTimeline
@@ -1123,7 +1159,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
       }
 
       const showcaseHeading = root.current?.querySelector<HTMLElement>(".showcase-heading");
-      if (showcaseHeading && !prefersReducedMotion) {
+      if (showcaseHeading && !prefersReducedMotion && !seenHomeMotion) {
         const showcaseTimeline = gsap.timeline({
           scrollTrigger: {
             trigger: showcaseHeading,
@@ -1164,7 +1200,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
         const visual = entry.querySelector<HTMLElement>(".project-visual");
         const media = entry.querySelector<HTMLElement>(".project-parallax-media");
 
-        if (media && supportsHeroParallax && !prefersReducedMotion) {
+        if (media && supportsHeroParallax && !prefersReducedMotion && !seenHomeMotion) {
           gsap.fromTo(media, {
             yPercent: -4,
           }, {
@@ -1179,7 +1215,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
           });
         }
 
-        if (!prefersReducedMotion) {
+        if (!prefersReducedMotion && !seenHomeMotion) {
           const projectTimeline = gsap.timeline({
             scrollTrigger: {
               trigger: entry,
@@ -1289,7 +1325,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
         ? Array.from(route.querySelectorAll<HTMLElement>(".story-stop"))
         : [];
 
-      if (route && routeSvg && basePath && progressPath && runner && stops.length > 0) {
+      if (route && routeSvg && basePath && progressPath && runner && stops.length > 0 && !seenHomeMotion) {
         type Point = { x: number; y: number };
         const routeLabels = locale === "en"
           ? ["Studio", "Making", "Learning", "Living", "Approach"]
@@ -1473,7 +1509,13 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
           mosaic.render(0, 0);
         }
 
-        const revealTimeline = gsap.timeline({
+        if (seenHomeMotion) {
+          mosaic?.render(1, 0);
+          gsap.set(copyElements, { autoAlpha: 1, y: 0, rotation: 0 });
+          gsap.set(ephemera, { autoAlpha: 1, scale: 1, rotation: 0 });
+        }
+
+        const revealTimeline = seenHomeMotion ? null : gsap.timeline({
           scrollTrigger: {
             trigger: stop,
             start: "top 92%",
@@ -1485,32 +1527,34 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
             },
           },
         });
-        revealTimeline
-          .fromTo(copyElements, {
+        if (revealTimeline) {
+          revealTimeline
+            .fromTo(copyElements, {
             autoAlpha: 0,
             y: 34,
             rotation: direction * 0.65,
-          }, {
-            autoAlpha: 1,
-            y: 0,
-            rotation: 0,
-            stagger: 0.11,
-            ease: motion.softEase,
-            duration: 0.72,
-          }, 0.1)
-          .fromTo(ephemera, {
-            autoAlpha: 0,
-            scale: 0.82,
-            rotation: direction * 7,
-          }, {
-            autoAlpha: 1,
-            scale: 1,
-            rotation: 0,
-            ease: motion.ease,
-            duration: 0.52,
-          }, 0.42);
+            }, {
+              autoAlpha: 1,
+              y: 0,
+              rotation: 0,
+              stagger: 0.11,
+              ease: motion.softEase,
+              duration: 0.72,
+            }, 0.1)
+            .fromTo(ephemera, {
+              autoAlpha: 0,
+              scale: 0.82,
+              rotation: direction * 7,
+            }, {
+              autoAlpha: 1,
+              scale: 1,
+              rotation: 0,
+              ease: motion.ease,
+              duration: 0.52,
+            }, 0.42);
+        }
 
-        if (photo) {
+        if (photo && !seenHomeMotion) {
           gsap.fromTo(photo, {
             y: 42,
             rotation: direction * 2.3,
@@ -1527,7 +1571,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
           });
         }
 
-        ScrollTrigger.create({
+        if (!seenHomeMotion) ScrollTrigger.create({
           trigger: stop,
           start: "70% 48%",
           end: "bottom 8%",
@@ -1537,7 +1581,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
           },
         });
 
-        gsap.to(copyElements, {
+        if (!seenHomeMotion) gsap.to(copyElements, {
           autoAlpha: 0.28,
           y: -24,
           stagger: 0.018,
@@ -1560,7 +1604,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
         mosaicControllers.forEach((controller) => controller.dispose());
       };
 
-      if (!prefersReducedMotion) {
+      if (!prefersReducedMotion && !seenHomeMotion) {
         const methodIntro = gsap.timeline({
           scrollTrigger: { trigger: ".method-intro", start: "top 78%", toggleActions: "play none none none", once: true, fastScrollEnd: true },
         });
@@ -1613,7 +1657,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
           }, 0);
       }
 
-      if (!prefersReducedMotion) {
+      if (!prefersReducedMotion && !seenHomeMotion) {
         gsap.from(".method-stack-chip", {
           opacity: 0,
           scale: 0.86,
@@ -1626,7 +1670,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
         });
       }
 
-      if (!prefersReducedMotion) {
+      if (!prefersReducedMotion && !seenHomeMotion) {
         const contactTimeline = gsap.timeline({
           scrollTrigger: { trigger: ".contact", start: "top 74%", toggleActions: "play none none none", once: true, fastScrollEnd: true },
         });

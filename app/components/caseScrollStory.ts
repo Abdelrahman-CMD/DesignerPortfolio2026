@@ -6,6 +6,30 @@ type CaseMotionOptions = {
 };
 
 const once = "play none none none";
+const caseMotionStoragePrefix = "portfolio:case-motion-seen:";
+
+function motionKey(root: HTMLElement) {
+  const project = root.dataset.motionProject
+    ?? Array.from(root.classList).find((className) => className.startsWith("tc-page-"))
+    ?? window.location.pathname;
+  return `${caseMotionStoragePrefix}${project}`;
+}
+
+function hasSeenMotion(key: string) {
+  try {
+    return window.localStorage.getItem(key) === "true";
+  } catch {
+    return false;
+  }
+}
+
+function rememberMotion(key: string) {
+  try {
+    window.localStorage.setItem(key, "true");
+  } catch {
+    // Storage can be unavailable in strict privacy modes; the site should still work.
+  }
+}
 
 function elements<T extends Element>(root: ParentNode, selector: string) {
   return Array.from(root.querySelectorAll<T>(selector));
@@ -113,6 +137,8 @@ export function revealCaseCard(card: HTMLElement, shell: HTMLElement) {
 export function initCaseMotion(root: HTMLElement, options: CaseMotionOptions = {}) {
   gsap.registerPlugin(ScrollTrigger);
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const storageKey = motionKey(root);
+  const seenMotion = hasSeenMotion(storageKey);
   const durationScale = window.matchMedia("(max-width: 720px)").matches ? 0.72 : 1;
   const cleanups: Array<() => void> = [];
 
@@ -132,7 +158,7 @@ export function initCaseMotion(root: HTMLElement, options: CaseMotionOptions = {
       ),
     ];
 
-    if (reduceMotion) {
+    if (reduceMotion || seenMotion) {
       root.setAttribute("data-case-motion", "ready");
       gsap.set(revealTargets, { clearProps: "all", autoAlpha: 1, x: 0, y: 0, xPercent: 0, yPercent: 0, scale: 1 });
       gsap.set(elements<HTMLElement>(root, ".tc-mask > span, .tc-mirqa-screen, .cc-card-tags > span, .cc-metric-board > *"), {
@@ -143,7 +169,7 @@ export function initCaseMotion(root: HTMLElement, options: CaseMotionOptions = {
         yPercent: 0,
         scale: 1,
       });
-      revealCaseEvidence(root);
+      gsap.set(elements<SVGPathElement>(root, ".tc-journey-line"), { strokeDashoffset: 0 });
       return;
     }
 
@@ -156,7 +182,7 @@ export function initCaseMotion(root: HTMLElement, options: CaseMotionOptions = {
     if (heroNote) gsap.set(heroNote, { autoAlpha: 0, rotate: -3, y: 16 });
     root.setAttribute("data-case-motion", "ready");
 
-    const intro = gsap.timeline({ defaults: { ease: "power4.out" } });
+    const intro = gsap.timeline({ defaults: { ease: "power4.out" }, onComplete: () => rememberMotion(storageKey) });
     intro
       .to(".tc-nav", { autoAlpha: 1, y: 0, duration: 0.34 })
       .to(".tc-hero-kicker", { autoAlpha: 1, y: 0, duration: 0.34 }, "-=0.08")
