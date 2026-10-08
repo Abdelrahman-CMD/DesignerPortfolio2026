@@ -736,7 +736,6 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
         motionFallback.__heroMotionFallback = undefined;
       }
       const skipHeroIntro = prefersReducedMotion
-        || seenHomeMotion
         || document.documentElement.dataset.heroFallback === "fired";
       const heroMosaic = heroMosaicCanvas && heroFullImage
         ? createStoryMosaic(
@@ -1325,7 +1324,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
         ? Array.from(route.querySelectorAll<HTMLElement>(".story-stop"))
         : [];
 
-      if (route && routeSvg && basePath && progressPath && runner && stops.length > 0 && !seenHomeMotion) {
+      if (route && routeSvg && basePath && progressPath && runner && stops.length > 0) {
         type Point = { x: number; y: number };
         const routeLabels = locale === "en"
           ? ["Studio", "Making", "Learning", "Living", "Approach"]

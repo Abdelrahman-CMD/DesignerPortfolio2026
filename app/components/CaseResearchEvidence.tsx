@@ -352,10 +352,6 @@ function BaynEvidence({ locale }: { locale: Locale }) {
         ))}
       </div>
 
-      <div className="tc-evidence-withheld tc-evidence-reveal">
-        <span>{locale === "en" ? "Why there is no journey here" : "Waarom hier nog geen journey staat"}</span>
-        <p>{locale === "en" ? "Without field research, an emotional curve would be invented. Bayn first needs interviews around real relocation and local-information moments; only then can a current-state journey honestly connect friction to design decisions." : "Zonder veldonderzoek zou een emotionele curve verzonnen zijn. Bayn heeft eerst gesprekken nodig rond echte verhuis- en informatiemomenten; pas daarna kan een current-state journey eerlijk frictie aan ontwerpbeslissingen koppelen."}</p>
-      </div>
     </section>
   );
 }

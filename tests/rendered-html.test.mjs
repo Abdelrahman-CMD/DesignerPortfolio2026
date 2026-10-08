@@ -154,7 +154,8 @@ test("uses bounded raster assets on the homepage and case pages", async () => {
   assert.match(baynHtml, /class="tc-evidence tc-evidence-bayn"/);
   assert.match(baynHtml, /De doelgroep is een hypothese/);
   assert.match(baynHtml, /Nog geen primair onderzoek · aannames zichtbaar · journey bewust uitgesteld/);
-  assert.match(baynHtml, /Waarom hier nog geen journey staat/);
+  assert.match(baynHtml, /Benodigd bewijs/);
+  assert.doesNotMatch(baynHtml, /Waarom hier nog geen journey staat/);
   assert.match(baynHtml, /class="tc-deep-dive"/);
 
   assert.equal(hijamaResponse.status, 200);
@@ -259,16 +260,23 @@ test("renders the three live client cases as measured scroll stories", async () 
   for (const html of [hijamaHtml, atotzHtml, oppasHtml]) {
     assert.match(html, /class="tc-page tc-page-client/);
     assert.match(html, /class="tc-snapshot"/);
-    assert.match(html, /class="cc-metric-board"/);
     assert.match(html, /class="tc-deep-dive"/);
     assert.equal((html.match(/class="tc-card-shell /g) ?? []).length, 4);
   }
 
+  for (const html of [hijamaHtml, oppasHtml]) {
+    assert.match(html, /class="cc-metric-board"/);
+  }
+
+  assert.doesNotMatch(atotzHtml, /class="cc-metric-board"/);
+  assert.match(atotzHtml, /contact-keuzeformulier\.jpg/);
+  assert.match(atotzHtml, /bewijs-2-sectorroutes\.jpg/);
+
   assert.match(hijamaHtml, /9\.3K/);
   assert.match(hijamaHtml, /182/);
   assert.match(hijamaHtml, /2m56/);
-  assert.match(atotzHtml, /2\.24K/);
-  assert.match(atotzHtml, /18\.6/);
+  assert.match(atotzHtml, /2[,.]24K/);
+  assert.match(atotzHtml, /18[,.]6/);
   assert.match(atotzHtml, /De aanvragen komen binnen/);
   assert.match(englishAtotzHtml, /The enquiries are coming in/);
   assert.match(englishAtotzHtml, /average position 18\.6/);
