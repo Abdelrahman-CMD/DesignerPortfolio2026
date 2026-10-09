@@ -174,6 +174,10 @@ export function MobileNav({ locale }: { locale: Locale }) {
         className="mnav-panel"
         aria-label={locale === "en" ? "Main navigation" : "Hoofdnavigatie"}
       >
+        {/* Twee lagen: .mnav-panel is het glas over het hele scherm, .mnav-sheet
+            is het blad met de inhoud. Op een telefoon vallen ze samen; vanaf
+            een tablet krimpt alleen het blad en blijft het glas liggen. */}
+        <div className="mnav-sheet">
         <nav className="mnav-card">
           <ul>
             {items.map((item) => (
@@ -229,6 +233,7 @@ export function MobileNav({ locale }: { locale: Locale }) {
           <span className="mnav-meta-wrap">
             {locale === "en" ? "Product strategy / UX/UI" : "Productstrategie / UX/UI"}
           </span>
+        </div>
         </div>
       </div>,
             document.body,

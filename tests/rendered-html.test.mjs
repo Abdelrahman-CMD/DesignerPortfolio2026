@@ -243,6 +243,15 @@ test("uses bounded raster assets on the homepage and case pages", async () => {
     [".mnav-panel", ".mnav-toggle-shape"],
     `onverwachte vervaging op: ${selectors.join(" | ")}`,
   );
+
+  /* De vervaging hoort op .mnav-panel te zitten en niet op .mnav-sheet: de
+     glaslaag ligt over het hele scherm, het blad krimpt. Zou het blad zelf
+     vervagen, dan staat er een scherpe pagina pal naast een vervaagd hoekje.
+     En onder de 600px blijft dat blad schermvullend - daar is 50vw maar 197px
+     en passen Aanpak en Contact er niet meer in. */
+  assert.match(css, /\.mnav-panel \{[^}]*inset: 0;/s);
+  assert.match(css, /@media \(min-width: 600px\) \{[^@]*\.mnav-sheet \{[^}]*width: 50vw/s);
+  assert.match(css, /@media \(min-width: 600px\) \{[^@]*padding-bottom: 25vh/s);
   assert.match(css, /prefers-reduced-motion:\s*reduce/i);
   assert.doesNotMatch(css, /\.mind-brush-stroke-base/);
   assert.doesNotMatch(homeSource, /mind-connector-map/);

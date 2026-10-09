@@ -9708,14 +9708,15 @@ html.is-cta-captured a { cursor: none !important; }
    hero-titel er dwars doorheen - juist bij een kaart met veel wit eromheen
    wordt dat rommelig. De header blijft erboven staan, dus de sluitknop is
    altijd bereikbaar. */
+/* De glaslaag ligt altijd over het hele scherm. Zou die met het blad
+   meekrimpen, dan staat er een scherpe pagina pal naast een vervaagd hoekje
+   en dat oogt als een fout in plaats van als een keuze. */
 .mnav-panel {
   position: fixed;
   inset: 0;
   z-index: 8;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 0.6rem;
   padding: calc(var(--space-1) + 3.95rem) var(--space-2) var(--space-2);
   overflow-y: auto;
   /* Niet dekken maar vervagen. 7px is bewust weinig: de hero blijft herkenbaar
@@ -9729,7 +9730,34 @@ html.is-cta-captured a { cursor: none !important; }
   animation: mnav-in 0.34s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-.mnav-panel > * { width: 100%; }
+/* Het blad met de inhoud. Op een telefoon vult het de hele laag - een menu
+   dat daar maar de halve breedte pakt, breekt het patroon dat iedereen kent
+   en laat de langste bestemmingen niet eens passen. */
+.mnav-sheet {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.6rem;
+  width: 100%;
+}
+
+.mnav-sheet > * { width: 100%; }
+
+/* Vanaf 600px krimpt alleen het blad: de halve breedte, rechts onder de knop
+   waar het uit komt, en onderaan blijft een kwart van het scherm vrij. Die
+   grens is gemeten, niet gekozen: de breedste rij (Contact plus nummer, pijl
+   en marges) heeft 276px nodig, en 50vw haalt dat pas boven 552px. */
+@media (min-width: 600px) {
+  .mnav-panel {
+    align-items: flex-end;
+    padding-bottom: 25vh;
+  }
+
+  .mnav-sheet {
+    width: 50vw;
+    max-width: 32rem;
+  }
+}
 
 /* De kaart neemt de ruimte die overblijft. Op een tablet of een bredere
    telefoon stond hij eerst als een smalle kolom in het midden; over de volle
