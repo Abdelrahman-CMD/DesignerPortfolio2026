@@ -2,6 +2,9 @@
 
 import { useEffect, useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import Linkedin from "lucide-react/icons/linkedin";
+import Mail from "lucide-react/icons/mail";
+import MessageCircle from "lucide-react/icons/message-circle";
 import { LanguageSwitcher, Locale, localeHref } from "../i18n";
 
 /* De navigatie voor smalle schermen, naar het ontwerp van Abdelrahman.
@@ -47,29 +50,15 @@ const kanalen = [
   { naam: "LinkedIn", href: "https://www.linkedin.com/in/abdelrahman-ahmed-30896964/", icoon: "linkedin" },
 ] as const;
 
-function Kanaalicoon({ soort }: { soort: (typeof kanalen)[number]["icoon"] }) {
-  const gedeeld = { width: 16, height: 16, viewBox: "0 0 24 24", "aria-hidden": true, focusable: "false" as const };
-  if (soort === "whatsapp") {
-    return (
-      <svg {...gedeeld} fill="none" stroke={MERK_ROOD} strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M21 11.5a8.4 8.4 0 0 1-12.6 7.3L3 20.5l1.8-5.2A8.5 8.5 0 1 1 21 11.5Z" />
-      </svg>
-    );
-  }
-  if (soort === "mail") {
-    return (
-      <svg {...gedeeld} fill="none" stroke={MERK_ROOD} strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="2.6" y="5" width="18.8" height="14" rx="2.4" />
-        <path d="m3.4 7 7.5 5.4a2 2 0 0 0 2.2 0L20.6 7" />
-      </svg>
-    );
-  }
-  return (
-    <svg {...gedeeld} fill={MERK_ROOD}>
-      <path d="M5.4 3.6a2 2 0 1 0 0 4 2 2 0 0 0 0-4ZM3.6 9.3h3.6V21H3.6zM10.2 9.3h3.4v1.6c.5-.9 1.7-1.9 3.5-1.9 3 0 3.9 1.9 3.9 4.6V21h-3.6v-6.1c0-1.5-.5-2.5-1.8-2.5-1 0-1.6.7-1.9 1.4-.1.3-.1.6-.1 1V21h-3.4z" />
-    </svg>
-  );
-}
+/* Dezelfde iconen als in de navigatiebalk en de ansichtkaart, in dezelfde
+   .link-icon-huls. Daarmee erven ze het hele gedrag van de desktoplinks: de
+   huls klapt open bij aanwijzen en de lijnen tekenen zichzelf via
+   stroke-dashoffset. Mijn eigen getekende svg's deden dat geen van beide. */
+const kanaalIcoon = {
+  whatsapp: MessageCircle,
+  mail: Mail,
+  linkedin: Linkedin,
+} as const;
 
 export function MobileNav({ locale }: { locale: Locale }) {
   const [open, setOpen] = useState(false);
@@ -218,7 +207,14 @@ export function MobileNav({ locale }: { locale: Locale }) {
               href={k.href}
               {...(k.href.startsWith("http") ? { target: "_blank", rel: "noreferrer" } : {})}
             >
-              <Kanaalicoon soort={k.icoon} />
+              {(() => {
+                const Icoon = kanaalIcoon[k.icoon];
+                return (
+                  <span className="link-icon" aria-hidden="true">
+                    <Icoon />
+                  </span>
+                );
+              })()}
               <span>{k.naam}</span>
             </a>
           ))}

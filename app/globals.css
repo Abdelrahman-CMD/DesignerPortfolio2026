@@ -9707,12 +9707,14 @@ html.is-cta-captured a { cursor: none !important; }
   animation: mnav-in 0.34s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-/* Op een telefoon vult alles de breedte; vanaf een tablet blijft het een
-   kolom in plaats van een banner die over het hele scherm uitrekt. */
-.mnav-panel > * {
-  width: 100%;
-  max-width: 32rem;
-}
+.mnav-panel > * { width: 100%; }
+
+/* De kaart neemt de ruimte die overblijft. Op een tablet of een bredere
+   telefoon stond hij eerst als een smalle kolom in het midden; over de volle
+   breedte staan de bestemmingen links en is de hele kaart aan te tikken. */
+.mnav-card { flex: 1; display: flex; flex-direction: column; }
+.mnav-card ul { flex: 1; display: flex; flex-direction: column; }
+.mnav-card li { flex: 1; display: flex; }
 
 /* De metaregel hangt onderaan, wat er boven hem staat houdt zijn eigen hoogte. */
 .mnav-meta {
@@ -9758,8 +9760,12 @@ html.is-cta-captured a { cursor: none !important; }
 
 .mnav-card a {
   display: grid;
+  width: 100%;
   grid-template-columns: 1.7rem 1fr auto;
   align-items: baseline;
+  /* De rijen groeien mee met de kaart; align-content houdt nummer en naam
+     samen in het midden van zo'n hogere rij in plaats van bovenaan. */
+  align-content: center;
   gap: 0.7rem;
   padding: 0.62rem 0;
   color: var(--ink);
@@ -9814,22 +9820,26 @@ html.is-cta-captured a { cursor: none !important; }
 
 /* De taalschakelaar erft anders de mobiele headerregels: knoppen van 2.75rem
    hoog in een rij van 2.25rem breed, waardoor NL uit zijn vakje liep. */
+/* Binnen het paneel gelden de brede-scherm-regels, niet de mobiele. Zonder
+   deze twee blokken erft de schakelaar de krappe knoppen uit de header
+   (2.25rem breed, 2.75rem hoog) en klopt de vorm niet meer met de desktop.
+   De waarden hieronder zijn letterlijk die van .language-switcher. */
 .mnav-lang .language-switcher {
   gap: 0.2rem;
-  padding: 0.3rem;
-  border-radius: 1.05rem;
-  box-shadow: none;
-  background: rgba(41, 38, 34, 0.05);
+  padding: 0.25rem;
+  border: 1px solid var(--language-border);
+  border-radius: 0.95rem;
+  background: var(--language-shell);
+  box-shadow: 0 0.45rem 1.4rem rgba(31, 28, 25, 0.1);
+  font-size: var(--type-label);
 }
 
-/* De geerfde hoeken liepen boven en onder uiteen (11px om 8px), waardoor de
-   donkere pil net buiten de ronding van de rail stak. Hier staan ze gelijk. */
 .mnav-lang .language-switcher a {
-  min-width: 2.9rem;
-  min-height: 2.1rem;
-  padding: 0 0.6rem;
-  border-radius: 0.75rem;
-  font-size: var(--type-micro);
+  min-width: 3.75rem;
+  min-height: 2.55rem;
+  padding: 0 0.7rem;
+  border-radius: 0.7rem 0.7rem 0.5rem 0.5rem;
+  font-size: inherit;
 }
 
 .mnav-kanalen {
@@ -9863,7 +9873,42 @@ html.is-cta-captured a { cursor: none !important; }
   outline-offset: 2px;
 }
 
-.mnav-kanalen svg { flex: none; }
+.mnav-kanalen .link-icon svg { stroke: #b83225; }
+
+/* Zonder muis bestaat :hover niet, en dan klapt .link-icon nooit open: in de
+   ansichtkaart en in het hamburgermenu zag je dan alleen tekst in een lege
+   pil. De navigatiebalk loste dat al zo op voor zichzelf; deze regel trekt het
+   door naar de twee plekken die het nog misten. De tekenanimatie vervalt dan -
+   die hoort bij het aanwijzen - dus de lijnen staan meteen af. */
+@media (hover: none) {
+  /* Vaste maten in plaats van em: deze knoppen staan op de microschaal, en
+     1.05em daarvan is nog geen elf pixels - dan botst het icoon tegen zijn
+     eigen huls. De navigatiebalk doet hetzelfde op smalle schermen. */
+  .postcard-links .link-icon,
+  .mnav-kanalen .link-icon {
+    width: 1.05rem;
+    margin-right: 0.45rem;
+    opacity: 1;
+    transform: none;
+  }
+
+  .postcard-links .link-icon svg,
+  .mnav-kanalen .link-icon svg {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  /* Zonder de streeplijn weg te halen blijft stroke-dasharray: 48 staan, en
+     een pad dat langer is dan 48 wordt dan een stippellijn. Bij het aanwijzen
+     valt dat niet op omdat de lijn zich voor je ogen dichttrekt; hier staat
+     het stil en zie je de gaten. */
+  .postcard-links .link-icon svg *,
+  .mnav-kanalen .link-icon svg * {
+    stroke-dasharray: none;
+    stroke-dashoffset: 0;
+    transition: none;
+  }
+}
 
 /* De zwevende contactknop zou dwars over het open menu heen staan; in het
    ontwerp is hij er niet. */
@@ -9885,4 +9930,25 @@ body:has(.mnav-panel) .floating-contact { opacity: 0; pointer-events: none; }
 /* Op de smalste telefoons wint de knop het van de naam. */
 @media (max-width: 374px) {
   .site-mark-copy { display: none; }
+}
+
+/* De vier contactknoppen in de ansichtkaart deelden de breedte gelijk op
+   (flex: 1 1 0, min-width: 0) en hielden hun tekst op een regel. Met het icoon
+   erbij past WHATSAPP niet meer in zijn 72 pixels en liep het label over de
+   knop ernaast heen. Ze staan nu op hun eigen maat en vallen om naar een
+   tweede regel.
+
+   Dit blok staat bewust helemaal achteraan: de regel die het overschrijft
+   (.postcard-links a met flex: 1 1 0) staat verderop in dit bestand dan de
+   mediaquery's hierboven, en een mediaquery verhoogt de specificiteit niet. */
+@media (max-width: 720px) {
+  .postcard-links {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+
+  .postcard-links a {
+    flex: 0 0 auto;
+    min-width: auto;
+  }
 }
