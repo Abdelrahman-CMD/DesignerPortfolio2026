@@ -9400,6 +9400,13 @@ html.is-cta-captured a { cursor: none !important; }
   border-width: 0;
 }
 
+.tc-card::before,
+.tc-page-oppas .tc-card::before,
+.story-tape,
+.method-note-tape {
+  display: none;
+}
+
 .tc-page .tc-proof-frame figcaption::before,
 .tc-page .tc-evidence-handnote::before {
   display: none;
