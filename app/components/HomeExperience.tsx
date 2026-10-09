@@ -932,9 +932,14 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
         const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
 
         if (!prefersReducedMotion) {
+          /* Was 11 seconden per omwenteling, oftewel 33 graden per seconde.
+             De woorden in de ring zijn dan niet meer rustig te volgen. Op 26
+             seconden draait hij nog zichtbaar maar lees je hem gewoon uit.
+             De eigenlijke instructie staat trouwens in het midden van de knop
+             - de ring is textuur, geen tekst die je moet halen. */
           gsap.to(heroCtaRings, {
             rotation: 360,
-            duration: 11,
+            duration: 26,
             repeat: -1,
             ease: "none",
             transformOrigin: "50% 50%",

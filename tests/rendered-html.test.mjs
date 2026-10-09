@@ -531,3 +531,19 @@ test("keeps the open menu on the 8pt grid", async () => {
   assert.doesNotMatch(menu, /^\.mnav-card a \{/m);
   assert.match(menu, /\.mnav-card li a \{/);
 });
+
+test("never lets a hovered language button swallow its own label", async () => {
+  const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
+
+  /* De hover-regel zette alleen de achtergrond. Met color-mix erin schreef de
+     bouwstap daar een terugval bij op de volle --language-active, en dan stond
+     de tekst in precies diezelfde kleur: contrast 1,00. */
+  assert.doesNotMatch(css, /\.language-switcher a:hover[^{]*\{[^}]*color-mix/s);
+  assert.match(css, /\.language-switcher a:hover,\s*\.language-switcher a:focus-visible \{[^}]*color: var\(--language-ink\)/s);
+  assert.match(css, /\.language-switcher a\[aria-current="page"\]:hover[^{]*\{[^}]*color: var\(--language-active-ink\)/s);
+
+  // Beide thema's hebben een eigen hover-tint nodig, anders valt er een terug op niets.
+  for (const token of [/--language-hover: rgba\(41, 38, 34/, /--language-hover: rgba\(248, 243, 233/]) {
+    assert.match(css, token);
+  }
+});
