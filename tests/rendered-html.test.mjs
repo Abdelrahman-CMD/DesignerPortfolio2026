@@ -232,10 +232,17 @@ test("uses bounded raster assets on the homepage and case pages", async () => {
      oppervlak. Daar is het glas wel te betalen, en het is bewust gevraagd.
      Deze test bewaakt dus nog steeds het oorspronkelijke doel: geen vervaging
      op grote vlakken. Komt er een derde regel bij, dan faalt hij. */
-  // Alleen echte declaraties tellen mee, niet de @supports-toets erboven.
-  const vervagingen = css.match(/backdrop-filter:\s*blur[^;{]*;/gi) ?? [];
-  assert.equal(vervagingen.length, 2, `onverwachte backdrop-filter-regels: ${vervagingen.join(" | ")}`);
-  assert.match(css, /\.mnav-toggle-shape \{[^}]*backdrop-filter: blur\(18px\) saturate\(185%\)/s);
+  /* Twee plekken mogen vervagen, en allebei om dezelfde reden: er scrollt
+     niets achter. De knop is klein, en het paneel vergrendelt de pagina zolang
+     het openstaat. Elke derde plek valt buiten die redenering. */
+  const zonderCommentaar = css.replace(/\/\*[\s\S]*?\*\//g, "");
+  const vervagingen = zonderCommentaar.match(/[^{}]+\{[^}]*backdrop-filter:\s*blur[^}]*\}/gi) ?? [];
+  const selectors = vervagingen.map((regel) => regel.split("{")[0].trim());
+  assert.deepEqual(
+    [...new Set(selectors)].sort(),
+    [".mnav-panel", ".mnav-toggle-shape"],
+    `onverwachte vervaging op: ${selectors.join(" | ")}`,
+  );
   assert.match(css, /prefers-reduced-motion:\s*reduce/i);
   assert.doesNotMatch(css, /\.mind-brush-stroke-base/);
   assert.doesNotMatch(homeSource, /mind-connector-map/);
@@ -460,4 +467,26 @@ test("keeps the switch to the hamburger tied to the measured breakpoint", async 
   // elkaar. Verschuift deze grens, dan gaan ze elkaar weer raken.
   assert.match(css, /@media \(max-width: 859px\) \{[^}]*\.site-header \.top-nav/s);
   assert.match(css, /\.mobile-nav \{ display: none; \}/);
+});
+
+test("never leaves the sticky bars hanging eighteen pixels too high", async () => {
+  const home = await readFile(new URL("../app/components/HomeExperience.tsx", import.meta.url), "utf8");
+  const caseNav = await readFile(new URL("../app/components/CaseNavMotion.tsx", import.meta.url), "utf8");
+  const story = await readFile(new URL("../app/components/caseScrollStory.ts", import.meta.url), "utf8");
+  const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
+
+  // Beide openingsanimaties laten hun balk van y: -18 naar nul zakken.
+  assert.match(home, /gsap\.set\("\.site-header", \{ autoAlpha: 0, y: -18 \}\)/);
+  assert.match(story, /gsap\.set\("\.tc-nav", \{ autoAlpha: 0, y: -18 \}\)/);
+
+  /* Scrolt iemand terwijl dat nog loopt, dan breekt overwrite: true die tween
+     af en blijft de -18 staan - de balk hangt dan voorgoed te hoog. Allebei de
+     verschijn-tweens moeten y daarom zelf op nul zetten. */
+  for (const [naam, bron] of [["HomeExperience", home], ["CaseNavMotion", caseNav]]) {
+    assert.match(bron, /\.\.\.\(visible \? \{ y: 0 \} : \{\}\)/, `${naam} zet y niet terug op nul`);
+  }
+
+  /* En de koptekstbalk moet aan het scherm vast blijven zitten, ook op smalle
+     schermen - anders scrolt hij weg en komt hij nooit meer terug. */
+  assert.doesNotMatch(css, /@media \(max-width: 859px\) \{[^}]*\.site-header \{ position: relative/s);
 });

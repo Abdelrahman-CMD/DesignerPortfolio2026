@@ -9610,16 +9610,19 @@ html.is-cta-captured a { cursor: none !important; }
   width: 3.4rem;
   height: 2.65rem;
   border-radius: 1.05rem;
+  /* Geen eigen vulling meer, alleen een lichtval: wat je ziet is de pagina
+     eronder, vervaagd en iets opgepompt in kleur. Met een dekkende witte laag
+     erover werd het een wit knopje met een blur die niemand opmerkt. */
   background:
-    linear-gradient(150deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.34) 46%, rgba(255, 255, 255, 0.52));
-  -webkit-backdrop-filter: blur(18px) saturate(185%);
-  backdrop-filter: blur(18px) saturate(185%);
+    linear-gradient(150deg, rgba(255, 255, 255, 0.34), rgba(255, 255, 255, 0.08) 46%, rgba(255, 255, 255, 0.2));
+  -webkit-backdrop-filter: blur(20px) saturate(190%);
+  backdrop-filter: blur(20px) saturate(190%);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.92),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.4),
-    inset 0 0 0 1px rgba(41, 38, 34, 0.08),
-    0 0.5rem 1.4rem rgba(41, 38, 34, 0.14),
-    0 0.1rem 0.3rem rgba(41, 38, 34, 0.08);
+    inset 0 1px 0 rgba(255, 255, 255, 0.75),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.3),
+    inset 0 0 0 1px rgba(41, 38, 34, 0.07),
+    0 0.5rem 1.4rem rgba(41, 38, 34, 0.12),
+    0 0.1rem 0.3rem rgba(41, 38, 34, 0.07);
   transition: transform 0.24s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.24s ease;
 }
 
@@ -9627,6 +9630,8 @@ html.is-cta-captured a { cursor: none !important; }
    knop bijna doorzichtig. Deze regel geeft hem dan een eigen vulling. */
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
   .mnav-toggle-shape { background: rgba(249, 245, 239, 0.96); }
+  /* Zonder vervaging zou de hero dwars door het menu heen lezen. */
+  .mnav-panel { background: var(--paper); }
 }
 
 .site-header[data-theme="dark"] .mnav-toggle-shape {
@@ -9691,7 +9696,14 @@ html.is-cta-captured a { cursor: none !important; }
   gap: 0.6rem;
   padding: calc(var(--space-1) + 3.95rem) var(--space-2) var(--space-2);
   overflow-y: auto;
-  background: var(--paper);
+  /* Niet dekken maar vervagen. 7px is bewust weinig: de hero blijft herkenbaar
+     als vorm en kleur, maar je kunt hem net niet meer lezen. Daardoor blijft de
+     aandacht bij het menu zonder dat de pagina verdwijnt. Er scrollt niets
+     achter deze laag - het paneel vergrendelt de pagina - dus de vervaging
+     wordt een keer samengesteld en niet elk frame opnieuw. */
+  background: color-mix(in srgb, var(--paper) 62%, transparent);
+  -webkit-backdrop-filter: blur(7px) saturate(118%);
+  backdrop-filter: blur(7px) saturate(118%);
   animation: mnav-in 0.34s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
@@ -9863,7 +9875,6 @@ body:has(.mnav-panel) .floating-contact { opacity: 0; pointer-events: none; }
   .site-header .top-nav,
   .site-header > .site-header-actions > .language-switcher { display: none; }
   .mobile-nav { display: block; }
-  .site-header { position: relative; }
 
   /* De naam stond verborgen omdat de vijf tekstknoppen alle ruimte namen.
      Die zijn hier weg, dus hij kan terug - en in het ontwerp staat hij erbij. */

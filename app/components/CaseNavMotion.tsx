@@ -33,6 +33,11 @@ export function CaseNavMotion() {
       gsap.to(nav, {
         autoAlpha: visible ? 1 : 0,
         yPercent: visible ? 0 : -125,
+        /* Zelfde reden als in setHeaderVisibility op de homepage: de intro van
+           de case laat deze balk van y: -18 naar nul zakken, en scrolt iemand
+           daar doorheen, dan breekt overwrite die tween af en blijft de balk
+           te hoog hangen. Zichtbaar betekent daarom ook y: 0. */
+        ...(visible ? { y: 0 } : {}),
         duration: visible ? 0.42 : 0.3,
         ease: visible ? "power3.out" : "power2.in",
         overwrite: true,

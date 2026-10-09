@@ -676,6 +676,13 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
         gsap.to(header, {
           autoAlpha: visible ? 1 : 0,
           yPercent: visible ? 0 : -125,
+          /* De openingsanimatie laat de balk van y: -18 naar y: 0 zakken. Scrolt
+             iemand terwijl dat nog loopt, dan breekt overwrite: true die tween
+             af en blijft die -18 voorgoed staan: de balk hangt dan achttien
+             pixels te hoog en wordt bovenaan afgesneden. Daarom zet zichtbaar
+             ook y op nul - de twee eigenschappen zijn apart, dus dit bijt de
+             yPercent hierboven niet. */
+          ...(visible ? { y: 0 } : {}),
           duration: visible ? 0.42 : 0.3,
           ease: visible ? "power3.out" : "power2.in",
           overwrite: true,
