@@ -224,7 +224,18 @@ test("uses bounded raster assets on the homepage and case pages", async () => {
   assert.match(hijamaSource, /hijama-2026\/home-mobile\.webp/);
   assert.match(hijamaSource, /styleGuide: true/);
   assert.match(tareeqiSource, /styleGuide: true/);
-  assert.doesNotMatch(css, /backdrop-filter:\s*blur/i);
+  /* In augustus is backdrop-filter overal weggehaald omdat het op grote,
+     meescrollende vlakken te duur was: een sticky balk van 1440 bij 64 is
+     92.160 px die elk scrollframe opnieuw vervaagd moeten worden.
+
+     De hamburgerknop is 54 bij 42, oftewel 2.268 px - veertig keer minder
+     oppervlak. Daar is het glas wel te betalen, en het is bewust gevraagd.
+     Deze test bewaakt dus nog steeds het oorspronkelijke doel: geen vervaging
+     op grote vlakken. Komt er een derde regel bij, dan faalt hij. */
+  // Alleen echte declaraties tellen mee, niet de @supports-toets erboven.
+  const vervagingen = css.match(/backdrop-filter:\s*blur[^;{]*;/gi) ?? [];
+  assert.equal(vervagingen.length, 2, `onverwachte backdrop-filter-regels: ${vervagingen.join(" | ")}`);
+  assert.match(css, /\.mnav-toggle-shape \{[^}]*backdrop-filter: blur\(18px\) saturate\(185%\)/s);
   assert.match(css, /prefers-reduced-motion:\s*reduce/i);
   assert.doesNotMatch(css, /\.mind-brush-stroke-base/);
   assert.doesNotMatch(homeSource, /mind-connector-map/);
@@ -426,4 +437,27 @@ test("keeps NL and EN readable in the language switcher", async () => {
   const html = await (await render("/nl")).text();
   assert.match(html, /<span>NL<\/span>/);
   assert.match(html, /<span>EN<\/span>/);
+});
+
+test("ships the narrow-screen navigation with the header", async () => {
+  const html = await (await render("/nl")).text();
+
+  // De knop staat in de server-HTML; het paneel komt pas na een klik, dus dat
+  // hoort er juist niet in te staan.
+  assert.match(html, /class="mnav-toggle"/);
+  assert.match(html, /aria-expanded="false"/);
+  assert.match(html, /Menu openen/);
+  assert.doesNotMatch(html, /class="mnav-panel"/);
+
+  const en = await (await render("/en")).text();
+  assert.match(en, /Open menu/);
+});
+
+test("keeps the switch to the hamburger tied to the measured breakpoint", async () => {
+  const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
+
+  // Op 810px stonden de pil en de tekstnavigatie met nul tussenruimte tegen
+  // elkaar. Verschuift deze grens, dan gaan ze elkaar weer raken.
+  assert.match(css, /@media \(max-width: 859px\) \{[^}]*\.site-header \.top-nav/s);
+  assert.match(css, /\.mobile-nav \{ display: none; \}/);
 });

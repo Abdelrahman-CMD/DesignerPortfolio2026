@@ -17,6 +17,7 @@ import Workflow from "lucide-react/icons/workflow";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { LanguageSwitcher, Locale, localeHref, translateText } from "../i18n";
+import { MobileNav } from "./MobileNav";
 
 const projects = [
   {
@@ -1746,6 +1747,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
             <a href={localeHref("/cv", locale)}><span className="link-icon" aria-hidden="true"><FileText /></span><span>CV</span></a>
           </nav>
           <LanguageSwitcher locale={locale} />
+          <MobileNav locale={locale} />
         </div>
       </header>
 
@@ -1790,6 +1792,13 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
             <span>Portfolio / 2026</span>
             <span>{locale === "en" ? "Product strategy / UX/UI" : "Productstrategie / UX/UI"}</span>
             <span>Amsterdam</span>
+            {/* Op smalle schermen zakt de discipline onder de scheidingslijn in
+                plaats van weg te vallen, zoals in het ontwerp. Dezelfde tekst
+                als hierboven, die daar juist verborgen wordt - zo staat hij
+                nooit twee keer tegelijk in beeld. */}
+            <span className="mind-hero-meta-wrap">
+              {locale === "en" ? "Product strategy / UX/UI" : "Productstrategie / UX/UI"}
+            </span>
           </div>
 
           <div className="mind-hero-canvas">
