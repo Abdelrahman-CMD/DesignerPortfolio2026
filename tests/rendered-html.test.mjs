@@ -499,3 +499,35 @@ test("never leaves the sticky bars hanging eighteen pixels too high", async () =
      schermen - anders scrolt hij weg en komt hij nooit meer terug. */
   assert.doesNotMatch(css, /@media \(max-width: 859px\) \{[^}]*\.site-header \{ position: relative/s);
 });
+
+test("keeps the open menu on the 8pt grid", async () => {
+  const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
+  // Zonder commentaar, anders telt een zin als "Geen gap:" mee als declaratie.
+  const menu = css
+    .slice(css.indexOf("Navigatie voor smalle schermen"))
+    .replace(/\/\*[\s\S]*?\*\//g, "");
+
+  /* Elke maat in dit blok hoort een veelvoud van 8px te zijn, of 4px als halve
+     stap. In rem: hele stappen van 0.5rem. Zestien van de negentien waarden
+     stonden er eerst naast - 9,6px hier, 11,2px daar - en dat stapelt op tot
+     een menu dat net niet klopt zonder dat je kunt aanwijzen waarom. */
+  const maten = [...menu.matchAll(/(?:padding|margin|gap|width|height|top|bottom)[a-z-]*:\s*([^;]+);/g)]
+    .flatMap(([, waarde]) => waarde.match(/-?\d*\.?\d+rem/g) ?? [])
+    .map((v) => parseFloat(v) * 16)
+    .filter((px) => px !== 0);
+
+  const buiten = [...new Set(maten.filter((px) => px % 4 !== 0))];
+  assert.deepEqual(buiten, [], `maten buiten het raster: ${buiten.join(", ")}px`);
+
+  // De taalknoppen: dezelfde vorm als de desktop, een halve stap smaller.
+  assert.match(menu, /\.mnav-lang \.language-switcher a \{[^}]*min-width: 3\.5rem/s);
+  assert.match(menu, /\.mnav-lang \.language-switcher a \{[^}]*min-height: 2\.5rem/s);
+
+  /* Het icoon brengt zijn eigen marge mee; een gap op de knop erbij maakte er
+     13,6px van terwijl dezelfde afstand elders 8 is. */
+  assert.doesNotMatch(menu, /\.mnav-kanalen a \{[^}]*gap:/s);
+
+  // En de rijen gelden alleen voor de bestemmingen, niet voor alles in de kaart.
+  assert.doesNotMatch(menu, /^\.mnav-card a \{/m);
+  assert.match(menu, /\.mnav-card li a \{/);
+});

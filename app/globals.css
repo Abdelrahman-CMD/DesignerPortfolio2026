@@ -9601,7 +9601,7 @@ html.is-cta-captured a { cursor: none !important; }
 .mnav-toggle {
   display: inline-flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.5rem;
   padding: 0;
   border: 0;
   background: none;
@@ -9629,9 +9629,10 @@ html.is-cta-captured a { cursor: none !important; }
   position: relative;
   display: grid;
   place-items: center;
-  width: 3.4rem;
-  height: 2.65rem;
-  border-radius: 1.05rem;
+  /* 56 bij 40, gelijk aan de taalknoppen in het paneel. */
+  width: 3.5rem;
+  height: 2.5rem;
+  border-radius: 1rem;
   /* Geen eigen vulling meer, alleen een lichtval: wat je ziet is de pagina
      eronder, vervaagd en iets opgepompt in kleur. Met een dekkende witte laag
      erover werd het een wit knopje met een blur die niemand opmerkt. */
@@ -9677,7 +9678,7 @@ html.is-cta-captured a { cursor: none !important; }
     0 0 0 5px #b83225;
 }
 
-.mnav-strokes { width: 1.45rem; height: auto; display: block; }
+.mnav-strokes { width: 1.5rem; height: auto; display: block; }
 
 /* Open staat de knop als een vol rond vlak, zoals in het ontwerp. */
 .mobile-nav.is-open .mnav-toggle-shape {
@@ -9693,8 +9694,8 @@ html.is-cta-captured a { cursor: none !important; }
 .mobile-nav.is-open .mnav-toggle-label { color: var(--nav-ink); }
 
 .mnav-cross {
-  width: 1.35rem;
-  height: 1.35rem;
+  width: 1.5rem;
+  height: 1.5rem;
   fill: none;
   stroke: #f9f5ef;
   stroke-width: 2.3;
@@ -9717,7 +9718,9 @@ html.is-cta-captured a { cursor: none !important; }
   z-index: 8;
   display: flex;
   flex-direction: column;
-  padding: calc(var(--space-1) + 3.95rem) var(--space-2) var(--space-2);
+  /* 72px boven: de header is 70 hoog, dus dat is de eerste rasterstap die
+     hem vrij houdt. */
+  padding: 4.5rem var(--space-2) var(--space-2);
   overflow-y: auto;
   /* Niet dekken maar vervagen. 7px is bewust weinig: de hero blijft herkenbaar
      als vorm en kleur, maar je kunt hem net niet meer lezen. Daardoor blijft de
@@ -9737,7 +9740,7 @@ html.is-cta-captured a { cursor: none !important; }
   display: flex;
   flex: 1;
   flex-direction: column;
-  gap: 0.6rem;
+  gap: 0.5rem;
   width: 100%;
 }
 
@@ -9771,7 +9774,7 @@ html.is-cta-captured a { cursor: none !important; }
   margin-top: auto;
   display: grid;
   grid-template-columns: 1fr auto;
-  gap: 0.45rem 1rem;
+  gap: 0.5rem 1rem;
   color: var(--ink);
 }
 
@@ -9779,7 +9782,7 @@ html.is-cta-captured a { cursor: none !important; }
 
 .mnav-meta-wrap {
   grid-column: 1 / -1;
-  padding-top: 0.45rem;
+  padding-top: 0.5rem;
   border-top: 1px solid var(--line);
   color: #6f685f;
 }
@@ -9796,7 +9799,7 @@ html.is-cta-captured a { cursor: none !important; }
 
 .mnav-card {
   position: relative;
-  padding: 0.35rem 1.15rem 1rem;
+  padding: 0.5rem 1rem 1rem;
   border-radius: 1.5rem;
   background: #f9f5ef;
   box-shadow: 0 1.2rem 3rem rgba(41, 38, 34, 0.16), 0 0.2rem 0.5rem rgba(41, 38, 34, 0.07);
@@ -9808,16 +9811,16 @@ html.is-cta-captured a { cursor: none !important; }
 .mnav-card li:last-child { border-top: 1px solid rgba(41, 38, 34, 0.13); }
 .mnav-card li:last-child { border-bottom: 1px solid rgba(41, 38, 34, 0.13); }
 
-.mnav-card a {
+.mnav-card li a {
   display: grid;
   width: 100%;
-  grid-template-columns: 1.7rem 1fr auto;
+  grid-template-columns: 2rem 1fr auto;
   align-items: baseline;
   /* De rijen groeien mee met de kaart; align-content houdt nummer en naam
      samen in het midden van zo'n hogere rij in plaats van bovenaan. */
   align-content: center;
-  gap: 0.7rem;
-  padding: 0.62rem 0;
+  gap: 1rem;
+  padding: 0.5rem 0;
   color: var(--ink);
   text-decoration: none;
 }
@@ -9844,8 +9847,8 @@ html.is-cta-captured a { cursor: none !important; }
 
 .mnav-arrow svg {
   display: block;
-  width: 1.3rem;
-  height: 1.3rem;
+  width: 1.5rem;
+  height: 1.5rem;
   fill: none;
   stroke: #b83225;
   stroke-width: 1.7;
@@ -9853,10 +9856,10 @@ html.is-cta-captured a { cursor: none !important; }
   stroke-linejoin: round;
 }
 
-.mnav-card a:hover .mnav-naam { color: #b83225; }
-.mnav-card a:hover .mnav-arrow svg { transform: translateX(2px); transition: transform 0.2s ease; }
+.mnav-card li a:hover .mnav-naam { color: #b83225; }
+.mnav-card li a:hover .mnav-arrow svg { transform: translateX(2px); transition: transform 0.2s ease; }
 
-.mnav-card a:focus-visible {
+.mnav-card li a:focus-visible {
   outline: 2px solid #b83225;
   outline-offset: 3px;
   border-radius: 0.4rem;
@@ -9865,7 +9868,7 @@ html.is-cta-captured a { cursor: none !important; }
 .mnav-lang {
   display: flex;
   justify-content: flex-end;
-  padding-top: 0.8rem;
+  padding-top: 1rem;
 }
 
 /* De taalschakelaar erft anders de mobiele headerregels: knoppen van 2.75rem
@@ -9875,26 +9878,34 @@ html.is-cta-captured a { cursor: none !important; }
    (2.25rem breed, 2.75rem hoog) en klopt de vorm niet meer met de desktop.
    De waarden hieronder zijn letterlijk die van .language-switcher. */
 .mnav-lang .language-switcher {
-  gap: 0.2rem;
+  gap: 0.25rem;
   padding: 0.25rem;
-  border: 1px solid var(--language-border);
-  border-radius: 0.95rem;
+  /* De haarlijn als inset-schaduw en niet als border: een rand telt op bij de
+     hoogte, en dan is de rail 50 in plaats van 48. Zo blijft hij precies de
+     knop (40) plus zijn padding (2x4). */
+  border: 0;
+  box-shadow: inset 0 0 0 1px var(--language-border);
+  /* 16px = de hoek van de knop (12) plus de padding eromheen (4), zodat de
+     donkere pil de ronding van de rail precies volgt. */
+  border-radius: 1rem;
   background: var(--language-shell);
   box-shadow: 0 0.45rem 1.4rem rgba(31, 28, 25, 0.1);
   font-size: var(--type-label);
 }
 
 .mnav-lang .language-switcher a {
-  min-width: 3.75rem;
-  min-height: 2.55rem;
-  padding: 0 0.7rem;
-  border-radius: 0.7rem 0.7rem 0.5rem 0.5rem;
+  /* 56 bij 40 in plaats van de 60 bij 40,8 van de desktop: dezelfde vorm,
+     een halve stap smaller, en allebei op het raster. */
+  min-width: 3.5rem;
+  min-height: 2.5rem;
+  padding: 0 0.75rem;
+  border-radius: 0.75rem 0.75rem 0.5rem 0.5rem;
   font-size: inherit;
 }
 
 .mnav-kanalen {
   display: flex;
-  gap: 0.45rem;
+  gap: 0.5rem;
   justify-content: space-between;
 }
 
@@ -9903,9 +9914,11 @@ html.is-cta-captured a { cursor: none !important; }
   flex: 1;
   align-items: center;
   justify-content: center;
-  gap: 0.4rem;
-  min-height: 2.9rem;
-  padding: 0 0.5rem;
+  /* Geen gap: het icoon brengt zijn eigen marge mee, net als in de
+     navigatiebalk en de ansichtkaart. Allebei tellen gaf 13,6px tussen icoon
+     en woord, terwijl diezelfde afstand elders 8 is. */
+  min-height: 3rem;
+  padding: 0 1rem;
   border-radius: 999px;
   background: #f9f5ef;
   box-shadow: 0 0.5rem 1.3rem rgba(41, 38, 34, 0.13);
@@ -9936,8 +9949,8 @@ html.is-cta-captured a { cursor: none !important; }
      eigen huls. De navigatiebalk doet hetzelfde op smalle schermen. */
   .postcard-links .link-icon,
   .mnav-kanalen .link-icon {
-    width: 1.05rem;
-    margin-right: 0.45rem;
+    width: 1rem;
+    margin-right: 0.5rem;
     opacity: 1;
     transform: none;
   }
