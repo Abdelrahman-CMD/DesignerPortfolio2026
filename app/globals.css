@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Inter:wght@300..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Inter:wght@300..700&family=Montserrat:wght@700&display=swap");
 @import "tailwindcss";
 
 :root {
@@ -1161,6 +1161,28 @@ img {
   height: 2.05rem;
   display: block;
   flex: none;
+}
+
+/* Het woordmerk naast het logo staat los van de rest van de site: Montserrat
+   Bold in plaats van Inter, en strak afgespatieerd in plaats van ruim. Alleen
+   deze ene regel tekst - de navigatie eromheen houdt gewoon Inter.
+
+   Montserrat laadt daarom ook maar in een gewicht. Hedvig Letters Serif stond
+   in de link die je stuurde maar wordt nergens gebruikt; die is niet geladen,
+   want een lettertype dat je niet zet is alleen gewicht op de pagina. */
+.site-mark-copy {
+  font-family: "Montserrat", var(--sans);
+  font-weight: 700;
+  /* -1,5%, het midden van wat je opgaf */
+  letter-spacing: -0.015em;
+  color: #262321;
+}
+
+/* Op de donkere secties keert de pil om: donkere vulling, lichte tekst. Een
+   vaste #262321 zou het woordmerk daar onleesbaar maken, dus daar wint de
+   navigatiekleur. */
+.site-header[data-theme="dark"] .site-mark-copy {
+  color: var(--nav-ink);
 }
 
 .top-nav {
