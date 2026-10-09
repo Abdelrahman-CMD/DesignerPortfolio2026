@@ -112,7 +112,7 @@ const projects = [
     status: "Online",
     bg: "#1c2a3a",
     ink: "#f9fafb",
-    image: "/projects/home/atotz-hero-thumbnail.jpg",
+    image: "/projects/home/atotz-case-thumbnail.jpg",
     imagePosition: "center",
     href: "/cases/atotz-detachering",
   },
