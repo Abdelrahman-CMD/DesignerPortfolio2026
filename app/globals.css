@@ -6195,75 +6195,134 @@ html.is-cta-captured a { cursor: none !important; }
   transform: translateY(-1px);
 }
 
+/* De inhoudsopgave naast een case. In rust vijf streepjes van samen 24px;
+   de labels komen pas bij aanwijzen of toetsenbordfocus. Zie CaseSectionNav
+   voor waarom: permanent uitgeklapt was hij 138px breed en lag er op de
+   meeste scrollposities content onder. */
 .tc-section-nav {
   position: fixed;
   z-index: 75;
   top: 50%;
   left: clamp(0.75rem, 1.3vw, 1.35rem);
   display: grid;
-  gap: 0.55rem;
+  /* 24px tussenruimte zodat elk klikdoel hieronder ook 24px hoog kan worden,
+     het minimum uit WCAG 2.5.8. Met 12px raakten de doelen elkaar. */
+  gap: 1.5rem;
+  /* 0.25rem opzij: met 1.25rem streepje komt de rail op 28px breed en loopt
+     hij tot x=45, net binnen de 51px die er op de smalste plek over is. */
+  padding: 0.75rem 0.25rem;
   transform: translateY(-50%);
 }
 
 .tc-section-nav a {
   position: relative;
-  display: grid;
-  width: 8.6rem;
-  grid-template-columns: 1.7rem 1fr;
-  align-items: center;
-  gap: 0.65rem;
-  padding: 0.42rem 0;
-  color: color-mix(in srgb, var(--tc-ink, var(--ink)) 42%, transparent);
-  font-size: var(--type-micro);
-  font-weight: 750;
-  letter-spacing: 0.1em;
-  line-height: 1;
+  display: block;
+  color: var(--tc-ink, var(--ink));
   text-decoration: none;
-  text-transform: uppercase;
-  transition: color var(--motion-standard) var(--ease-premium), transform var(--motion-standard) var(--ease-premium);
 }
 
-.tc-section-nav a::before {
+/* Het klikvlak loopt verder dan het streepje maar staat buiten de flow, zodat
+   het de rail niet breder maakt. Een streepje van 2px hoog is anders een
+   onmogelijk doel; dit maakt er 24 bij 40 van. */
+.tc-section-nav a::after {
   content: "";
   position: absolute;
-  top: 50%;
-  left: 1.7rem;
+  inset: -0.6875rem -0.625rem;
+}
+
+/* Het streepje. Dit is het enige dat in rust ruimte inneemt: 1.5rem breed,
+   dus de hele rail blijft binnen de 51px die er op de smalste plek is. */
+.tc-section-tick {
+  display: block;
   width: 1.25rem;
-  height: 1px;
+  height: 2px;
+  flex: none;
+  border-radius: 2px;
   background: currentColor;
-  opacity: 0.32;
-  transform: translateY(-50%) scaleX(0.56);
+  opacity: 0.3;
   transform-origin: left center;
-  transition: opacity var(--motion-standard) var(--ease-premium), transform var(--motion-standard) var(--ease-premium);
+  transform: scaleX(0.55);
+  transition:
+    transform var(--motion-standard) var(--ease-premium),
+    opacity var(--motion-standard) var(--ease-premium);
 }
 
-.tc-section-nav span,
-.tc-section-nav strong {
-  position: relative;
-  z-index: 1;
+.tc-section-nav a[aria-current="location"] .tc-section-tick {
+  opacity: 1;
+  transform: scaleX(1);
 }
 
-.tc-section-nav span {
+.tc-section-nav a:hover .tc-section-tick,
+.tc-section-nav a:focus-visible .tc-section-tick {
+  opacity: 0.8;
+  transform: scaleX(1);
+}
+
+/* Het label staat absoluut gepositioneerd: het hoort wel in de html voor
+   schermlezers, maar mag in rust geen breedte kosten. Met alleen opacity: 0
+   bleef de rail 168px breed en loste het probleem zich niet op. */
+.tc-section-label {
+  position: absolute;
+  top: 50%;
+  left: calc(1.25rem + 0.6rem);
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  /* Een vast vlak en geen vervaging. Achter dit label scrollt de pagina wel,
+     anders dan bij de twee plekken waar vervaging is toegestaan, en dan moet
+     die elk frame opnieuw samengesteld worden. Bovendien moet dit label over
+     willekeurige inhoud leesbaar zijn, en dat is een dekkend vlak gewoon
+     betrouwbaarder in. */
+  background: var(--tc-shell, #f9f5ef);
+  box-shadow: 0 0.5rem 1.25rem rgba(31, 28, 25, 0.14), 0 0 0 1px rgba(31, 28, 25, 0.06);
+  color: var(--tc-ink, var(--ink));
+  font-size: var(--type-micro);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  line-height: 1.6;
+  text-transform: uppercase;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-0.4rem, -50%);
+  transition:
+    opacity var(--motion-standard) var(--ease-premium),
+    transform var(--motion-standard) var(--ease-premium);
+}
+
+.tc-section-label span {
+  opacity: 0.55;
   font-variant-numeric: tabular-nums;
 }
 
-.tc-section-nav strong {
-  padding-left: 1.55rem;
-  font: inherit;
+.tc-section-label strong { font: inherit; }
+
+/* Aanwijzen of ernaartoe tabben klapt de hele rail uit. focus-within zorgt
+   dat het toetsenbord dezelfde toegang heeft als de muis. */
+.tc-section-nav:hover .tc-section-label,
+.tc-section-nav:focus-within .tc-section-label {
+  opacity: 1;
+  transform: translate(0, -50%);
 }
 
-.tc-section-nav a:hover,
-.tc-section-nav a:focus-visible,
-.tc-section-nav a[aria-current="location"] {
-  color: var(--tc-ink, var(--ink));
-  transform: translateX(0.2rem);
+/* En tijdens het scrollen licht alleen het label van de huidige sectie op,
+   zodat "waar ben ik" beantwoord wordt zonder blijvende ruimte te kosten. */
+.tc-section-nav.is-scrolling a[aria-current="location"] .tc-section-label {
+  opacity: 1;
+  transform: translate(0, -50%);
 }
 
-.tc-section-nav a:hover::before,
-.tc-section-nav a:focus-visible::before,
-.tc-section-nav a[aria-current="location"]::before {
-  opacity: 0.86;
-  transform: translateY(-50%) scaleX(1);
+.tc-section-nav a:focus-visible {
+  outline: 2px solid var(--tc-ink, var(--ink));
+  outline-offset: 4px;
+  border-radius: 0.25rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tc-section-tick,
+  .tc-section-label { transition: none; }
 }
 
 .tc-hero,
