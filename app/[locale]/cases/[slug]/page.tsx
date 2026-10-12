@@ -26,11 +26,25 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     description: seo.description[locale],
     alternates: { canonical: `/${locale}/cases/${slug}`, languages: { "nl-NL": `/nl/cases/${slug}`, "en-GB": `/en/cases/${slug}`, "x-default": `/nl/cases/${slug}` } },
     openGraph: {
-      title: seo.title[locale],
+      title: seo.socialTitle[locale],
       description: seo.description[locale],
       url: `/${locale}/cases/${slug}`,
       locale: locale === "en" ? "en_GB" : "nl_NL",
       type: "article",
+      images: [
+        {
+          url: seo.socialImage.url,
+          width: seo.socialImage.width,
+          height: seo.socialImage.height,
+          alt: seo.socialImage.alt[locale],
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: seo.socialTitle[locale],
+      description: seo.description[locale],
+      images: [seo.socialImage.url],
     },
   };
 }
@@ -47,7 +61,8 @@ const ORIGIN = "https://abdelrahman.nl";
 const caseSchema = (slug: string, locale: Locale) => {
   const project = editorialCases[slug];
   const name = project?.name ?? slug.split("-").map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(" ");
-  const description = isCaseSlug(slug) ? caseSeo[slug].description[locale] : project?.description;
+  const seo = isCaseSlug(slug) ? caseSeo[slug] : null;
+  const description = seo ? seo.description[locale] : project?.description;
   if (!name || !description) return null;
 
   const url = `${ORIGIN}/${locale}/cases/${slug}`;
@@ -72,7 +87,7 @@ const caseSchema = (slug: string, locale: Locale) => {
         creator: { "@type": "Person", name: "Abdelrahman Ahmed", url: `${ORIGIN}/${locale}` },
         ...(year ? { dateCreated: year } : {}),
         ...(keywords.length ? { keywords } : {}),
-        ...(project?.featured ? { image: `${ORIGIN}${project.featured}` } : {}),
+        ...(seo ? { image: `${ORIGIN}${seo.socialImage.url}` } : project?.featured ? { image: `${ORIGIN}${project.featured}` } : {}),
         ...(project?.externalUrl
           ? { about: { "@type": "WebSite", name, url: project.externalUrl } }
           : {}),

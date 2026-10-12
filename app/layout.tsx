@@ -27,11 +27,11 @@ export async function generateMetadata(): Promise<Metadata> {
       template: "%s · Abdelrahman",
     },
     description:
-      "Ik haal de twijfel uit digitale keuzes. Acht cases van eerste gesprek tot live website, waarvan drie draaien voor echte opdrachtgevers.",
+      "Product & UX/UI designer die onduidelijke ideeën vertaalt naar heldere websites, flows en interfaces.",
     openGraph: {
-      title: "Ik ontwerp met alles wat ik onderweg leer.",
+      title: "Van onduidelijk idee naar heldere digitale ervaring.",
       description:
-        "Websites ontstaan niet uit een vaste formule. Ontdek hoe Abdelrahman leert, richting kiest en samen bouwt.",
+        "Portfolio van Abdelrahman Ahmed: productstrategie, UX/UI en visuele uitvoering voor websites en digitale producten.",
       type: "website",
       locale: "nl_NL",
       images: [
@@ -39,7 +39,7 @@ export async function generateMetadata(): Promise<Metadata> {
           url: `${origin}/og-mind-hero.jpg`,
           width: 1672,
           height: 941,
-          alt: "Ik ontwerp met alles wat ik onderweg leer. Abdelrahman Ahmed, product & UX/UI designer",
+          alt: "Abdelrahman Ahmed, product & UX/UI designer in Amsterdam",
         },
       ],
     },
@@ -53,9 +53,9 @@ export async function generateMetadata(): Promise<Metadata> {
     manifest: "/site.webmanifest",
     twitter: {
       card: "summary_large_image",
-      title: "Ik ontwerp met alles wat ik onderweg leer.",
+      title: "Van onduidelijk idee naar heldere digitale ervaring.",
       description:
-        "Websites ontstaan niet uit een vaste formule. Ontdek hoe Abdelrahman leert, richting kiest en samen bouwt.",
+        "Portfolio van Abdelrahman Ahmed: productstrategie, UX/UI en visuele uitvoering voor websites en digitale producten.",
       images: [`${origin}/og-mind-hero.jpg`],
     },
   };

@@ -16,6 +16,13 @@ export type CaseSeo = {
      onderscheidende deel dan juist wegvalt. */
   title: Record<Locale, string>;
   description: Record<Locale, string>;
+  socialTitle: Record<Locale, string>;
+  socialImage: {
+    url: string;
+    width: number;
+    height: number;
+    alt: Record<Locale, string>;
+  };
   /* Datum van de laatste inhoudelijke wijziging, voor de sitemap. Met de hand
      bijhouden: zet hem op vandaag zodra je de tekst of het beeld van een case
      echt verandert, en laat hem staan bij een opmaakwijziging. Een datum die
@@ -36,6 +43,19 @@ export const caseSeo = {
       nl: "Past dit bureau bij mijn sector, en hoe neem ik gericht contact op? Zo bouwde ik dat in één week, en dit liet Search Console daarna zien.",
       en: "Does this agency fit my sector, and how do I reach the right person? How I built that in one week, and what Search Console showed afterwards.",
     },
+    socialTitle: {
+      nl: "AtotZ Detachering - van sectorvraag naar gericht contact",
+      en: "AtotZ Detachering - from sector need to focused contact",
+    },
+    socialImage: {
+      url: "/projects/home/atotz-case-thumbnail.jpg",
+      width: 1800,
+      height: 1350,
+      alt: {
+        nl: "AtotZ Detachering case thumbnail met logo en websiteframes",
+        en: "AtotZ Detachering case thumbnail with logo and website frames",
+      },
+    },
     updated: "2026-10-08",
   },
   "hijaman-cups": {
@@ -46,6 +66,19 @@ export const caseSeo = {
     description: {
       nl: "Wat houdt hijama in, past het bij mij, en durf ik contact op te nemen? Dertien pagina's die die vragen wegnemen voordat iemand belt.",
       en: "What does hijama involve, is it for me, and dare I get in touch? Thirteen pages that answer those questions before anyone picks up the phone.",
+    },
+    socialTitle: {
+      nl: "Hijama 'N Cups - dertien pagina's tegen twijfel",
+      en: "Hijama 'N Cups - thirteen pages against doubt",
+    },
+    socialImage: {
+      url: "/projects/home/hijaman-cups.webp",
+      width: 1280,
+      height: 853,
+      alt: {
+        nl: "Hijama 'N Cups website case thumbnail",
+        en: "Hijama 'N Cups website case thumbnail",
+      },
     },
     updated: "2026-10-08",
   },
@@ -58,6 +91,19 @@ export const caseSeo = {
       nl: "Kan ik deze persoon mijn kind en mijn huis toevertrouwen? Een drietalige site die dat vertrouwen opbouwt voordat de eerste boeking komt.",
       en: "Can I trust this person with my child and my home? A trilingual site that builds that trust before the first booking arrives.",
     },
+    socialTitle: {
+      nl: "Oppas by Chaima - vertrouwen voor de eerste boeking",
+      en: "Oppas by Chaima - trust before the first booking",
+    },
+    socialImage: {
+      url: "/projects/home/oppas-by-chaima-cover.webp",
+      width: 2200,
+      height: 1650,
+      alt: {
+        nl: "Oppas by Chaima case thumbnail met zachte websiteframes",
+        en: "Oppas by Chaima case thumbnail with soft website frames",
+      },
+    },
     updated: "2026-10-08",
   },
   mirqa: {
@@ -68,6 +114,19 @@ export const caseSeo = {
     description: {
       nl: "Wanneer moet ik vertrekken, naar welke moskee, en klopt die tijd? Een app-concept over gedrag en timing, niet over nog een gebedstijdenlijst.",
       en: "When should I leave, which mosque, and is that time right? An app concept about behaviour and timing, not another list of prayer times.",
+    },
+    socialTitle: {
+      nl: "MIRQA - van intentie naar moskeebezoek",
+      en: "MIRQA - from intention to mosque visit",
+    },
+    socialImage: {
+      url: "/projects/home/mirqa-cover.webp",
+      width: 2200,
+      height: 1780,
+      alt: {
+        nl: "MIRQA appconcept case thumbnail",
+        en: "MIRQA app concept case thumbnail",
+      },
     },
     updated: "2026-10-04",
   },
@@ -80,6 +139,19 @@ export const caseSeo = {
       nl: "Google Maps kent de weg, maar niet de plek. Een navigatieconcept voor Mekka en Medina, gebouwd op wat pelgrims steeds opnieuw vertelden.",
       en: "Google Maps knows the route but not the place. A navigation concept for Mecca and Medina, built on what pilgrims kept telling me.",
     },
+    socialTitle: {
+      nl: "Tareeqi - navigatie met lokale context",
+      en: "Tareeqi - navigation with local context",
+    },
+    socialImage: {
+      url: "/projects/home/tareeqi.webp",
+      width: 1280,
+      height: 853,
+      alt: {
+        nl: "Tareeqi navigatieconcept case thumbnail",
+        en: "Tareeqi navigation concept case thumbnail",
+      },
+    },
     updated: "2026-10-08",
   },
   "guidance-travel": {
@@ -90,6 +162,19 @@ export const caseSeo = {
     description: {
       nl: "Welke reis past bij mij, en wie begeleidt me? Een conceptsite die Hajj- en Umrahbegeleiding terugbrengt tot een rustige keuze. 21 mensen bevraagd.",
       en: "Which journey suits me, and who will guide me? A concept site that turns Hajj and Umrah guidance into one calm choice. 21 people surveyed.",
+    },
+    socialTitle: {
+      nl: "Guidance Travel - een rustige keuze voor Hajj en Umrah",
+      en: "Guidance Travel - one calm choice for Hajj and Umrah",
+    },
+    socialImage: {
+      url: "/projects/home/guidance.webp",
+      width: 1280,
+      height: 853,
+      alt: {
+        nl: "Guidance Travel conceptsite case thumbnail",
+        en: "Guidance Travel concept site case thumbnail",
+      },
     },
     updated: "2026-10-08",
   },
@@ -102,6 +187,19 @@ export const caseSeo = {
       nl: "Wat gebeurt er in mijn buurt, en wat kan ik ermee? Een concept voor lokaal nieuws dat eindigt in een vervolgstap in plaats van een tijdlijn.",
       en: "What is happening in my area, and what can I do with it? A concept for local news that ends in a next step instead of a timeline.",
     },
+    socialTitle: {
+      nl: "Bayn Signal - lokaal nieuws met een vervolgstap",
+      en: "Bayn Signal - local news with a next step",
+    },
+    socialImage: {
+      url: "/projects/home/bayn.webp",
+      width: 1280,
+      height: 853,
+      alt: {
+        nl: "Bayn Signal lokaal nieuwsconcept case thumbnail",
+        en: "Bayn Signal local news concept case thumbnail",
+      },
+    },
     updated: "2026-10-04",
   },
   "ayn-al-hikmah": {
@@ -112,6 +210,19 @@ export const caseSeo = {
     description: {
       nl: "Welk boek, welke leraar, en kan ik die vertrouwen? Een platformconcept dat authentieke bronnen en persoonlijke leerpaden samenbrengt.",
       en: "Which book, which teacher, and can I trust them? A platform concept that brings authentic sources and personal learning paths together.",
+    },
+    socialTitle: {
+      nl: "Ayn Al-Hikmah - kennis, bronnen en leerpaden",
+      en: "Ayn Al-Hikmah - knowledge, sources and learning paths",
+    },
+    socialImage: {
+      url: "/projects/home/ayn.webp",
+      width: 1280,
+      height: 853,
+      alt: {
+        nl: "Ayn Al-Hikmah platformconcept case thumbnail",
+        en: "Ayn Al-Hikmah platform concept case thumbnail",
+      },
     },
     updated: "2026-10-04",
   },

@@ -9,32 +9,39 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const locale = resolveLocale((await params).locale);
   return locale === "en" ? {
     title: { absolute: "Product & UX/UI designer in Amsterdam · Abdelrahman Ahmed" },
-    description: "I design the doubt out of digital choices. Eight case studies from first conversation to live site, three of them running for real clients.",
+    description: "Product & UX/UI designer who turns unclear ideas into clear websites, flows and interfaces.",
     alternates: { canonical: "/en", languages: { "nl-NL": "/nl", "en-GB": "/en", "x-default": "/nl" } },
     openGraph: {
-      title: "I design with everything I learn along the way.",
-      description: "Websites don't come from a fixed formula. See how Abdelrahman learns, chooses a direction and builds together.",
+      title: "From unclear idea to clear digital experience.",
+      description: "Portfolio of Abdelrahman Ahmed: product strategy, UX/UI and visual execution for websites and digital products.",
       url: "/en",
       locale: "en_GB",
       alternateLocale: ["nl_NL"],
       images: [{ url: "/og-mind-hero.jpg", width: 1672, height: 941, alt: "Abdelrahman Ahmed, product & UX/UI designer in Amsterdam" }],
     },
     twitter: {
-      title: "I design with everything I learn along the way.",
-      description: "Websites don't come from a fixed formula. See how Abdelrahman learns, chooses a direction and builds together.",
+      card: "summary_large_image",
+      title: "From unclear idea to clear digital experience.",
+      description: "Portfolio of Abdelrahman Ahmed: product strategy, UX/UI and visual execution for websites and digital products.",
       images: ["/og-mind-hero.jpg"],
     },
   } : {
     title: { absolute: "Product & UX/UI designer in Amsterdam · Abdelrahman Ahmed" },
-    description: "Ik haal de twijfel uit digitale keuzes. Acht cases van eerste gesprek tot live website, waarvan drie draaien voor echte opdrachtgevers.",
+    description: "Product & UX/UI designer die onduidelijke ideeën vertaalt naar heldere websites, flows en interfaces.",
     alternates: { canonical: "/nl", languages: { "nl-NL": "/nl", "en-GB": "/en", "x-default": "/nl" } },
     openGraph: {
-      title: "Ik ontwerp met alles wat ik onderweg leer.",
-      description: "Websites ontstaan niet uit een vaste formule. Ontdek hoe Abdelrahman leert, richting kiest en samen bouwt.",
+      title: "Van onduidelijk idee naar heldere digitale ervaring.",
+      description: "Portfolio van Abdelrahman Ahmed: productstrategie, UX/UI en visuele uitvoering voor websites en digitale producten.",
       url: "/nl",
       locale: "nl_NL",
       alternateLocale: ["en_GB"],
       images: [{ url: "/og-mind-hero.jpg", width: 1672, height: 941, alt: "Abdelrahman Ahmed, product & UX/UI designer in Amsterdam" }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "Van onduidelijk idee naar heldere digitale ervaring.",
+      description: "Portfolio van Abdelrahman Ahmed: productstrategie, UX/UI en visuele uitvoering voor websites en digitale producten.",
+      images: ["/og-mind-hero.jpg"],
     },
   };
 }
@@ -59,8 +66,8 @@ const personSchema = (locale: Locale) => ({
   url: `${ORIGIN}/${locale}`,
   jobTitle: "Product & UX/UI designer",
   description: locale === "en"
-    ? "Product & UX/UI designer in Amsterdam. Brings unclear digital questions back to a route people understand and dare to take: structure, interaction and visual execution in one pair of hands."
-    : "Product & UX/UI designer in Amsterdam. Brengt onduidelijke digitale vraagstukken terug tot een route die mensen begrijpen en durven te nemen: structuur, interactie en visuele uitvoering in één hand.",
+    ? "Product & UX/UI designer in Amsterdam who turns unclear ideas into clear websites, flows and interfaces through product strategy, UX/UI and visual execution."
+    : "Product & UX/UI designer in Amsterdam die onduidelijke ideeën vertaalt naar heldere websites, flows en interfaces via productstrategie, UX/UI en visuele uitvoering.",
   address: { "@type": "PostalAddress", addressLocality: "Amsterdam", addressCountry: "NL" },
   knowsLanguage: ["nl", "en"],
   knowsAbout: locale === "en"

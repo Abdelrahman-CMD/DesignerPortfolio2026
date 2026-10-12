@@ -25,6 +25,27 @@ export async function generateMetadata({
     title: { absolute: seo.title.nl },
     description: seo.description.nl,
     alternates: { canonical: `/nl/cases/${slug}`, languages: { "nl-NL": `/nl/cases/${slug}`, "en-GB": `/en/cases/${slug}`, "x-default": `/nl/cases/${slug}` } },
+    openGraph: {
+      title: seo.socialTitle.nl,
+      description: seo.description.nl,
+      url: `/nl/cases/${slug}`,
+      locale: "nl_NL",
+      type: "article",
+      images: [
+        {
+          url: seo.socialImage.url,
+          width: seo.socialImage.width,
+          height: seo.socialImage.height,
+          alt: seo.socialImage.alt.nl,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: seo.socialTitle.nl,
+      description: seo.description.nl,
+      images: [seo.socialImage.url],
+    },
   };
 }
 
