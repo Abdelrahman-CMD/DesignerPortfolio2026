@@ -133,7 +133,7 @@ export function BaynSignalExperience({ locale = "nl" }: { locale?: Locale }) {
 
       <header className="tc-hero">
         <div className="tc-hero-copy">
-          <p className="tc-hero-kicker">{locale === "en" ? "Case 05 · Hypothesis-led concept" : "Case 05 · Hypothesegedreven concept"}</p>
+          <p className="tc-hero-kicker">{locale === "en" ? "Hypothesis-led concept" : "Hypothesegedreven concept"}</p>
           <h1>
             <span className="tc-title-line"><span>Bayn Signal</span></span>
             <span className="tc-title-line tc-title-small"><span>{tx("Zie verandering.")}</span></span>

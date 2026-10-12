@@ -15,7 +15,7 @@ import { CaseNavMotion } from "./CaseNavMotion";
 const content = {
   nl: {
     navCount: "01 / 08",
-    kicker: "Case 01 · Concept in ontwikkeling",
+    kicker: "Concept in ontwikkeling",
     title: ["MIRQA", "Eén gebed.", "Een haalbaar vertrekpunt."],
     summary:
       "Ik ontwerp MIRQA als een rustige mobiele companion die intentie omzet in één concrete vertrekbeslissing: welk gebed wil je in de moskee halen, waar ga je heen en wanneer moet je vertrekken?",
@@ -115,7 +115,7 @@ const content = {
   },
   en: {
     navCount: "01 / 08",
-    kicker: "Case 01 · Product concept in development",
+    kicker: "Product concept in development",
     title: ["MIRQA", "One prayer.", "A realistic time to leave."],
     summary:
       "I am designing MIRQA as a calm mobile companion that turns intention into one practical decision: which prayer do you want to reach at the mosque, where will you go and when should you leave?",

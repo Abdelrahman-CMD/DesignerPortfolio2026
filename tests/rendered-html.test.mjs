@@ -43,7 +43,7 @@ test("server-renders the complete portfolio homepage", async () => {
   assert.equal((html.match(/class="mind-brain-region(?: is-active)?"/g) ?? []).length, 5);
   assert.equal((html.match(/class="mind-zone mind-zone-/g) ?? []).length, 5);
   assert.equal((html.match(/class="mind-touch-tab(?: is-active)?"/g) ?? []).length, 5);
-  assert.match(html, /Bekijk 8 cases/);
+  assert.match(html, /Bekijk werk/);
   assert.equal((html.match(/class="manifesto-marker-stroke"/g) ?? []).length, 3);
   assert.match(html, /class="mind-brain-stage"/);
   assert.doesNotMatch(html, /mind-zone-motif/);
@@ -83,6 +83,10 @@ test("server-renders the complete portfolio homepage", async () => {
       "/nl/cases/guidance-travel",
       "/nl/cases/ayn-al-hikmah",
     ],
+  );
+  assert.deepEqual(
+    [...html.matchAll(/class="project-external-link" href="([^"]+)"/g)].map((match) => match[1]),
+    ["https://oppasbychaima.nl/", "https://hijamancups.com/", "https://atotzdetachering.nl/"],
   );
   assert.equal((html.match(/class="project-parallax-media"/g) ?? []).length, 8);
   assert.match(html, /05<\/strong> Conceptprojecten/);
@@ -255,8 +259,8 @@ test("uses bounded raster assets on the homepage and case pages", async () => {
   assert.match(css, /prefers-reduced-motion:\s*reduce/i);
   assert.doesNotMatch(css, /\.mind-brush-stroke-base/);
   assert.doesNotMatch(homeSource, /mind-connector-map/);
-  assert.match(homeSource, /idle: "ZIE DE GEVOLGEN · ZIE DE GEVOLGEN · "/);
-  assert.match(homeSource, /active: "ONTDEK PROJECTEN · ONTDEK PROJECTEN · "/);
+  assert.match(homeSource, /idle: "SCROLL OR PRESS · SCROLL OR PRESS · "/);
+  assert.match(homeSource, /active: "SHOW THE WORK · SHOW THE WORK · "/);
   assert.match(homeSource, /case: "BEKIJK CASE · BEKIJK CASE · "/);
   assert.doesNotMatch(homeSource, /<circle cx=\{zone\.dotX\}/);
   assert.doesNotMatch(homeSource, /Scroll om verder te kijken/);

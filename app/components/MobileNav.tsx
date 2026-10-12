@@ -39,7 +39,7 @@ function Streken() {
 const items = [
   { nummer: "01", nl: "Werk", en: "Work", href: "#werk", extern: false },
   { nummer: "02", nl: "Over", en: "About", href: "#over", extern: false },
-  { nummer: "03", nl: "Aanpak", en: "Approach", href: "#aanpak", extern: false },
+  { nummer: "03", nl: "Werkwijze", en: "How I work", href: "#aanpak", extern: false },
   { nummer: "04", nl: "Contact", en: "Contact", href: "#contact", extern: false },
   { nummer: "05", nl: "CV", en: "CV", href: "/cv", extern: true },
 ] as const;

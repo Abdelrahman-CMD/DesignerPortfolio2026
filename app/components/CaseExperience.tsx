@@ -139,7 +139,7 @@ export function CaseExperience({ locale = "nl" }: { locale?: Locale }) {
 
       <header className="tc-hero">
         <div className="tc-hero-copy">
-          <p className="tc-hero-kicker">{locale === "en" ? "Case 03 · Qualitative concept" : "Case 03 · Kwalitatief concept"}</p>
+          <p className="tc-hero-kicker">{locale === "en" ? "Qualitative concept" : "Kwalitatief concept"}</p>
           <h1>
             <span className="tc-title-line"><span>Tareeqi</span></span>
             <span className="tc-title-line tc-title-small"><span>{tx("De route was duidelijk.")}</span></span>

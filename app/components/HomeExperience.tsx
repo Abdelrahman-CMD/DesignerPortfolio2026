@@ -51,6 +51,7 @@ const projects = [
     image: "/projects/home/oppas-by-chaima-cover.webp",
     imagePosition: "center",
     href: "/cases/oppas-by-chaima",
+    externalUrl: "https://oppasbychaima.nl/",
   },
   {
     number: "03",
@@ -83,6 +84,7 @@ const projects = [
     image: "/projects/home/hijaman-cups.webp",
     imagePosition: "center",
     href: "/cases/hijaman-cups",
+    externalUrl: "https://hijamancups.com/",
   },
   {
     number: "05",
@@ -115,6 +117,7 @@ const projects = [
     image: "/projects/home/atotz-case-thumbnail.jpg",
     imagePosition: "center",
     href: "/cases/atotz-detachering",
+    externalUrl: "https://atotzdetachering.nl/",
   },
   {
     number: "07",
@@ -153,13 +156,13 @@ const projects = [
 const projectCount = String(projects.length).padStart(2, "0");
 const heroCtaRingCopy = {
   nl: {
-    idle: "ZIE DE GEVOLGEN · ZIE DE GEVOLGEN · ",
-    active: "ONTDEK PROJECTEN · ONTDEK PROJECTEN · ",
+    idle: "SCROLL OR PRESS · SCROLL OR PRESS · ",
+    active: "SHOW THE WORK · SHOW THE WORK · ",
     case: "BEKIJK CASE · BEKIJK CASE · ",
   },
   en: {
-    idle: "SEE THE OUTCOME · SEE THE OUTCOME · ",
-    active: "EXPLORE PROJECTS · EXPLORE PROJECTS · ",
+    idle: "SCROLL OR PRESS · SCROLL OR PRESS · ",
+    active: "SHOW THE WORK · SHOW THE WORK · ",
     case: "VIEW CASE · VIEW CASE · ",
   },
 } as const;
@@ -1334,8 +1337,8 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
       if (route && routeSvg && basePath && progressPath && runner && stops.length > 0) {
         type Point = { x: number; y: number };
         const routeLabels = locale === "en"
-          ? ["Studio", "Making", "Learning", "Living", "Approach"]
-          : ["Studio", "Maken", "Leren", "Leven", "Aanpak"];
+          ? ["Studio", "Making", "Learning", "Living", "How I work"]
+          : ["Studio", "Maken", "Leren", "Leven", "Werkwijze"];
         let routeLength = 0;
         let routeProgress = 0;
         let resizeFrame = 0;
@@ -1754,7 +1757,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
           <nav className="top-nav" aria-label="Portfolio tabs">
             <a href="#werk" aria-current={activeNav === "werk" ? "location" : undefined}><span className="link-icon" aria-hidden="true"><BriefcaseBusiness /></span><span>Werk</span></a>
             <a href="#over" aria-current={activeNav === "over" ? "location" : undefined}><span className="link-icon" aria-hidden="true"><UserRound /></span><span>Over</span></a>
-            <a href="#aanpak" aria-current={activeNav === "aanpak" ? "location" : undefined}><span className="link-icon" aria-hidden="true"><Workflow /></span><span>Aanpak</span></a>
+            <a href="#aanpak" aria-current={activeNav === "aanpak" ? "location" : undefined}><span className="link-icon" aria-hidden="true"><Workflow /></span><span>{locale === "en" ? "How I work" : "Werkwijze"}</span></a>
             <a href="#contact" aria-current={activeNav === "contact" ? "location" : undefined}><span className="link-icon" aria-hidden="true"><Mail /></span><span>Contact</span></a>
             <a href={localeHref("/cv", locale)}><span className="link-icon" aria-hidden="true"><FileText /></span><span>CV</span></a>
           </nav>
@@ -1925,10 +1928,10 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
                         </span>
                       ))}
                     </span>
-                    <span className="hero-cta-orbit-core">↘</span>
+                    <span className="hero-cta-orbit-core">WORK</span>
                   </span>
                   <span className="hero-cta-touch-copy">
-                    <span>Bekijk 8 cases</span>
+                    <span>{locale === "en" ? "Show the work" : "Bekijk werk"}</span>
                     <ArrowUpRight aria-hidden="true" />
                   </span>
                 </a>
@@ -2166,6 +2169,12 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
                   <span className="project-services">{project.services}</span>
                 </div>
               </a>
+              {"externalUrl" in project ? (
+                <a className="project-external-link" href={project.externalUrl} target="_blank" rel="noreferrer">
+                  {locale === "en" ? "Visit live website" : "Bezoek live website"}
+                  <ArrowUpRight aria-hidden="true" />
+                </a>
+              ) : null}
             </article>
           ))}
         </div>

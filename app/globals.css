@@ -2594,6 +2594,33 @@ html.is-cta-captured a { cursor: none !important; }
   text-transform: uppercase;
 }
 
+.project-external-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: var(--space-2);
+  color: rgba(47, 43, 38, 0.68);
+  font-size: var(--type-micro);
+  font-weight: 750;
+  letter-spacing: 0.1em;
+  line-height: 1.2;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color var(--motion-fast) var(--ease-premium), transform var(--motion-fast) var(--ease-premium);
+}
+
+.project-external-link svg {
+  width: 0.85rem;
+  height: 0.85rem;
+  stroke-width: 1.8;
+}
+
+.project-external-link:hover,
+.project-external-link:focus-visible {
+  color: #b83225;
+  transform: translateX(0.12rem);
+}
+
 .case-cursor {
   --case-cursor-bg: #f8f3e9;
   --case-cursor-ink: #2f2b26;

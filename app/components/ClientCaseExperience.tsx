@@ -67,7 +67,7 @@ const clientStories: Record<ClientSlug, ClientStory> = {
   "hijaman-cups": {
     theme: "hijama",
     hero: {
-      kicker: copy("Case 04 · Live klantproject", "Case 04 · Live client project"),
+      kicker: copy("Live klantproject", "Live client project"),
       lines: [
         copy("Hijama ’N Cups", "Hijama ’N Cups"),
         copy("Van mond-tot-mond.", "From word of mouth."),
@@ -171,7 +171,7 @@ const clientStories: Record<ClientSlug, ClientStory> = {
   "atotz-detachering": {
     theme: "atotz",
     hero: {
-      kicker: copy("Case 06 · Live klantproject", "Case 06 · Live client project"),
+      kicker: copy("Live klantproject", "Live client project"),
       lines: [copy("AtotZ", "AtotZ"), copy("Van sectorvraag.", "From sector need."), copy("Naar gericht contact.", "To focused contact.")],
       summary: copy("Een oud-collega uit de branche was met een compagnon een detacheringsbureau begonnen. Het liep al, maar alles ging via via: geen website, niets online. Ik had één week, want daarna ging ik op vakantie met mijn gezin.", "A former colleague from the industry had started a staffing agency with a business partner. It was already running, but entirely by word of mouth: no website, nothing online. I had one week, because after that I was going on holiday with my family."),
       meta: [
@@ -263,7 +263,7 @@ const clientStories: Record<ClientSlug, ClientStory> = {
   "oppas-by-chaima": {
     theme: "oppas",
     hero: {
-      kicker: copy("Case 02 · Live klantproject", "Case 02 · Live client project"),
+      kicker: copy("Live klantproject", "Live client project"),
       lines: [copy("Oppas by Chaima", "Oppas by Chaima"), copy("Eerst vertrouwen.", "Trust first."), copy("Dan pas boeken.", "Then book.")],
       summary: copy("Een warme, drietalige kennismaking voor ouders die niet zomaar beschikbaarheid zoeken, maar iemand tijdelijk toelaten tot het ritme van thuis.", "A warm, trilingual introduction for parents who are not simply checking availability, but inviting someone into the rhythm of home."),
       meta: [

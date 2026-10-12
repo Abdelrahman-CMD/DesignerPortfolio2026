@@ -130,7 +130,7 @@ export function AynAlHikmahExperience({ locale = "nl" }: { locale?: Locale }) {
 
       <header className="tc-hero">
         <div className="tc-hero-copy">
-          <p className="tc-hero-kicker">{tx("Case 08 · Zelf geïnitieerd concept")}</p>
+          <p className="tc-hero-kicker">{tx("Zelf geïnitieerd concept")}</p>
           <h1>
             <span className="tc-title-line"><span>Ayn Al-Hikmah</span></span>
             <span className="tc-title-line tc-title-small"><span>{tx("Kennis meenemen.")}</span></span>

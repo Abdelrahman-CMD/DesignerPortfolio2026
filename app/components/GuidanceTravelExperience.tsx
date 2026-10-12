@@ -118,7 +118,7 @@ export function GuidanceTravelExperience({ locale = "nl" }: { locale?: Locale })
 
       <header className="tc-hero">
         <div className="tc-hero-copy">
-          <p className="tc-hero-kicker">{locale === "en" ? "Case 07 · Research-led concept" : "Case 07 · Onderzoeksgericht concept"}</p>
+          <p className="tc-hero-kicker">{locale === "en" ? "Research-led concept" : "Onderzoeksgericht concept"}</p>
           <h1>
             <span className="tc-title-line"><span>Guidance Travel</span></span>
             <span className="tc-title-line tc-title-small"><span>{tx("De reis vroeg overgave.")}</span></span>

@@ -192,7 +192,7 @@ export function HijamaNCupsExperience({ locale = "nl" }: { locale?: Locale }) {
 
       <header className="tc-hero">
         <div className="tc-hero-copy">
-          <p className="tc-hero-kicker">{tx("Case 04 · Klantproject")}</p>
+          <p className="tc-hero-kicker">{tx("Klantproject")}</p>
           <h1>
             <span className="tc-title-line"><span>Hijama ’N Cups</span></span>
             <span className="tc-title-line tc-title-small"><span>{tx("Vertrouwen voelen.")}</span></span>
