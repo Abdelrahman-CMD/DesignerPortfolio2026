@@ -138,6 +138,12 @@ test("uses bounded raster assets on the homepage and case pages", async () => {
   assert.match(caseHtml, /De huidige reis verliest zekerheid tussen intentie en vertrek/);
   assert.match(caseHtml, /class="tc-deep-dive"/);
   assert.equal((caseHtml.match(/class="tc-card-shell /g) ?? []).length, 3);
+  assert.match(caseHtml, /class="tc-section-nav"/);
+  for (const sectionId of ["case-overview", "case-context", "case-process", "case-evidence", "case-outcome"]) {
+    assert.match(caseHtml, new RegExp(`href="#${sectionId}"`));
+    assert.match(caseHtml, new RegExp(`id="${sectionId}"`));
+  }
+  assert.match(css, /\.tc-section-nav \{/);
 
   assert.equal(tareeqiResponse.status, 200);
   const tareeqiHtml = await tareeqiResponse.text();

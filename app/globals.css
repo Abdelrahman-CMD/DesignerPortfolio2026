@@ -6195,12 +6195,83 @@ html.is-cta-captured a { cursor: none !important; }
   transform: translateY(-1px);
 }
 
+.tc-section-nav {
+  position: fixed;
+  z-index: 75;
+  top: 50%;
+  left: clamp(0.75rem, 1.3vw, 1.35rem);
+  display: grid;
+  gap: 0.55rem;
+  transform: translateY(-50%);
+}
+
+.tc-section-nav a {
+  position: relative;
+  display: grid;
+  width: 8.6rem;
+  grid-template-columns: 1.7rem 1fr;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.42rem 0;
+  color: color-mix(in srgb, var(--tc-ink, var(--ink)) 42%, transparent);
+  font-size: var(--type-micro);
+  font-weight: 750;
+  letter-spacing: 0.1em;
+  line-height: 1;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color var(--motion-standard) var(--ease-premium), transform var(--motion-standard) var(--ease-premium);
+}
+
+.tc-section-nav a::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 1.7rem;
+  width: 1.25rem;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.32;
+  transform: translateY(-50%) scaleX(0.56);
+  transform-origin: left center;
+  transition: opacity var(--motion-standard) var(--ease-premium), transform var(--motion-standard) var(--ease-premium);
+}
+
+.tc-section-nav span,
+.tc-section-nav strong {
+  position: relative;
+  z-index: 1;
+}
+
+.tc-section-nav span {
+  font-variant-numeric: tabular-nums;
+}
+
+.tc-section-nav strong {
+  padding-left: 1.55rem;
+  font: inherit;
+}
+
+.tc-section-nav a:hover,
+.tc-section-nav a:focus-visible,
+.tc-section-nav a[aria-current="location"] {
+  color: var(--tc-ink, var(--ink));
+  transform: translateX(0.2rem);
+}
+
+.tc-section-nav a:hover::before,
+.tc-section-nav a:focus-visible::before,
+.tc-section-nav a[aria-current="location"]::before {
+  opacity: 0.86;
+  transform: translateY(-50%) scaleX(1);
+}
+
 .tc-hero,
 .ec-hero {
   position: relative;
   display: block;
-  min-height: 142svh;
-  padding: 17vh 4vw 5vh;
+  min-height: 132svh;
+  padding: 16vh 4vw 5vh;
   overflow: hidden;
   background-color: var(--tc-paper, var(--case-bg));
   background-image:
@@ -6214,7 +6285,7 @@ html.is-cta-captured a { cursor: none !important; }
   position: relative;
   z-index: 8;
   display: block;
-  min-height: 72svh;
+  min-height: 66svh;
   padding: 0;
 }
 
@@ -6224,25 +6295,25 @@ html.is-cta-captured a { cursor: none !important; }
 }
 
 .tc-title-line:first-child {
-  font-size: clamp(5.2rem, 10.5vw, 12rem);
+  font-size: clamp(4.8rem, 9.4vw, 10.8rem);
 }
 
 .tc-title-small {
   width: fit-content;
-  padding-left: 18vw;
-  font-size: clamp(2.3rem, 4.3vw, 5.2rem);
+  padding-left: 15vw;
+  font-size: clamp(2.08rem, 3.72vw, 4.55rem);
 }
 
 .tc-title-small:last-child {
-  margin-left: 8vw;
-  padding-left: 18vw;
+  margin-left: 6vw;
+  padding-left: 15vw;
 }
 
 .tc-hero-summary,
 .ec-hero-headline {
-  width: min(31rem, 40vw);
+  width: min(32rem, 38vw);
   max-width: none;
-  margin: 3.5vh 0 0 48vw;
+  margin: 3vh 0 0 48vw;
 }
 
 .tc-hero-summary {
@@ -6271,10 +6342,10 @@ html.is-cta-captured a { cursor: none !important; }
   position: absolute;
   z-index: 4;
   right: 4vw;
-  bottom: -4vh;
+  bottom: -2vh;
   left: 4vw;
   width: auto;
-  height: 62svh;
+  height: 58svh;
   min-height: 0;
   margin: 0;
   border: 1px solid color-mix(in srgb, currentColor 13%, transparent);
@@ -6333,6 +6404,8 @@ html.is-cta-captured a { cursor: none !important; }
 }
 
 @media (max-width: 720px) {
+  .tc-section-nav { display: none; }
+
   .tc-nav,
   .ec-nav {
     top: var(--space-1);
@@ -6344,19 +6417,19 @@ html.is-cta-captured a { cursor: none !important; }
 
   .tc-hero,
   .ec-hero {
-    min-height: 112svh;
+    min-height: 106svh;
     padding: 14vh var(--space-2) 4vh;
     background-size: 22vw 22vw;
   }
 
   .tc-hero-copy,
-  .ec-hero-copy { min-height: 64svh; }
+  .ec-hero-copy { min-height: 60svh; }
 
   .tc-hero h1,
   .ec-hero h1 { margin-top: 6vh; }
 
-  .tc-title-line:first-child { font-size: clamp(4rem, 20vw, 6.3rem); }
-  .tc-title-small { padding-left: 0; font-size: clamp(2rem, 10vw, 3.35rem); }
+  .tc-title-line:first-child { font-size: clamp(3.65rem, 18vw, 5.8rem); }
+  .tc-title-small { padding-left: 0; font-size: clamp(1.88rem, 9.2vw, 3.05rem); }
   .tc-title-small:last-child { margin-left: 8vw; padding-left: 0; }
 
   .tc-hero-summary,

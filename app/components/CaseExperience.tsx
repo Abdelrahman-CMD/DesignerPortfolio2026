@@ -13,6 +13,7 @@ import WifiOff from "lucide-react/icons/wifi-off";
 import { LanguageSwitcher, Locale, localeHref, translateText } from "../i18n";
 import { CaseDeepDive } from "./CaseDeepDive";
 import { CaseResearchEvidence } from "./CaseResearchEvidence";
+import { CaseSectionNav } from "./CaseSectionNav";
 import { CaseStyleGuide, type CaseStyleGuideData } from "./CaseStyleGuide";
 import { initCaseMotion } from "./caseScrollStory";
 
@@ -128,16 +129,17 @@ export function CaseExperience({ locale = "nl" }: { locale?: Locale }) {
 
   return (
     <main ref={root} className="tc-page" data-motion-project="tareeqi" data-case-motion="pending">
-      <a className="skip-link" href="#tareeqi-content">{tx("Ga naar de case")}</a>
+      <a className="skip-link" href="#case-context">{tx("Ga naar de case")}</a>
 
       <CaseNavMotion />
+      <CaseSectionNav locale={locale} />
       <nav className="tc-nav" aria-label={tx("Case navigatie")}>
         <a href={localeHref("/#werk", locale)}><ArrowLeft aria-hidden="true" /> {tx("Alle cases")}</a>
         <a className="tc-nav-brand" href={localeHref("/", locale)}>Abdelrahman / Product &amp; UX/UI designer</a>
         <div className="tc-nav-actions"><span>03 / 08</span><LanguageSwitcher locale={locale} path="/cases/tareeqi" /></div>
       </nav>
 
-      <header className="tc-hero">
+      <header className="tc-hero" id="case-overview">
         <div className="tc-hero-copy">
           <p className="tc-hero-kicker">{locale === "en" ? "Qualitative concept" : "Kwalitatief concept"}</p>
           <h1>
@@ -164,7 +166,7 @@ export function CaseExperience({ locale = "nl" }: { locale?: Locale }) {
         </figure>
       </header>
 
-      <section className="tc-snapshot" id="tareeqi-content" aria-labelledby="tc-snapshot-title">
+      <section className="tc-snapshot" id="case-context" aria-labelledby="tc-snapshot-title">
         <header>
           <p>{locale === "en" ? "What the route was missing" : "Wat de route nog miste"}</p>
           <h2 id="tc-snapshot-title">{locale === "en" ? "Stories. Local knowledge. Validation." : "Verhalen. Lokale kennis. Toetsing."}</h2>
@@ -178,7 +180,7 @@ export function CaseExperience({ locale = "nl" }: { locale?: Locale }) {
 
       <CaseResearchEvidence variant="tareeqi" locale={locale} />
 
-      <section className="tc-deck" aria-label={locale === "en" ? "Tareeqi discovery concept in three choices" : "Tareeqi discoveryconcept in drie keuzes"}>
+      <section className="tc-deck" id="case-process" aria-label={locale === "en" ? "Tareeqi discovery concept in three choices" : "Tareeqi discoveryconcept in drie keuzes"}>
         {cards.slice(0, 3).map((card, index) => (
           <article
             className={`tc-card-shell tc-tone-${card.tone}`}
@@ -233,7 +235,7 @@ export function CaseExperience({ locale = "nl" }: { locale?: Locale }) {
 
       <CaseDeepDive items={cards.slice(3).map((card) => ({ ...card, eyebrow: tx(card.eyebrow), title: tx(card.title), body: tx(card.body), note: tx(card.note) }))} locale={locale} />
 
-      <section className="tc-proof" aria-labelledby="tc-proof-title">
+      <section className="tc-proof" id="case-evidence" aria-labelledby="tc-proof-title">
         <header className="tc-proof-heading">
           <p>{locale === "en" ? "Route frames / local context" : "Routebeelden / lokale context"}</p>
           <h2 id="tc-proof-title">{tx("Eén systeem.")}<br />{tx("Drie formaten.")}<br /><em>{tx("Vier kernschermen.")}</em></h2>
@@ -256,7 +258,7 @@ export function CaseExperience({ locale = "nl" }: { locale?: Locale }) {
         </div>
       </section>
 
-      <section className="tc-contribution">
+      <section className="tc-contribution" id="case-outcome">
         <p>{locale === "en" ? "My role / concept evidence" : "Mijn rol / conceptbewijs"}</p>
         <div>
           <h2>{tx("Niet aantonen dat ik een interface kan maken. Aantonen dat ik een onbenutte vraag kan vinden en vertalen naar een toetsbaar systeem.")}</h2>

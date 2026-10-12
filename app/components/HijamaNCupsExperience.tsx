@@ -14,6 +14,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { LanguageSwitcher, Locale, localeHref, translateText } from "../i18n";
 import { CaseDeepDive } from "./CaseDeepDive";
+import { CaseSectionNav } from "./CaseSectionNav";
 import { revealCaseCard } from "./caseScrollStory";
 
 import { CaseNavMotion } from "./CaseNavMotion";
@@ -182,15 +183,16 @@ export function HijamaNCupsExperience({ locale = "nl" }: { locale?: Locale }) {
 
   return (
     <main ref={root} className="tc-page tc-page-hijama" data-case-motion="pending">
-      <a className="skip-link" href="#hijama-content">{tx("Ga naar de case")}</a>
+      <a className="skip-link" href="#case-context">{tx("Ga naar de case")}</a>
       <CaseNavMotion />
+      <CaseSectionNav locale={locale} />
       <nav className="tc-nav" aria-label={tx("Case navigatie")}>
         <a href={localeHref("/#werk", locale)}><ArrowLeft aria-hidden="true" /> {tx("Alle cases")}</a>
         <a className="tc-nav-brand" href={localeHref("/", locale)}>Abdelrahman / Product &amp; UX/UI designer</a>
         <div className="tc-nav-actions"><span>04 / 08</span><LanguageSwitcher locale={locale} path="/cases/hijaman-cups" /></div>
       </nav>
 
-      <header className="tc-hero">
+      <header className="tc-hero" id="case-overview">
         <div className="tc-hero-copy">
           <p className="tc-hero-kicker">{tx("Klantproject")}</p>
           <h1>
@@ -214,7 +216,7 @@ export function HijamaNCupsExperience({ locale = "nl" }: { locale?: Locale }) {
         </figure>
       </header>
 
-      <section className="tc-snapshot" id="hijama-content" aria-labelledby="hijama-snapshot-title">
+      <section className="tc-snapshot" id="case-context" aria-labelledby="hijama-snapshot-title">
         <header>
           <p>{locale === "en" ? "What first-time visitors needed" : "Wat nieuwe bezoekers nodig hadden"}</p>
           <h2 id="hijama-snapshot-title">{locale === "en" ? "Explanation. Trust. Personal contact." : "Uitleg. Vertrouwen. Persoonlijk contact."}</h2>
@@ -226,7 +228,7 @@ export function HijamaNCupsExperience({ locale = "nl" }: { locale?: Locale }) {
         </div>
       </section>
 
-      <section className="tc-deck" aria-label={locale === "en" ? "Hijama 'N Cups trust journey in three choices" : "Hijama 'N Cups vertrouwensroute in drie keuzes"}>
+      <section className="tc-deck" id="case-process" aria-label={locale === "en" ? "Hijama 'N Cups trust journey in three choices" : "Hijama 'N Cups vertrouwensroute in drie keuzes"}>
         {cards.slice(0, 3).map((card, index) => (
           <article className={`tc-card-shell tc-tone-${card.tone}`} id={`chapter-${card.number}`} key={card.number} style={{ "--tc-index": index + 1 } as CSSProperties}>
             <div className="tc-card">
@@ -259,7 +261,7 @@ export function HijamaNCupsExperience({ locale = "nl" }: { locale?: Locale }) {
         }))}
       />
 
-      <section className="tc-proof" aria-labelledby="hijama-proof-title">
+      <section className="tc-proof" id="case-evidence" aria-labelledby="hijama-proof-title">
         <header className="tc-proof-heading">
           <p>{tx("De kernflows / responsive gebouwd")}</p>
           <h2 id="hijama-proof-title">{tx("Eerst begrijpen.")}<br />{tx("Dan vertrouwen.")}<br /><em>{tx("Dan contact.")}</em></h2>
@@ -275,7 +277,7 @@ export function HijamaNCupsExperience({ locale = "nl" }: { locale?: Locale }) {
         </div>
       </section>
 
-      <section className="tc-contribution">
+      <section className="tc-contribution" id="case-outcome">
         <p>{locale === "en" ? "My role / live delivery" : "Mijn rol / live levering"}</p>
         <div>
           <h2>{tx("Van mond-tot-mondvertrouwen naar een digitale praktijk die Nora’s eigen manier van werken bewaart.")}</h2>

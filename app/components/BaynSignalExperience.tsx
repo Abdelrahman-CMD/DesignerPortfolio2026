@@ -13,6 +13,7 @@ import UsersRound from "lucide-react/icons/users-round";
 import { LanguageSwitcher, Locale, localeHref, translateText } from "../i18n";
 import { CaseDeepDive } from "./CaseDeepDive";
 import { CaseResearchEvidence } from "./CaseResearchEvidence";
+import { CaseSectionNav } from "./CaseSectionNav";
 import { CaseStyleGuide, type CaseStyleGuideData } from "./CaseStyleGuide";
 import { initCaseMotion } from "./caseScrollStory";
 
@@ -123,15 +124,16 @@ export function BaynSignalExperience({ locale = "nl" }: { locale?: Locale }) {
 
   return (
     <main ref={root} className="tc-page tc-page-bayn" data-motion-project="bayn-signal" data-case-motion="pending">
-      <a className="skip-link" href="#bayn-content">{tx("Ga naar de case")}</a>
+      <a className="skip-link" href="#case-context">{tx("Ga naar de case")}</a>
       <CaseNavMotion />
+      <CaseSectionNav locale={locale} />
       <nav className="tc-nav" aria-label={tx("Case navigatie")}>
         <a href={localeHref("/#werk", locale)}><ArrowLeft aria-hidden="true" /> {tx("Alle cases")}</a>
         <a className="tc-nav-brand" href={localeHref("/", locale)}>Abdelrahman / Product &amp; UX/UI designer</a>
         <div className="tc-nav-actions"><span>05 / 08</span><LanguageSwitcher locale={locale} path="/cases/bayn-signal" /></div>
       </nav>
 
-      <header className="tc-hero">
+      <header className="tc-hero" id="case-overview">
         <div className="tc-hero-copy">
           <p className="tc-hero-kicker">{locale === "en" ? "Hypothesis-led concept" : "Hypothesegedreven concept"}</p>
           <h1>
@@ -152,7 +154,7 @@ export function BaynSignalExperience({ locale = "nl" }: { locale?: Locale }) {
         </figure>
       </header>
 
-      <section className="tc-snapshot" id="bayn-content" aria-labelledby="bayn-snapshot-title">
+      <section className="tc-snapshot" id="case-context" aria-labelledby="bayn-snapshot-title">
         <header>
           <p>{locale === "en" ? "The assumption that needs testing" : "Welke aanname getest moet worden"}</p>
           <h2 id="bayn-snapshot-title">{locale === "en" ? "Signal. Context. Next test." : "Signaal. Context. Volgende toets."}</h2>
@@ -166,7 +168,7 @@ export function BaynSignalExperience({ locale = "nl" }: { locale?: Locale }) {
 
       <CaseResearchEvidence variant="bayn" locale={locale} />
 
-      <section className="tc-deck" aria-label={locale === "en" ? "Bayn Signal platform hypothesis in three choices" : "Bayn Signal platformhypothese in drie keuzes"}>
+      <section className="tc-deck" id="case-process" aria-label={locale === "en" ? "Bayn Signal platform hypothesis in three choices" : "Bayn Signal platformhypothese in drie keuzes"}>
         {cards.slice(0, 3).map((card, index) => (
           <article className={`tc-card-shell tc-tone-${card.tone}`} id={`chapter-${card.number}`} key={card.number} style={{ "--tc-index": index + 1 } as CSSProperties}>
             <div className="tc-card">
@@ -192,7 +194,7 @@ export function BaynSignalExperience({ locale = "nl" }: { locale?: Locale }) {
 
       <CaseDeepDive items={cards.slice(3).map((card) => ({ ...card, eyebrow: tx(card.eyebrow), title: tx(card.title), body: tx(card.body), note: tx(card.note) }))} locale={locale} />
 
-      <section className="tc-proof" aria-labelledby="bayn-proof-title">
+      <section className="tc-proof" id="case-evidence" aria-labelledby="bayn-proof-title">
         <header className="tc-proof-heading">
           <p>{tx("De kernflows / responsive uitgewerkt")}</p>
           <h2 id="bayn-proof-title">{tx("Van signaleren.")}<br />{tx("Naar begrijpen.")}<br /><em>{tx("Naar handelen.")}</em></h2>
@@ -208,7 +210,7 @@ export function BaynSignalExperience({ locale = "nl" }: { locale?: Locale }) {
         </div>
       </section>
 
-      <section className="tc-contribution">
+      <section className="tc-contribution" id="case-outcome">
         <p>{locale === "en" ? "My role / hypothesis boundary" : "Mijn rol / grens van de hypothese"}</p>
         <div><h2>{tx("Van informatie-overload naar een lokale pulse die betekenis vóór volume plaatst.")}</h2><p>{tx("Ik vertaalde de nichekans naar positionering, contentarchitectuur, signaalhiërarchie en een responsive interfacesysteem. Omdat dit een conceptproject is, presenteer ik geen verzonnen impactcijfers; de case maakt juist zichtbaar welke aannames rond relevantie, vertrouwen en gedrag met echte gebruikers getoetst moeten worden.")}</p></div>
       </section>

@@ -13,6 +13,7 @@ import UsersRound from "lucide-react/icons/users-round";
 import { LanguageSwitcher, Locale, localeHref, translateText } from "../i18n";
 import { CaseDeepDive } from "./CaseDeepDive";
 import { CaseResearchEvidence } from "./CaseResearchEvidence";
+import { CaseSectionNav } from "./CaseSectionNav";
 import { CaseStyleGuide, type CaseStyleGuideData } from "./CaseStyleGuide";
 import { initCaseMotion } from "./caseScrollStory";
 
@@ -108,15 +109,16 @@ export function GuidanceTravelExperience({ locale = "nl" }: { locale?: Locale })
 
   return (
     <main ref={root} className="tc-page tc-page-guidance" data-motion-project="guidance-travel" data-case-motion="pending">
-      <a className="skip-link" href="#guidance-content">{tx("Ga naar de case")}</a>
+      <a className="skip-link" href="#case-context">{tx("Ga naar de case")}</a>
       <CaseNavMotion />
+      <CaseSectionNav locale={locale} />
       <nav className="tc-nav" aria-label={tx("Case navigatie")}>
         <a href={localeHref("/#werk", locale)}><ArrowLeft aria-hidden="true" /> {tx("Alle cases")}</a>
         <a className="tc-nav-brand" href={localeHref("/", locale)}>Abdelrahman / Product &amp; UX/UI designer</a>
         <div className="tc-nav-actions"><span>07 / 08</span><LanguageSwitcher locale={locale} path="/cases/guidance-travel" /></div>
       </nav>
 
-      <header className="tc-hero">
+      <header className="tc-hero" id="case-overview">
         <div className="tc-hero-copy">
           <p className="tc-hero-kicker">{locale === "en" ? "Research-led concept" : "Onderzoeksgericht concept"}</p>
           <h1>
@@ -137,7 +139,7 @@ export function GuidanceTravelExperience({ locale = "nl" }: { locale?: Locale })
         </figure>
       </header>
 
-      <section className="tc-snapshot" id="guidance-content" aria-labelledby="guidance-snapshot-title">
+      <section className="tc-snapshot" id="case-context" aria-labelledby="guidance-snapshot-title">
         <header>
           <p>{locale === "en" ? "What the research already showed" : "Wat het onderzoek al liet zien"}</p>
           <h2 id="guidance-snapshot-title">{locale === "en" ? "Uncertainty. Guidance. Validation." : "Onzekerheid. Begeleiding. Toetsing."}</h2>
@@ -151,7 +153,7 @@ export function GuidanceTravelExperience({ locale = "nl" }: { locale?: Locale })
 
       <CaseResearchEvidence variant="guidance" locale={locale} />
 
-      <section className="tc-deck" aria-label={locale === "en" ? "Guidance Travel service concept in three choices" : "Guidance Travel serviceconcept in drie keuzes"}>
+      <section className="tc-deck" id="case-process" aria-label={locale === "en" ? "Guidance Travel service concept in three choices" : "Guidance Travel serviceconcept in drie keuzes"}>
         {cards.slice(0, 3).map((card, index) => (
           <article className={`tc-card-shell tc-tone-${card.tone}`} id={`chapter-${card.number}`} key={card.number} style={{ "--tc-index": index + 1 } as CSSProperties}>
             <div className="tc-card">
@@ -177,7 +179,7 @@ export function GuidanceTravelExperience({ locale = "nl" }: { locale?: Locale })
 
       <CaseDeepDive items={cards.slice(3).map((card) => ({ ...card, eyebrow: tx(card.eyebrow), title: tx(card.title), body: tx(card.body), note: tx(card.note) }))} locale={locale} />
 
-      <section className="tc-proof" aria-labelledby="guidance-proof-title">
+      <section className="tc-proof" id="case-evidence" aria-labelledby="guidance-proof-title">
         <header className="tc-proof-heading">
           <p>{locale === "en" ? "Travel route / decision moments" : "Reisroute / beslismomenten"}</p>
           <h2 id="guidance-proof-title">{tx("Eén reislogica.")}<br />{tx("Drie formaten.")}<br /><em>{tx("Vier kernschermen.")}</em></h2>
@@ -188,7 +190,7 @@ export function GuidanceTravelExperience({ locale = "nl" }: { locale?: Locale })
         </div>
       </section>
 
-      <section className="tc-contribution">
+      <section className="tc-contribution" id="case-outcome">
         <p>{locale === "en" ? "My role / research to route" : "Mijn rol / van onderzoek naar route"}</p>
         <div><h2>{tx("Van een markt vol pakketten naar een dienst die al vóór vertrek vertrouwen begint op te bouwen.")}</h2><p>{tx("Ik heb de marktfrictie vertaald naar positionering, informatiehiërarchie, keuzehulp en een responsive systeem. Het resultaat claimt geen verzonnen conversiewinst; het maakt precies zichtbaar welke aannames met echte reizigers getoetst moeten worden.")}</p></div>
       </section>

@@ -7,6 +7,7 @@ import ArrowUpRight from "lucide-react/icons/arrow-up-right";
 import type { EditorialCase } from "../data/caseContent";
 import { LanguageSwitcher, Locale, localeHref } from "../i18n";
 import { CaseDeepDive } from "./CaseDeepDive";
+import { CaseSectionNav } from "./CaseSectionNav";
 import { initCaseMotion } from "./caseScrollStory";
 
 import { CaseNavMotion } from "./CaseNavMotion";
@@ -394,16 +395,17 @@ export function ClientCaseExperience({ project, locale = "nl" }: { project: Edit
 
   return (
     <main ref={root} className={`tc-page tc-page-client tc-page-${story.theme}`} style={pageStyle} data-motion-project={project.slug} data-case-motion="pending">
-      <a className="skip-link" href="#client-case-content">{locale === "en" ? "Skip to the case study" : "Ga naar de case"}</a>
+      <a className="skip-link" href="#case-context">{locale === "en" ? "Skip to the case study" : "Ga naar de case"}</a>
 
       <CaseNavMotion />
+      <CaseSectionNav locale={locale} />
       <nav className="tc-nav" aria-label={locale === "en" ? "Case study navigation" : "Case navigatie"}>
         <a href={localeHref("/#werk", locale)}><ArrowLeft aria-hidden="true" /> {locale === "en" ? "All case studies" : "Alle cases"}</a>
         <a className="tc-nav-brand" href={localeHref("/", locale)}>Abdelrahman / Product &amp; UX/UI designer</a>
         <div className="tc-nav-actions"><span>{project.number} / 08</span><LanguageSwitcher locale={locale} path={`/cases/${project.slug}`} /></div>
       </nav>
 
-      <header className="tc-hero">
+      <header className="tc-hero" id="case-overview">
         <div className="tc-hero-copy">
           <p className="tc-hero-kicker">{pick(locale, story.hero.kicker)}</p>
           <h1>
@@ -428,7 +430,7 @@ export function ClientCaseExperience({ project, locale = "nl" }: { project: Edit
         </figure>
       </header>
 
-      <section className="tc-snapshot" id="client-case-content" aria-labelledby={`${project.slug}-snapshot-title`}>
+      <section className="tc-snapshot" id="case-context" aria-labelledby={`${project.slug}-snapshot-title`}>
         <header>
           <p>{pick(locale, caseLabels.kicker)}</p>
           <h2 id={`${project.slug}-snapshot-title`}>{pick(locale, caseLabels.title)}</h2>
@@ -438,7 +440,7 @@ export function ClientCaseExperience({ project, locale = "nl" }: { project: Edit
         </div>
       </section>
 
-      <section className="tc-deck" aria-label={pick(locale, caseLabels.storyLabel)}>
+      <section className="tc-deck" id="case-process" aria-label={pick(locale, caseLabels.storyLabel)}>
         {story.cards.map((card, index) => (
           <article className={`tc-card-shell tc-tone-${card.tone}`} id={`chapter-${card.number}`} key={card.number} style={{ "--tc-index": index + 1 } as CSSProperties}>
             <div className="tc-card">
@@ -485,7 +487,7 @@ export function ClientCaseExperience({ project, locale = "nl" }: { project: Edit
         }))}
       />
 
-      <section className="tc-proof" aria-labelledby={`${project.slug}-proof-title`}>
+      <section className="tc-proof" id="case-evidence" aria-labelledby={`${project.slug}-proof-title`}>
         <header className="tc-proof-heading">
           <p>{pick(locale, story.proof.kicker)}</p>
           <h2 id={`${project.slug}-proof-title`}>{pick(locale, story.proof.title)}</h2>
@@ -501,7 +503,7 @@ export function ClientCaseExperience({ project, locale = "nl" }: { project: Edit
         </div>
       </section>
 
-      <section className="tc-contribution">
+      <section className="tc-contribution" id="case-outcome">
         <p>{pick(locale, caseLabels.contribution)}</p>
         <div>
           <h2>{pick(locale, story.contribution.title)}</h2>

@@ -12,6 +12,7 @@ import ShieldCheck from "lucide-react/icons/shield-check";
 import Sparkles from "lucide-react/icons/sparkles";
 import { LanguageSwitcher, Locale, localeHref, translateText } from "../i18n";
 import { CaseDeepDive } from "./CaseDeepDive";
+import { CaseSectionNav } from "./CaseSectionNav";
 import { CaseStyleGuide, type CaseStyleGuideData } from "./CaseStyleGuide";
 import { initCaseMotion } from "./caseScrollStory";
 
@@ -120,15 +121,16 @@ export function AynAlHikmahExperience({ locale = "nl" }: { locale?: Locale }) {
 
   return (
     <main ref={root} className="tc-page tc-page-ayn" data-motion-project="ayn-al-hikmah" data-case-motion="pending">
-      <a className="skip-link" href="#ayn-content">{tx("Ga naar de case")}</a>
+      <a className="skip-link" href="#case-context">{tx("Ga naar de case")}</a>
       <CaseNavMotion />
+      <CaseSectionNav locale={locale} />
       <nav className="tc-nav" aria-label={tx("Case navigatie")}>
         <a href={localeHref("/#werk", locale)}><ArrowLeft aria-hidden="true" /> {tx("Alle cases")}</a>
         <a className="tc-nav-brand" href={localeHref("/", locale)}>Abdelrahman / Product &amp; UX/UI designer</a>
         <div className="tc-nav-actions"><span>08 / 08</span><LanguageSwitcher locale={locale} path="/cases/ayn-al-hikmah" /></div>
       </nav>
 
-      <header className="tc-hero">
+      <header className="tc-hero" id="case-overview">
         <div className="tc-hero-copy">
           <p className="tc-hero-kicker">{tx("Zelf geïnitieerd concept")}</p>
           <h1>
@@ -149,7 +151,7 @@ export function AynAlHikmahExperience({ locale = "nl" }: { locale?: Locale }) {
         </figure>
       </header>
 
-      <section className="tc-snapshot" id="ayn-content" aria-labelledby="ayn-snapshot-title">
+      <section className="tc-snapshot" id="case-context" aria-labelledby="ayn-snapshot-title">
         <header>
           <p>{locale === "en" ? "What has to keep working after Medina" : "Wat na Medina overeind moet blijven"}</p>
           <h2 id="ayn-snapshot-title">{locale === "en" ? "Access. Guidance. Return." : "Toegang. Begeleiding. Terugkeer."}</h2>
@@ -161,7 +163,7 @@ export function AynAlHikmahExperience({ locale = "nl" }: { locale?: Locale }) {
         </div>
       </section>
 
-      <section className="tc-deck" aria-label={locale === "en" ? "Ayn Al-Hikmah learning-commerce concept in three choices" : "Ayn Al-Hikmah leercommerceconcept in drie keuzes"}>
+      <section className="tc-deck" id="case-process" aria-label={locale === "en" ? "Ayn Al-Hikmah learning-commerce concept in three choices" : "Ayn Al-Hikmah leercommerceconcept in drie keuzes"}>
         {cards.slice(0, 3).map((card, index) => (
           <article className={`tc-card-shell tc-tone-${card.tone}`} id={`chapter-${card.number}`} key={card.number} style={{ "--tc-index": index + 1 } as CSSProperties}>
             <div className="tc-card">
@@ -187,7 +189,7 @@ export function AynAlHikmahExperience({ locale = "nl" }: { locale?: Locale }) {
 
       <CaseDeepDive items={cards.slice(3).map((card) => ({ ...card, eyebrow: tx(card.eyebrow), title: tx(card.title), body: tx(card.body), note: tx(card.note) }))} locale={locale} />
 
-      <section className="tc-proof" aria-labelledby="ayn-proof-title">
+      <section className="tc-proof" id="case-evidence" aria-labelledby="ayn-proof-title">
         <header className="tc-proof-heading">
           <p>{tx("Drie kernflows / volledig uitgewerkt")}</p>
           <h2 id="ayn-proof-title">{tx("Van belofte.")}<br />{tx("Naar boekkeuze.")}<br /><em>{tx("Naar begrip.")}</em></h2>
@@ -203,7 +205,7 @@ export function AynAlHikmahExperience({ locale = "nl" }: { locale?: Locale }) {
         </div>
       </section>
 
-      <section className="tc-contribution">
+      <section className="tc-contribution" id="case-outcome">
         <p>{locale === "en" ? "My role / concept to validate" : "Mijn rol / concept om te toetsen"}</p>
         <div><h2>{tx("Van een webshop voor boeken naar een omgeving die kennis helpt landen, groeien en doorgaan.")}</h2><p>{tx("Ik vertaalde de nichekans naar positionering, servicearchitectuur, informatiehiërarchie en een responsive interface. Omdat dit een conceptproject is, presenteer ik geen verzonnen impactcijfers; de case maakt juist helder welke aannames met kenniszoekers getoetst moeten worden.")}</p></div>
       </section>

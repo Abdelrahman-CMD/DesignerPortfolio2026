@@ -9,6 +9,7 @@ import BellOff from "lucide-react/icons/bell-off";
 import CheckCircle2 from "lucide-react/icons/check-circle-2";
 import { LanguageSwitcher, Locale, localeHref } from "../i18n";
 import { CaseDeepDive } from "./CaseDeepDive";
+import { CaseSectionNav } from "./CaseSectionNav";
 import { initCaseMotion } from "./caseScrollStory";
 
 import { CaseNavMotion } from "./CaseNavMotion";
@@ -256,16 +257,17 @@ export function MirqaExperience({ locale = "nl" }: { locale?: Locale }) {
 
   return (
     <main ref={root} className="tc-page tc-page-mirqa" data-motion-project="mirqa" data-case-motion="pending">
-      <a className="skip-link" href="#mirqa-content">{locale === "en" ? "Skip to the case study" : "Ga naar de case"}</a>
+      <a className="skip-link" href="#case-context">{locale === "en" ? "Skip to the case study" : "Ga naar de case"}</a>
 
       <CaseNavMotion />
+      <CaseSectionNav locale={locale} />
       <nav className="tc-nav" aria-label={locale === "en" ? "Case study navigation" : "Case navigatie"}>
         <a href={localeHref("/#werk", locale)}><ArrowLeft aria-hidden="true" /> {locale === "en" ? "All case studies" : "Alle cases"}</a>
         <a className="tc-nav-brand" href={localeHref("/", locale)}>Abdelrahman / Product &amp; UX/UI designer</a>
         <div className="tc-nav-actions"><span>{copy.navCount}</span><LanguageSwitcher locale={locale} path="/cases/mirqa" /></div>
       </nav>
 
-      <header className="tc-hero">
+      <header className="tc-hero" id="case-overview">
         <div className="tc-hero-copy">
           <p className="tc-hero-kicker">{copy.kicker}</p>
           <h1>
@@ -284,7 +286,7 @@ export function MirqaExperience({ locale = "nl" }: { locale?: Locale }) {
         </figure>
       </header>
 
-      <section className="tc-snapshot" id="mirqa-content" aria-labelledby="mirqa-snapshot-title">
+      <section className="tc-snapshot" id="case-context" aria-labelledby="mirqa-snapshot-title">
         <header>
           <p>{copy.snapshotKicker}</p>
           <h2 id="mirqa-snapshot-title">{copy.snapshotTitle}</h2>
@@ -296,7 +298,7 @@ export function MirqaExperience({ locale = "nl" }: { locale?: Locale }) {
         </div>
       </section>
 
-      <section className="tc-deck" aria-label={copy.storyLabel}>
+      <section className="tc-deck" id="case-process" aria-label={copy.storyLabel}>
         {copy.cards.slice(0, 3).map((card, index) => (
           <article className={`tc-card-shell tc-tone-${card.tone}`} id={`chapter-${index + 1}`} key={card.eyebrow} style={{ "--tc-index": index + 1 } as CSSProperties}>
             <div className="tc-card">
@@ -336,7 +338,7 @@ export function MirqaExperience({ locale = "nl" }: { locale?: Locale }) {
         }))}
       />
 
-      <section className="tc-proof" aria-labelledby="mirqa-proof-title">
+      <section className="tc-proof" id="case-evidence" aria-labelledby="mirqa-proof-title">
         <header className="tc-proof-heading">
           <p>{copy.proofKicker}</p>
           <h2 id="mirqa-proof-title">{copy.proofTitle[0]}<br />{copy.proofTitle[1]}<br /><em>{copy.proofTitle[2]}</em></h2>
@@ -352,7 +354,7 @@ export function MirqaExperience({ locale = "nl" }: { locale?: Locale }) {
         </div>
       </section>
 
-      <section className="tc-contribution">
+      <section className="tc-contribution" id="case-outcome">
         <p>{copy.contributionKicker}</p>
         <div><h2>{copy.contributionTitle}</h2><p>{copy.contributionBody}</p></div>
       </section>
