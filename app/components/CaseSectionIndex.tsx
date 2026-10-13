@@ -29,6 +29,27 @@ import type { Locale } from "../i18n";
    eerste rendert. Een portaal telt daarin mee als vorm, ook al landt de inhoud
    ergens anders in de pagina - dus meteen portalen gaf "Hydration failed".
    Deze haak zegt alleen maar: op de server nee, daarna ja. */
+/* Relatieve helderheid volgens WCAG, voor de keuze hieronder welke kleur de
+   voortgangslijn krijgt. Alleen hex, want dat is wat de palletten van de cases
+   bevatten. */
+function helderheid(hex: string) {
+  const h = hex.replace("#", "");
+  const vol = h.length === 3 ? h.split("").map((c) => c + c).join("") : h;
+  if (vol.length !== 6) return null;
+  const kanalen = [0, 2, 4].map((i) => {
+    const c = parseInt(vol.slice(i, i + 2), 16) / 255;
+    return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+  });
+  return 0.2126 * kanalen[0] + 0.7152 * kanalen[1] + 0.0722 * kanalen[2];
+}
+
+function contrast(a: string, b: string) {
+  const la = helderheid(a);
+  const lb = helderheid(b);
+  if (la === null || lb === null) return 0;
+  return (Math.max(la, lb) + 0.05) / (Math.min(la, lb) + 0.05);
+}
+
 const abonneerNiets = () => () => {};
 const opDeClient = () => true;
 const opDeServer = () => false;
@@ -48,13 +69,22 @@ export function CaseSectionIndex({ locale }: { locale: Locale }) {
   const [actiefId, setActiefId] = useState<string>(secties[0].id);
   const knop = useRef<HTMLButtonElement>(null);
   const paneel = useRef<HTMLDivElement>(null);
-  const segmenten = useRef<(HTMLDivElement | null)[]>([]);
+  const ring = useRef<SVGRectElement>(null);
+  const ringDoek = useRef<SVGSVGElement>(null);
   /* Waar we na het sluiten heen scrollen. Dit moet via een ref: de scroll-lock
      hieronder zet bij het opruimen de oude positie terug, dus een scroll die
      de klik zelf doet wordt daarna overschreven. Zelfde constructie als in
      MobileNav, om dezelfde reden. */
   const doel = useRef<string | null>(null);
   const paneelId = useId();
+
+  /* Deze vier staan hier en niet vlak boven de return, omdat de effecten
+     hieronder ze in hun afhankelijkheden hebben: een const die later in de
+     functie staat bestaat op dat moment nog niet. */
+  const positie = Math.max(0, secties.findIndex((sectie) => sectie.id === actiefId));
+  const nu = secties[positie];
+  const nummer = String(positie + 1).padStart(2, "0");
+  const naam = en ? nu.en : nu.nl;
 
   /* Waar de bezoeker is, en hoe ver hij in dat hoofdstuk is. Beide komen uit
      dezelfde meting, met opzet: toen de naam uit een IntersectionObserver kwam
@@ -101,12 +131,30 @@ export function CaseSectionIndex({ locale }: { locale: Locale }) {
         const volgende = aanzet.slice(index + 1).find((g) => g !== null) ?? laatste;
         const lengte = Math.max(1, volgende - start);
         const deel = Math.min(1, Math.max(0, (window.scrollY - start) / lengte));
-
-        const balk = segmenten.current[index];
-        if (balk) balk.style.transform = `scaleX(${deel})`;
         if (deel > 0 && deel < 1) hier = index;
         else if (deel >= 1) hier = Math.min(secties.length - 1, index + 1);
       });
+
+      /* De rand van de pil toont de voortgang door de hele case, niet door het
+         huidige hoofdstuk: hoe ver je in dit hoofdstuk bent zegt niets over
+         hoeveel er nog komt, en dat laatste is de vraag die een haastige lezer
+         stelt. Welk hoofdstuk het is staat er in letters naast. */
+      const doek = ringDoek.current;
+      const rand = ring.current;
+      if (doek && rand) {
+        const pil = doek.parentElement?.getBoundingClientRect();
+        if (pil && pil.width > 0) {
+          /* Binnen twee pixels van het einde telt als het einde. De laatste
+             scrollpixels komen er door ScrollTrigger niet altijd uit, en dan
+             bleef er een zichtbare kier in de rand staan terwijl je echt
+             helemaal beneden was - precies op het moment dat de cirkel rond
+             hoort te zijn. */
+          const totaal = window.scrollY >= laatste - 2
+            ? 1
+            : Math.min(1, Math.max(0, window.scrollY / laatste));
+          rand.style.strokeDashoffset = String(1 - totaal);
+        }
+      }
 
       setActiefId((vorige) => (vorige === secties[hier].id ? vorige : secties[hier].id));
     };
@@ -125,6 +173,106 @@ export function CaseSectionIndex({ locale }: { locale: Locale }) {
       if (frame) window.cancelAnimationFrame(frame);
     };
   }, []);
+
+  /* De kleuren van de case staan op <main class="tc-page tc-page-...">, maar de
+     pil hangt in een portaal aan document.body en valt daar dus buiten. Ze
+     worden hier eenmalig overgezet.
+
+     Twee verschillende, met opzet. De baan waarin de voortgang loopt krijgt de
+     accentkleur: die is decoratief, dus daar geldt geen contrasteis. De lijn
+     die zich vult krijgt de donkere kleur van de case, want drie van de zeven
+     accenten halen de 3:1 niet die een functioneel element nodig heeft -
+     Guidance komt op 1,89 en zou een vrijwel onzichtbare amberen lijn op crème
+     opleveren. De donkere variant haalt overal minstens 6,5 en is nog steeds
+     van de case zelf. */
+  useEffect(() => {
+    const pil = knop.current;
+    const pagina = document.querySelector<HTMLElement>(".tc-page, .editorial-case");
+    if (!pil || !pagina) return;
+    const stijl = getComputedStyle(pagina);
+    const haal = (naam: string, terugval: string) => stijl.getPropertyValue(naam).trim() || terugval;
+
+    const accent = haal("--tc-brown", "#b83225");
+    const donker = haal("--tc-ink", "#292723");
+    const schil = haal("--nav-shell", "#f8f5ef");
+
+    /* De voortgangslijn krijgt de accentkleur van de case, maar alleen als die
+       het haalt. Vier van de zeven palletten doen dat: Ayn 3,74, Oppas 4,57,
+       Mirqa 4,82, AtotZ 5,04. Drie niet: Guidance blijft op 1,89, Bayn op 2,33
+       en Hijama op 2,48 - en een voortgangsbalk die je niet kunt zien is geen
+       voortgangsbalk. Die drie vallen terug op de donkere kleur van diezelfde
+       case, dus het blijft een kleur die bij de pagina hoort.
+
+       Dit staat hier en niet in de css, omdat css niet kan rekenen met
+       contrast. Verandert er ooit een palet, dan verschuift deze keuze
+       vanzelf mee. */
+    const leesbaar = contrast(accent, schil) >= 3;
+
+    pil.style.setProperty("--case-accent", accent);
+    /* De lijn en de tekst zijn apart. Stonden ze op dezelfde variabele, dan
+       kreeg de tekst de accentkleur mee zodra die voor de lijn gekozen werd -
+       en terracotta letters op een crèmekleurige pil leest beroerd. De tekst
+       is altijd de donkere kleur van de case. */
+    pil.style.setProperty("--case-lijn", leesbaar ? accent : donker);
+    pil.style.setProperty("--case-tekst", donker);
+    pil.style.setProperty("--case-schil", schil);
+  }, [gehydrateerd]);
+
+  /* De rand is een svg en moet dus de maat van de pil kennen. Dat gebeurt via
+     een ResizeObserver en niet in de scrollmeting, omdat de pil ook breder of
+     smaller wordt terwijl je stilstaat - bij een hoofdstukwissel - en die
+     overgang duurt een paar honderd milliseconden. Een observer loopt daar
+     frame voor frame in mee; een scrollmeting zou pas bij de volgende scroll
+     bijtrekken en de rand ondertussen naast de pil laten staan. */
+  useEffect(() => {
+    const doek = ringDoek.current;
+    const rand = ring.current;
+    const pil = knop.current;
+    if (!doek || !rand || !pil) return;
+
+    const pas = () => {
+      const b = Math.round(pil.offsetWidth);
+      const h = Math.round(pil.offsetHeight);
+      if (b < 2 || h < 2) return;
+      /* De rand van de pil is de baan; deze lijn ligt er precies bovenop. De
+         inzet is daarom een halve randdikte, niet een hele pixel. */
+      const dikte = 2.5;
+      doek.setAttribute("viewBox", `0 0 ${b} ${h}`);
+      rand.setAttribute("x", String(dikte / 2));
+      rand.setAttribute("y", String(dikte / 2));
+      rand.setAttribute("width", String(b - dikte));
+      rand.setAttribute("height", String(h - dikte));
+      rand.setAttribute("rx", String((h - dikte) / 2));
+    };
+
+    pas();
+    const kijker = new ResizeObserver(pas);
+    kijker.observe(pil);
+    return () => kijker.disconnect();
+    /* gehydrateerd hoort erbij: de pil hangt in een portaal dat pas na de
+       hydratie bestaat, dus bij de eerste doorloop is knop.current nog leeg.
+       Zonder deze afhankelijkheid liep dit effect precies een keer, op dat
+       lege moment, en bleef de rand op breedte nul staan. */
+  }, [gehydrateerd]);
+
+  /* De breedte wordt expliciet gezet, want een pil die zich naar zijn inhoud
+     voegt valt niet te animeren - fit-content heeft geen begin- en eindwaarde
+     om tussen te lopen. Bij elke hoofdstukwissel meten we de nieuwe natuurlijke
+     breedte en schrijven die als pixelwaarde; de overgang in de css doet de
+     rest. De eerste keer staat hij er meteen goed, zonder animatie. */
+  useEffect(() => {
+    const pil = knop.current;
+    if (!pil) return;
+    const vorige = pil.style.width;
+    pil.style.width = "auto";
+    const breed = pil.offsetWidth;
+    pil.style.width = vorige || `${breed}px`;
+    if (!vorige) return;
+    const frame = window.requestAnimationFrame(() => {
+      pil.style.width = `${breed}px`;
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, [naam, nummer, gehydrateerd]);
 
   // Escape sluit, en de focus gaat terug naar de regel waar hij vandaan kwam.
   useEffect(() => {
@@ -195,11 +343,6 @@ export function CaseSectionIndex({ locale }: { locale: Locale }) {
     };
   }, [open]);
 
-  const positie = Math.max(0, secties.findIndex((sectie) => sectie.id === actiefId));
-  const nu = secties[positie];
-  const nummer = String(positie + 1).padStart(2, "0");
-  const naam = en ? nu.en : nu.nl;
-
   const ga = (id: string) => (event: { preventDefault: () => void }) => {
     event.preventDefault();
     doel.current = id;
@@ -208,42 +351,6 @@ export function CaseSectionIndex({ locale }: { locale: Locale }) {
 
   return (
     <>
-      <button
-        ref={knop}
-        type="button"
-        className="csi-bar"
-        /* Zonder javascript opent deze knop niets, en een knop die niets
-           doet is erger dan geen knop. Tot de hydratie staat hij uit en
-           de lijst hieronder aan; daarna precies andersom. */
-        hidden={!gehydrateerd}
-        aria-expanded={open}
-        aria-controls={paneelId}
-        aria-label={
-          open
-            ? en ? "Close contents" : "Inhoud sluiten"
-            : en
-              ? `Open contents. You are at section ${positie + 1} of ${secties.length}: ${naam}`
-              : `Inhoud openen. Je bent bij onderdeel ${positie + 1} van ${secties.length}: ${naam}`
-        }
-        onClick={() => setOpen((v) => !v)}
-      >
-        <span className="csi-nu" aria-hidden="true">
-          <span className="csi-nu-num">{nummer}</span>
-          <span className="csi-nu-streep">/</span>
-          <span className="csi-nu-naam">{naam}</span>
-        </span>
-        <span className="csi-cue" aria-hidden="true">
-          <span>{open ? (en ? "Close" : "Sluit") : en ? "Contents" : "Inhoud"}</span>
-          {/* Eén plusje dat 45 graden draait. Dat is dezelfde beweging als de
-              hamburger naar een kruis maakt, dus het rijmt met de rest. */}
-          <span className={`csi-plus${open ? " is-kruis" : ""}`}>
-            <svg viewBox="0 0 24 24" focusable="false">
-              <path d="M12 5.5v13M5.5 12h13" />
-            </svg>
-          </span>
-        </span>
-      </button>
-
       {/* De vijf ankers blijven hoe dan ook in de html staan - de rail die hier
           eerst stond leverde die ook, en zonder javascript is dit het enige
           dat werkt. */}
@@ -261,28 +368,18 @@ export function CaseSectionIndex({ locale }: { locale: Locale }) {
       {gehydrateerd
         ? createPortal(
             <>
-              {/* De haarlijn blijft staan als de balk weggeschoven is. Dat is
-                  het enige dat de vraag "hoeveel komt er nog" beantwoordt
-                  zodra de navigatie verdwijnt. */}
-              <div className="csi-voortgang" aria-hidden="true">
-                {secties.map((sectie, index) => (
-                  <div key={sectie.id} className="csi-segment">
-                    <div
-                      ref={(el) => {
-                        segmenten.current[index] = el;
-                      }}
-                      className="csi-segment-vulling"
-                    />
-                  </div>
-                ))}
-              </div>
+              {/* Het enige blijvende element op een casepagina: waar je bent,
+                  hoe ver je bent, en de ingang naar de inhoudsopgave in een
+                  pil van ongeveer 120 bij 30.
 
-              {/* De compacte versie van de regel in de balk. Zij verschijnt
-                  precies wanneer die balk wegschuift en verdwijnt wanneer hij
-                  terugkomt, zodat er altijd een van de twee staat. Aantikbaar,
-                  zodat je ook diep in een case kunt springen zonder eerst
-                  omhoog te swipen. */}
+                  Hij staat linksonder en niet linksboven, omdat hij altijd in
+                  beeld moet blijven: de voortgang zit nu in zijn rand, dus zou
+                  hij met de balk meeverdwijnen, dan verdween de voortgang mee.
+                  Boven is geen ruimte - daar staat de balk, en eronder de
+                  broodkruimel die er anders onder wegvalt. Onderaan is wel
+                  ruimte, en op een telefoon ligt hij daar in duimbereik. */}
               <button
+                ref={knop}
                 type="button"
                 className="csi-chip"
                 aria-expanded={open}
@@ -294,6 +391,14 @@ export function CaseSectionIndex({ locale }: { locale: Locale }) {
                 }
                 onClick={() => setOpen((v) => !v)}
               >
+                {/* De rand tekent zichzelf vol terwijl je scrolt. Dat is
+                    dezelfde techniek als de icoontjes in de navigatiebalk
+                    gebruiken: een pad met pathLength 1, zodat de voortgang
+                    rechtstreeks de dashoffset is en er geen rekenwerk met de
+                    omtrek aan te pas komt. */}
+                <svg ref={ringDoek} className="csi-chip-rand" aria-hidden="true" focusable="false">
+                  <rect ref={ring} x="0" y="0" width="0" height="0" rx="0" pathLength="1" />
+                </svg>
                 <span className="csi-nu-num" aria-hidden="true">{nummer}</span>
                 <span className="csi-nu-streep" aria-hidden="true">/</span>
                 <span className="csi-chip-naam" aria-hidden="true">{naam}</span>

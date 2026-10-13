@@ -6200,213 +6200,151 @@ html.is-cta-captured a { cursor: none !important; }
   transform: translateY(-1px);
 }
 
-/* De inhoudsopgave van een case. Zie CaseSectionIndex voor de reden dat dit
-   geen rail links in beeld meer is: die stond permanent uitgeklapt, lag op
-   vier van de zes gemeten scrollposities onder de tekst, en op een telefoon
-   is die marge er helemaal niet.
+/* De inhoudsopgave van een case. Zie CaseSectionIndex voor de weg hierheen:
+   eerst een rail links in beeld, die op de content lag; daarna een regel in de
+   navigatiebalk, die over de broodkruimel boven de titel viel. Wat overblijft
+   is een pil linksonder - waar je bent, hoe ver je bent, en de ingang naar de
+   opgave - plus het volledige scherm dat hij opent. Verder niets. */
 
-   Nu zijn voortgang en opgave gesplitst. De voortgang is een haarlijn van 2px
-   die altijd blijft staan; de opgave zit achter een regel in de balk en komt
-   alleen op verzoek. */
-
-/* De regel onder in de navigatiebalk. Hij spant alle kolommen van het raster
-   van .tc-nav en wordt zo een tweede rij. Omdat hij een kind van die balk is,
-   schuift hij mee met de transform die CaseNavMotion erop zet - er is dus
-   maar een element dat op het scrollgebaar reageert, niet twee. */
-.csi-bar {
-  grid-column: 1 / -1;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  /* 8pt: 16px tussen de twee helften, 40px hoog. Dat laatste is ruim boven
-     de 24px die WCAG 2.5.8 als klikdoel vraagt. */
-  gap: var(--space-2);
-  width: 100%;
-  min-height: 2.5rem;
-  margin-top: var(--space-1);
-  padding: 0 var(--space-2);
-  border: 0;
-  border-top: 1px solid var(--case-rule, rgba(41, 38, 34, 0.14));
-  background: none;
-  color: inherit;
-  font: inherit;
-  letter-spacing: inherit;
-  text-transform: inherit;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-  transition: background-color var(--motion-standard) var(--ease-premium);
-}
-
-.csi-bar:hover { background: rgba(45, 42, 38, 0.05); }
-
-/* Zonder javascript bestaat er geen paneel om te openen, dus dan staat de
-   knop uit en de lijst aan. De component zet dat zelf met het hidden-attribuut
-   zodra ze gehydrateerd is; display moet hier expliciet, anders wint de flex
-   hieronder van de standaardstijl van hidden. */
-.csi-bar[hidden],
-.csi-fallback[hidden] { display: none; }
-
-.csi-fallback {
-  grid-column: 1 / -1;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0 var(--space-2);
-  margin: var(--space-1) 0 0;
-  padding: var(--space-1) 0 0;
-  border-top: 1px solid var(--case-rule, rgba(41, 38, 34, 0.14));
-  list-style: none;
-}
-
-.csi-fallback a { min-height: 2.5rem; }
-.csi-fallback .csi-num { letter-spacing: 0.11em; }
-
-.csi-bar:focus-visible {
-  outline: 2px solid #b83225;
-  outline-offset: 2px;
-  border-radius: 0.3rem;
-}
-
-/* Waar je bent. De nummers zijn tabulair, anders verspringt de naam ernaast
-   bij elke sectiewissel. */
-.csi-nu {
-  display: inline-flex;
-  align-items: baseline;
-  gap: var(--space-1);
-  min-width: 0;
-}
-
-.csi-nu-num {
-  color: #b83225;
-  font-variant-numeric: tabular-nums;
-}
-
-.csi-nu-streep { opacity: 0.35; }
-
-.csi-nu-naam {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-/* De uitnodiging om te openen. */
-.csi-cue {
-  display: inline-flex;
-  flex: none;
-  align-items: center;
-  gap: var(--space-1);
-  opacity: 0.7;
-}
-
-.csi-bar:hover .csi-cue { opacity: 1; }
-
-.csi-plus {
-  display: grid;
-  place-items: center;
-  width: 1rem;
-  height: 1rem;
-  transition: transform var(--motion-standard) var(--ease-premium);
-}
-
-.csi-plus svg {
-  display: block;
-  width: 1rem;
-  height: 1rem;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.8;
-  stroke-linecap: round;
-}
-
-/* Een plus die 45 graden draait is een kruis. Dezelfde beweging als de
-   hamburger op de homepage maakt. */
-.csi-plus.is-kruis { transform: rotate(45deg); }
-
-/* De voortgangslijn, een segment per hoofdstuk. Staat boven de balk in
-   z-index en verdwijnt nooit. Vijf segmenten in plaats van een doorlopende
-   streep, omdat een streep alleen zegt hoe ver je bent en niet waar: je zag
-   pas in welk hoofdstuk je zat als je omhoog scrolde om de balk terug te
-   halen. 2px vraagt geen aandacht en kost geen witruimte. */
-.csi-voortgang {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 95;
-  display: grid;
-  /* Gelijke breedtes en niet naar de lengte van het hoofdstuk: dit is een
-     hoofdstukteller, geen schuifbalk. Zou hij meeschalen, dan werd Overzicht
-     een spikkel en Bewijs de halve breedte. */
-  grid-auto-flow: column;
-  grid-auto-columns: 1fr;
-  gap: 2px;
-  width: 100%;
-  height: 2px;
-  pointer-events: none;
-}
-
-.csi-segment {
-  overflow: hidden;
-  background: rgba(41, 38, 34, 0.14);
-}
-
-/* scaleX en geen breedte, zodat de browser hier geen layout voor doet. Geen
-   transition: de vulling moet de scroll volgen en niet erachteraan lopen. */
-.csi-segment-vulling {
-  width: 100%;
-  height: 100%;
-  background: #b83225;
-  transform-origin: left center;
-  transform: scaleX(0);
-}
-
-/* De compacte versie van de regel uit de balk. Zij en de balk wisselen elkaar
-   af: CaseNavMotion zet data-case-nav op html, en daaronder staat er altijd
-   precies een van de twee in beeld. Nooit geen - dat was de klacht - en nooit
-   allebei, want dan stond dezelfde regel er twee keer.
-
-   Links uitgelijnd met de balk erboven, zodat het nummer op dezelfde plek
-   blijft staan als de een in de ander overgaat. */
+/* De pil. Linksonder, altijd in beeld, en het enige blijvende element op een
+   casepagina. Dezelfde taal als de pillen in de header van de homepage:
+   volledig rond, dezelfde rand, dezelfde schil, dezelfde schaduw. */
 .csi-chip {
   position: fixed;
-  top: 0.625rem;
-  left: 2vw;
+  bottom: clamp(0.8rem, 2vw, 1.5rem);
+  left: clamp(0.8rem, 2vw, 1.5rem);
   z-index: 94;
   display: inline-flex;
-  /* Niet baseline: dat lijnt op de basislijn van de letters en laat de hele
-     regel bovenin het pilletje hangen - gemeten 1px speling boven en 11,6px
-     onder. Alle drie de deeltjes hebben dezelfde korpsgrootte, dus centreren
-     mag gewoon. */
   align-items: center;
-  gap: var(--space-1);
-  min-height: 1.75rem;
-  padding: 0 0.625rem;
-  border: 1px solid rgba(41, 38, 34, 0.1);
-  border-radius: 0.5rem;
-  background: color-mix(in srgb, var(--paper-light) 92%, transparent);
-  box-shadow: 0 0.4rem 1.1rem rgba(41, 38, 34, 0.07);
-  color: var(--ink);
+  /* Maten naar het ontwerp, teruggebracht van de geexporteerde mockup: die
+     stond op 88px hoog met een rand van 5,3px, oftewel op tweemaal ware
+     grootte. Gehalveerd komt dat uit op 44 bij 2,5 - en 44 is net de hoogte
+     van .site-mark in de header, dus het rijmt ook met de rest. */
+  height: 2.75rem;
+  gap: 0.4375rem;
+  padding: 0 0.75rem;
+  /* Geen css-rand. Die was een tweede ring: altijd helemaal rond, met daar
+     bovenop een lijn die meebewoog - twee cirkels waar er een hoort te zijn.
+     De rand van de pil is nu de voortgang zelf en wordt getekend in de svg
+     hieronder, van niets naar rond. Css kan dat niet: een border kent geen
+     gedeeltelijke lengte.
+
+     Aan het begin van een case heeft de pil dus geen omlijning. Dat mag: de
+     vulling en de schaduw geven hem genoeg vorm, en de ring die zich sluit
+     terwijl je leest is juist het idee. */
+  border: 0;
+  border-radius: 999px;
+  /* Glas met een vleugje van de case erin: de eigen schil van de pagina met de
+     accentkleur er als dunne laag overheen. Twee lagen en geen geneste
+     color-mix, omdat de bouwstap daar een onbruikbare terugval van maakt.
+
+     88% en niet 58%: deze pil zweeft over de hele case, en die heeft donkere
+     secties. Op 58% nam het glas dat donker over, werd de pil zelf donker en
+     viel de tekst erin weg. Op 88% blijft hij licht boven wat er ook achter
+     staat, terwijl de vervaging de vorm en de kleur erachter nog doorlaat. */
+  background:
+    /* Spiegeling. Het licht staat in het ontwerp op -30 graden op volle sterkte,
+       dus de glans loopt van linksboven weg. Dit is wat css van "licht" kan
+       maken: een verloop, geen berekende weerkaatsing. */
+    linear-gradient(
+      155deg,
+      rgba(255, 255, 255, 0.55) 0%,
+      rgba(255, 255, 255, 0.12) 34%,
+      rgba(255, 255, 255, 0) 62%
+    ),
+    linear-gradient(
+      color-mix(in srgb, var(--case-accent, #b83225) 8%, transparent),
+      color-mix(in srgb, var(--case-accent, #b83225) 8%, transparent)
+    ),
+    color-mix(in srgb, var(--case-schil, var(--paper-light)) 88%, transparent);
+  /* Frost staat op 9 van de 100, dus nauwelijks matglas: de achtergrond mag
+     doorkomen, niet vervagen tot pap. Vandaar 6px en niet de 14px van hiervoor.
+     Breking en spreiding kent css niet; wat die in Figma doen - de achtergrond
+     verzadigder en iets lichter door de dikte heen - benader ik met saturate en
+     brightness. Het is een gelijkenis, geen vertaling. */
+  -webkit-backdrop-filter: blur(6px) saturate(172%) brightness(1.04);
+  backdrop-filter: blur(6px) saturate(172%) brightness(1.04);
+  /* Diepte en splay staan allebei op 100: dik glas waarvan de randen oplichten.
+     Dat zijn de twee inzetlijnen - licht aan de kant waar het licht vandaan
+     komt, donker aan de overkant. Daaronder de slagschaduw van het ontwerp. */
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.7),
+    inset 1px 0 0 0 rgba(255, 255, 255, 0.35),
+    inset 0 -1px 0 0 rgba(31, 28, 25, 0.09),
+    0 0.4rem 1.2rem rgba(31, 28, 25, 0.08);
+  color: var(--case-tekst, #292622);
   font-family: var(--sans);
-  font-size: var(--type-micro);
-  font-weight: 650;
-  letter-spacing: 0.11em;
-  text-transform: uppercase;
+  /* Zoals in het ontwerp: gewone schrijfwijze, geen kapitalen, geen spatiering.
+     Dat leest als een statusmelding en niet als een navigatielabel - en dat is
+     precies wat het is. */
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+  white-space: nowrap;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
-  opacity: 0;
-  transform: translateY(-0.4rem);
-  pointer-events: none;
+  /* De breedte wordt in javascript gezet omdat een pil met fit-content niet
+     te animeren valt. Zonder deze overgang sprong hij van "Overzicht" naar
+     "Context" in een frame, en dat tikt in je ooghoek. */
   transition:
-    opacity var(--motion-standard) var(--ease-premium),
-    transform var(--motion-standard) var(--ease-premium);
+    width var(--motion-standard) var(--ease-premium),
+    box-shadow var(--motion-standard) var(--ease-premium);
 }
 
-html[data-case-nav="hidden"] .csi-chip {
-  opacity: 1;
-  transform: none;
-  pointer-events: auto;
+.csi-chip:hover {
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.8),
+    inset 1px 0 0 0 rgba(255, 255, 255, 0.4),
+    inset 0 -1px 0 0 rgba(31, 28, 25, 0.09),
+    0 0.55rem 1.6rem rgba(31, 28, 25, 0.14);
 }
 
-/* Het aantiksel loopt verder dan het pilletje zelf, zodat ook een duim die
-   er net naast zit het nog raakt. */
+/* In het ontwerp is het nummer donker en het schuine streepje het accent -
+   andersom dan in de versie hiervoor. Het streepje is leesteken en geen
+   informatie, dus daar mag de accentkleur staan ook als die zacht uitvalt. */
+.csi-nu-num {
+  font-variant-numeric: tabular-nums;
+  opacity: 0.72;
+}
+
+.csi-nu-streep { color: var(--case-accent, #b83225); }
+
+/* De voortgangsrand. Die ligt over de rand van de pil heen en vult zich
+   terwijl je scrolt, in plaats van de haarlijn die hier eerst tegen de
+   bovenkant van het scherm stond. Een element minder, en de voortgang staat
+   nu waar ook staat waar je bent.
+
+   Geen transition: de rand hoort de scroll te volgen, niet erachteraan te
+   lopen. Met pathLength=1 is de voortgang rechtstreeks de dashoffset. */
+.csi-chip-rand {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+/* Dit is de rand van de pil, niet iets dat eroverheen ligt: hij valt precies
+   samen met de buitenkant en is het enige dat die vorm omlijnt. */
+.csi-chip-rand rect {
+  fill: none;
+  /* --case-lijn is de accentkleur van de case waar die 3:1 haalt, en anders de
+     donkere kleur van diezelfde case. Die keuze wordt in CaseSectionIndex
+     gemaakt, omdat css niet met contrast kan rekenen. */
+  stroke: var(--case-lijn, #292723);
+  stroke-width: 2.5;
+  /* Ronde uiteinden: met platte uiteinden bleef er op het laatst een haarfijne
+     kier staan waar begin en eind van het pad elkaar raken. */
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+/* Het aantiksel loopt verder dan de pil zelf, zodat ook een duim die er net
+   naast zit hem nog raakt. */
 .csi-chip::after {
   content: "";
   position: absolute;
@@ -6527,9 +6465,10 @@ html[data-case-nav="hidden"] .csi-chip {
 
 @media (prefers-reduced-motion: reduce) {
   .csi-panel { animation: none; }
-  .csi-plus,
-  .csi-naam,
-  .csi-bar { transition: none; }
+  .csi-naam { transition: none; }
+  /* De breedte blijft wel overgaan: zonder die overgang springt de pil, en
+     springen is voor wie hier gevoelig voor is juist het probleem. */
+  .csi-chip { transition: width var(--motion-standard) var(--ease-premium); }
 }
 
 .tc-hero,
@@ -6674,7 +6613,6 @@ html[data-case-nav="hidden"] .csi-chip {
      mag hoger beginnen. De 2vw wordt dezelfde halve rem als de balk zelf,
      zodat 01 nog steeds recht onder de pijl terug staat. */
   .csi-panel { padding: 7.5rem var(--space-1) var(--space-4); }
-  .csi-chip { left: var(--space-1); }
   .csi-naam { font-size: var(--type-h3); }
 
   .tc-nav,
@@ -10406,4 +10344,136 @@ body:has(.mnav-panel) .floating-contact { opacity: 0; pointer-events: none; }
     flex: 0 0 auto;
     min-width: auto;
   }
+}
+
+/* ===== De navigatiebalk van een case, gelijkgetrokken met de homepage =====
+
+   De header van de homepage is een doorzichtige strook over de volle breedte
+   waarin losse pillen zweven: het merk links, de tabs en de taalschakelaar
+   rechts. De casebalk was iets heel anders - een zwevende kaart van 96vw met
+   een eigen rand, radius en schaduw - en dat las als een tweede ontwerp op
+   dezelfde site.
+
+   Hieronder krijgt hij dezelfde opbouw, met letterlijk dezelfde schil, rand en
+   schaduw als .site-mark en .top-nav. En dezelfde verdeling: het merk is rond
+   omdat het identiteit is, de functionele groepen zijn rechthoekig met 0.95rem.
+
+   De kleur per case blijft bestaan, maar verhuist van de balk naar de pillen -
+   anders loopt er een gekleurde band over de bovenkant van het beeld.
+
+   Dit blok staat achteraan omdat de regels die het overschrijft verspreid door
+   het bestand staan, tot in mediaqueries toe. Zelfde reden als bij
+   .postcard-links hierboven. */
+
+.tc-page-ayn { --nav-shell: #fff3e9; }
+.tc-page-bayn { --nav-shell: #f5f1e8; }
+.tc-page-hijama { --nav-shell: #f7f7f2; }
+.tc-page-mirqa { --nav-shell: #f4ece2; }
+.tc-page-atotz { --nav-shell: #f4f5f6; }
+.tc-page-oppas { --nav-shell: #fbf6ea; }
+
+.tc-page .tc-nav,
+.editorial-case .ec-nav {
+  --nav-border: rgba(41, 38, 34, 0.18);
+  --nav-schaduw: 0 0.45rem 1.4rem rgba(31, 28, 25, 0.1);
+  position: fixed;
+  z-index: 90;
+  top: 0;
+  left: 0;
+  display: flex;
+  width: 100%;
+  min-height: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem;
+  padding: var(--space-1) var(--space-2);
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  /* De strook zelf vangt geen klikken, de pillen erin wel - net als
+     .site-header, zodat de case eronder aanklikbaar blijft. */
+  pointer-events: none;
+}
+
+.tc-page .tc-nav > a,
+.tc-page .tc-nav-actions > span,
+.editorial-case .ec-nav > a,
+.editorial-case .ec-nav-actions > a {
+  display: inline-flex;
+  width: fit-content;
+  /* 51px: exact de hoogte van de pillen in de header van de homepage. Die
+     komt daar uit links van 40,8px plus 0,25rem schil en 1px rand; hier staat
+     hij als maat omdat deze pillen geen link-in-een-groep zijn. */
+  min-height: 3.1875rem;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-2);
+  border: 1px solid var(--nav-border);
+  border-radius: 0.95rem;
+  background: var(--nav-shell, rgba(248, 245, 239, 0.96));
+  box-shadow: var(--nav-schaduw);
+  pointer-events: auto;
+}
+
+/* Het merk is rond, zoals .site-mark op de homepage; de functionele groepen
+   blijven rechthoekig op 0.95rem. De selector noemt hier ook > a, want anders
+   wint de regel hierboven op specificiteit en blijft het merk hoekig. */
+.tc-page .tc-nav > a.tc-nav-brand,
+.editorial-case .ec-nav > a.case-brand { border-radius: 999px; }
+
+/* De taalschakelaar kreeg op casepagina's kleinere links dan op de homepage,
+   waardoor hij 48px werd naast pillen van 51. Deze maten zijn letterlijk die
+   van .site-header, zodat de hele rij op een lijn staat. */
+.tc-page .tc-nav .language-switcher a,
+.editorial-case .ec-nav .language-switcher a {
+  min-width: 3.75rem;
+  min-height: 2.55rem;
+  padding: 0 0.7rem;
+}
+
+.tc-page .tc-nav-actions,
+.editorial-case .ec-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.tc-page .tc-nav .language-switcher,
+.editorial-case .ec-nav .language-switcher { pointer-events: auto; }
+
+.tc-page .tc-nav > a:hover,
+.tc-page .tc-nav > a:focus-visible,
+.editorial-case .ec-nav > a:hover,
+.editorial-case .ec-nav > a:focus-visible {
+  background: var(--nav-shell, rgba(248, 245, 239, 0.96));
+  transform: translateY(-1px);
+}
+
+/* De ankerlijst voor bezoekers zonder javascript hing aan het raster dat deze
+   balk niet meer heeft; in een flexrij wordt het een eigen regel. */
+.csi-fallback {
+  flex-basis: 100%;
+  pointer-events: auto;
+}
+
+@media (max-width: 720px) {
+  .tc-page .tc-nav,
+  .editorial-case .ec-nav { padding: var(--space-1); gap: 0.4rem; }
+
+  /* Smaller scherm, smallere pillen - en 46px omdat de taalschakelaar hier
+     naar 2.35rem krimpt om de rij te laten passen. */
+  .tc-page .tc-nav > a,
+  .tc-page .tc-nav-actions > span,
+  .editorial-case .ec-nav > a { min-height: 2.875rem; padding: 0.25rem 0.7rem; }
+
+  .tc-page .tc-nav .language-switcher a,
+  .editorial-case .ec-nav .language-switcher a {
+    min-width: 2.35rem;
+    min-height: 2.35rem;
+    padding: 0 0.35rem;
+  }
+
+  .tc-page .tc-nav-actions,
+  .editorial-case .ec-nav-actions { gap: 0.4rem; }
 }

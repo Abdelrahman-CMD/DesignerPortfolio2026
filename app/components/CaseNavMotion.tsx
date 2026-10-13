@@ -41,12 +41,6 @@ export function CaseNavMotion() {
     const setNavVisibility = (visible: boolean) => {
       if (visible === navVisible) return;
       navVisible = visible;
-      /* CaseSectionIndex laat hieraan zien of hij zijn compacte versie moet
-         tonen. Die neemt het over zodra deze balk wegschuift, zodat er altijd
-         precies een van de twee in beeld staat - nooit geen en nooit allebei.
-         Via een attribuut en niet via react-state, omdat dit op elke
-         scrollstap kan wisselen en er dan geen render aan te pas hoeft. */
-      document.documentElement.dataset.caseNav = visible ? "visible" : "hidden";
       gsap.to(nav, {
         autoAlpha: visible ? 1 : 0,
         yPercent: visible ? 0 : -125,
@@ -76,12 +70,9 @@ export function CaseNavMotion() {
 
     window.addEventListener("scroll", handleDirectionalScroll, { passive: true });
 
-    document.documentElement.dataset.caseNav = "visible";
-
     return () => {
       window.removeEventListener("scroll", handleDirectionalScroll);
       if (scrollFrame) window.cancelAnimationFrame(scrollFrame);
-      delete document.documentElement.dataset.caseNav;
     };
   }, []);
 

@@ -158,36 +158,20 @@ test("uses bounded raster assets on the homepage and case pages", async () => {
   assert.match(caseHtml, /De huidige reis verliest zekerheid tussen intentie en vertrek/);
   assert.match(caseHtml, /class="tc-deep-dive"/);
   assert.equal((caseHtml.match(/class="tc-card-shell /g) ?? []).length, 3);
-  /* De inhoudsopgave zit IN de navigatiebalk en niet ernaast: die balk krijgt
-     een transform van CaseNavMotion, en twee losse elementen zouden dan op
-     hetzelfde scrollgebaar dezelfde beweging moeten maken. */
-  assert.match(caseHtml, /<nav class="tc-nav"(?:(?!<\/nav>)[\s\S])*class="csi-bar"/);
-  assert.doesNotMatch(caseHtml, /tc-section-nav|tc-section-tick/);
-  assert.match(css, /\.csi-bar \{/);
-  assert.doesNotMatch(css, /\.tc-section-nav|\.tc-section-tick|\.tc-section-label/);
+  /* Wat er van de inhoudsopgave over is: een pil linksonder en het scherm dat
+     hij opent. De rail naast de case lag op de content; de regel in de
+     navigatiebalk viel over de broodkruimel boven de titel. Beide weg. */
+  assert.doesNotMatch(caseHtml, /tc-section-nav|tc-section-tick|csi-bar/);
+  assert.doesNotMatch(css, /\.tc-section-nav|\.tc-section-tick|\.csi-bar|\.csi-voortgang|\.csi-segment/);
+  assert.match(css, /\.csi-chip \{/);
 
-  /* De vijf ankers blijven in de html staan, ook al zit de opgave zelf achter
-     een knop. Zonder javascript is die lijst het enige dat werkt, en de rail
-     die hier eerst stond leverde ze ook. */
+  /* De vijf ankers blijven in de html staan. Zonder javascript is die lijst
+     het enige dat werkt, en de rail die hier eerst stond leverde ze ook. */
   for (const sectionId of ["case-overview", "case-context", "case-process", "case-evidence", "case-outcome"]) {
     assert.match(caseHtml, new RegExp(`href="#${sectionId}"`));
     assert.match(caseHtml, new RegExp(`id="${sectionId}"`));
   }
   assert.match(caseHtml, /class="csi-fallback"/);
-  /* In de server-html staat de knop uit en de lijst aan; de component draait
-     dat om zodra ze gehydrateerd is. Zo opent er nooit een knop die niets kan
-     openen, en blijven de ankers werken als de bundel wegblijft. */
-  assert.match(caseHtml, /class="csi-bar"[^>]*hidden=""/);
-  assert.doesNotMatch(caseHtml, /class="csi-fallback"[^>]*hidden/);
-  assert.match(css, /\.csi-bar\[hidden\],\n\.csi-fallback\[hidden\] \{ display: none; \}/);
-
-  /* De noodrem uit layout.tsx zet data-js na 2,6 seconden op "off" als de
-     bundel wegblijft. HomeExperience wist die timer, maar draait niet op een
-     case - dus daar meldde de vlag ten onrechte "off". CaseNavMotion wist hem
-     nu ook, want anders liegt de lock hierboven over elke casepagina. */
-  const navMotionSource = await readFile(new URL("../app/components/CaseNavMotion.tsx", import.meta.url), "utf8");
-  assert.match(navMotionSource, /__heroMotionFallback/);
-  assert.match(navMotionSource, /clearTimeout/);
 
   /* De lock op een casehero wachtte op data-case-motion="ready", en dat zet
      alleen de client. Zonder javascript bleef de navigatiebalk daardoor voor
@@ -196,42 +180,54 @@ test("uses bounded raster assets on the homepage and case pages", async () => {
   assert.match(css, /html\[data-js="on"\] \.tc-page\[data-case-motion="pending"\] :is\(\.tc-nav/);
   assert.doesNotMatch(css, /\n {2}\.tc-page\[data-case-motion="pending"\]/);
 
-  /* De voortgangslijn blijft staan als de balk wegschuift - zonder haar is er
-     niets meer dat zegt hoeveel er nog komt. Daarom hangt ze aan document.body
-     en niet aan de balk, die immers een transform krijgt. Ze is decoratief en
-     client-only, dus ze staat niet in de server-html; wat hier te bewaken valt
-     is dat ze buiten de balk terechtkomt. */
   const indexSource = await readFile(new URL("../app/components/CaseSectionIndex.tsx", import.meta.url), "utf8");
   const portaalStart = indexSource.indexOf("createPortal(");
   const portaalDoel = indexSource.indexOf("document.body", portaalStart);
   assert.ok(portaalStart > -1 && portaalDoel > -1, "de inhoudsopgave hoort naar document.body te portalen");
   const inPortaal = indexSource.slice(portaalStart, portaalDoel);
-  assert.ok(inPortaal.includes("csi-voortgang"), "de voortgangslijn hoort in het portaal te staan");
+  assert.ok(inPortaal.includes("csi-chip"), "de pil hoort in het portaal te staan");
   assert.ok(inPortaal.includes("csi-panel"), "het paneel hoort in het portaal te staan");
-  assert.ok(inPortaal.includes("csi-chip"), "de compacte regel hoort in het portaal te staan");
-  /* De balk juist niet: die hoort een kind van <nav> te blijven. */
-  assert.ok(!inPortaal.includes('className="csi-bar"'), "de balk hoort niet in het portaal te staan");
-  assert.match(css, /\.csi-voortgang \{(?:(?!\})[\s\S])*position: fixed/);
 
-  /* Een segment per hoofdstuk, gelijk breed. Een doorlopende streep zei alleen
-     hoe ver je was en niet waar; dan moest je omhoog scrollen om de balk terug
-     te halen en te zien in welk hoofdstuk je zat. Gelijke breedtes omdat dit
-     een hoofdstukteller is en geen schuifbalk. */
-  assert.equal((indexSource.match(/csi-segment-vulling/g) ?? []).length, 1);
-  assert.match(css, /\.csi-voortgang \{(?:(?!\})[\s\S])*grid-auto-columns: 1fr/);
-  assert.match(css, /\.csi-segment-vulling \{(?:(?!\})[\s\S])*transform: scaleX\(0\)/);
-  assert.doesNotMatch(css, /\.csi-segment-vulling \{(?:(?!\})[\s\S])*transition/);
+  /* De pil moet blijven staan. Zodra de voortgang in zijn rand zit en niet
+     meer als haarlijn tegen de bovenkant van het scherm, verdwijnt met de pil
+     ook de voortgang - dus hij mag niet aan de zichtbaarheid van de balk
+     hangen zoals eerder, en hij staat onderaan omdat bovenaan de balk en de
+     broodkruimel al staan. */
+  assert.doesNotMatch(css, /data-case-nav/);
 
-  /* De balk en de compacte regel wisselen elkaar af en staan er nooit samen:
-     CaseNavMotion zet data-case-nav, de css hangt daaraan. Valt die koppeling
-     weg, dan is de bezoeker diep in een case weer kwijt waar hij zit. */
-  assert.match(navMotionSource, /dataset\.caseNav = visible \? "visible" : "hidden"/);
-  assert.match(css, /html\[data-case-nav="hidden"\] \.csi-chip \{/);
-  assert.match(css, /\.csi-chip \{(?:(?!\})[\s\S])*opacity: 0;/);
+  /* De noodrem uit layout.tsx zet data-js na 2,6 seconden op "off" als de
+     bundel wegblijft. HomeExperience wist die timer, maar draait niet op een
+     case - dus daar meldde de vlag ten onrechte "off" en ging de lock
+     hierboven ten onrechte open. CaseNavMotion wist hem nu ook. */
+  const navMotionSource = await readFile(new URL("../app/components/CaseNavMotion.tsx", import.meta.url), "utf8");
+  assert.match(navMotionSource, /__heroMotionFallback/);
+  assert.match(navMotionSource, /clearTimeout/);
+  assert.doesNotMatch(navMotionSource, /caseNav/);
+  assert.match(css, /\.csi-chip \{(?:(?!\})[\s\S])*position: fixed/);
+  assert.match(css, /\.csi-chip \{(?:(?!\})[\s\S])*bottom:/);
 
-  /* Het paneel bestaat pas als de bezoeker de regel aantikt, dus het staat
-     niet in de eerste html. En z-index 80 ligt onder de 90 van de balk, zodat
-     de regel waarmee je het sluit zichtbaar en aan te tikken blijft. */
+  /* De rand vult zich via pathLength 1, zodat de voortgang rechtstreeks de
+     dashoffset is. Zonder transition, anders loopt hij achter de scroll aan. */
+  assert.match(indexSource, /pathLength="1"/);
+
+  /* De rand moet aan het einde van de pagina echt rond zijn. De laatste
+     scrollpixels komen er door ScrollTrigger niet altijd uit, en dan bleef er
+     een zichtbare kier staan juist op het moment dat de cirkel sluit. */
+  assert.match(indexSource, /window\.scrollY >= laatste - 2/);
+  assert.match(css, /\.csi-chip-rand rect \{(?:(?!\})[\s\S])*stroke-linecap: round;/);
+
+  /* De pil wordt breder of smaller als de hoofdstuknaam wisselt. Dat sprong in
+     een frame; nu gaat het over. Een pil met fit-content valt niet te animeren,
+     dus de breedte wordt als pixelwaarde gezet en de css laat hem lopen. De
+     ResizeObserver houdt de rand daarbij in de maat, ook mid-animatie. */
+  assert.match(indexSource, /pil\.style\.width = `\$\{breed\}px`/);
+  assert.match(indexSource, /ResizeObserver/);
+  assert.match(css, /\.csi-chip \{(?:(?!\})[\s\S])*transition:\s*\n?\s*width /);
+  assert.match(css, /\.csi-chip-rand rect \{(?:(?!\})[\s\S])*stroke-dasharray: 1;/);
+  assert.doesNotMatch(css, /\.csi-chip-rand rect \{(?:(?!\})[\s\S])*transition/);
+
+  /* Het paneel bestaat pas als de bezoeker de pil aantikt, en z-index 80 ligt
+     onder de 90 van de balk. */
   assert.doesNotMatch(caseHtml, /class="csi-panel"/);
   assert.match(css, /\.csi-panel \{(?:(?!\})[\s\S])*z-index: 80/);
 
@@ -328,18 +324,21 @@ test("uses bounded raster assets on the homepage and case pages", async () => {
      meescrollende vlakken te duur was: een sticky balk van 1440 bij 64 is
      92.160 px die elk scrollframe opnieuw vervaagd moeten worden.
 
-     De hamburgerknop is 54 bij 42, oftewel 2.268 px - veertig keer minder
-     oppervlak. Daar is het glas wel te betalen, en het is bewust gevraagd.
-     Deze test bewaakt dus nog steeds het oorspronkelijke doel: geen vervaging
-     op grote vlakken. Komt er een vierde regel bij, dan faalt hij. */
-  /* Kleine of vergrendelde overlayvlakken mogen vervagen. Grote meescrollende
-     vlakken blijven uitgesloten. */
+     Vier plekken mogen het wel, en de grens is oppervlak, niet het principe.
+     De twee panelen vergrendelen de pagina zolang ze openstaan, dus daar wordt
+     de vervaging een keer samengesteld. De hamburgerknop (54 bij 42, 2.268 px)
+     en de hoofdstukpil (115 bij 40, 4.600 px) hebben wel bewegende inhoud
+     achter zich, maar scheelt respectievelijk veertig en twintig keer met die
+     balk. Beide zijn bewust gevraagd.
+
+     Komt er een vijfde regel bij, dan faalt deze test, en dan hoort er een
+     oppervlakteberekening bij het verzoek. */
   const zonderCommentaar = css.replace(/\/\*[\s\S]*?\*\//g, "");
   const vervagingen = zonderCommentaar.match(/[^{}]+\{[^}]*backdrop-filter:\s*blur[^}]*\}/gi) ?? [];
   const selectors = vervagingen.map((regel) => regel.split("{")[0].trim());
   assert.deepEqual(
     [...new Set(selectors)].sort(),
-    [".csi-panel", ".mnav-panel", ".mnav-toggle-shape"],
+    [".csi-chip", ".csi-panel", ".mnav-panel", ".mnav-toggle-shape"],
     `onverwachte vervaging op: ${selectors.join(" | ")}`,
   );
 
@@ -602,8 +601,16 @@ test("never leaves the sticky bars hanging eighteen pixels too high", async () =
 test("keeps the open menu on the 8pt grid", async () => {
   const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
   // Zonder commentaar, anders telt een zin als "Geen gap:" mee als declaratie.
+  /* De begrenzing aan beide kanten is nodig. Dit liep eerst tot het einde van
+     het bestand, wat alleen goed ging zolang het menu het laatste blok was.
+     Toen de casebalk erachter kwam, keurde deze test diens maten af - en die
+     zijn juist letterlijk overgenomen van de header van de homepage, die zelf
+     niet op het 8pt-raster staat. Het raster geldt voor het menu. */
+  const menuStart = css.indexOf("Navigatie voor smalle schermen");
+  const menuEind = css.indexOf("De navigatiebalk van een case, gelijkgetrokken");
+  assert.ok(menuStart > -1 && menuEind > menuStart, "de grenzen van het menublok zijn verschoven");
   const menu = css
-    .slice(css.indexOf("Navigatie voor smalle schermen"))
+    .slice(menuStart, menuEind)
     .replace(/\/\*[\s\S]*?\*\//g, "");
 
   /* Elke maat in dit blok hoort een veelvoud van 8px te zijn, of 4px als halve
