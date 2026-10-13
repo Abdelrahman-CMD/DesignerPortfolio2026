@@ -106,8 +106,16 @@ test("server-renders the complete portfolio homepage", async () => {
   assert.match(html, /href="\/en"/);
   assert.equal((html.match(/class="method-note /g) ?? []).length, 4);
   assert.match(html, /Synthese · Probleemkader · Succesmaatstaf/);
-  assert.equal((html.match(/class="story-stop story-stop-/g) ?? []).length, 4);
-  assert.equal((html.match(/<canvas class="story-photo-mosaic"/g) ?? []).length, 4);
+  /* Vijf stops sinds reizen erbij kwam als 04 en vaderschap doorschoof naar 05.
+     De route tussen de stippen wordt uit hun werkelijke posities berekend, dus
+     die groeide vanzelf mee; de teller in de kop niet, die stond vast op 04. */
+  assert.equal((html.match(/class="story-stop story-stop-/g) ?? []).length, 5);
+  assert.equal((html.match(/<canvas class="story-photo-mosaic"/g) ?? []).length, 5);
+  assert.match(html, /01 \/ 05/);
+  /* Niet op de titel toetsen: die wordt woord voor woord in losse spans gezet,
+     dus de zin staat nergens aaneengesloten in de html. De body wel. */
+  assert.match(html, /ik kom terug met scherpere vragen/);
+  assert.match(html, /about%2Fweb%2Ftravel\.webp|\/about\/web\/travel\.webp/);
 });
 
 test("server-renders case specific social metadata", async () => {
@@ -164,6 +172,11 @@ test("uses bounded raster assets on the homepage and case pages", async () => {
   assert.doesNotMatch(caseHtml, /tc-section-nav|tc-section-tick|csi-bar/);
   assert.doesNotMatch(css, /\.tc-section-nav|\.tc-section-tick|\.csi-bar|\.csi-voortgang|\.csi-segment/);
   assert.match(css, /\.csi-chip \{/);
+
+  /* De stip in de over-sectie hoort boven de foto te liggen. Allebei stonden ze
+     op z-index 8, en bij gelijke stapeling wint wie later in de html staat - de
+     figure dus, die de stippen doormidden sneed. */
+  assert.match(css, /\.story-stop-dot \{(?:(?!\})[\s\S])*z-index: 12/);
 
   /* De vijf ankers blijven in de html staan. Zonder javascript is die lijst
      het enige dat werkt, en de rail die hier eerst stond leverde ze ook. */
@@ -324,21 +337,23 @@ test("uses bounded raster assets on the homepage and case pages", async () => {
      meescrollende vlakken te duur was: een sticky balk van 1440 bij 64 is
      92.160 px die elk scrollframe opnieuw vervaagd moeten worden.
 
-     Vier plekken mogen het wel, en de grens is oppervlak, niet het principe.
+     Vijf plekken mogen het wel, en de grens is oppervlak, niet het principe.
      De twee panelen vergrendelen de pagina zolang ze openstaan, dus daar wordt
-     de vervaging een keer samengesteld. De hamburgerknop (54 bij 42, 2.268 px)
-     en de hoofdstukpil (115 bij 40, 4.600 px) hebben wel bewegende inhoud
-     achter zich, maar scheelt respectievelijk veertig en twintig keer met die
-     balk. Beide zijn bewust gevraagd.
+     de vervaging een keer samengesteld. De hamburgerknop (54 bij 42, 2.268 px),
+     de hoofdstukpil (115 bij 40, 4.600 px) en de stippen in de over-sectie
+     (rond, 60 px doorsnee, 2.827 px per stuk) hebben wel bewegende inhoud
+     achter zich, maar scheelt twintig tot veertig keer met die balk. Van die
+     stippen staan er hooguit twee tegelijk in beeld, samen nog altijd minder
+     dan een tiende van de balk. Alle drie zijn bewust gevraagd.
 
-     Komt er een vijfde regel bij, dan faalt deze test, en dan hoort er een
+     Komt er een zesde regel bij, dan faalt deze test, en dan hoort er een
      oppervlakteberekening bij het verzoek. */
   const zonderCommentaar = css.replace(/\/\*[\s\S]*?\*\//g, "");
   const vervagingen = zonderCommentaar.match(/[^{}]+\{[^}]*backdrop-filter:\s*blur[^}]*\}/gi) ?? [];
   const selectors = vervagingen.map((regel) => regel.split("{")[0].trim());
   assert.deepEqual(
     [...new Set(selectors)].sort(),
-    [".csi-chip", ".csi-panel", ".mnav-panel", ".mnav-toggle-shape"],
+    [".csi-chip", ".csi-panel", ".mnav-panel", ".mnav-toggle-shape", ".story-stop-dot"],
     `onverwachte vervaging op: ${selectors.join(" | ")}`,
   );
 

@@ -3939,26 +3939,62 @@ html.is-cta-captured a { cursor: none !important; }
 
 .story-stop-dot {
   position: absolute;
-  z-index: 8;
+  /* Boven de foto. Allebei stonden ze op 8, en bij gelijke stapeling wint wie
+     later in de html staat - dat is de figure, dus de foto sneed de stippen
+     doormidden. */
+  z-index: 12;
   top: 50%;
   left: var(--dot-x);
   display: grid;
-  width: 4.25rem;
-  height: 4.25rem;
+  /* Van 4,25 naar 3,75rem: 60px in plaats van 68. Zie ook --fixed-circle-size
+     verderop, die dezelfde maat nog een keer vastlegt. */
+  width: 3.75rem;
+  height: 3.75rem;
   place-items: center;
   overflow: hidden;
-  border: 2px solid #35302b;
+  border: 1.5px solid rgba(53, 48, 43, 0.45);
   border-radius: 50%;
-  background: #f8f3e9;
-  box-shadow: 0 8px 0 rgba(47, 43, 38, 0.11);
+  /* Glas, met dezelfde waarden als de hoofdstukpil op een casepagina: een
+     doorzichtige vulling met vervaging erachter, lichte inzetranden aan de
+     kant waar het licht vandaan komt en een donkere aan de overkant. De
+     accentkleur blijft in .story-stop-dot-fill zitten, die hier overheen
+     schuift zodra je een stop gepasseerd bent. */
+  background: color-mix(in srgb, #f8f3e9 72%, transparent);
+  -webkit-backdrop-filter: blur(6px) saturate(172%) brightness(1.04);
+  backdrop-filter: blur(6px) saturate(172%) brightness(1.04);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.7),
+    inset 1px 0 0 0 rgba(255, 255, 255, 0.35),
+    inset 0 -1px 0 0 rgba(31, 28, 25, 0.09),
+    0 0.4rem 1.2rem rgba(31, 28, 25, 0.08);
   transform: translate(-50%, -50%);
   transition: box-shadow var(--motion-fast) var(--ease-premium), transform var(--motion-fast) var(--ease-premium);
 }
 
+/* De spiegeling ligt bovenop en niet in de achtergrond, zodat hij ook over de
+   accentvulling heen blijft liggen als die is opgeschoven. Zelfde hoek als de
+   pil: licht uit -30 graden. */
+.story-stop-dot::after {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  background: linear-gradient(
+    155deg,
+    rgba(255, 255, 255, 0.55) 0%,
+    rgba(255, 255, 255, 0.1) 34%,
+    rgba(255, 255, 255, 0) 62%
+  );
+  pointer-events: none;
+}
+
 .story-stop-dot.is-current {
   box-shadow:
-    0 8px 0 rgba(47, 43, 38, 0.11),
-    0 0 0 8px rgba(244, 81, 54, 0.18);
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.7),
+    inset 1px 0 0 0 rgba(255, 255, 255, 0.35),
+    inset 0 -1px 0 0 rgba(31, 28, 25, 0.09),
+    0 0.4rem 1.2rem rgba(31, 28, 25, 0.08),
+    0 0 0 7px rgba(244, 81, 54, 0.18);
   transform: translate(-50%, -50%) scale(1.045);
 }
 
@@ -4127,6 +4163,7 @@ html.is-cta-captured a { cursor: none !important; }
 .story-stop-2 .story-stop-copy { transform: rotate(-1.1deg); }
 .story-stop-3 .story-stop-copy { transform: rotate(1.3deg); }
 .story-stop-4 .story-stop-copy { transform: rotate(-0.7deg); }
+.story-stop-5 .story-stop-copy { transform: rotate(0.9deg); }
 
 .story-stop-2 .story-photo {
   width: 86%;
@@ -4143,6 +4180,13 @@ html.is-cta-captured a { cursor: none !important; }
   width: 89%;
   height: 77vh;
   justify-self: end;
+}
+
+/* De vijfde is een staande foto, net als de tweede en de derde - vandaar
+   dezelfde orde van grootte en niet de bredere maat van de vierde. */
+.story-stop-5 .story-photo {
+  width: 84%;
+  height: 71vh;
 }
 
 .story-stop:nth-child(even) .story-photo {
@@ -5194,13 +5238,14 @@ html.is-cta-captured a { cursor: none !important; }
   .story-stop-dot {
     top: 14%;
     left: var(--dot-mobile-x);
-    width: 3.35rem;
-    height: 3.35rem;
+    width: 3rem;
+    height: 3rem;
   }
   .story-photo,
   .story-stop-2 .story-photo,
   .story-stop-3 .story-photo,
-  .story-stop-4 .story-photo {
+  .story-stop-4 .story-photo,
+  .story-stop-5 .story-photo {
     width: 88%;
     height: 65vh;
     justify-self: auto;
@@ -8201,8 +8246,8 @@ html.is-cta-captured a { cursor: none !important; }
 .story-stop-dot,
 .postcard-monogram,
 .method-track-exit > span {
-  min-width: var(--fixed-circle-size, 4.25rem);
-  min-height: var(--fixed-circle-size, 4.25rem);
+  min-width: var(--fixed-circle-size, 3.75rem);
+  min-height: var(--fixed-circle-size, 3.75rem);
   aspect-ratio: 1 / 1;
   flex: 0 0 auto;
 }
@@ -8296,7 +8341,7 @@ html.is-cta-captured a { cursor: none !important; }
     line-height: 0.92;
   }
 
-  .story-stop-dot { --fixed-circle-size: 3.35rem; }
+  .story-stop-dot { --fixed-circle-size: 3rem; }
 
   .method-note {
     width: 84vw;
@@ -8421,8 +8466,11 @@ html.is-cta-captured a { cursor: none !important; }
 
 .story-stop-dot.is-current {
   box-shadow:
-    0 8px 0 rgba(47, 43, 38, 0.11),
-    0 0 0 8px color-mix(in srgb, var(--story-accent, #c9653d) 24%, transparent);
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.7),
+    inset 1px 0 0 0 rgba(255, 255, 255, 0.35),
+    inset 0 -1px 0 0 rgba(31, 28, 25, 0.09),
+    0 0.4rem 1.2rem rgba(31, 28, 25, 0.08),
+    0 0 0 7px color-mix(in srgb, var(--story-accent, #c9653d) 24%, transparent);
 }
 
 .story-stop-dot-fill,
@@ -10325,25 +10373,70 @@ body:has(.mnav-panel) .floating-contact { opacity: 0; pointer-events: none; }
   .site-mark-copy { display: none; }
 }
 
-/* De vier contactknoppen in de ansichtkaart deelden de breedte gelijk op
-   (flex: 1 1 0, min-width: 0) en hielden hun tekst op een regel. Met het icoon
-   erbij past WHATSAPP niet meer in zijn 72 pixels en liep het label over de
-   knop ernaast heen. Ze staan nu op hun eigen maat en vallen om naar een
-   tweede regel.
+/* ===== De contactkanalen als cellen in het raster =====
 
-   Dit blok staat bewust helemaal achteraan: de regel die het overschrijft
-   (.postcard-links a met flex: 1 1 0) staat verderop in dit bestand dan de
-   mediaquery's hierboven, en een mediaquery verhoogt de specificiteit niet. */
+   Deze vier waren pillen: rond, met een eigen rand en vulling, zwevend naast
+   elkaar. Maar ze zweven helemaal niet - ze scrollen gewoon mee met de
+   ansichtkaart. Daarmee misten ze de enige reden om een pil te zijn: zich
+   losmaken van een achtergrond die onder je door beweegt. De projectkaarten
+   op dezelfde pagina doen het al goed: vlakke cellen zonder ronding en zonder
+   schaduw.
+
+   Als cellen lossen ze ook een bug op in plaats van hem te verplaatsen. Ze
+   deelden de breedte gelijk op met flex: 1 1 0 en hielden hun tekst op een
+   regel; met het icoon erbij paste WHATSAPP niet meer in zijn 72 pixels en
+   liep het label over de knop ernaast. Dat moest hier eerder met een
+   mediaquery worden rechtgezet. Cellen verdelen de breedte, pillen vechten
+   erom - dus die botsing kan nu niet meer bestaan, en je krijgt er een
+   tikdoel van de volle celbreedte voor terug.
+
+   Dit blok staat achteraan omdat de regels die het overschrijft verderop in
+   dit bestand staan dan de mediaquery's hierboven, en een mediaquery verhoogt
+   de specificiteit niet. */
+
+.postcard-links {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: 0;
+  width: 100%;
+  border-top: 1px solid rgba(39, 38, 33, 0.22);
+}
+
+.postcard-links a {
+  display: flex;
+  min-height: 3.25rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 0.5rem;
+  border: 0;
+  /* De haarlijn tussen twee cellen is er een, niet twee: alleen links, en de
+     eerste cel heeft er geen. */
+  border-left: 1px solid rgba(39, 38, 33, 0.22);
+  border-radius: 0;
+  background: none;
+  white-space: nowrap;
+  /* Geen translateY bij aanwijzen: een cel die optilt spreekt tegen dat hij in
+     het raster ligt. De cel zelf licht op. */
+  transition: background var(--motion-standard) var(--ease-premium);
+}
+
+.postcard-links a:first-child { border-left: 0; }
+
+.postcard-links a:hover,
+.postcard-links a:focus-visible {
+  background: rgba(39, 38, 33, 0.07);
+  transform: none;
+}
+
+/* Op een telefoon is een kolom van vier te smal voor WHATSAPP, dus twee bij
+   twee. De linkerkolom heeft geen lijn links, de onderste rij wel een lijn
+   boven. */
 @media (max-width: 720px) {
-  .postcard-links {
-    flex-wrap: wrap;
-    justify-content: flex-start;
-  }
-
-  .postcard-links a {
-    flex: 0 0 auto;
-    min-width: auto;
-  }
+  .postcard-links { grid-auto-flow: row; grid-template-columns: 1fr 1fr; }
+  .postcard-links a:nth-child(odd) { border-left: 0; }
+  .postcard-links a:nth-child(even) { border-left: 1px solid rgba(39, 38, 33, 0.22); }
+  .postcard-links a:nth-child(n + 3) { border-top: 1px solid rgba(39, 38, 33, 0.22); }
 }
 
 /* ===== De navigatiebalk van een case, gelijkgetrokken met de homepage =====
@@ -10477,3 +10570,37 @@ body:has(.mnav-panel) .floating-contact { opacity: 0; pointer-events: none; }
   .tc-page .tc-nav-actions,
   .editorial-case .ec-nav-actions { gap: 0.4rem; }
 }
+
+/* ===== De thumbnails bouwen zich op zoals de hero-foto =====
+
+   Dezelfde twee lagen als .story-photo-stage: het echte beeld eronder op
+   dekking nul, en een doek erboven dat het mozaiek tekent. createStoryMosaic
+   kruist ze in elkaar tussen 68% en 100% van de opbouw.
+
+   De dekking nul hangt aan html[data-js="on"] en staat niet hard in de css.
+   Zonder dat voorbehoud zou een bezoeker bij wie de bundel wegblijft acht
+   onzichtbare thumbnails zien, want dan draait er niets dat ze weer aanzet.
+   Die vlag wordt blokkerend gezet en valt na 2,6 seconden terug op "off". */
+.project-mosaic-stage {
+  position: absolute;
+  inset: 0;
+}
+
+html[data-js="on"] .project-visual-full { opacity: 0; }
+
+.project-visual-full { object-fit: cover; }
+
+.project-mosaic {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  will-change: opacity;
+}
+
+/* Kan de browser geen webgl, dan tekent createStoryMosaic niets en regelt hij
+   de dekking van het echte beeld zelf. Het doek mag dan weg. */
+.project-mosaic.is-unsupported { display: none; }

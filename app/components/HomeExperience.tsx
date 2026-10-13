@@ -217,6 +217,20 @@ const personalStory = [
   },
   {
     step: "04",
+    kicker: "Waar mijn blik verschuift",
+    title: "Reizen is geen pauze. Het is een andere invalshoek.",
+    englishTitle: "Travel isn't a break. It's another vantage point.",
+    body: "Zodra het kan, ga ik weg. Andere steden, andere gewoontes, en gesprekken waarin je niet kunt terugvallen op wat je gewend bent. Het laadt op, en het verzet mijn maatstaf: ik kom terug met scherpere vragen over wat ik vanzelfsprekend was gaan vinden.",
+    image: "/about/web/travel.webp",
+    alt: "Abdelrahman kijkt uit over de haven van Dubai bij zonsondergang",
+    position: "center 45%",
+    note: "Afstand scherpt de blik",
+    caption: "Dubai / afstand die het werk ten goede komt",
+    dotX: "41%",
+    dotMobileX: "88%",
+  },
+  {
+    step: "05",
     kicker: "En buiten het scherm",
     title: "Papa zijn is mijn scherpste gebruikerstest.",
     englishTitle: "Fatherhood is my most honest usability test.",
@@ -226,8 +240,8 @@ const personalStory = [
     position: "center 35%",
     note: "Ontwerp begint thuis",
     caption: "Dagelijks leven / de belangrijkste rol buiten het scherm",
-    dotX: "44%",
-    dotMobileX: "88%",
+    dotX: "58%",
+    dotMobileX: "10%",
   },
 ] as const;
 
@@ -1205,9 +1219,43 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
           }, "-=0.44");
       }
 
-      gsap.utils.toArray<HTMLElement>(".project-entry").forEach((entry) => {
+      /* De mozaieken van de thumbnails worden opgeruimd zodra hun opbouw klaar
+         is. Webgl-contexten zijn schaars - een browser houdt er een stuk of
+         zestien tegelijk aan, en de hero en de vier over-fotos gebruiken er al
+         vijf. Zou elk van de acht thumbnails er een vasthouden, dan zit je op
+         dertien en begint de browser de oudste weg te gooien, waarmee juist de
+         hero stilvalt. Na de opbouw is het echte beeld zichtbaar en heeft het
+         doek niets meer te doen. */
+      /* Hoe ver een thumbnail meeschuift terwijl hij openveegt. Stond op 14,
+         overgenomen van de hero - maar daar is het een beeld dat de halve
+         pagina vult. Op een thumbnail zeggen de veeg en de schuif hetzelfde,
+         en dan is 14 te veel gezegd. Een derde ervan blijft voelbaar zonder
+         het dubbelop te maken. Terug naar 14 is dit ene getal. */
+      const projectSchuif = 5;
+
+      const projectMosaics = new Set<StoryMosaicController>();
+      const projectOpruimers: Array<() => void> = [];
+
+      gsap.utils.toArray<HTMLElement>(".project-entry").forEach((entry, projectIndex) => {
         const visual = entry.querySelector<HTMLElement>(".project-visual");
         const media = entry.querySelector<HTMLElement>(".project-parallax-media");
+        const mosaicCanvas = entry.querySelector<HTMLCanvasElement>(".project-mosaic");
+        const mosaicFull = entry.querySelector<HTMLElement>(".project-visual-full");
+        const project = projects[projectIndex];
+        /* De richting wisselt per rij en niet per kolom. Per kolom betekende:
+           links opent vanaf links, rechts vanaf rechts - twee spiegelbeeldige
+           bewegingen op vrijwel dezelfde hoogte, en dat leest als een gordijn
+           dat opengaat, niet als twee kaarten die na elkaar aankomen. Nu doen
+           de twee kaarten in een rij dezelfde beweging, net na elkaar, en slaat
+           de richting per rij om zodat de variatie blijft. */
+        const projectDirection = Math.floor(projectIndex / 2) % 2 === 0 ? -1 : 1;
+        const mosaic = mosaicCanvas && mosaicFull && project
+          ? createStoryMosaic(mosaicCanvas, mosaicFull, project.image, project.imagePosition, projectDirection)
+          : null;
+        if (mosaic) {
+          projectMosaics.add(mosaic);
+          mosaic.render(0, 0);
+        }
 
         if (media && supportsHeroParallax && !prefersReducedMotion && !seenHomeMotion) {
           gsap.fromTo(media, {
@@ -1224,28 +1272,77 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
           });
         }
 
-        if (!prefersReducedMotion && !seenHomeMotion) {
-          const projectTimeline = gsap.timeline({
-            scrollTrigger: {
-              trigger: entry,
-              start: "top 84%",
-              toggleActions: "play none none none",
-              once: true,
-              fastScrollEnd: true,
-            },
-          });
+        /* seenHomeMotion staat hier bewust niet bij, anders dan bij de hero.
+           De hero-intro is een eenmalige voorstelling die je niet elk bezoek
+           opnieuw wil zitten uitkijken. Dit is geen voorstelling maar de manier
+           waarop de thumbnails binnenkomen, en hij houdt niets op: hij volgt je
+           scroll. Wie hier vaker komt zag tot nu toe helemaal niets. */
+        if (!prefersReducedMotion) {
+          /* Niet op een eigen tijdlijn maar aan de scroll gekoppeld, net als de
+             fotos in de over-sectie. Met een vaste duur van ruim een seconde
+             was de opbouw voorbij voordat je hem kon zien: hij startte als de
+             bovenkant van de kaart op 70% van het scherm stond, en dan is er
+             nog maar 299 van de ruim 500 pixels thumbnail zichtbaar. Nu loopt
+             hij van "kaart komt binnen" tot "kaart staat bijna in het midden",
+             dus je scrolt hem letterlijk tevoorschijn. */
+          const projectTimeline = gsap.timeline({ paused: true });
           if (visual) {
+            /* Dezelfde beweging als de hero-foto en de fotos in de
+               over-sectie: een veeg met clip-path vanaf een van de randen, met
+               een lichte schuif mee naar binnen. De waarden zijn letterlijk die
+               van .mind-hero-photo-slide - verander je daar de veeg, verander
+               hem hier dan ook. Alleen de kant verschilt per kolom. */
+            const vanLinks = projectDirection < 0;
+
+            /* De dekking staat los van de veeg, met een vlakke easing. Zat hij
+               in dezelfde tween, dan erfde hij de easing van de veeg en was de
+               opkomst net zo kort als de beweging - dan zie je geen fade maar
+               een schakelaar.
+
+               Hij begint op 0,2 en is op ongeveer de helft van de opbouw klaar,
+               en loopt dus niet meer tot het eind door. De dekking ligt namelijk
+               over de hele kaart heen, dus ook over het doek met de blokken - en
+               die stonden daardoor juist op hun mooiste moment het bleekst. Nu
+               is de kaart al op sterkte als het mozaiek zich oplost. */
             projectTimeline.fromTo(visual, {
-              autoAlpha: 0,
-              y: 48,
-              scale: 0.985,
+              autoAlpha: 0.2,
             }, {
               autoAlpha: 1,
-              y: 0,
-              scale: 1,
-              duration: 0.92,
-              ease: motion.ease,
-            });
+              duration: 0.9,
+              ease: "none",
+            }, 0);
+
+            /* De veeg zelf, met de waarden van .mind-hero-photo-slide. Alleen
+               de easing wijkt af: de hero gebruikt power4.inOut, wat bij een
+               animatie met een vaste duur mooi is maar aan de scroll gekoppeld
+               alles in een korte stoot in het midden propt. power2.out loopt
+               vanaf het begin en remt af - dat leest als binnenkomen. */
+            projectTimeline.fromTo(visual, {
+              clipPath: vanLinks ? "inset(0 100% 0 0)" : "inset(0 0 0 100%)",
+              xPercent: vanLinks ? -projectSchuif : projectSchuif,
+            }, {
+              clipPath: vanLinks ? "inset(0 0% 0 0)" : "inset(0 0 0 0%)",
+              xPercent: 0,
+              duration: 1.5,
+              ease: "power2.out",
+            }, 0);
+          }
+
+          /* En onder die veeg door bouwt het mozaiek zich op, net als bij de
+             hero. Een hulpobject met een enkele waarde, omdat het doek met de
+             hand getekend moet worden en gsap niets van een canvas weet. */
+          if (mosaic) {
+            /* Het mozaiek loopt vanaf het begin mee en niet pas tegen het
+               einde, zodat het pixelige de hele binnenkomst duurt in plaats van
+               een flits te zijn. Het is klaar voor de dekking klaar is, dus het
+               beeld staat scherp terwijl het laatste stukje opkomst nog loopt. */
+            const opbouw = { progress: 0 };
+            projectTimeline.to(opbouw, {
+              progress: 1,
+              duration: 1.7,
+              ease: "power1.inOut",
+              onUpdate: () => mosaic.render(opbouw.progress, 0),
+            }, 0);
           }
           projectTimeline.from(entry.querySelectorAll(".project-card-copy > *"), {
             autoAlpha: 0,
@@ -1253,7 +1350,72 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
             duration: 0.58,
             stagger: 0.065,
             ease: motion.softEase,
-          }, visual ? "-=0.42" : 0);
+          }, visual ? 1.2 : 0);
+
+          /* De voortgang loopt alleen vooruit. Een gewone scrub draait de
+             opbouw terug zodra je omhoog scrolt, en een thumbnail die weer uit
+             elkaar valt als je even terugkijkt is geen "verschijnen".
+
+             De voortgang wordt hier zelf uitgerekend en niet aan ScrollTrigger
+             overgelaten. Dat was de bedoeling, maar een los aangemaakte trigger
+             riep zijn onUpdate nooit aan - gemeten over het hele bereik, bij
+             alle acht kaarten, terwijl de triggers wel aangemaakt werden. In
+             plaats van dat uit te zoeken staat de som er nu gewoon: waar staat
+             de bovenkant van de kaart tussen 88% en 38% van het scherm. */
+          let hoogste = 0;
+          let frame = 0;
+
+          const stop = () => {
+            window.removeEventListener("scroll", bijScroll);
+            window.removeEventListener("resize", bijScroll);
+            if (frame) window.cancelAnimationFrame(frame);
+            frame = 0;
+          };
+
+          const meet = () => {
+            frame = 0;
+            /* Ruimer dan eerst: van 88-38% naar 95-22% van het scherm. Bij een
+               animatie die aan de scroll hangt zit de snelheid niet in de duur
+               maar in hoeveel scrollafstand de opbouw krijgt. Dit is op een
+               scherm van 1000px zo'n 730px scrollen in plaats van 500. */
+            /* De tweede kaart van een rij begint een stukje later. Hij staat
+               van zichzelf al 70px lager, maar dat is op een opbouw van 730px
+               nog geen tiende - gemeten stonden ze op 0,72 en 0,62 dekking,
+               praktisch gelijk. Met deze vertraging erbij zit er zo'n 140px
+               tussen, en dat is genoeg om het als na elkaar te lezen. */
+            const vertraging = projectIndex % 2 === 1 ? window.innerHeight * 0.07 : 0;
+            const begin = window.innerHeight * 0.95 - vertraging;
+            const eind = window.innerHeight * 0.22 - vertraging;
+            const deel = (begin - entry.getBoundingClientRect().top) / (begin - eind);
+            const geklemd = Math.min(1, Math.max(0, deel));
+            if (geklemd > hoogste) {
+              hoogste = geklemd;
+              projectTimeline.progress(hoogste);
+              if (hoogste >= 1) {
+                if (mosaic) {
+                  mosaic.dispose();
+                  projectMosaics.delete(mosaic);
+                }
+                stop();
+              }
+            }
+          };
+
+          function bijScroll() {
+            if (frame) return;
+            frame = window.requestAnimationFrame(meet);
+          }
+
+          window.addEventListener("scroll", bijScroll, { passive: true });
+          window.addEventListener("resize", bijScroll);
+          projectOpruimers.push(stop);
+          meet();
+        } else if (mosaic) {
+          /* Minder beweging gevraagd, of je bent hier al eens geweest: dan
+             staat het beeld meteen scherp en hoeft het doek niet te bestaan. */
+          mosaic.render(1, 0);
+          mosaic.dispose();
+          projectMosaics.delete(mosaic);
         }
       });
 
@@ -1518,13 +1680,24 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
           mosaic.render(0, 0);
         }
 
-        if (seenHomeMotion) {
+        /* Dit hing op seenHomeMotion: wie hier al eens geweest was, kreeg de
+           fotos in deze sectie meteen scherp en zonder enige beweging. Dat is
+           dezelfde redenering als bij de hero-intro, maar hier klopt hij niet.
+           De hero-intro is een voorstelling van anderhalve seconde die je niet
+           elk bezoek opnieuw wil uitzitten; dit hangt aan je scroll en houdt
+           niets op. Sinds de thumbnails hierboven wel elk bezoek opbouwen viel
+           het ook op: eerst bouwt het werk zich op, en dan staat de over-sectie
+           er ineens kant-en-klaar.
+
+           Wat er nu voor in de plaats staat is de voorwaarde die hier hoorde en
+           ontbrak: wie minder beweging vraagt, krijgt het beeld meteen scherp. */
+        if (prefersReducedMotion) {
           mosaic?.render(1, 0);
           gsap.set(copyElements, { autoAlpha: 1, y: 0, rotation: 0 });
           gsap.set(ephemera, { autoAlpha: 1, scale: 1, rotation: 0 });
         }
 
-        const revealTimeline = seenHomeMotion ? null : gsap.timeline({
+        const revealTimeline = prefersReducedMotion ? null : gsap.timeline({
           scrollTrigger: {
             trigger: stop,
             start: "top 92%",
@@ -1563,7 +1736,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
             }, 0.42);
         }
 
-        if (photo && !seenHomeMotion) {
+        if (photo && !prefersReducedMotion) {
           gsap.fromTo(photo, {
             y: 42,
             rotation: direction * 2.3,
@@ -1580,7 +1753,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
           });
         }
 
-        if (!seenHomeMotion) ScrollTrigger.create({
+        if (!prefersReducedMotion) ScrollTrigger.create({
           trigger: stop,
           start: "70% 48%",
           end: "bottom 8%",
@@ -1590,7 +1763,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
           },
         });
 
-        if (!seenHomeMotion) gsap.to(copyElements, {
+        if (!prefersReducedMotion) gsap.to(copyElements, {
           autoAlpha: 0.28,
           y: -24,
           stagger: 0.018,
@@ -1611,6 +1784,9 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
         window.removeEventListener("resize", resizeMosaics);
         ScrollTrigger.removeEventListener("refreshInit", resizeMosaics);
         mosaicControllers.forEach((controller) => controller.dispose());
+        projectOpruimers.forEach((stop) => stop());
+        projectMosaics.forEach((controller) => controller.dispose());
+        projectMosaics.clear();
       };
 
       if (!prefersReducedMotion && !seenHomeMotion) {
@@ -2145,13 +2321,24 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
               >
                 <div className="project-visual">
                   <div className="project-parallax-media">
-                    <Image
-                      src={project.image}
-                      alt={`Ontwerpoverzicht van ${project.name}`}
-                      fill
-                      sizes="(max-width: 720px) 100vw, 46vw"
-                      style={{ objectPosition: project.imagePosition }}
-                    />
+                    {/* Dezelfde opbouw als .story-photo-stage in de over-sectie:
+                        het echte beeld ligt eronder op dekking nul, en het
+                        doek erboven bouwt het mozaiek op. De laag die de
+                        dekking van beide stuurt is het blok hieromheen, en dat
+                        is met opzet niet .project-visual - daar loopt de veeg
+                        van gsap overheen, en die twee zouden om dezelfde
+                        eigenschap vechten. */}
+                    <div className="project-mosaic-stage">
+                      <Image
+                        className="project-visual-full"
+                        src={project.image}
+                        alt={`Ontwerpoverzicht van ${project.name}`}
+                        fill
+                        sizes="(max-width: 720px) 100vw, 46vw"
+                        style={{ objectPosition: project.imagePosition }}
+                      />
+                      <canvas className="project-mosaic" width="1" height="1" aria-hidden="true" />
+                    </div>
                   </div>
                 </div>
                 <div className="project-card-copy">
@@ -2224,7 +2411,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
           <span className="story-route-runner" data-label="Studio" aria-hidden="true" />
           <div className="story-board-meta label" aria-hidden="true">
             <span>Personal field notes</span>
-            <span>01 / 04</span>
+            <span>01 / 05</span>
           </div>
           {personalStory.map((story, index) => (
             <article
