@@ -253,6 +253,14 @@ const directionPalette = {
   craft: "#c9653d",
 } as const;
 
+const storyRouteStops = [
+  { label: { nl: "Studio", en: "Studio" }, color: directionPalette.focus },
+  { label: { nl: "Maken", en: "Making" }, color: directionPalette.route },
+  { label: { nl: "Leren", en: "Learning" }, color: directionPalette.proof },
+  { label: { nl: "Reizen", en: "Travel" }, color: directionPalette.care },
+  { label: { nl: "Vaderschap", en: "Fatherhood" }, color: directionPalette.craft },
+] as const;
+
 type StoryMosaicController = {
   render: (reveal: number, exit: number) => void;
   resize: () => void;
@@ -1499,9 +1507,6 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
       if (route && routeSvg && basePath && progressPath && runner && stops.length > 0) {
         type Point = { x: number; y: number };
         type RouteSample = Point & { distance: number };
-        const routeLabels = locale === "en"
-          ? ["Studio", "Making", "Learning", "Living", "How I work"]
-          : ["Studio", "Maken", "Leren", "Leven", "Werkwijze"];
         let routeLength = 0;
         let routeProgress = 0;
         let resizeFrame = 0;
@@ -1548,13 +1553,11 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
             : `M ${runnerPoint.x} ${runnerPoint.y}`;
           progressPath.setAttribute("d", partialPath);
           gsap.set(runner, { x: runnerPoint.x - 7, y: runnerPoint.y - 7 });
-          const upcomingStop = dotDistances.findIndex((distance) => visibleLength < distance - 12);
-          const routeIndex = Math.max(
-            0,
-            Math.min(stops.length - 1, upcomingStop === -1 ? stops.length - 1 : upcomingStop),
-          );
-          runner.dataset.label = routeLabels[upcomingStop === -1 ? routeLabels.length - 1 : upcomingStop];
-          route.style.setProperty("--story-accent", workingMethod[routeIndex]?.color ?? directionPalette.craft);
+          const reachedStop = dotDistances.findLastIndex((distance) => visibleLength >= distance - 12);
+          const routeIndex = Math.max(0, Math.min(stops.length - 1, reachedStop));
+          const routeStop = storyRouteStops[routeIndex] ?? storyRouteStops[storyRouteStops.length - 1];
+          runner.dataset.label = routeStop.label[locale];
+          route.style.setProperty("--story-accent", routeStop.color);
 
           dotDistances.forEach((distance, index) => {
             const previousDistance = index === 0 ? 0 : dotDistances[index - 1];
@@ -2439,7 +2442,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
               style={{
                 "--dot-x": story.dotX,
                 "--dot-mobile-x": story.dotMobileX,
-                "--story-accent": workingMethod[index]?.color ?? directionPalette.craft,
+                "--story-accent": storyRouteStops[index]?.color ?? directionPalette.craft,
               } as CSSProperties}
             >
               <div className="story-stop-dot" aria-hidden="true">
