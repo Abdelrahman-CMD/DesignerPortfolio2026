@@ -1498,14 +1498,16 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
 
       if (route && routeSvg && basePath && progressPath && runner && stops.length > 0) {
         type Point = { x: number; y: number };
+        type RouteSample = Point & { distance: number };
         const routeLabels = locale === "en"
           ? ["Studio", "Making", "Learning", "Living", "How I work"]
           : ["Studio", "Maken", "Leren", "Leven", "Werkwijze"];
         let routeLength = 0;
         let routeProgress = 0;
         let resizeFrame = 0;
+        let routeSignature = "";
         let dotDistances: number[] = [];
-        let routeSamples: Point[] = [];
+        let routeSamples: RouteSample[] = [];
 
         const createSmoothPath = (points: Point[]) => {
           if (points.length < 2) return "";
@@ -1569,27 +1571,29 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
         };
 
         const findClosestDistance = (target: Point) => {
-          const coarseStep = Math.max(8, routeLength / 900);
-          let closestDistance = 0;
+          let closestDistance = routeSamples[0]?.distance ?? 0;
           let closestDelta = Number.POSITIVE_INFINITY;
-          for (let distance = 0; distance <= routeLength; distance += coarseStep) {
-            const point = basePath.getPointAtLength(distance);
+
+          for (let index = 0; index < routeSamples.length - 1; index += 1) {
+            const start = routeSamples[index];
+            const end = routeSamples[index + 1];
+            const dx = end.x - start.x;
+            const dy = end.y - start.y;
+            const lengthSquared = dx * dx + dy * dy;
+            const segmentProgress = lengthSquared === 0
+              ? 0
+              : clamp01(((target.x - start.x) * dx + (target.y - start.y) * dy) / lengthSquared);
+            const point = {
+              x: start.x + dx * segmentProgress,
+              y: start.y + dy * segmentProgress,
+            };
             const delta = (point.x - target.x) ** 2 + (point.y - target.y) ** 2;
             if (delta < closestDelta) {
               closestDelta = delta;
-              closestDistance = distance;
+              closestDistance = start.distance + ((end.distance - start.distance) * segmentProgress);
             }
           }
-          const start = Math.max(0, closestDistance - coarseStep);
-          const end = Math.min(routeLength, closestDistance + coarseStep);
-          for (let distance = start; distance <= end; distance += 1) {
-            const point = basePath.getPointAtLength(distance);
-            const delta = (point.x - target.x) ** 2 + (point.y - target.y) ** 2;
-            if (delta < closestDelta) {
-              closestDelta = delta;
-              closestDistance = distance;
-            }
-          }
+
           return closestDistance;
         };
 
@@ -1607,6 +1611,17 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
               y: dotRect ? dotRect.top + dotRect.height / 2 - routeRect.top : 0,
             };
           });
+          const nextSignature = [
+            Math.round(width),
+            Math.round(height),
+            ...dotPoints.flatMap((point) => [Math.round(point.x), Math.round(point.y)]),
+          ].join(":");
+          if (nextSignature === routeSignature) {
+            drawRoute(routeProgress);
+            return;
+          }
+          routeSignature = nextSignature;
+
           const points: Point[] = [
             { x: width * 0.18, y: Math.min(64, height * 0.015) },
             ...dotPoints,
@@ -1618,7 +1633,11 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
           routeLength = basePath.getTotalLength();
           routeSamples = Array.from(
             { length: Math.ceil(routeLength / 12) + 1 },
-            (_, index) => basePath.getPointAtLength(Math.min(routeLength, index * 12)),
+            (_, index) => {
+              const distance = Math.min(routeLength, index * 12);
+              const point = basePath.getPointAtLength(distance);
+              return { x: point.x, y: point.y, distance };
+            },
           );
           dotDistances = dotPoints.map(findClosestDistance);
           progressPath.style.opacity = "1";
