@@ -1089,6 +1089,12 @@ img {
 }
 
 .language-switcher {
+  /* De radius staat als variabele zodat de knoppen binnenin eraan kunnen
+     rekenen. Bij geneste afrondingen hoort de binnenbocht gelijk te zijn aan de
+     buitenbocht min de ruimte ertussen - anders lopen ze niet concentrisch en
+     ziet de binnenste er te strak uit. Zelfde redenering als bij .mnav-lang,
+     waar dat al uitgeschreven stond. */
+  --language-radius: 0.95rem;
   --language-shell: rgba(248, 245, 239, 0.96);
   --language-ink: #292622;
   --language-border: rgba(41, 38, 34, 0.18);
@@ -1100,7 +1106,7 @@ img {
   gap: 0.2rem;
   padding: 0.25rem;
   border: 1px solid var(--language-border);
-  border-radius: 0.95rem;
+  border-radius: var(--language-radius);
   background: var(--language-shell);
   box-shadow: 0 0.45rem 1.4rem rgba(31, 28, 25, 0.1);
   color: var(--language-ink);
@@ -1126,7 +1132,9 @@ img {
   justify-content: center;
   gap: 0.35rem;
   padding: 0 0.7rem;
-  border-radius: 0.7rem 0.7rem 0.5rem 0.5rem;
+  /* 0.95rem buiten, min 0.25rem padding, min de rand van 1px. Stond hier als
+     0.7/0.5rem, dus boven iets te rond en onder ruim 2px te strak. */
+  border-radius: calc(var(--language-radius) - 0.25rem - 1px);
   color: inherit;
   transition: background var(--motion-standard) var(--ease-premium), color var(--motion-standard) var(--ease-premium), transform var(--motion-standard) var(--ease-premium);
 }
@@ -10477,7 +10485,11 @@ body:has(.mnav-panel) .floating-contact { opacity: 0; pointer-events: none; }
   width: 100%;
   min-height: 0;
   align-items: center;
-  justify-content: space-between;
+  /* Het merk en de terugkoppeling horen bij elkaar aan de linkerkant; de
+     handelingen worden met een automatische marge naar rechts geduwd. Met
+     space-between kwam de terugkoppeling in het midden te hangen, precies waar
+     de verwijderde naampil stond. */
+  justify-content: flex-start;
   gap: 0.65rem;
   padding: var(--space-1) var(--space-2);
   border: 0;
@@ -10512,8 +10524,17 @@ body:has(.mnav-panel) .floating-contact { opacity: 0; pointer-events: none; }
 /* Het merk is rond, zoals .site-mark op de homepage; de functionele groepen
    blijven rechthoekig op 0.95rem. De selector noemt hier ook > a, want anders
    wint de regel hierboven op specificiteit en blijft het merk hoekig. */
-.tc-page .tc-nav > a.tc-nav-brand,
-.editorial-case .ec-nav > a.case-brand { border-radius: 999px; }
+.tc-page .tc-nav > a.tc-nav-mark { border-radius: 999px; }
+
+/* Alleen het beeldmerk, zonder de naam ernaast. Op de homepage staat die naam
+   er wel, maar daar is de header leeg aan de linkerkant; hier staat er ook nog
+   een terugkoppeling, een teller en een taalschakelaar naast. Met de naam erbij
+   liep de rij 33px over de rand en werd "ABDELRAHMAN" afgekapt. Zonder scheelt
+   dat ruim honderd pixels, genoeg om "Alle cases" voluit te laten staan. */
+.tc-page .tc-nav .site-mark-copy { display: none; }
+
+.tc-page .tc-nav-actions,
+.editorial-case .ec-nav-actions { margin-left: auto; }
 
 /* De taalschakelaar kreeg op casepagina's kleinere links dan op de homepage,
    waardoor hij 48px werd naast pillen van 51. Deze maten zijn letterlijk die
@@ -10523,6 +10544,11 @@ body:has(.mnav-panel) .floating-contact { opacity: 0; pointer-events: none; }
   min-width: 3.75rem;
   min-height: 2.55rem;
   padding: 0 0.7rem;
+  /* Hier moet de radius expliciet staan. .tc-nav a zet 0.48rem op elke link in
+     de balk, en dat heeft dezelfde specificiteit als .language-switcher a maar
+     staat later in het bestand - dus won die, en kregen de taalknoppen een
+     bocht van 7,68px waar 10,2 hoort. */
+  border-radius: calc(var(--language-radius, 0.95rem) - 0.25rem - 1px);
 }
 
 .tc-page .tc-nav-actions,

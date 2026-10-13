@@ -124,8 +124,25 @@ export function AynAlHikmahExperience({ locale = "nl" }: { locale?: Locale }) {
       <a className="skip-link" href="#case-context">{tx("Ga naar de case")}</a>
       <CaseNavMotion />
       <nav className="tc-nav" aria-label={tx("Case navigatie")}>
-        <a href={localeHref("/#werk", locale)}><ArrowLeft aria-hidden="true" /> {tx("Alle cases")}</a>
-        <a className="tc-nav-brand" href={localeHref("/", locale)}>Abdelrahman / Product &amp; UX/UI designer</a>
+        {/* Hetzelfde merk als in de header van de homepage, op dezelfde plek.
+            Hier stond in het midden alleen de tekst "Abdelrahman / Product &
+            UX/UI designer", en die was onder 720px helemaal verborgen - op een
+            telefoon stond er op een casepagina dus niets dat zei dat dit
+            dezelfde site was. */}
+        <a className="site-mark tc-nav-mark" href={localeHref("/", locale)} aria-label="Naar de homepage">
+          <Image
+            className="site-mark-logo"
+            src="/merk.svg"
+            alt=""
+            width={1737}
+            height={1472}
+            unoptimized
+            priority
+            draggable={false}
+          />
+          <span className="site-mark-copy">Abdelrahman</span>
+        </a>
+        <a href={localeHref("/#werk", locale)} aria-label={tx("Alle cases")}><ArrowLeft aria-hidden="true" /> <span className="tc-nav-terug-tekst">{tx("Alle cases")}</span></a>
         <div className="tc-nav-actions"><span>08 / 08</span><LanguageSwitcher locale={locale} path="/cases/ayn-al-hikmah" /></div>
         <CaseSectionIndex locale={locale} />
       </nav>

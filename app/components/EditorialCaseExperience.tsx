@@ -180,7 +180,6 @@ export function EditorialCaseExperience({ project, locale = "nl" }: { project: E
       <CaseNavMotion />
       <nav className="ec-nav" aria-label={tx("Case navigatie")}>
         <a href={localeHref("/#werk", locale)} className="case-back"><span aria-hidden="true">←</span> {tx("Alle cases")}</a>
-        <a href={localeHref("/", locale)} className="case-brand">Abdelrahman / Product &amp; UX/UI designer</a>
         <div className="ec-nav-actions"><a href="mailto:dhr_abdelrahman@outlook.com">{tx("Start een gesprek")}</a><LanguageSwitcher locale={locale} path={`/cases/${project.slug}`} tone={project.prototype === "atotz" ? "dark" : "light"} /></div>
       </nav>
 
