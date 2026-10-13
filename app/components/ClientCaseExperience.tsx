@@ -7,7 +7,7 @@ import ArrowUpRight from "lucide-react/icons/arrow-up-right";
 import type { EditorialCase } from "../data/caseContent";
 import { LanguageSwitcher, Locale, localeHref } from "../i18n";
 import { CaseDeepDive } from "./CaseDeepDive";
-import { CaseSectionNav } from "./CaseSectionNav";
+import { CaseSectionIndex } from "./CaseSectionIndex";
 import { initCaseMotion } from "./caseScrollStory";
 
 import { CaseNavMotion } from "./CaseNavMotion";
@@ -398,11 +398,11 @@ export function ClientCaseExperience({ project, locale = "nl" }: { project: Edit
       <a className="skip-link" href="#case-context">{locale === "en" ? "Skip to the case study" : "Ga naar de case"}</a>
 
       <CaseNavMotion />
-      <CaseSectionNav locale={locale} />
       <nav className="tc-nav" aria-label={locale === "en" ? "Case study navigation" : "Case navigatie"}>
         <a href={localeHref("/#werk", locale)}><ArrowLeft aria-hidden="true" /> {locale === "en" ? "All case studies" : "Alle cases"}</a>
         <a className="tc-nav-brand" href={localeHref("/", locale)}>Abdelrahman / Product &amp; UX/UI designer</a>
         <div className="tc-nav-actions"><span>{project.number} / 08</span><LanguageSwitcher locale={locale} path={`/cases/${project.slug}`} /></div>
+        <CaseSectionIndex locale={locale} />
       </nav>
 
       <header className="tc-hero" id="case-overview">

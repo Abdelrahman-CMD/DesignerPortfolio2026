@@ -14,7 +14,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { LanguageSwitcher, Locale, localeHref, translateText } from "../i18n";
 import { CaseDeepDive } from "./CaseDeepDive";
-import { CaseSectionNav } from "./CaseSectionNav";
+import { CaseSectionIndex } from "./CaseSectionIndex";
 import { revealCaseCard } from "./caseScrollStory";
 
 import { CaseNavMotion } from "./CaseNavMotion";
@@ -185,11 +185,11 @@ export function HijamaNCupsExperience({ locale = "nl" }: { locale?: Locale }) {
     <main ref={root} className="tc-page tc-page-hijama" data-case-motion="pending">
       <a className="skip-link" href="#case-context">{tx("Ga naar de case")}</a>
       <CaseNavMotion />
-      <CaseSectionNav locale={locale} />
       <nav className="tc-nav" aria-label={tx("Case navigatie")}>
         <a href={localeHref("/#werk", locale)}><ArrowLeft aria-hidden="true" /> {tx("Alle cases")}</a>
         <a className="tc-nav-brand" href={localeHref("/", locale)}>Abdelrahman / Product &amp; UX/UI designer</a>
         <div className="tc-nav-actions"><span>04 / 08</span><LanguageSwitcher locale={locale} path="/cases/hijaman-cups" /></div>
+        <CaseSectionIndex locale={locale} />
       </nav>
 
       <header className="tc-hero" id="case-overview">

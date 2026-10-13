@@ -13,7 +13,7 @@ import UsersRound from "lucide-react/icons/users-round";
 import { LanguageSwitcher, Locale, localeHref, translateText } from "../i18n";
 import { CaseDeepDive } from "./CaseDeepDive";
 import { CaseResearchEvidence } from "./CaseResearchEvidence";
-import { CaseSectionNav } from "./CaseSectionNav";
+import { CaseSectionIndex } from "./CaseSectionIndex";
 import { CaseStyleGuide, type CaseStyleGuideData } from "./CaseStyleGuide";
 import { initCaseMotion } from "./caseScrollStory";
 
@@ -126,11 +126,11 @@ export function BaynSignalExperience({ locale = "nl" }: { locale?: Locale }) {
     <main ref={root} className="tc-page tc-page-bayn" data-motion-project="bayn-signal" data-case-motion="pending">
       <a className="skip-link" href="#case-context">{tx("Ga naar de case")}</a>
       <CaseNavMotion />
-      <CaseSectionNav locale={locale} />
       <nav className="tc-nav" aria-label={tx("Case navigatie")}>
         <a href={localeHref("/#werk", locale)}><ArrowLeft aria-hidden="true" /> {tx("Alle cases")}</a>
         <a className="tc-nav-brand" href={localeHref("/", locale)}>Abdelrahman / Product &amp; UX/UI designer</a>
         <div className="tc-nav-actions"><span>05 / 08</span><LanguageSwitcher locale={locale} path="/cases/bayn-signal" /></div>
+        <CaseSectionIndex locale={locale} />
       </nav>
 
       <header className="tc-hero" id="case-overview">

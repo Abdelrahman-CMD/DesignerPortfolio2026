@@ -12,7 +12,7 @@ import ShieldCheck from "lucide-react/icons/shield-check";
 import Sparkles from "lucide-react/icons/sparkles";
 import { LanguageSwitcher, Locale, localeHref, translateText } from "../i18n";
 import { CaseDeepDive } from "./CaseDeepDive";
-import { CaseSectionNav } from "./CaseSectionNav";
+import { CaseSectionIndex } from "./CaseSectionIndex";
 import { CaseStyleGuide, type CaseStyleGuideData } from "./CaseStyleGuide";
 import { initCaseMotion } from "./caseScrollStory";
 
@@ -123,11 +123,11 @@ export function AynAlHikmahExperience({ locale = "nl" }: { locale?: Locale }) {
     <main ref={root} className="tc-page tc-page-ayn" data-motion-project="ayn-al-hikmah" data-case-motion="pending">
       <a className="skip-link" href="#case-context">{tx("Ga naar de case")}</a>
       <CaseNavMotion />
-      <CaseSectionNav locale={locale} />
       <nav className="tc-nav" aria-label={tx("Case navigatie")}>
         <a href={localeHref("/#werk", locale)}><ArrowLeft aria-hidden="true" /> {tx("Alle cases")}</a>
         <a className="tc-nav-brand" href={localeHref("/", locale)}>Abdelrahman / Product &amp; UX/UI designer</a>
         <div className="tc-nav-actions"><span>08 / 08</span><LanguageSwitcher locale={locale} path="/cases/ayn-al-hikmah" /></div>
+        <CaseSectionIndex locale={locale} />
       </nav>
 
       <header className="tc-hero" id="case-overview">

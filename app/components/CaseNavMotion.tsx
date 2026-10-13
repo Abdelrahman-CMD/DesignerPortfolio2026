@@ -20,6 +20,17 @@ import gsap from "gsap";
    Renderen doet deze component niets. */
 export function CaseNavMotion() {
   useEffect(() => {
+    /* layout.tsx zet data-js="on" en start een noodrem van 2,6 seconden die de
+       vlag op "off" zet als de client-bundel wegblijft. HomeExperience wist die
+       timer, maar dat draait niet op een casepagina - dus daar sloeg de vlag na
+       2,6 seconden altijd om, ook al was de bundel gewoon binnen. Deze
+       component draait op elke casepagina, dus hier hoort dezelfde wis. */
+    const noodrem = window as unknown as { __heroMotionFallback?: number };
+    if (noodrem.__heroMotionFallback !== undefined) {
+      window.clearTimeout(noodrem.__heroMotionFallback);
+      noodrem.__heroMotionFallback = undefined;
+    }
+
     const nav = document.querySelector<HTMLElement>(".tc-nav, .ec-nav");
     if (!nav) return;
 
@@ -30,6 +41,12 @@ export function CaseNavMotion() {
     const setNavVisibility = (visible: boolean) => {
       if (visible === navVisible) return;
       navVisible = visible;
+      /* CaseSectionIndex laat hieraan zien of hij zijn compacte versie moet
+         tonen. Die neemt het over zodra deze balk wegschuift, zodat er altijd
+         precies een van de twee in beeld staat - nooit geen en nooit allebei.
+         Via een attribuut en niet via react-state, omdat dit op elke
+         scrollstap kan wisselen en er dan geen render aan te pas hoeft. */
+      document.documentElement.dataset.caseNav = visible ? "visible" : "hidden";
       gsap.to(nav, {
         autoAlpha: visible ? 1 : 0,
         yPercent: visible ? 0 : -125,
@@ -59,9 +76,12 @@ export function CaseNavMotion() {
 
     window.addEventListener("scroll", handleDirectionalScroll, { passive: true });
 
+    document.documentElement.dataset.caseNav = "visible";
+
     return () => {
       window.removeEventListener("scroll", handleDirectionalScroll);
       if (scrollFrame) window.cancelAnimationFrame(scrollFrame);
+      delete document.documentElement.dataset.caseNav;
     };
   }, []);
 

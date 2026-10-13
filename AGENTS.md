@@ -62,6 +62,33 @@ Hetzelfde geldt voor de navigatiebalk: `CaseNavMotion.tsx` kopieert bewust de
 drempels, duur en easing van `setHeaderVisibility` in `HomeExperience.tsx`,
 zodat de balk zich op elke pagina gelijk gedraagt.
 
+Die vlag `html[data-js="on"]` is er ook de reden van dat `CaseNavMotion.tsx` de
+noodremtimer `window.__heroMotionFallback` wist, net als `HomeExperience.tsx`
+dat doet. Wist je hem daar niet, dan sloeg de vlag op elke casepagina na 2,6
+seconden om naar `"off"` — ook als de bundel gewoon binnen was — en gingen de
+locks in `globals.css` die aan die vlag hangen ten onrechte open. **Verwijder je
+die wis, dan loog de vlag weer over elke casepagina.**
+
+## Inhoudsopgave van een case
+
+`CaseSectionIndex.tsx` hangt als kind in `<nav class="tc-nav">`, en niet ernaast.
+Dat is geen smaak: `CaseNavMotion` zet een transform op die balk, en een los
+element met `position: fixed` zou daar niet alleen zijn eigen plek van gaan
+rekenen, het zou ook een tweede ding zijn dat op hetzelfde scrollgebaar dezelfde
+beweging moet maken. De voortgangslijn en het paneel gaan juist wél via een
+portaal naar `document.body`, omdat die niet mee mogen schuiven.
+
+Twee dingen die daar aan vastzitten:
+
+- De vijf ankers staan altijd in de html, in `.csi-fallback`. Zonder javascript
+  is dat het enige dat werkt; de knop staat dan uit. De component draait die
+  schakelaar zelf om zodra ze gehydrateerd is.
+- Het paneel vergrendelt de pagina met `overflow: hidden` op `html`, en niet met
+  `position: fixed` op de body zoals het mobiele menu doet. Op een casepagina
+  pint ScrollTrigger secties vast; haal je de body uit de flow, dan klapt de
+  documenthoogte in en bestaat de bewaarde scrollpositie bij het sluiten niet
+  meer. Gemeten sprong je dan bijna vierduizend pixels terug.
+
 ## Inhoud van de cases
 
 De teksten van de drie klantcases staan in `clientStories` in

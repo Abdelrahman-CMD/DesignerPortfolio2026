@@ -9,7 +9,7 @@ import BellOff from "lucide-react/icons/bell-off";
 import CheckCircle2 from "lucide-react/icons/check-circle-2";
 import { LanguageSwitcher, Locale, localeHref } from "../i18n";
 import { CaseDeepDive } from "./CaseDeepDive";
-import { CaseSectionNav } from "./CaseSectionNav";
+import { CaseSectionIndex } from "./CaseSectionIndex";
 import { initCaseMotion } from "./caseScrollStory";
 
 import { CaseNavMotion } from "./CaseNavMotion";
@@ -260,11 +260,11 @@ export function MirqaExperience({ locale = "nl" }: { locale?: Locale }) {
       <a className="skip-link" href="#case-context">{locale === "en" ? "Skip to the case study" : "Ga naar de case"}</a>
 
       <CaseNavMotion />
-      <CaseSectionNav locale={locale} />
       <nav className="tc-nav" aria-label={locale === "en" ? "Case study navigation" : "Case navigatie"}>
         <a href={localeHref("/#werk", locale)}><ArrowLeft aria-hidden="true" /> {locale === "en" ? "All case studies" : "Alle cases"}</a>
         <a className="tc-nav-brand" href={localeHref("/", locale)}>Abdelrahman / Product &amp; UX/UI designer</a>
         <div className="tc-nav-actions"><span>{copy.navCount}</span><LanguageSwitcher locale={locale} path="/cases/mirqa" /></div>
+        <CaseSectionIndex locale={locale} />
       </nav>
 
       <header className="tc-hero" id="case-overview">

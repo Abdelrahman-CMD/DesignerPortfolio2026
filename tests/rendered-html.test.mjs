@@ -30,9 +30,14 @@ test("server-renders the complete portfolio homepage", async () => {
 
   const html = await response.text();
   assert.match(html, /Product &amp; UX\/UI designer in Amsterdam · Abdelrahman Ahmed/);
+  assert.match(html, /Product &amp; UX\/UI designer die onduidelijke ideeën vertaalt naar heldere websites, flows en interfaces\./);
+  assert.match(html, /Van onduidelijk idee naar heldere digitale ervaring\./);
+  assert.match(html, /property="og:image" content="https:\/\/abdelrahman\.nl\/og-mind-hero\.jpg"/);
+  assert.match(html, /name="twitter:image" content="https:\/\/abdelrahman\.nl\/og-mind-hero\.jpg"/);
   // "Senior" is uit de metadata gehaald: het is een claim over jezelf waar
   // niemand op zoekt. Deze regel houdt hem eruit.
   assert.doesNotMatch(html, /Senior digitaal ontwerper|Senior digital designer/);
+  assert.doesNotMatch(html, /Ik haal de twijfel uit digitale keuzes/);
   assert.match(html, /Productdesigner die complexiteit helder maakt/);
   assert.match(html, /Ik combineer productstrategie, UX-onderzoek en interfaceontwerp/);
   assert.match(html, /class="mind-hero-canvas"/);
@@ -105,6 +110,21 @@ test("server-renders the complete portfolio homepage", async () => {
   assert.equal((html.match(/<canvas class="story-photo-mosaic"/g) ?? []).length, 4);
 });
 
+test("server-renders case specific social metadata", async () => {
+  const response = await render("/en/cases/atotz-detachering");
+  assert.equal(response.status, 200);
+
+  const html = await response.text();
+  assert.match(html, /<title>AtotZ Detachering — a website in one week · Abdelrahman<\/title>/);
+  assert.match(html, /property="og:title" content="AtotZ Detachering - from sector need to focused contact"/);
+  assert.match(html, /property="og:image" content="https:\/\/abdelrahman\.nl\/projects\/home\/atotz-case-thumbnail\.jpg"/);
+  assert.match(html, /property="og:image:width" content="1800"/);
+  assert.match(html, /property="og:image:height" content="1350"/);
+  assert.match(html, /name="twitter:card" content="summary_large_image"/);
+  assert.match(html, /name="twitter:image" content="https:\/\/abdelrahman\.nl\/projects\/home\/atotz-case-thumbnail\.jpg"/);
+  assert.doesNotMatch(html, /name="twitter:image" content="https:\/\/abdelrahman\.nl\/og-mind-hero\.jpg"/);
+});
+
 test("uses bounded raster assets on the homepage and case pages", async () => {
   const [homeSource, editorialSource, tareeqiSource, guidanceSource, aynSource, baynSource, hijamaSource, mirqaSource, caseData, css, caseResponse, tareeqiResponse, aynResponse, baynResponse, hijamaResponse, mirqaResponse, oppasResponse] = await Promise.all([
     readFile(new URL("../app/components/HomeExperience.tsx", import.meta.url), "utf8"),
@@ -138,12 +158,82 @@ test("uses bounded raster assets on the homepage and case pages", async () => {
   assert.match(caseHtml, /De huidige reis verliest zekerheid tussen intentie en vertrek/);
   assert.match(caseHtml, /class="tc-deep-dive"/);
   assert.equal((caseHtml.match(/class="tc-card-shell /g) ?? []).length, 3);
-  assert.match(caseHtml, /class="tc-section-nav"/);
+  /* De inhoudsopgave zit IN de navigatiebalk en niet ernaast: die balk krijgt
+     een transform van CaseNavMotion, en twee losse elementen zouden dan op
+     hetzelfde scrollgebaar dezelfde beweging moeten maken. */
+  assert.match(caseHtml, /<nav class="tc-nav"(?:(?!<\/nav>)[\s\S])*class="csi-bar"/);
+  assert.doesNotMatch(caseHtml, /tc-section-nav|tc-section-tick/);
+  assert.match(css, /\.csi-bar \{/);
+  assert.doesNotMatch(css, /\.tc-section-nav|\.tc-section-tick|\.tc-section-label/);
+
+  /* De vijf ankers blijven in de html staan, ook al zit de opgave zelf achter
+     een knop. Zonder javascript is die lijst het enige dat werkt, en de rail
+     die hier eerst stond leverde ze ook. */
   for (const sectionId of ["case-overview", "case-context", "case-process", "case-evidence", "case-outcome"]) {
     assert.match(caseHtml, new RegExp(`href="#${sectionId}"`));
     assert.match(caseHtml, new RegExp(`id="${sectionId}"`));
   }
-  assert.match(css, /\.tc-section-nav \{/);
+  assert.match(caseHtml, /class="csi-fallback"/);
+  /* In de server-html staat de knop uit en de lijst aan; de component draait
+     dat om zodra ze gehydrateerd is. Zo opent er nooit een knop die niets kan
+     openen, en blijven de ankers werken als de bundel wegblijft. */
+  assert.match(caseHtml, /class="csi-bar"[^>]*hidden=""/);
+  assert.doesNotMatch(caseHtml, /class="csi-fallback"[^>]*hidden/);
+  assert.match(css, /\.csi-bar\[hidden\],\n\.csi-fallback\[hidden\] \{ display: none; \}/);
+
+  /* De noodrem uit layout.tsx zet data-js na 2,6 seconden op "off" als de
+     bundel wegblijft. HomeExperience wist die timer, maar draait niet op een
+     case - dus daar meldde de vlag ten onrechte "off". CaseNavMotion wist hem
+     nu ook, want anders liegt de lock hierboven over elke casepagina. */
+  const navMotionSource = await readFile(new URL("../app/components/CaseNavMotion.tsx", import.meta.url), "utf8");
+  assert.match(navMotionSource, /__heroMotionFallback/);
+  assert.match(navMotionSource, /clearTimeout/);
+
+  /* De lock op een casehero wachtte op data-case-motion="ready", en dat zet
+     alleen de client. Zonder javascript bleef de navigatiebalk daardoor voor
+     altijd onzichtbaar. Nu hangt die lock aan dezelfde data-js-vlag als de
+     hero op de homepage, die blokkerend gezet wordt en een noodrem heeft. */
+  assert.match(css, /html\[data-js="on"\] \.tc-page\[data-case-motion="pending"\] :is\(\.tc-nav/);
+  assert.doesNotMatch(css, /\n {2}\.tc-page\[data-case-motion="pending"\]/);
+
+  /* De voortgangslijn blijft staan als de balk wegschuift - zonder haar is er
+     niets meer dat zegt hoeveel er nog komt. Daarom hangt ze aan document.body
+     en niet aan de balk, die immers een transform krijgt. Ze is decoratief en
+     client-only, dus ze staat niet in de server-html; wat hier te bewaken valt
+     is dat ze buiten de balk terechtkomt. */
+  const indexSource = await readFile(new URL("../app/components/CaseSectionIndex.tsx", import.meta.url), "utf8");
+  const portaalStart = indexSource.indexOf("createPortal(");
+  const portaalDoel = indexSource.indexOf("document.body", portaalStart);
+  assert.ok(portaalStart > -1 && portaalDoel > -1, "de inhoudsopgave hoort naar document.body te portalen");
+  const inPortaal = indexSource.slice(portaalStart, portaalDoel);
+  assert.ok(inPortaal.includes("csi-voortgang"), "de voortgangslijn hoort in het portaal te staan");
+  assert.ok(inPortaal.includes("csi-panel"), "het paneel hoort in het portaal te staan");
+  assert.ok(inPortaal.includes("csi-chip"), "de compacte regel hoort in het portaal te staan");
+  /* De balk juist niet: die hoort een kind van <nav> te blijven. */
+  assert.ok(!inPortaal.includes('className="csi-bar"'), "de balk hoort niet in het portaal te staan");
+  assert.match(css, /\.csi-voortgang \{(?:(?!\})[\s\S])*position: fixed/);
+
+  /* Een segment per hoofdstuk, gelijk breed. Een doorlopende streep zei alleen
+     hoe ver je was en niet waar; dan moest je omhoog scrollen om de balk terug
+     te halen en te zien in welk hoofdstuk je zat. Gelijke breedtes omdat dit
+     een hoofdstukteller is en geen schuifbalk. */
+  assert.equal((indexSource.match(/csi-segment-vulling/g) ?? []).length, 1);
+  assert.match(css, /\.csi-voortgang \{(?:(?!\})[\s\S])*grid-auto-columns: 1fr/);
+  assert.match(css, /\.csi-segment-vulling \{(?:(?!\})[\s\S])*transform: scaleX\(0\)/);
+  assert.doesNotMatch(css, /\.csi-segment-vulling \{(?:(?!\})[\s\S])*transition/);
+
+  /* De balk en de compacte regel wisselen elkaar af en staan er nooit samen:
+     CaseNavMotion zet data-case-nav, de css hangt daaraan. Valt die koppeling
+     weg, dan is de bezoeker diep in een case weer kwijt waar hij zit. */
+  assert.match(navMotionSource, /dataset\.caseNav = visible \? "visible" : "hidden"/);
+  assert.match(css, /html\[data-case-nav="hidden"\] \.csi-chip \{/);
+  assert.match(css, /\.csi-chip \{(?:(?!\})[\s\S])*opacity: 0;/);
+
+  /* Het paneel bestaat pas als de bezoeker de regel aantikt, dus het staat
+     niet in de eerste html. En z-index 80 ligt onder de 90 van de balk, zodat
+     de regel waarmee je het sluit zichtbaar en aan te tikken blijft. */
+  assert.doesNotMatch(caseHtml, /class="csi-panel"/);
+  assert.match(css, /\.csi-panel \{(?:(?!\})[\s\S])*z-index: 80/);
 
   assert.equal(tareeqiResponse.status, 200);
   const tareeqiHtml = await tareeqiResponse.text();
@@ -241,16 +331,15 @@ test("uses bounded raster assets on the homepage and case pages", async () => {
      De hamburgerknop is 54 bij 42, oftewel 2.268 px - veertig keer minder
      oppervlak. Daar is het glas wel te betalen, en het is bewust gevraagd.
      Deze test bewaakt dus nog steeds het oorspronkelijke doel: geen vervaging
-     op grote vlakken. Komt er een derde regel bij, dan faalt hij. */
-  /* Twee plekken mogen vervagen, en allebei om dezelfde reden: er scrollt
-     niets achter. De knop is klein, en het paneel vergrendelt de pagina zolang
-     het openstaat. Elke derde plek valt buiten die redenering. */
+     op grote vlakken. Komt er een vierde regel bij, dan faalt hij. */
+  /* Kleine of vergrendelde overlayvlakken mogen vervagen. Grote meescrollende
+     vlakken blijven uitgesloten. */
   const zonderCommentaar = css.replace(/\/\*[\s\S]*?\*\//g, "");
   const vervagingen = zonderCommentaar.match(/[^{}]+\{[^}]*backdrop-filter:\s*blur[^}]*\}/gi) ?? [];
   const selectors = vervagingen.map((regel) => regel.split("{")[0].trim());
   assert.deepEqual(
     [...new Set(selectors)].sort(),
-    [".mnav-panel", ".mnav-toggle-shape"],
+    [".csi-panel", ".mnav-panel", ".mnav-toggle-shape"],
     `onverwachte vervaging op: ${selectors.join(" | ")}`,
   );
 

@@ -296,17 +296,22 @@
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .tc-page[data-case-motion="pending"] :is(.tc-nav, .tc-hero-kicker, .tc-hero-summary, .tc-hero-live, .tc-hero-meta, .tc-hero-media, .cc-hero-note) {
+  /* html[data-js="on"] staat hier bewust voor: data-case-motion wordt pas
+     "ready" door de client, dus zonder javascript bleef deze lock voor altijd
+     staan en was de navigatiebalk van een case onzichtbaar. De vlag wordt
+     blokkerend gezet in app/layout.tsx en na 2,6 seconden op "off" als de
+     bundel niet aankomt - dezelfde voorwaarde als de hero op de homepage. */
+  html[data-js="on"] .tc-page[data-case-motion="pending"] :is(.tc-nav, .tc-hero-kicker, .tc-hero-summary, .tc-hero-live, .tc-hero-meta, .tc-hero-media, .cc-hero-note) {
     visibility: hidden;
     opacity: 0;
   }
 
-  .tc-page[data-case-motion="pending"] .tc-title-line > span {
+  html[data-js="on"] .tc-page[data-case-motion="pending"] .tc-title-line > span {
     transform: translate3d(0, 2.2em, 0);
     will-change: transform;
   }
 
-  .editorial-case[data-case-motion="pending"] .ec-title-line > span {
+  html[data-js="on"] .editorial-case[data-case-motion="pending"] .ec-title-line > span {
     transform: translate3d(0, 2.2em, 0);
     will-change: transform;
   }
@@ -6195,134 +6200,336 @@ html.is-cta-captured a { cursor: none !important; }
   transform: translateY(-1px);
 }
 
-/* De inhoudsopgave naast een case. In rust vijf streepjes van samen 24px;
-   de labels komen pas bij aanwijzen of toetsenbordfocus. Zie CaseSectionNav
-   voor waarom: permanent uitgeklapt was hij 138px breed en lag er op de
-   meeste scrollposities content onder. */
-.tc-section-nav {
-  position: fixed;
-  z-index: 75;
-  top: 50%;
-  left: clamp(0.75rem, 1.3vw, 1.35rem);
-  display: grid;
-  /* 24px tussenruimte zodat elk klikdoel hieronder ook 24px hoog kan worden,
-     het minimum uit WCAG 2.5.8. Met 12px raakten de doelen elkaar. */
-  gap: 1.5rem;
-  /* 0.25rem opzij: met 1.25rem streepje komt de rail op 28px breed en loopt
-     hij tot x=45, net binnen de 51px die er op de smalste plek over is. */
-  padding: 0.75rem 0.25rem;
-  transform: translateY(-50%);
+/* De inhoudsopgave van een case. Zie CaseSectionIndex voor de reden dat dit
+   geen rail links in beeld meer is: die stond permanent uitgeklapt, lag op
+   vier van de zes gemeten scrollposities onder de tekst, en op een telefoon
+   is die marge er helemaal niet.
+
+   Nu zijn voortgang en opgave gesplitst. De voortgang is een haarlijn van 2px
+   die altijd blijft staan; de opgave zit achter een regel in de balk en komt
+   alleen op verzoek. */
+
+/* De regel onder in de navigatiebalk. Hij spant alle kolommen van het raster
+   van .tc-nav en wordt zo een tweede rij. Omdat hij een kind van die balk is,
+   schuift hij mee met de transform die CaseNavMotion erop zet - er is dus
+   maar een element dat op het scrollgebaar reageert, niet twee. */
+.csi-bar {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* 8pt: 16px tussen de twee helften, 40px hoog. Dat laatste is ruim boven
+     de 24px die WCAG 2.5.8 als klikdoel vraagt. */
+  gap: var(--space-2);
+  width: 100%;
+  min-height: 2.5rem;
+  margin-top: var(--space-1);
+  padding: 0 var(--space-2);
+  border: 0;
+  border-top: 1px solid var(--case-rule, rgba(41, 38, 34, 0.14));
+  background: none;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color var(--motion-standard) var(--ease-premium);
 }
 
-.tc-section-nav a {
-  position: relative;
-  display: block;
-  color: var(--tc-ink, var(--ink));
-  text-decoration: none;
+.csi-bar:hover { background: rgba(45, 42, 38, 0.05); }
+
+/* Zonder javascript bestaat er geen paneel om te openen, dus dan staat de
+   knop uit en de lijst aan. De component zet dat zelf met het hidden-attribuut
+   zodra ze gehydrateerd is; display moet hier expliciet, anders wint de flex
+   hieronder van de standaardstijl van hidden. */
+.csi-bar[hidden],
+.csi-fallback[hidden] { display: none; }
+
+.csi-fallback {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--space-2);
+  margin: var(--space-1) 0 0;
+  padding: var(--space-1) 0 0;
+  border-top: 1px solid var(--case-rule, rgba(41, 38, 34, 0.14));
+  list-style: none;
 }
 
-/* Het klikvlak loopt verder dan het streepje maar staat buiten de flow, zodat
-   het de rail niet breder maakt. Een streepje van 2px hoog is anders een
-   onmogelijk doel; dit maakt er 24 bij 40 van. */
-.tc-section-nav a::after {
-  content: "";
-  position: absolute;
-  inset: -0.6875rem -0.625rem;
+.csi-fallback a { min-height: 2.5rem; }
+.csi-fallback .csi-num { letter-spacing: 0.11em; }
+
+.csi-bar:focus-visible {
+  outline: 2px solid #b83225;
+  outline-offset: 2px;
+  border-radius: 0.3rem;
 }
 
-/* Het streepje. Dit is het enige dat in rust ruimte inneemt: 1.5rem breed,
-   dus de hele rail blijft binnen de 51px die er op de smalste plek is. */
-.tc-section-tick {
-  display: block;
-  width: 1.25rem;
-  height: 2px;
-  flex: none;
-  border-radius: 2px;
-  background: currentColor;
-  opacity: 0.3;
-  transform-origin: left center;
-  transform: scaleX(0.55);
-  transition:
-    transform var(--motion-standard) var(--ease-premium),
-    opacity var(--motion-standard) var(--ease-premium);
-}
-
-.tc-section-nav a[aria-current="location"] .tc-section-tick {
-  opacity: 1;
-  transform: scaleX(1);
-}
-
-.tc-section-nav a:hover .tc-section-tick,
-.tc-section-nav a:focus-visible .tc-section-tick {
-  opacity: 0.8;
-  transform: scaleX(1);
-}
-
-/* Het label staat absoluut gepositioneerd: het hoort wel in de html voor
-   schermlezers, maar mag in rust geen breedte kosten. Met alleen opacity: 0
-   bleef de rail 168px breed en loste het probleem zich niet op. */
-.tc-section-label {
-  position: absolute;
-  top: 50%;
-  left: calc(1.25rem + 0.6rem);
+/* Waar je bent. De nummers zijn tabulair, anders verspringt de naam ernaast
+   bij elke sectiewissel. */
+.csi-nu {
   display: inline-flex;
   align-items: baseline;
-  gap: 0.5rem;
-  padding: 0.25rem 0.75rem;
-  border-radius: 999px;
-  /* Een vast vlak en geen vervaging. Achter dit label scrollt de pagina wel,
-     anders dan bij de twee plekken waar vervaging is toegestaan, en dan moet
-     die elk frame opnieuw samengesteld worden. Bovendien moet dit label over
-     willekeurige inhoud leesbaar zijn, en dat is een dekkend vlak gewoon
-     betrouwbaarder in. */
-  background: var(--tc-shell, #f9f5ef);
-  box-shadow: 0 0.5rem 1.25rem rgba(31, 28, 25, 0.14), 0 0 0 1px rgba(31, 28, 25, 0.06);
-  color: var(--tc-ink, var(--ink));
-  font-size: var(--type-micro);
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  line-height: 1.6;
-  text-transform: uppercase;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.csi-nu-num {
+  color: #b83225;
+  font-variant-numeric: tabular-nums;
+}
+
+.csi-nu-streep { opacity: 0.35; }
+
+.csi-nu-naam {
+  overflow: hidden;
+  text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+/* De uitnodiging om te openen. */
+.csi-cue {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: var(--space-1);
+  opacity: 0.7;
+}
+
+.csi-bar:hover .csi-cue { opacity: 1; }
+
+.csi-plus {
+  display: grid;
+  place-items: center;
+  width: 1rem;
+  height: 1rem;
+  transition: transform var(--motion-standard) var(--ease-premium);
+}
+
+.csi-plus svg {
+  display: block;
+  width: 1rem;
+  height: 1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+}
+
+/* Een plus die 45 graden draait is een kruis. Dezelfde beweging als de
+   hamburger op de homepage maakt. */
+.csi-plus.is-kruis { transform: rotate(45deg); }
+
+/* De voortgangslijn, een segment per hoofdstuk. Staat boven de balk in
+   z-index en verdwijnt nooit. Vijf segmenten in plaats van een doorlopende
+   streep, omdat een streep alleen zegt hoe ver je bent en niet waar: je zag
+   pas in welk hoofdstuk je zat als je omhoog scrolde om de balk terug te
+   halen. 2px vraagt geen aandacht en kost geen witruimte. */
+.csi-voortgang {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 95;
+  display: grid;
+  /* Gelijke breedtes en niet naar de lengte van het hoofdstuk: dit is een
+     hoofdstukteller, geen schuifbalk. Zou hij meeschalen, dan werd Overzicht
+     een spikkel en Bewijs de halve breedte. */
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: 2px;
+  width: 100%;
+  height: 2px;
   pointer-events: none;
+}
+
+.csi-segment {
+  overflow: hidden;
+  background: rgba(41, 38, 34, 0.14);
+}
+
+/* scaleX en geen breedte, zodat de browser hier geen layout voor doet. Geen
+   transition: de vulling moet de scroll volgen en niet erachteraan lopen. */
+.csi-segment-vulling {
+  width: 100%;
+  height: 100%;
+  background: #b83225;
+  transform-origin: left center;
+  transform: scaleX(0);
+}
+
+/* De compacte versie van de regel uit de balk. Zij en de balk wisselen elkaar
+   af: CaseNavMotion zet data-case-nav op html, en daaronder staat er altijd
+   precies een van de twee in beeld. Nooit geen - dat was de klacht - en nooit
+   allebei, want dan stond dezelfde regel er twee keer.
+
+   Links uitgelijnd met de balk erboven, zodat het nummer op dezelfde plek
+   blijft staan als de een in de ander overgaat. */
+.csi-chip {
+  position: fixed;
+  top: 0.625rem;
+  left: 2vw;
+  z-index: 94;
+  display: inline-flex;
+  /* Niet baseline: dat lijnt op de basislijn van de letters en laat de hele
+     regel bovenin het pilletje hangen - gemeten 1px speling boven en 11,6px
+     onder. Alle drie de deeltjes hebben dezelfde korpsgrootte, dus centreren
+     mag gewoon. */
+  align-items: center;
+  gap: var(--space-1);
+  min-height: 1.75rem;
+  padding: 0 0.625rem;
+  border: 1px solid rgba(41, 38, 34, 0.1);
+  border-radius: 0.5rem;
+  background: color-mix(in srgb, var(--paper-light) 92%, transparent);
+  box-shadow: 0 0.4rem 1.1rem rgba(41, 38, 34, 0.07);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: var(--type-micro);
+  font-weight: 650;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
   opacity: 0;
-  transform: translate(-0.4rem, -50%);
+  transform: translateY(-0.4rem);
+  pointer-events: none;
   transition:
     opacity var(--motion-standard) var(--ease-premium),
     transform var(--motion-standard) var(--ease-premium);
 }
 
-.tc-section-label span {
-  opacity: 0.55;
+html[data-case-nav="hidden"] .csi-chip {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+/* Het aantiksel loopt verder dan het pilletje zelf, zodat ook een duim die
+   er net naast zit het nog raakt. */
+.csi-chip::after {
+  content: "";
+  position: absolute;
+  inset: -0.5rem -0.25rem;
+}
+
+.csi-chip:focus-visible {
+  outline: 2px solid #b83225;
+  outline-offset: 2px;
+}
+
+/* Het volledige scherm met de opgave. Dezelfde taal als het mobiele menu:
+   crème, licht vervaagd, grote namen in de serif. Dat is bewust - het is
+   hetzelfde soort ding, dus het hoort hetzelfde te voelen.
+
+   z-index 80 ligt onder de balk (90), zodat de regel waar je hem mee sluit
+   zichtbaar en aan te tikken blijft. */
+.csi-panel {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: flex;
+  flex-direction: column;
+  padding: 8rem 2vw var(--space-6);
+  overflow-y: auto;
+  /* Het scrollen stopt bij de rand van het paneel in plaats van door te slaan
+     naar de case erachter. */
+  overscroll-behavior: contain;
+  /* Niet dekken maar vervagen, net als bij het menu: de case blijft
+     herkenbaar als vorm, maar je kunt hem niet meer lezen. Er scrollt niets
+     achter deze laag, dus de vervaging wordt een keer samengesteld. */
+  background: color-mix(in srgb, var(--paper) 62%, transparent);
+  -webkit-backdrop-filter: blur(7px) saturate(118%);
+  backdrop-filter: blur(7px) saturate(118%);
+  animation: csi-in 0.34s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Het blad lijnt links uit met de navigatiebalk erboven, dus met dezelfde
+   2vw. Daardoor staat het nummer 01 recht onder de pijl terug. */
+.csi-sheet {
+  /* Niet over de volle breedte: op een breed scherm staat er dan een meter
+     niets tussen "Overzicht" en de rechterkant van de regel. 44rem houdt de
+     opgave een leesbare kolom die links uitlijnt met de balk erboven. */
+  width: min(100%, 44rem);
+  margin: auto 0;
+}
+
+.csi-eyebrow {
+  margin: 0 0 var(--space-2);
+  color: #6f685f;
+}
+
+.csi-lijst {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid rgba(41, 38, 34, 0.13);
+}
+
+.csi-lijst li { border-bottom: 1px solid rgba(41, 38, 34, 0.13); }
+
+.csi-lijst a {
+  display: grid;
+  /* De naam krijgt auto en niet 1fr, zodat de stip erachter er pal naast komt
+     te staan in plaats van aan de andere kant van de regel. */
+  grid-template-columns: 2.5rem auto 1fr;
+  align-items: baseline;
+  gap: var(--space-2);
+  padding: var(--space-2) 0;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.csi-num {
+  font-family: var(--sans);
+  font-size: var(--type-micro);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.6;
+  color: #b83225;
   font-variant-numeric: tabular-nums;
 }
 
-.tc-section-label strong { font: inherit; }
-
-/* Aanwijzen of ernaartoe tabben klapt de hele rail uit. focus-within zorgt
-   dat het toetsenbord dezelfde toegang heeft als de muis. */
-.tc-section-nav:hover .tc-section-label,
-.tc-section-nav:focus-within .tc-section-label {
-  opacity: 1;
-  transform: translate(0, -50%);
+.csi-naam {
+  font-family: var(--serif);
+  font-size: var(--type-h2);
+  font-weight: 400;
+  line-height: 1.04;
+  letter-spacing: -0.01em;
+  transition: color var(--motion-standard) var(--ease-premium);
 }
 
-/* En tijdens het scrollen licht alleen het label van de huidige sectie op,
-   zodat "waar ben ik" beantwoord wordt zonder blijvende ruimte te kosten. */
-.tc-section-nav.is-scrolling a[aria-current="location"] .tc-section-label {
-  opacity: 1;
-  transform: translate(0, -50%);
+/* De sectie waar je staat is rood met een stip, net zoals het eerste item in
+   het mobiele menu de huidige pagina aangeeft. */
+.csi-hier {
+  align-self: center;
+  justify-self: start;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: transparent;
 }
 
-.tc-section-nav a:focus-visible {
-  outline: 2px solid var(--tc-ink, var(--ink));
-  outline-offset: 4px;
-  border-radius: 0.25rem;
+.csi-lijst a[aria-current="location"] .csi-naam { color: #b83225; }
+.csi-lijst a[aria-current="location"] .csi-hier { background: #b83225; }
+.csi-lijst a:hover .csi-naam { color: #b83225; }
+
+.csi-lijst a:focus-visible {
+  outline: 2px solid #b83225;
+  outline-offset: 3px;
+  border-radius: 0.4rem;
+}
+
+@keyframes csi-in {
+  from { opacity: 0; transform: translateY(-0.5rem) scale(0.985); }
+  to { opacity: 1; transform: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .tc-section-tick,
-  .tc-section-label { transition: none; }
+  .csi-panel { animation: none; }
+  .csi-plus,
+  .csi-naam,
+  .csi-bar { transition: none; }
 }
 
 .tc-hero,
@@ -6463,7 +6670,12 @@ html.is-cta-captured a { cursor: none !important; }
 }
 
 @media (max-width: 720px) {
-  .tc-section-nav { display: none; }
+  /* De balk staat hier dichter op de rand en is iets lager, dus het paneel
+     mag hoger beginnen. De 2vw wordt dezelfde halve rem als de balk zelf,
+     zodat 01 nog steeds recht onder de pijl terug staat. */
+  .csi-panel { padding: 7.5rem var(--space-1) var(--space-4); }
+  .csi-chip { left: var(--space-1); }
+  .csi-naam { font-size: var(--type-h3); }
 
   .tc-nav,
   .ec-nav {
