@@ -168,8 +168,8 @@ const heroCtaRingCopy = {
 } as const;
 
 const manifestoMarkerWords = {
-  nl: new Set(["probleem", "gebruikers", "bouwen"]),
-  en: new Set(["problem", "users", "build"]),
+  nl: new Set(["helders", "bruikbaars", "opleverbaar"]),
+  en: new Set(["clear", "usable", "shippable"]),
 };
 
 const personalStory = [
@@ -192,7 +192,7 @@ const personalStory = [
     kicker: "Wat ik doe",
     title: "Eerst begrijpen wat er schuurt. Dan pas een scherm.",
     englishTitle: "Understand the friction before designing the screen.",
-    body: "We leggen aannames, gedrag en doelen naast elkaar. Ik zoek het moment waarop losse informatie één duidelijke richting krijgt. Vanaf daar ontwerp ik websites die logisch reageren op echte keuzes.",
+    body: "We leggen aannames, gedrag en doelen naast elkaar. Ik zoek het moment waarop losse informatie één duidelijke richting krijgt. Vanaf daar maak ik de oplossing tastbaar in flows, prototypes en interfaces die logisch reageren op echte keuzes.",
     image: "/about/web/designing.webp",
     alt: "Abdelrahman werkt aan een digitaal ontwerp achter zijn bureau",
     position: "center",
@@ -527,7 +527,7 @@ const workingMethod = [
   {
     number: "04",
     phase: "Aanscherpen",
-    title: "Lever bewijs, geen decoratie.",
+    title: "Lever iets op dat toetsbaar is.",
     body: "Interface, content en uitvoering worden samen verfijnd. Na livegang kijk ik naar gebruikssignalen om te zien wat echt werkt.",
     tools: "Designsystem · Handoff · QA · Meting",
     annotation: "Mooi wordt waardevol zodra het werkt.",
@@ -1910,8 +1910,8 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
   }, [locale]);
 
   const manifesto = locale === "en"
-    ? "I make complex choices easier to understand. First define the problem. Then design a direction users understand and teams can build."
-    : "Ik maak complexe keuzes begrijpelijk. Eerst het probleem scherp. Dan een richting die gebruikers begrijpen en teams kunnen bouwen.";
+    ? "I turn complex choices into something clear, usable and shippable. First frame the problem, then make the direction tangible."
+    : "Ik breng complexe keuzes terug tot iets helders, bruikbaars en opleverbaar. Eerst het probleem scherp, daarna de richting tastbaar maken.";
   const ringCopy = heroCtaRingCopy[locale];
 
   const activateContact = () => {
@@ -2086,8 +2086,8 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
               </h1>
               <p className="mind-hero-lede">
                 {locale === "en"
-                  ? "I combine product strategy, UX research and interface design to turn complex ideas into digital products people understand and teams can build."
-                  : "Ik combineer productstrategie, UX-onderzoek en interfaceontwerp om complexe ideeën te vertalen naar digitale producten die mensen begrijpen en teams kunnen bouwen."}
+                  ? "I combine product strategy, UX research and interface design to turn complex ideas into prototypes, websites and digital products people understand and teams can build."
+                  : "Ik combineer productstrategie, UX-onderzoek en interfaceontwerp om complexe ideeën te vertalen naar prototypes, websites en digitale producten die mensen begrijpen en teams kunnen bouwen."}
               </p>
             </header>
 
@@ -2538,7 +2538,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
               "Afstemming",
             ].map((tool) => <span className="method-stack-chip" key={tool}>{tool}</span>)}
           </div>
-          <p>Gereedschap versnelt. Richting blijft mensenwerk.</p>
+          <p>Gereedschap versnelt ideeën. Mijn oordeel bepaalt wat blijft.</p>
         </div>
       </section>
 

@@ -9,11 +9,11 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const locale = resolveLocale((await params).locale);
   return locale === "en" ? {
     title: { absolute: "Product & UX/UI designer in Amsterdam · Abdelrahman Ahmed" },
-    description: "Product & UX/UI designer who turns unclear ideas into clear websites, flows and interfaces.",
+    description: "Product & UX/UI designer who turns complex ideas into clear digital experiences: from problem framing to prototypes, interfaces and working delivery.",
     alternates: { canonical: "/en", languages: { "nl-NL": "/nl", "en-GB": "/en", "x-default": "/nl" } },
     openGraph: {
       title: "From unclear idea to clear digital experience.",
-      description: "Portfolio of Abdelrahman Ahmed: product strategy, UX/UI and visual execution for websites and digital products.",
+      description: "Portfolio of Abdelrahman Ahmed: product strategy, UX/UI, prototypes and working websites for digital products.",
       url: "/en",
       locale: "en_GB",
       alternateLocale: ["nl_NL"],
@@ -22,16 +22,16 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     twitter: {
       card: "summary_large_image",
       title: "From unclear idea to clear digital experience.",
-      description: "Portfolio of Abdelrahman Ahmed: product strategy, UX/UI and visual execution for websites and digital products.",
+      description: "Portfolio of Abdelrahman Ahmed: product strategy, UX/UI, prototypes and working websites for digital products.",
       images: ["/og-mind-hero.jpg"],
     },
   } : {
     title: { absolute: "Product & UX/UI designer in Amsterdam · Abdelrahman Ahmed" },
-    description: "Product & UX/UI designer die onduidelijke ideeën vertaalt naar heldere websites, flows en interfaces.",
+    description: "Product & UX/UI designer die complexe ideeën terugbrengt tot heldere digitale ervaringen: van probleemkader tot prototype, interface en werkende oplevering.",
     alternates: { canonical: "/nl", languages: { "nl-NL": "/nl", "en-GB": "/en", "x-default": "/nl" } },
     openGraph: {
       title: "Van onduidelijk idee naar heldere digitale ervaring.",
-      description: "Portfolio van Abdelrahman Ahmed: productstrategie, UX/UI en visuele uitvoering voor websites en digitale producten.",
+      description: "Portfolio van Abdelrahman Ahmed: productstrategie, UX/UI, prototypes en werkende websites voor digitale producten.",
       url: "/nl",
       locale: "nl_NL",
       alternateLocale: ["en_GB"],
@@ -40,7 +40,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     twitter: {
       card: "summary_large_image",
       title: "Van onduidelijk idee naar heldere digitale ervaring.",
-      description: "Portfolio van Abdelrahman Ahmed: productstrategie, UX/UI en visuele uitvoering voor websites en digitale producten.",
+      description: "Portfolio van Abdelrahman Ahmed: productstrategie, UX/UI, prototypes en werkende websites voor digitale producten.",
       images: ["/og-mind-hero.jpg"],
     },
   };
@@ -66,13 +66,13 @@ const personSchema = (locale: Locale) => ({
   url: `${ORIGIN}/${locale}`,
   jobTitle: "Product & UX/UI designer",
   description: locale === "en"
-    ? "Product & UX/UI designer in Amsterdam who turns unclear ideas into clear websites, flows and interfaces through product strategy, UX/UI and visual execution."
-    : "Product & UX/UI designer in Amsterdam die onduidelijke ideeën vertaalt naar heldere websites, flows en interfaces via productstrategie, UX/UI en visuele uitvoering.",
+    ? "Product & UX/UI designer in Amsterdam who turns complex ideas into clear digital experiences through product strategy, UX/UI, prototypes and working delivery."
+    : "Product & UX/UI designer in Amsterdam die complexe ideeën terugbrengt tot heldere digitale ervaringen via productstrategie, UX/UI, prototypes en werkende oplevering.",
   address: { "@type": "PostalAddress", addressLocality: "Amsterdam", addressCountry: "NL" },
   knowsLanguage: ["nl", "en"],
   knowsAbout: locale === "en"
-    ? ["Product design", "UX design", "Information architecture", "Interface design", "Web design"]
-    : ["Productontwerp", "UX-ontwerp", "Informatiearchitectuur", "Interfaceontwerp", "Webdesign"],
+    ? ["Product design", "UX design", "Information architecture", "Interface design", "Web design", "Prototyping", "Framer"]
+    : ["Productontwerp", "UX-ontwerp", "Informatiearchitectuur", "Interfaceontwerp", "Webdesign", "Prototyping", "Framer"],
   email: "mailto:dhr_abdelrahman@outlook.com",
   sameAs: ["https://www.linkedin.com/in/abdelrahman-ahmed-30896964/"],
 });

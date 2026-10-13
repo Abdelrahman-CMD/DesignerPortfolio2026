@@ -27,11 +27,11 @@ export async function generateMetadata(): Promise<Metadata> {
       template: "%s · Abdelrahman",
     },
     description:
-      "Product & UX/UI designer die onduidelijke ideeën vertaalt naar heldere websites, flows en interfaces.",
+      "Product & UX/UI designer die complexe ideeën terugbrengt tot heldere digitale ervaringen: van probleemkader tot prototype, interface en werkende oplevering.",
     openGraph: {
       title: "Van onduidelijk idee naar heldere digitale ervaring.",
       description:
-        "Portfolio van Abdelrahman Ahmed: productstrategie, UX/UI en visuele uitvoering voor websites en digitale producten.",
+        "Portfolio van Abdelrahman Ahmed: productstrategie, UX/UI, prototypes en werkende websites voor digitale producten.",
       type: "website",
       locale: "nl_NL",
       images: [
@@ -55,7 +55,7 @@ export async function generateMetadata(): Promise<Metadata> {
       card: "summary_large_image",
       title: "Van onduidelijk idee naar heldere digitale ervaring.",
       description:
-        "Portfolio van Abdelrahman Ahmed: productstrategie, UX/UI en visuele uitvoering voor websites en digitale producten.",
+        "Portfolio van Abdelrahman Ahmed: productstrategie, UX/UI, prototypes en werkende websites voor digitale producten.",
       images: [`${origin}/og-mind-hero.jpg`],
     },
   };

@@ -40,8 +40,8 @@ export const caseSeo = {
       en: "AtotZ Detachering — a website in one week · Abdelrahman",
     },
     description: {
-      nl: "Past dit bureau bij mijn sector, en hoe neem ik gericht contact op? Zo bouwde ik dat in één week, en dit liet Search Console daarna zien.",
-      en: "Does this agency fit my sector, and how do I reach the right person? How I built that in one week, and what Search Console showed afterwards.",
+      nl: "Van geen digitale plek naar een werkende website in één week: positionering, sectorroutes en een contactflow die werkgevers gericht laat reageren.",
+      en: "From no digital presence to a working website in one week: positioning, sector routes and a contact flow that helps employers respond with context.",
     },
     socialTitle: {
       nl: "AtotZ Detachering - van sectorvraag naar gericht contact",
@@ -64,8 +64,8 @@ export const caseSeo = {
       en: "Hijama 'N Cups — thirteen pages against doubt · Abdelrahman",
     },
     description: {
-      nl: "Wat houdt hijama in, past het bij mij, en durf ik contact op te nemen? Dertien pagina's die die vragen wegnemen voordat iemand belt.",
-      en: "What does hijama involve, is it for me, and dare I get in touch? Thirteen pages that answer those questions before anyone picks up the phone.",
+      nl: "Een persoonlijke praktijk vertaald naar dertien vindbare pagina's: structuur, vertrouwen en een boekingsroute die twijfel vóór het eerste contact verkleint.",
+      en: "A personal practice translated into thirteen discoverable pages: structure, trust and a booking route that reduces doubt before first contact.",
     },
     socialTitle: {
       nl: "Hijama 'N Cups - dertien pagina's tegen twijfel",
@@ -88,8 +88,8 @@ export const caseSeo = {
       en: "Oppas by Chaima — trilingual, booked over WhatsApp · Abdelrahman",
     },
     description: {
-      nl: "Kan ik deze persoon mijn kind en mijn huis toevertrouwen? Een drietalige site die dat vertrouwen opbouwt voordat de eerste boeking komt.",
-      en: "Can I trust this person with my child and my home? A trilingual site that builds that trust before the first booking arrives.",
+      nl: "Een drietalige website die een persoonlijke oppasdienst begrijpelijk en vertrouwd maakt, van eerste indruk tot bruikbaar WhatsApp-gesprek.",
+      en: "A trilingual website that makes a personal babysitting service clear and trustworthy, from first impression to a useful WhatsApp conversation.",
     },
     socialTitle: {
       nl: "Oppas by Chaima - vertrouwen voor de eerste boeking",
@@ -112,8 +112,8 @@ export const caseSeo = {
       en: "MIRQA — an app concept for going to the mosque · Abdelrahman",
     },
     description: {
-      nl: "Wanneer moet ik vertrekken, naar welke moskee, en klopt die tijd? Een app-concept over gedrag en timing, niet over nog een gebedstijdenlijst.",
-      en: "When should I leave, which mosque, and is that time right? An app concept about behaviour and timing, not another list of prayer times.",
+      nl: "Een app-concept dat gebedstijden vertaalt naar één haalbare vertrekbeslissing: gedrag, timing en rustiger keuzes in plaats van nog een lijst.",
+      en: "An app concept that turns prayer times into one realistic departure decision: behaviour, timing and calmer choices instead of another list.",
     },
     socialTitle: {
       nl: "MIRQA - van intentie naar moskeebezoek",
@@ -136,8 +136,8 @@ export const caseSeo = {
       en: "Tareeqi — a navigation concept for Mecca · Abdelrahman",
     },
     description: {
-      nl: "Google Maps kent de weg, maar niet de plek. Een navigatieconcept voor Mekka en Medina, gebouwd op wat pelgrims steeds opnieuw vertelden.",
-      en: "Google Maps knows the route but not the place. A navigation concept for Mecca and Medina, built on what pilgrims kept telling me.",
+      nl: "Een navigatieconcept voor Mekka en Medina dat route, betekenis en lokale context samenbrengt, gebaseerd op terugkerende verhalen van pelgrims.",
+      en: "A navigation concept for Mecca and Medina that connects route, meaning and local context, based on recurring stories from pilgrims.",
     },
     socialTitle: {
       nl: "Tareeqi - navigatie met lokale context",
@@ -160,8 +160,8 @@ export const caseSeo = {
       en: "Guidance Travel — a concept for Hajj guidance · Abdelrahman",
     },
     description: {
-      nl: "Welke reis past bij mij, en wie begeleidt me? Een conceptsite die Hajj- en Umrahbegeleiding terugbrengt tot een rustige keuze. 21 mensen bevraagd.",
-      en: "Which journey suits me, and who will guide me? A concept site that turns Hajj and Umrah guidance into one calm choice. 21 people surveyed.",
+      nl: "Een conceptsite voor Hajj- en Umrahbegeleiding die pakketkeuzes terugbrengt tot een rustige beslisroute, gevoed door input van 21 mensen.",
+      en: "A concept site for Hajj and Umrah guidance that turns package choices into a calm decision route, shaped by input from 21 people.",
     },
     socialTitle: {
       nl: "Guidance Travel - een rustige keuze voor Hajj en Umrah",
@@ -184,8 +184,8 @@ export const caseSeo = {
       en: "Bayn Signal — a concept for local news · Abdelrahman",
     },
     description: {
-      nl: "Wat gebeurt er in mijn buurt, en wat kan ik ermee? Een concept voor lokaal nieuws dat eindigt in een vervolgstap in plaats van een tijdlijn.",
-      en: "What is happening in my area, and what can I do with it? A concept for local news that ends in a next step instead of a timeline.",
+      nl: "Een productconcept voor lokaal nieuws dat signalen, context en vervolgstappen samenbrengt, zodat informatie sneller bruikbaar wordt.",
+      en: "A product concept for local news that brings signals, context and next steps together, so information becomes useful faster.",
     },
     socialTitle: {
       nl: "Bayn Signal - lokaal nieuws met een vervolgstap",
@@ -208,8 +208,8 @@ export const caseSeo = {
       en: "Ayn Al-Hikmah — a platform concept for knowledge · Abdelrahman",
     },
     description: {
-      nl: "Welk boek, welke leraar, en kan ik die vertrouwen? Een platformconcept dat authentieke bronnen en persoonlijke leerpaden samenbrengt.",
-      en: "Which book, which teacher, and can I trust them? A platform concept that brings authentic sources and personal learning paths together.",
+      nl: "Een platformconcept dat authentieke bronnen, vertrouwde docenten en persoonlijke leerpaden ordent tot een duidelijke kenniservaring.",
+      en: "A platform concept that structures authentic sources, trusted teachers and personal learning paths into a clear learning experience.",
     },
     socialTitle: {
       nl: "Ayn Al-Hikmah - kennis, bronnen en leerpaden",

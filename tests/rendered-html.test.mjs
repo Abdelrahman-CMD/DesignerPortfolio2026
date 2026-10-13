@@ -30,7 +30,7 @@ test("server-renders the complete portfolio homepage", async () => {
 
   const html = await response.text();
   assert.match(html, /Product &amp; UX\/UI designer in Amsterdam · Abdelrahman Ahmed/);
-  assert.match(html, /Product &amp; UX\/UI designer die onduidelijke ideeën vertaalt naar heldere websites, flows en interfaces\./);
+  assert.match(html, /Product &amp; UX\/UI designer die complexe ideeën terugbrengt tot heldere digitale ervaringen: van probleemkader tot prototype, interface en werkende oplevering\./);
   assert.match(html, /Van onduidelijk idee naar heldere digitale ervaring\./);
   assert.match(html, /property="og:image" content="https:\/\/abdelrahman\.nl\/og-mind-hero\.jpg"/);
   assert.match(html, /name="twitter:image" content="https:\/\/abdelrahman\.nl\/og-mind-hero\.jpg"/);
@@ -315,8 +315,8 @@ test("uses bounded raster assets on the homepage and case pages", async () => {
   assert.doesNotMatch(homeSource, /\/about\/brain-color\.svg/);
   assert.match(homeSource, /clipPath: "inset\(0 0 0 100%\)"/);
   assert.match(homeSource, /xPercent: 14/);
-  assert.match(homeSource, /nl: new Set\(\["probleem", "gebruikers", "bouwen"\]\)/);
-  assert.match(homeSource, /en: new Set\(\["problem", "users", "build"\]\)/);
+  assert.match(homeSource, /nl: new Set\(\["helders", "bruikbaars", "opleverbaar"\]\)/);
+  assert.match(homeSource, /en: new Set\(\["clear", "usable", "shippable"\]\)/);
   assert.match(homeSource, /\/about\/web\/fatherhood\.webp/);
   assert.doesNotMatch(homeSource, /image: "\/projects\/(tareeqi|ayn|guidance|bayn)-overview\.jpg"/);
   assert.match(caseData, /\/projects\/case-shots\/ayn-detail\.webp/);
