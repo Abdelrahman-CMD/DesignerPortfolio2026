@@ -5732,10 +5732,10 @@ html.is-cta-captured a { cursor: none !important; }
   }
   .postcard-copy { grid-column: 1 / -1; grid-row: 2; padding: 0; transform: none; }
   .postcard-copy > .label { margin-bottom: var(--space-6); }
-  .contact h2 { font-size: 2.75rem; line-height: 1.05; letter-spacing: 0; }
-  .postcard-copy { min-width: 0; }
+  .contact h2 { font-size: min(2.75rem, 8cqw); line-height: 1.05; }
+  .postcard-copy { min-width: 0; container-type: inline-size; }
   .contact h2 span,
-  .contact h2 em { white-space: normal; overflow-wrap: break-word; }
+  .contact h2 em { white-space: nowrap; }
   .contact h2 em { padding-left: 0; }
   .postcard-copy > p:last-child { width: 88%; margin: var(--space-5) 0 0 12%; }
   .postcard-portrait {
