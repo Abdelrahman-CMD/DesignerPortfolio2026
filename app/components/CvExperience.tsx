@@ -209,6 +209,21 @@ export function CvExperience({ locale }: { locale: Locale }) {
       <link rel="stylesheet" href={FONTS} precedence="default" />
       <a className="skip-link" href="#cv-main">{nl ? "Spring naar inhoud" : "Skip to content"}</a>
 
+      {/* Kop en voet van de afdruk. Alleen het beeldmerk, zonder woordmerk.
+
+          De voet staat in print op position: fixed en wordt door Chrome op elke
+          pagina herhaald. De kop kan dat niet: Chrome klemt vaste elementen
+          binnen het paginavlak en weigert in de marge van @page te tekenen - een
+          negatieve top duwt het element zelfs naar de onderkant, dat is
+          uitgeprobeerd. De marginboxen van @page ondersteunt geen enkele
+          browser. Daarom is dit een briefhoofd op de eerste pagina, en loopt het
+          merk verder onderaan elke pagina mee. */}
+      <div className="cv-print-head" aria-hidden="true">
+        {/* eslint-disable-next-line @next/next/no-img-element -- svg die alleen
+            in print zichtbaar is; er valt niets te optimaliseren. */}
+        <img src="/merk.svg" alt="" width={1737} height={1472} />
+        <span>abdelrahman.nl</span>
+      </div>
       <header className={`nav${navHidden ? " nav--hidden" : ""}`}>
         <div className="nav-inner">
           <div className="nav-start">
@@ -410,6 +425,15 @@ export function CvExperience({ locale }: { locale: Locale }) {
         <span className="footer-line">{t(cvFooter.regel, locale)}</span>
         <span className="footer-meta">{t(cvFooter.meta, locale)}</span>
       </footer>
+
+      <div className="cv-print-foot" aria-hidden="true">
+        <span className="cv-print-foot-naam">
+          {/* eslint-disable-next-line @next/next/no-img-element -- zie boven */}
+          <img src="/merk.svg" alt="" width={1737} height={1472} />
+          Abdelrahman Ahmed · Product &amp; UX/UI designer
+        </span>
+        <a href="https://abdelrahman.nl">abdelrahman.nl</a>
+      </div>
     </div>
   );
 }
