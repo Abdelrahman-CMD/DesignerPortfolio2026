@@ -10,7 +10,6 @@ import Framer from "lucide-react/icons/framer";
 import Linkedin from "lucide-react/icons/linkedin";
 import Mail from "lucide-react/icons/mail";
 import MessageCircle from "lucide-react/icons/message-circle";
-import Share2 from "lucide-react/icons/share-2";
 import Sparkles from "lucide-react/icons/sparkles";
 import UserRound from "lucide-react/icons/user-round";
 import Workflow from "lucide-react/icons/workflow";
@@ -1917,9 +1916,6 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
     : "Ik breng complexe keuzes terug tot iets helders, bruikbaars en opleverbaar. Eerst het probleem scherp, daarna de richting tastbaar maken.";
   const ringCopy = heroCtaRingCopy[locale];
 
-  const activateContact = () => {
-    document.getElementById("contact")?.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
 
   return (
     <main ref={root} className="site-shell">
@@ -1963,33 +1959,6 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
           <MobileNav locale={locale} />
         </div>
       </header>
-
-      <aside
-        className={`floating-contact${activeNav === "contact" ? " is-over-contact" : ""}`}
-        aria-label="Direct contact"
-      >
-        <button
-          type="button"
-          className="floating-contact-trigger"
-          aria-label="Ga naar contact"
-          onClick={activateContact}
-        >
-          <span className="contact-arch" aria-hidden="true">
-            {[..."CONTACT"].map((letter, index) => (
-              <span
-                style={{
-                  "--letter-angle": `${-60 + (index * 20)}deg`,
-                  "--letter-counter-angle": `${60 - (index * 20)}deg`,
-                } as CSSProperties}
-                key={`${letter}-${index}`}
-              >
-                {letter}
-              </span>
-            ))}
-          </span>
-          <Share2 className="contact-share-icon" aria-hidden="true" />
-        </button>
-      </aside>
 
       <section
         className="mind-hero"

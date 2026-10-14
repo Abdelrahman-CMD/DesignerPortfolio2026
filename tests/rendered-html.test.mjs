@@ -55,7 +55,7 @@ test("server-renders the complete portfolio homepage", async () => {
   assert.match(html, /Gereedschap: Figma, Framer en AI/);
   assert.doesNotMatch(html, /hero-project-letter|hero-rule/);
   assert.match(html, /class="contact-postcard"/);
-  assert.match(html, /class="floating-contact"/);
+  assert.doesNotMatch(html, /class="floating-contact/);
   assert.doesNotMatch(html, /floating-contact-links|Open contactmogelijkheden/);
   assert.doesNotMatch(html, /class="manifesto-quarter-roll"/);
   assert.doesNotMatch(html, /manifesto-coin|manifesto-coin-edge|manifesto-coin-shadow/);
