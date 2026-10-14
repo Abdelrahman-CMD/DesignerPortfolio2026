@@ -2053,15 +2053,6 @@ html.is-cta-captured a { cursor: none !important; }
     transform: none;
     transition: opacity 120ms ease, visibility 120ms ease;
   }
-  .mind-zone-layer .mind-annotation-panel .mind-written-char,
-  .mind-zone-layer .mind-annotation-panel .mind-annotation-kicker,
-  .mind-zone-layer .mind-annotation-panel .mind-annotation-detail,
-  .mind-zone-layer .mind-annotation-panel .mind-tools {
-    opacity: 1;
-    filter: none;
-    transform: none;
-    transition: none;
-  }
   .mind-zone-layer .mind-annotation-panel .mind-annotation-detail {
     max-height: none;
     margin-top: var(--space-1);
