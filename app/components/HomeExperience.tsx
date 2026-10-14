@@ -621,6 +621,56 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
   const touchMindZone = mindZones.find((zone) => zone.id === activeMindZone) ?? mindZones[0];
 
   useEffect(() => {
+    const layer = root.current?.querySelector<HTMLElement>(".mind-zone-layer");
+    if (!layer) return;
+    const desktop = window.matchMedia("(min-width: 981px) and (hover: hover) and (pointer: fine)");
+    let frame = 0;
+    let pointerX = 0;
+    let pointerY = 0;
+    let zoneId = "";
+    const positionCard = () => {
+      frame = 0;
+      const panel = layer.querySelector<HTMLElement>(`.mind-annotation-panel[data-zone="${zoneId}"]`);
+      if (!panel) return;
+      const rect = layer.getBoundingClientRect();
+      const width = panel.offsetWidth;
+      const height = panel.offsetHeight;
+      const gap = 20;
+      const x = pointerX + gap + width > window.innerWidth - 16
+        ? pointerX - width - gap : pointerX + gap;
+      const y = Math.max(16, Math.min(pointerY + gap, window.innerHeight - height - 16));
+      layer.style.setProperty("--mind-card-x", `${Math.max(16, x) - rect.left}px`);
+      layer.style.setProperty("--mind-card-y", `${y - rect.top}px`);
+    };
+    const onMove = (event: PointerEvent) => {
+      if (!desktop.matches) return;
+      const zone = (event.target as Element).closest<HTMLElement>(".mind-zone");
+      if (!zone) return;
+      zoneId = zone.dataset.mindZone ?? "";
+      pointerX = event.clientX;
+      pointerY = event.clientY;
+      if (!frame) frame = requestAnimationFrame(positionCard);
+    };
+    const onFocus = (event: FocusEvent) => {
+      if (!desktop.matches) return;
+      const zone = (event.target as Element).closest<HTMLElement>(".mind-zone");
+      if (!zone || !zone.matches(":focus-visible")) return;
+      const rect = zone.getBoundingClientRect();
+      zoneId = zone.dataset.mindZone ?? "";
+      pointerX = rect.right;
+      pointerY = rect.top;
+      positionCard();
+    };
+    layer.addEventListener("pointermove", onMove, { passive: true });
+    layer.addEventListener("focusin", onFocus);
+    return () => {
+      cancelAnimationFrame(frame);
+      layer.removeEventListener("pointermove", onMove);
+      layer.removeEventListener("focusin", onFocus);
+    };
+  }, []);
+
+  useEffect(() => {
     const touchHero = window.matchMedia(
       "(max-width: 980px), (hover: none), (pointer: coarse)",
     );
@@ -2117,6 +2167,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
                     key={zone.id}
                     type="button"
                     className={`mind-zone mind-zone-${zone.id}${isActive ? " is-active" : ""}`}
+                    data-mind-zone={zone.id}
                     style={{ "--zone-color": zone.color, "--zone-ink": zone.ink } as CSSProperties}
                     aria-pressed={isActive}
                     aria-label={`${zone.number} ${zoneLabel}: ${zoneTitle}. ${zoneDetail}`}

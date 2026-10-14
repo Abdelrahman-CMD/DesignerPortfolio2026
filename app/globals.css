@@ -2045,6 +2045,29 @@ html.is-cta-captured a { cursor: none !important; }
   transition-delay: 0s;
 }
 
+@media (min-width: 981px) and (hover: hover) and (pointer: fine) {
+  .mind-zone-layer .mind-annotation-panel[data-zone] {
+    top: var(--mind-card-y, 0px);
+    left: var(--mind-card-x, 0px);
+    right: auto;
+    transform: none;
+    transition: opacity 120ms ease, visibility 120ms ease;
+  }
+  .mind-zone-layer .mind-annotation-panel .mind-written-char,
+  .mind-zone-layer .mind-annotation-panel .mind-annotation-kicker,
+  .mind-zone-layer .mind-annotation-panel .mind-annotation-detail,
+  .mind-zone-layer .mind-annotation-panel .mind-tools {
+    opacity: 1;
+    filter: none;
+    transform: none;
+    transition: none;
+  }
+  .mind-zone-layer .mind-annotation-panel .mind-annotation-detail {
+    max-height: none;
+    margin-top: var(--space-1);
+  }
+}
+
 .mind-annotation-panel::before {
   width: 2.75rem;
   height: 1px;
