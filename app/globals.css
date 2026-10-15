@@ -2047,7 +2047,7 @@ html.is-cta-captured a { cursor: none !important; }
 
 @media (min-width: 981px) and (hover: hover) and (pointer: fine) {
   .mind-zone {
-    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 24 24' fill='none' stroke='%23292723' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8' fill='%23f9f6f0'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E") 13 13, zoom-in;
+    cursor: url("/brain-magnifier-cursor.svg") 27 27, zoom-in;
   }
   .mind-zone-layer .mind-annotation-panel[data-zone] {
     top: var(--mind-card-y, 0px);
