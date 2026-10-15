@@ -27,11 +27,11 @@ export async function generateMetadata(): Promise<Metadata> {
       template: "%s · Abdelrahman",
     },
     description:
-      "Product & UX/UI designer die complexe ideeën terugbrengt tot heldere digitale ervaringen: van probleemkader tot prototype, interface en werkende oplevering.",
+      "Product & UX/UI designer in Amsterdam. Ik onderzoek problemen en kansen en werk ideeën uit tot heldere concepten, prototypes en werkende websites.",
     openGraph: {
       title: "Van onduidelijk idee naar heldere digitale ervaring.",
       description:
-        "Portfolio van Abdelrahman Ahmed: productstrategie, UX/UI, prototypes en werkende websites voor digitale producten.",
+        "Abdelrahman Ahmed · Product & UX/UI designer. Van problemen en nieuwe mogelijkheden naar heldere concepten, prototypes en werkende websites.",
       type: "website",
       locale: "nl_NL",
       images: [
@@ -55,7 +55,7 @@ export async function generateMetadata(): Promise<Metadata> {
       card: "summary_large_image",
       title: "Van onduidelijk idee naar heldere digitale ervaring.",
       description:
-        "Portfolio van Abdelrahman Ahmed: productstrategie, UX/UI, prototypes en werkende websites voor digitale producten.",
+        "Abdelrahman Ahmed · Product & UX/UI designer. Van problemen en nieuwe mogelijkheden naar heldere concepten, prototypes en werkende websites.",
       images: [`${origin}/og-mind-hero.jpg`],
     },
   };

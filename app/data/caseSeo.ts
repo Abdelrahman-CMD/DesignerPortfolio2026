@@ -112,8 +112,8 @@ export const caseSeo = {
       en: "MIRQA — an app concept for going to the mosque · Abdelrahman",
     },
     description: {
-      nl: "Een app-concept dat gebedstijden vertaalt naar één haalbare vertrekbeslissing: gedrag, timing en rustiger keuzes in plaats van nog een lijst.",
-      en: "An app concept that turns prayer times into one realistic departure decision: behaviour, timing and calmer choices instead of another list.",
+      nl: "MIRQA: een zelf geïnitieerd UX/UI-appconcept voor moskeebezoek. Een verkenning van gebedskeuze, moskeekeuze en een haalbaar vertrekmoment.",
+      en: "MIRQA: a self-initiated UX/UI app concept for mosque visits, exploring prayer selection, mosque choice and a realistic time to leave.",
     },
     socialTitle: {
       nl: "MIRQA - van intentie naar moskeebezoek",

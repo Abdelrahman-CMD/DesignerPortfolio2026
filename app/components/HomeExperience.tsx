@@ -2108,8 +2108,8 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
               </h1>
               <p className="mind-hero-lede">
                 {locale === "en"
-                  ? "I combine product strategy, UX research and interface design to turn complex ideas into prototypes, websites and digital products people understand and teams can build."
-                  : "Ik combineer productstrategie, UX-onderzoek en interfaceontwerp om complexe ideeën te vertalen naar prototypes, websites en digitale producten die mensen begrijpen en teams kunnen bouwen."}
+                  ? "I explore what gets in the way and what is missing. Through product strategy, UX research and interface design, I make ideas tangible: from an initial concept to a prototype or live website."
+                  : "Ik onderzoek wat schuurt én wat ontbreekt. Met productstrategie, UX-onderzoek en interfaceontwerp maak ik de richting tastbaar: van eerste concept tot prototype of werkende website."}
               </p>
             </header>
 

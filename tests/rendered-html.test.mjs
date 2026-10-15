@@ -30,7 +30,7 @@ test("server-renders the complete portfolio homepage", async () => {
 
   const html = await response.text();
   assert.match(html, /Product &amp; UX\/UI designer in Amsterdam · Abdelrahman Ahmed/);
-  assert.match(html, /Product &amp; UX\/UI designer die complexe ideeën terugbrengt tot heldere digitale ervaringen: van probleemkader tot prototype, interface en werkende oplevering\./);
+  assert.match(html, /Product &amp; UX\/UI designer in Amsterdam\. Ik onderzoek problemen en kansen/);
   assert.match(html, /Van onduidelijk idee naar heldere digitale ervaring\./);
   assert.match(html, /property="og:image" content="https:\/\/abdelrahman\.nl\/og-mind-hero\.jpg"/);
   assert.match(html, /name="twitter:image" content="https:\/\/abdelrahman\.nl\/og-mind-hero\.jpg"/);
@@ -39,7 +39,7 @@ test("server-renders the complete portfolio homepage", async () => {
   assert.doesNotMatch(html, /Senior digitaal ontwerper|Senior digital designer/);
   assert.doesNotMatch(html, /Ik haal de twijfel uit digitale keuzes/);
   assert.match(html, /Productdesigner die complexiteit helder maakt/);
-  assert.match(html, /Ik combineer productstrategie, UX-onderzoek en interfaceontwerp/);
+  assert.match(html, /Ik onderzoek wat schuurt én wat ontbreekt/);
   assert.match(html, /class="mind-hero-canvas"/);
   assert.match(html, /class="mind-hero-photo-slide"/);
   assert.match(html, /class="mind-hero-mosaic"/);

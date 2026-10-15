@@ -9,11 +9,11 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const locale = resolveLocale((await params).locale);
   return locale === "en" ? {
     title: { absolute: "Product & UX/UI designer in Amsterdam · Abdelrahman Ahmed" },
-    description: "Product & UX/UI designer who turns complex ideas into clear digital experiences: from problem framing to prototypes, interfaces and working delivery.",
+    description: "Product & UX/UI designer in Amsterdam. I explore problems and opportunities and turn ideas into clear concepts, prototypes and live websites.",
     alternates: { canonical: "/en", languages: { "nl-NL": "/nl", "en-GB": "/en", "x-default": "/nl" } },
     openGraph: {
       title: "From unclear idea to clear digital experience.",
-      description: "Portfolio of Abdelrahman Ahmed: product strategy, UX/UI, prototypes and working websites for digital products.",
+      description: "Abdelrahman Ahmed · Product & UX/UI designer. Exploring problems and new possibilities through clear concepts, prototypes and live websites.",
       url: "/en",
       locale: "en_GB",
       alternateLocale: ["nl_NL"],
@@ -22,16 +22,16 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     twitter: {
       card: "summary_large_image",
       title: "From unclear idea to clear digital experience.",
-      description: "Portfolio of Abdelrahman Ahmed: product strategy, UX/UI, prototypes and working websites for digital products.",
+      description: "Abdelrahman Ahmed · Product & UX/UI designer. Exploring problems and new possibilities through clear concepts, prototypes and live websites.",
       images: ["/og-mind-hero.jpg"],
     },
   } : {
     title: { absolute: "Product & UX/UI designer in Amsterdam · Abdelrahman Ahmed" },
-    description: "Product & UX/UI designer die complexe ideeën terugbrengt tot heldere digitale ervaringen: van probleemkader tot prototype, interface en werkende oplevering.",
+    description: "Product & UX/UI designer in Amsterdam. Ik onderzoek problemen en kansen en werk ideeën uit tot heldere concepten, prototypes en werkende websites.",
     alternates: { canonical: "/nl", languages: { "nl-NL": "/nl", "en-GB": "/en", "x-default": "/nl" } },
     openGraph: {
       title: "Van onduidelijk idee naar heldere digitale ervaring.",
-      description: "Portfolio van Abdelrahman Ahmed: productstrategie, UX/UI, prototypes en werkende websites voor digitale producten.",
+      description: "Abdelrahman Ahmed · Product & UX/UI designer. Van problemen en nieuwe mogelijkheden naar heldere concepten, prototypes en werkende websites.",
       url: "/nl",
       locale: "nl_NL",
       alternateLocale: ["en_GB"],
@@ -40,7 +40,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     twitter: {
       card: "summary_large_image",
       title: "Van onduidelijk idee naar heldere digitale ervaring.",
-      description: "Portfolio van Abdelrahman Ahmed: productstrategie, UX/UI, prototypes en werkende websites voor digitale producten.",
+      description: "Abdelrahman Ahmed · Product & UX/UI designer. Van problemen en nieuwe mogelijkheden naar heldere concepten, prototypes en werkende websites.",
       images: ["/og-mind-hero.jpg"],
     },
   };
@@ -66,8 +66,8 @@ const personSchema = (locale: Locale) => ({
   url: `${ORIGIN}/${locale}`,
   jobTitle: "Product & UX/UI designer",
   description: locale === "en"
-    ? "Product & UX/UI designer in Amsterdam who turns complex ideas into clear digital experiences through product strategy, UX/UI, prototypes and working delivery."
-    : "Product & UX/UI designer in Amsterdam die complexe ideeën terugbrengt tot heldere digitale ervaringen via productstrategie, UX/UI, prototypes en werkende oplevering.",
+    ? "Product & UX/UI designer in Amsterdam exploring problems and opportunities through product strategy, UX research, interface design, prototypes and live websites."
+    : "Product & UX/UI designer in Amsterdam die problemen en kansen onderzoekt met productstrategie, UX-onderzoek, interfaceontwerp, prototypes en werkende websites.",
   address: { "@type": "PostalAddress", addressLocality: "Amsterdam", addressCountry: "NL" },
   knowsLanguage: ["nl", "en"],
   knowsAbout: locale === "en"

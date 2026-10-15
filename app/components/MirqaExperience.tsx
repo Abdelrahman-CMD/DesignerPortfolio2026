@@ -19,7 +19,7 @@ const content = {
     kicker: "Concept in ontwikkeling",
     title: ["MIRQA", "Eén gebed.", "Een haalbaar vertrekpunt."],
     summary:
-      "Ik ontwerp MIRQA als een rustige mobiele companion die intentie omzet in één concrete vertrekbeslissing: welk gebed wil je in de moskee halen, waar ga je heen en wanneer moet je vertrekken?",
+      "Met MIRQA onderzoek ik hoe een rustige mobiele companion de stap van intentie naar moskeebezoek kan ondersteunen: welk gebed wil je halen, naar welke moskee ga je en wanneer moet je vertrekken?",
     meta: [
       ["Vertrekpunt", "Zelf geïnitieerde productkans"],
       ["Mijn rol", "Productstrategie · UX research · UX/UI"],
@@ -119,7 +119,7 @@ const content = {
     kicker: "Product concept in development",
     title: ["MIRQA", "One prayer.", "A realistic time to leave."],
     summary:
-      "I am designing MIRQA as a calm mobile companion that turns intention into one practical decision: which prayer do you want to reach at the mosque, where will you go and when should you leave?",
+      "With MIRQA, I am exploring how a calm mobile companion could support the step from intention to visiting the mosque: which prayer do you want to attend, which mosque will you go to and when should you leave?",
     meta: [
       ["Starting point", "Self-initiated product opportunity"],
       ["My role", "Product strategy · UX research · UX/UI"],
