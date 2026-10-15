@@ -1442,7 +1442,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
                tussen, en dat is genoeg om het als na elkaar te lezen. */
             const vertraging = projectIndex % 2 === 1 ? window.innerHeight * 0.07 : 0;
             const begin = window.innerHeight * 0.95 - vertraging;
-            const eind = window.innerHeight * 0.22 - vertraging;
+            const eind = begin - window.innerHeight * (0.95 - 0.22) * 1.03;
             const deel = (begin - entry.getBoundingClientRect().top) / (begin - eind);
             const geklemd = Math.min(1, Math.max(0, deel));
             if (geklemd > hoogste) {
