@@ -2047,7 +2047,7 @@ html.is-cta-captured a { cursor: none !important; }
 
 @media (min-width: 981px) and (hover: hover) and (pointer: fine) {
   .mind-zone {
-    cursor: url("/brain-magnifier-cursor.svg") 27 27, zoom-in;
+    cursor: url("/brain-magnifier-cursor.svg?v=2") 11 11, zoom-in;
   }
   .mind-zone-layer .mind-annotation-panel[data-zone] {
     top: var(--mind-card-y, 0px);
