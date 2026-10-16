@@ -10728,3 +10728,36 @@ html[data-js="on"] .project-visual-full { opacity: 0; }
   .method-note-back { transition: none; transform: none; }
 }
 
+@media (min-width: 1200px) {
+  .project-grid {
+    width: min(100%, var(--content-wide));
+    margin-inline: auto;
+  }
+
+  .project-entry:nth-child(4n + 1) {
+    width: 78%;
+    justify-self: start;
+  }
+
+  .project-entry:nth-child(4n + 2) {
+    width: 88%;
+    justify-self: end;
+    margin-top: var(--space-12);
+  }
+
+  .project-entry:nth-child(4n + 3) {
+    width: 88%;
+    justify-self: end;
+    margin-top: var(--space-8);
+  }
+
+  .project-entry:nth-child(4n) {
+    width: 72%;
+    justify-self: end;
+    margin-top: var(--space-15);
+  }
+
+  .project-card-title h3 {
+    font-size: clamp(1.955rem, 3.0175vw, 3.6125rem);
+  }
+}

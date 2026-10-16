@@ -1310,6 +1310,20 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
            de twee kaarten in een rij dezelfde beweging, net na elkaar, en slaat
            de richting per rij om zodat de variatie blijft. */
         const projectDirection = Math.floor(projectIndex / 2) % 2 === 0 ? -1 : 1;
+        if (window.matchMedia("(min-width: 1200px) and (hover: hover) and (pointer: fine)").matches && !prefersReducedMotion) {
+          gsap.fromTo(entry, {
+            y: projectIndex % 2 === 0 ? 48 : 90,
+          }, {
+            y: projectIndex % 2 === 0 ? -48 : -90,
+            ease: "none",
+            scrollTrigger: {
+              trigger: entry,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: 0.6,
+            },
+          });
+        }
         const mosaic = mosaicCanvas && mosaicFull && project
           ? createStoryMosaic(mosaicCanvas, mosaicFull, project.image, project.imagePosition, projectDirection)
           : null;
@@ -1318,17 +1332,17 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
           mosaic.render(0, 0);
         }
 
-        if (media && supportsHeroParallax && !prefersReducedMotion && !seenHomeMotion) {
+        if (media && window.matchMedia("(min-width: 1200px) and (hover: hover) and (pointer: fine)").matches && !prefersReducedMotion) {
           gsap.fromTo(media, {
-            yPercent: -4,
+            yPercent: 0,
           }, {
-            yPercent: 5,
+            yPercent: 6,
             ease: "none",
             scrollTrigger: {
               trigger: entry,
-              start: "top bottom",
+              start: "top 35%",
               end: "bottom top",
-              scrub: 1.25,
+              scrub: 0.65,
             },
           });
         }
