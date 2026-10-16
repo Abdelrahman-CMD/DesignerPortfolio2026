@@ -1929,6 +1929,14 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
             transformOrigin: "left",
             ease: "none",
           }, 0);
+        if (!prefersReducedMotion) {
+          horizontalTimeline.fromTo(methodPin, {
+            "--workspace-photo-y": "25%",
+          }, {
+            "--workspace-photo-y": "80%",
+            ease: "none",
+          }, 0);
+        }
         methodTrack.querySelectorAll<HTMLElement>(".method-note").forEach((note) => {
         if (!prefersReducedMotion) {
           gsap.to(note, {

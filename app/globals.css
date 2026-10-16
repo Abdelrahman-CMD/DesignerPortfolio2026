@@ -10677,7 +10677,7 @@ html[data-js="on"] .project-visual-full { opacity: 0; }
   position: absolute;
   inset: -20px;
   z-index: -2;
-  background: linear-gradient(rgba(22,29,25,0.35), rgba(22,29,25,0.35)), url('/about/workspace-board.jpg') center 58% / cover;
+  background: linear-gradient(rgba(22,29,25,0.35), rgba(22,29,25,0.35)), url('/about/workspace-board.jpg') center var(--workspace-photo-y, 58%) / cover;
   filter: blur(7px) saturate(0.8);
   pointer-events: none;
 }
