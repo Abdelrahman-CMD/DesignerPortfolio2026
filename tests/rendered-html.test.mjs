@@ -353,7 +353,7 @@ test("uses bounded raster assets on the homepage and case pages", async () => {
   const selectors = vervagingen.map((regel) => regel.split("{")[0].trim());
   assert.deepEqual(
     [...new Set(selectors)].sort(),
-    [".csi-chip", ".csi-panel", ".method-pin", ".mnav-panel", ".mnav-toggle-shape", ".story-stop-dot"],
+    [".csi-chip", ".csi-panel", ".mnav-panel", ".mnav-toggle-shape", ".story-stop-dot"],
     `onverwachte vervaging op: ${selectors.join(" | ")}`,
   );
 
