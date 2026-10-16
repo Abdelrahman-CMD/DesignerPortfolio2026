@@ -134,14 +134,14 @@ test("server-renders case specific social metadata", async () => {
 });
 
 test("uses bounded raster assets on the homepage and case pages", async () => {
-  const [homeSource, editorialSource, tareeqiSource, guidanceSource, aynSource, baynSource, hijamaSource, mirqaSource, caseData, css, caseResponse, tareeqiResponse, aynResponse, baynResponse, hijamaResponse, mirqaResponse, oppasResponse] = await Promise.all([
+  const [homeSource, editorialSource, tareeqiSource, guidanceSource, aynSource, baynSource, klantcaseSource, mirqaSource, caseData, css, caseResponse, tareeqiResponse, aynResponse, baynResponse, hijamaResponse, mirqaResponse, oppasResponse] = await Promise.all([
     readFile(new URL("../app/components/HomeExperience.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/components/EditorialCaseExperience.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/components/CaseExperience.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/components/GuidanceTravelExperience.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/components/AynAlHikmahExperience.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/components/BaynSignalExperience.tsx", import.meta.url), "utf8"),
-    readFile(new URL("../app/components/HijamaNCupsExperience.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/components/ClientCaseExperience.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/components/MirqaExperience.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/data/caseContent.ts", import.meta.url), "utf8"),
     readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
@@ -330,8 +330,11 @@ test("uses bounded raster assets on the homepage and case pages", async () => {
   assert.match(aynSource, /styleGuide: true/);
   assert.match(baynSource, /bayn-2026\/landing-mobile\.webp/);
   assert.match(baynSource, /styleGuide: true/);
-  assert.match(hijamaSource, /hijama-2026\/home-mobile\.webp/);
-  assert.match(hijamaSource, /styleGuide: true/);
+  /* De Hijama-case liep ooit via een eigen component; die is weg en de case
+     rendert nu via ClientCaseExperience, samen met AtotZ en Oppas. Het
+     begrensde beeld wordt daar bewaakt. De styleGuide-kaart hoorde bij de
+     conceptvorm en bestaat in de klantcase niet. */
+  assert.match(klantcaseSource, /hijama-2026\/home-mobile\.webp/);
   assert.match(tareeqiSource, /styleGuide: true/);
   /* In augustus is backdrop-filter overal weggehaald omdat het op grote,
      meescrollende vlakken te duur was: een sticky balk van 1440 bij 64 is
