@@ -10743,7 +10743,12 @@ html[data-js="on"] .project-visual-full { opacity: 0; }
   transition: opacity 220ms ease, transform 350ms ease;
   pointer-events: none;
 }
-.method-note-back p { font-family: var(--hand); font-size: 2.75rem; line-height: 1.2; }
+.method-note-back p { min-width: 0; overflow-wrap: anywhere; font-family: var(--hand); font-size: 2.75rem; line-height: 1.2; }
+.method-progress span { transition: background-color 200ms ease; }
+@media (max-width: 720px) {
+  .method-note-back { padding: 1.5rem; }
+  .method-note-back p { font-size: 2rem; }
+}
 .method-paper-preview.is-flipped .method-note-back { opacity: 1; visibility: visible; transform: rotateY(0); }
 @media (prefers-reduced-motion: reduce) {
   .method-note-back { transition: none; transform: none; }

@@ -1909,8 +1909,27 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
       const methodProgress = root.current?.querySelector<HTMLElement>(".method-progress span");
 
       if (methodPin && methodTrack && methodProgress) {
+        const notes = Array.from(methodTrack.querySelectorAll<HTMLElement>(".method-note"));
+        const counter = methodPin.querySelector<HTMLElement>(".method-step-counter");
+        let currentStep = -1;
         const getMethodDistance = () => Math.max(0, methodTrack.scrollWidth - methodPin.clientWidth);
         const horizontalTimeline = gsap.timeline({
+          onUpdate: () => {
+            const board = methodPin.getBoundingClientRect();
+            const center = board.left + board.width / 2;
+            let closest = 0;
+            let distance = Infinity;
+            notes.forEach((note, index) => {
+              const rect = note.getBoundingClientRect();
+              const delta = Math.abs(rect.left + rect.width / 2 - center);
+              if (delta < distance) { distance = delta; closest = index; }
+            });
+            if (closest !== currentStep) {
+              currentStep = closest;
+              if (counter) counter.textContent = `${workingMethod[closest].number} / 04`;
+              methodProgress.style.backgroundColor = workingMethod[closest].color;
+            }
+          },
           scrollTrigger: {
             trigger: methodPin,
             start: "top top",
@@ -2561,7 +2580,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
             <div className="method-horizontal-meta">
               <p className="label">Scrollroute · links naar rechts</p>
               <div className="method-progress" aria-hidden="true"><span /></div>
-              <p className="label">01 / 04</p>
+              <p className="label method-step-counter">01 / 04</p>
             </div>
             <div className="method-track">
               {workingMethod.map((step, index) => (
