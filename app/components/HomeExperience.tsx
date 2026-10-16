@@ -618,6 +618,10 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
   const [activeMindZone, setActiveMindZone] = useState<string | null>(null);
   const [isMindTouchReady, setIsMindTouchReady] = useState(false);
   const [activeNav, setActiveNav] = useState("");
+  const [flippedNotes, setFlippedNotes] = useState<number[]>([]);
+  const noteJokes = locale === "en"
+    ? ["The brief was clear. Until we started asking questions.", "On paper, it was three screens.", "I was sure it worked. Good thing we tested it.", "Filename: final_final_really_this_time_v8."]
+    : ["De briefing was helder. Tot we vragen gingen stellen.", "Op papier waren het drie schermen.", "Ik wist zeker dat dit werkte. Gelukkig hebben we het getest.", "Bestandsnaam: definitief_final_nu_echt_v8."];
   const touchMindZone = mindZones.find((zone) => zone.id === activeMindZone) ?? mindZones[0];
 
   useEffect(() => {
@@ -1911,6 +1915,22 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
             transformOrigin: "left",
             ease: "none",
           }, 0);
+        methodTrack.querySelectorAll<HTMLElement>(".method-note").forEach((note) => {
+        if (!prefersReducedMotion) {
+          gsap.to(note, {
+            scale: 0.88,
+            rotation: -5,
+            ease: "none",
+            scrollTrigger: {
+              trigger: note,
+              containerAnimation: horizontalTimeline,
+              start: "left left",
+              end: "right left",
+              scrub: true,
+            },
+          });
+        }
+        });
       }
 
       if (!prefersReducedMotion && !seenHomeMotion) {
@@ -2524,10 +2544,25 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
             <div className="method-track">
               {workingMethod.map((step, index) => (
                 <article
-                  className={`method-note method-note-${index + 1}`}
+                  className={`method-note method-note-${index + 1} method-paper-preview${flippedNotes.includes(index) ? " is-flipped" : ""}`}
                   key={step.number}
                   style={{ "--method-note-color": step.color } as CSSProperties}
                 >
+                  {(
+                    <>
+                      <button
+                        type="button"
+                        className="method-note-flip"
+                        aria-label={locale === "en" ? "Turn the sticky note over" : "Draai de post-it om"}
+                        aria-pressed={flippedNotes.includes(index)}
+                        onClick={() => setFlippedNotes((current) => current.includes(index) ? current.filter((value) => value !== index) : [...current, index])}
+                      />
+                      <div className="method-note-back" aria-hidden={!flippedNotes.includes(index)}>
+                        <span className="label">{step.number} / {locale === "en" ? "Field notes" : "Veldnotities"}</span>
+                        <p>{noteJokes[index]}</p>
+                      </div>
+                    </>
+                  )}
                   <span className="method-note-tape" aria-hidden="true" />
                   <header>
                     <span className="method-note-number">{step.number}</span>
