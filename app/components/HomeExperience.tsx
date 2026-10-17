@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { CSSProperties, useEffect, useLayoutEffect, useRef, useState } from "react";
 import ArrowUpRight from "lucide-react/icons/arrow-up-right";
-import ArrowDown from "lucide-react/icons/arrow-down";
 import BriefcaseBusiness from "lucide-react/icons/briefcase-business";
 import FileText from "lucide-react/icons/file-text";
 import Figma from "lucide-react/icons/figma";
@@ -2212,7 +2211,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
                   onPointerUp={(event) => event.currentTarget.classList.remove("is-touch-pressed")}
                   onPointerCancel={(event) => event.currentTarget.classList.remove("is-touch-pressed")}
                   onPointerLeave={(event) => event.currentTarget.classList.remove("is-touch-pressed")}
-                  aria-label="Zie de gevolgen en ontdek de acht projecten"
+                  aria-label={locale === "en" ? "View work: explore the eight projects" : "Bekijk werk: ontdek de acht projecten"}
                 >
                   <span className="hero-cta-shape" aria-hidden="true">
                     <span className="editorial-text-ring hero-cta-ring-idle">
@@ -2220,6 +2219,8 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
                         <span
                           style={{
                             "--ring-angle": `${(index / characters.length) * 360}deg`,
+                            "--ring-delay": `${-(Math.floor(index / (characters.length / 2)) * 0.5 + (index % (characters.length / 2)) / (characters.length / 2) * 0.32) * 26}s`,
+                            "--ring-progress": `${(Math.floor(index / (characters.length / 2)) * 0.5 + (index % (characters.length / 2)) / (characters.length / 2) * 0.32) * 100}%`,
                           } as CSSProperties}
                           key={`idle-${character}-${index}`}
                         >
@@ -2232,6 +2233,8 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
                         <span
                           style={{
                             "--ring-angle": `${(index / characters.length) * 360}deg`,
+                            "--ring-delay": `${-(Math.floor(index / (characters.length / 2)) * 0.5 + (index % (characters.length / 2)) / (characters.length / 2) * 0.32) * 26}s`,
+                            "--ring-progress": `${(Math.floor(index / (characters.length / 2)) * 0.5 + (index % (characters.length / 2)) / (characters.length / 2) * 0.32) * 100}%`,
                           } as CSSProperties}
                           key={`active-${character}-${index}`}
                         >
@@ -2240,10 +2243,6 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
                       ))}
                     </span>
                     <span className="hero-cta-orbit-core">WORK</span>
-                  </span>
-                  <span className="hero-cta-touch-copy">
-                    <span>{locale === "en" ? "View " : "Bekijk "}<em>{locale === "en" ? "work" : "werk"}</em></span>
-                    <ArrowDown aria-hidden="true" />
                   </span>
                 </a>
               </div>
