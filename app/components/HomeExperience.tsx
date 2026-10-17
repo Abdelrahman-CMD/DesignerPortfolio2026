@@ -2205,6 +2205,12 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
                 <a
                   className="hero-cta-container"
                   href="#werk"
+                  onPointerDown={(event) => {
+                    if (event.pointerType === "touch") event.currentTarget.classList.add("is-touch-pressed");
+                  }}
+                  onPointerUp={(event) => event.currentTarget.classList.remove("is-touch-pressed")}
+                  onPointerCancel={(event) => event.currentTarget.classList.remove("is-touch-pressed")}
+                  onPointerLeave={(event) => event.currentTarget.classList.remove("is-touch-pressed")}
                   aria-label="Zie de gevolgen en ontdek de acht projecten"
                 >
                   <span className="hero-cta-shape" aria-hidden="true">

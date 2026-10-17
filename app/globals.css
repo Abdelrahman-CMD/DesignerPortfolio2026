@@ -10756,6 +10756,38 @@ html[data-js="on"] .project-visual-full { opacity: 0; }
   .method-note-back p { font-size: 2rem; }
 }
 .method-paper-preview.is-flipped .method-note-back { opacity: 1; visibility: visible; transform: rotateY(0); }
+
+@media (max-width: 980px), (hover: none), (pointer: coarse) {
+  .hero-cta-stage {
+    width: var(--hero-cta-circle-size);
+    height: var(--hero-cta-circle-size);
+  }
+  .hero-cta-container {
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    min-height: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    justify-content: center;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .hero-cta-shape { display: grid; }
+  .hero-cta-touch-copy { display: none; }
+  .hero-cta-container .hero-cta-ring-idle { opacity: 1; }
+  .hero-cta-container .hero-cta-ring-active { opacity: 0; }
+  .hero-cta-container.is-touch-pressed .hero-cta-shape,
+  .hero-cta-container:active .hero-cta-shape {
+    background: #24211e;
+    border-color: #24211e;
+    color: #f9f6f0;
+    box-shadow: 0 1rem 2.5rem rgba(35,30,26,0.2);
+    animation: none;
+  }
+}
 @media (prefers-reduced-motion: reduce) {
   .method-note-back { transition: none; transform: none; }
 }
