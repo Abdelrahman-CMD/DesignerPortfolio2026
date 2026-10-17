@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { CSSProperties, useEffect, useLayoutEffect, useRef, useState } from "react";
 import ArrowUpRight from "lucide-react/icons/arrow-up-right";
+import ArrowDown from "lucide-react/icons/arrow-down";
 import BriefcaseBusiness from "lucide-react/icons/briefcase-business";
 import FileText from "lucide-react/icons/file-text";
 import Figma from "lucide-react/icons/figma";
@@ -2241,8 +2242,8 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
                     <span className="hero-cta-orbit-core">WORK</span>
                   </span>
                   <span className="hero-cta-touch-copy">
-                    <span>{locale === "en" ? "Show the work" : "Bekijk werk"}</span>
-                    <ArrowUpRight aria-hidden="true" />
+                    <span>{locale === "en" ? "View " : "Bekijk "}<em>{locale === "en" ? "work" : "werk"}</em></span>
+                    <ArrowDown aria-hidden="true" />
                   </span>
                 </a>
               </div>
