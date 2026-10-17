@@ -627,6 +627,29 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
   useEffect(() => {
     const layer = root.current?.querySelector<HTMLElement>(".mind-zone-layer");
     if (!layer) return;
+    const photo = root.current?.querySelector<HTMLElement>(".mind-hero-photo-slide");
+    const layoutPosition = (element: HTMLElement) => {
+      let x = 0;
+      let y = 0;
+      let current: HTMLElement | null = element;
+      while (current) {
+        x += current.offsetLeft;
+        y += current.offsetTop;
+        current = current.offsetParent as HTMLElement | null;
+      }
+      return { x, y };
+    };
+    const alignHoverLayer = () => {
+      if (!photo) return;
+      const imagePosition = layoutPosition(photo);
+      const hoverPosition = layoutPosition(layer);
+      layer.style.translate = `${imagePosition.x - hoverPosition.x}px ${imagePosition.y - hoverPosition.y}px`;
+    };
+    const alignmentObserver = new ResizeObserver(alignHoverLayer);
+    if (photo) alignmentObserver.observe(photo);
+    if (photo?.parentElement) alignmentObserver.observe(photo.parentElement);
+    window.addEventListener("resize", alignHoverLayer);
+    alignHoverLayer();
     const desktop = window.matchMedia("(min-width: 981px) and (hover: hover) and (pointer: fine)");
     let frame = 0;
     let pointerX = 0;
@@ -669,6 +692,9 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
     layer.addEventListener("focusin", onFocus);
     return () => {
       cancelAnimationFrame(frame);
+      alignmentObserver.disconnect();
+      window.removeEventListener("resize", alignHoverLayer);
+      layer.style.removeProperty("translate");
       layer.removeEventListener("pointermove", onMove);
       layer.removeEventListener("focusin", onFocus);
     };
