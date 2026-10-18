@@ -261,6 +261,7 @@ const storyRouteStops = [
 ] as const;
 
 type StoryMosaicController = {
+  prepare: () => void;
   render: (reveal: number, exit: number) => void;
   resize: () => void;
   dispose: () => void;
@@ -467,6 +468,9 @@ function createStoryMosaic(
   };
 
   return {
+    prepare() {
+      initialize();
+    },
     render(reveal, exit) {
       revealProgress = clamp01(reveal);
       exitProgress = clamp01(exit);
@@ -628,18 +632,6 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
     ? ["The brief was clear. Until we started asking questions.", "On paper, it was three screens.", "I was sure it worked. Good thing we tested it.", "Filename: final_final_really_this_time_v8."]
     : ["De briefing was helder. Tot we vragen gingen stellen.", "Op papier waren het drie schermen.", "Ik wist zeker dat dit werkte. Gelukkig hebben we het getest.", "Bestandsnaam: definitief_final_nu_echt_v8."];
   const touchMindZone = mindZones.find((zone) => zone.id === activeMindZone) ?? mindZones[0];
-
-  useEffect(() => {
-    const contours = root.current?.querySelector<SVGElement>(".mind-brain-contours");
-    if (!contours) return;
-    const observer = new IntersectionObserver(([entry]) => {
-      if (!entry.isIntersecting) return;
-      contours.dataset.intro = "seen";
-      observer.disconnect();
-    }, { threshold: 0.35 });
-    observer.observe(contours);
-    return () => observer.disconnect();
-  }, []);
 
   useEffect(() => {
     const dismiss = (event: KeyboardEvent) => {
@@ -874,6 +866,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
       }
 
       if (skipHeroIntro) {
+        gsap.set(".mind-hero-photo-slide", { attr: { "data-reveal": "complete" } });
         markHeroReady();
         gsap.set(".site-header", { autoAlpha: 1, y: 0 });
         gsap.set(".mind-title-handwrite", { clipPath: "inset(0 0% 0 0)" });
@@ -892,8 +885,8 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
           xPercent: 14,
           opacity: 0.18,
         });
-        gsap.set(".mind-hero-mosaic", { filter: "blur(16px)", scale: 1.055, opacity: 1 });
-        gsap.set(".mind-hero-base", { filter: "blur(10px)", scale: 1.025, opacity: 0 });
+        gsap.set(".mind-hero-mosaic", { filter: touchHeroVisual ? "none" : "blur(16px)", scale: 1.055, opacity: 1 });
+        gsap.set(".mind-hero-base", { filter: touchHeroVisual ? "none" : "blur(10px)", scale: 1.025, opacity: 0 });
         gsap.set(".mind-title-line > span", { y: "1.24em" });
         // Gelijk aan de pre-hydration lock in globals.css: wijzig ze samen.
         gsap.set(".site-header", { autoAlpha: 0, y: -18 });
@@ -904,7 +897,13 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
         gsap.set(".mind-brain-dot", { autoAlpha: 0, scale: 0.68, transformOrigin: "50% 50%" });
 
         const revealHeroVisual = () => {
-          const visual = gsap.timeline({ defaults: { ease: "power4.out" } });
+          const visual = gsap.timeline({
+            defaults: { ease: "power4.out" },
+            onComplete: () => {
+              gsap.set(".mind-hero-photo-slide", { attr: { "data-reveal": "complete" } });
+              root.current?.querySelector<SVGElement>(".mind-brain-contours")?.setAttribute("data-intro", "seen");
+            },
+          });
           visual
             .to(
               ".mind-hero-photo-slide",
@@ -928,12 +927,12 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
             )
             .to(
               ".mind-hero-mosaic",
-              { filter: "blur(0px)", scale: 1, duration: 1.04, ease: "power3.out" },
+              { ...(touchHeroVisual ? {} : { filter: "blur(0px)" }), scale: 1, duration: 1.04, ease: "power3.out" },
               "<",
             )
             .to(
               ".mind-hero-base",
-              { filter: "blur(0px)", scale: 1, opacity: 1, duration: 0.9, ease: "power3.out" },
+              { ...(touchHeroVisual ? {} : { filter: "blur(0px)" }), scale: 1, opacity: 1, duration: 0.9, ease: "power3.out" },
               "<+0.34",
             )
             .to(
@@ -956,6 +955,8 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
           onComplete: () => {
             markHeroReady();
             rememberHomeMotion();
+            // Prepare the below-the-fold mosaic before its scroll-triggered reveal.
+            if (touchHeroVisual) heroMosaic?.prepare();
           },
         });
         intro

@@ -1655,6 +1655,13 @@ a:focus-visible > .link-icon svg * {
 .mind-brain-contours { display: block; position: absolute; inset: 0; width: 100%; height: 100%; z-index: 3; overflow: visible; }
 .mind-brain-contours image { opacity: 0; transition: opacity 220ms ease; }
 .mind-brain-contours image.is-active { opacity: 1; }
+html[data-js="on"] .mind-hero-photo-slide:not([data-reveal="complete"]) .mind-brain-contours { visibility: hidden; }
+@media (max-width: 720px), (hover: none), (pointer: coarse) {
+  html[data-js="on"] .mind-hero[data-hero-motion="pending"] :is(.mind-hero-mosaic, .mind-hero-base) {
+    filter: none;
+    will-change: opacity, transform;
+  }
+}
 @keyframes mind-contour-intro {
   0%, 100% { opacity: 0.18; }
   45% { opacity: 0.8; }

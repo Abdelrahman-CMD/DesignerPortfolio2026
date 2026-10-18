@@ -37,13 +37,20 @@ test("touch brain uses contour feedback and leaves the artwork unobstructed", ()
   assert.match(css, /\.mind-brain-dots \{ display: none; \}/);
   assert.doesNotMatch(home, /className="mind-touch-tabs"/);
   assert.match(home, /className="mind-brain-contours"/);
-  assert.match(home, /contours.dataset.intro = "seen"/);
+  assert.match(home, /setAttribute\("data-intro", "seen"\)/);
   assert.doesNotMatch(css, /aspect-ratio: 1\.06; border-top:/);
 });
 
 test("compact hero height follows portrait geometry instead of viewport height", () => {
   assert.match(css, /min-height: calc\(72\.2cqw \+ var\(--space-6\) \+ var\(--space-3\)\)/);
   assert.doesNotMatch(css, /min-height: max\(40rem, calc\(100svh - 11rem\)\)/);
+});
+
+test("touch mosaic avoids blur and contours wait for the reveal to complete", () => {
+  assert.match(home, /filter: touchHeroVisual \? "none" : "blur\(16px\)"/);
+  assert.match(home, /if \(touchHeroVisual\) heroMosaic\?\.prepare\(\)/);
+  assert.match(home, /onComplete: \(\) => \{\s*gsap.set\("\.mind-hero-photo-slide", \{ attr: \{ "data-reveal": "complete"/);
+  assert.match(css, /:not\(\[data-reveal="complete"\]\) \.mind-brain-contours \{ visibility: hidden; \}/);
 });
 
 test("postcard tracks cannot grow to intrinsic unwrapped headline widths", () => {
