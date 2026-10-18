@@ -18,7 +18,7 @@ Local implementation; do not publish without approval.
 | --- | --- | --- | --- |
 | Header | Hamburger at <=1100 CSS px | Full links above 1100 | Labels never wrap; navigation never collides with brand |
 | Hero | Stack at <=720; two columns above | Existing editorial composition | No sudden text enlargement when stacking |
-| Hero portrait | Beside CTA at 375-720; stacked below CTA at <=374; capped at 26rem | Aligned beside heading on intermediate widths | Brain artwork and hit regions share photo geometry |
+| Hero portrait | Stacked below CTA at <=720; capped at 26rem | Aligned beside heading on intermediate widths | Brain artwork and hit regions share photo geometry |
 | Brain details | Tap artwork with light contour feedback; no extra numbered controls | Hover with active contour above 720 | Details also available on keyboard focus; Escape dismisses |
 | Work CTA | Left 88px circle at <=720 | Centred circle above 720 | Magnet only above 980 with fine pointer |
 | Case intro | Flowing copy followed by media at <=980 | Existing wide layout | Media never overlays summary or metadata |
