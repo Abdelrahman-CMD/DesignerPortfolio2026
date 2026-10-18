@@ -419,9 +419,18 @@ test("renders the three live client cases as measured scroll stories", async () 
   assert.match(atotzHtml, /contact-keuzeformulier\.jpg/);
   assert.match(atotzHtml, /bewijs-2-sectorroutes\.jpg/);
 
-  assert.match(hijamaHtml, /9\.3K/);
-  assert.match(hijamaHtml, /182/);
+  /* De Search Console-cijfers zijn in oktober 2026 opnieuw afgelezen: 16 maanden
+     leverden inmiddels 13K vertoningen en 252 klikken op, waar de case eerst
+     9,3K en 182 noemde. De meetperiode staat er nu bij. */
+  assert.match(hijamaHtml, /13K/);
+  assert.match(hijamaHtml, /252/);
+  assert.match(hijamaHtml, /gemeten tot oktober 2026/);
+  assert.doesNotMatch(hijamaHtml, /9[,.]3K/);
   assert.match(hijamaHtml, /2m56/);
+  /* De twee ketens die uit die cijfers volgen staan in kaart 04, in de
+     zichtbare stroom en niet achter de verdieping. */
+  assert.match(hijamaHtml, /positie 8,4/);
+  assert.match(oppasHtml, /43% van het zoekverkeer/);
   assert.match(atotzHtml, /2[,.]24K/);
   assert.match(atotzHtml, /18[,.]6/);
   assert.match(atotzHtml, /De aanvragen komen binnen/);

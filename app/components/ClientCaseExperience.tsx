@@ -91,7 +91,7 @@ const clientStories: Record<ClientSlug, ClientStory> = {
     snapshot: [
       { label: copy("Probleem", "Problem"), value: copy("Nieuwe bezoekers hadden uitleg en vertrouwen nodig vóórdat zij een behandeling durfden bespreken.", "New visitors needed clarity and reassurance before feeling ready to discuss a treatment.") },
       { label: copy("Oplossing", "Solution"), value: copy("Dertien gerichte pagina’s verbinden behandelingen, Nora’s expertise, FAQ en persoonlijk WhatsApp-contact.", "Thirteen focused pages connect treatments, Nora’s expertise, FAQs and personal WhatsApp contact.") },
-      { label: copy("Resultaat", "Outcome"), value: copy("9,3K Google-vertoningen en 182 organische klikken in 16 maanden; recent gemiddeld 2m56 per bezoek.", "9.3K Google impressions and 182 organic clicks in 16 months; recent visits averaged 2m56.") },
+      { label: copy("Resultaat", "Outcome"), value: copy("252 organische klikken uit 13K vertoningen in 16 maanden, gemeten tot oktober 2026; recent gemiddeld 2m56 per bezoek.", "252 organic clicks from 13K impressions over 16 months, measured to October 2026; recent visits averaged 2m56.") },
     ],
     cards: [
       {
@@ -130,20 +130,20 @@ const clientStories: Record<ClientSlug, ClientStory> = {
       {
         number: "04",
         eyebrow: copy("De gemeten bewijslaag", "The measured evidence layer"),
-        title: copy("De architectuur werd niet alleen gebouwd. Ze wordt gevonden en gebruikt.", "The architecture was not only built. It is being found and used."),
-        body: copy("Search Console en recente site-analytics laten organische zichtbaarheid, inhoudelijke verdieping en een uitgesproken mobiele context zien. De publieke audit bevestigt daarnaast dat alle dertien sitemap-URL’s bereikbaar zijn.", "Search Console and recent site analytics show organic visibility, deeper content exploration and a distinctly mobile context. The public audit also confirms that all thirteen sitemap URLs are reachable."),
+        title: copy("Wat de twijfel moest wegnemen, blijkt ook de ingang te zijn.", "What was meant to take away doubt turns out to be the way in."),
+        body: copy("De FAQ moest twijfel wegnemen bij iemand die net is doorverwezen. Na zestien maanden is het na de homepage de best gevonden pagina, en op de vraag of hijama kan tijdens de menstruatie staat de site gemiddeld op positie 8,4.", "The FAQ was there to take away doubt for someone who had just been referred. Sixteen months on it is the best-found page after the homepage, and on the question of whether hijama is possible during menstruation the site sits at an average position of 8.4."),
         note: copy("Geen toegeschreven boekingen zonder CTA-tracking. Wel controleerbaar bewijs van bereik en gebruik.", "No attributed bookings without CTA tracking, but there is verifiable evidence of reach and use."),
         tone: "hijama-deep",
         metrics: true,
       },
     ],
     metrics: [
-      { value: "9.3K", label: copy("Google-vertoningen · 16 maanden", "Google impressions · 16 months"), source: copy("Search Console", "Search Console") },
-      { value: "182", label: copy("organische klikken", "organic clicks"), source: copy("Search Console", "Search Console") },
+      { value: "8.4", label: copy("gemiddelde positie op een behandelvraag", "average position on a treatment question"), source: copy("Search Console", "Search Console") },
+      { value: "252", label: copy("organische klikken · 16 maanden", "organic clicks · 16 months"), source: copy("Search Console", "Search Console") },
       { value: "2m56", label: copy("gemiddelde bezoektijd · recente 30 dagen", "average visit · recent 30 days"), source: copy("Site-analytics", "Site analytics") },
       { value: "85%", label: copy("mobiele bezoekers · 44 van 52", "mobile visitors · 44 of 52"), source: copy("Site-analytics", "Site analytics") },
     ],
-    metricContext: copy("52 unieke bezoekers genereerden recent 145 paginaweergaven: 2,8 per bezoeker. Diensten, Over Nora, Wet Cupping en FAQ stonden bij de meest bekeken routes.", "52 unique visitors recently generated 145 pageviews: 2.8 per visitor. Services, About Nora, Wet Cupping and FAQs ranked among the most-viewed routes."),
+    metricContext: copy("52 unieke bezoekers genereerden recent 145 paginaweergaven: 2,8 per bezoeker, met Diensten, Over Nora, Wet Cupping en FAQ bij de meest bekeken routes. Zoekcijfers uit Search Console, gemeten van 15 juni 2025 tot 14 oktober 2026: de site wordt gevonden op “hijama amsterdam” en niet op “cupping amsterdam”, waar ook fysiotherapeuten en wellnesscentra op mikken.", "52 unique visitors recently generated 145 pageviews: 2.8 per visitor, with Services, About Nora, Wet Cupping and FAQs among the most-viewed routes. Search figures from Search Console, measured 15 June 2025 to 14 October 2026: the site is found on “hijama amsterdam” and not on “cupping amsterdam”, a term physiotherapists and wellness centres target too."),
     deepDive: [
       { number: "05", eyebrow: copy("Publieke audit", "Public audit"), title: copy("13 van 13 pagina’s bereikbaar", "13 of 13 pages reachable"), body: copy("Iedere sitemap-URL gaf een succesvolle respons en bevatte een unieke titel, description, canonical, social metadata en één H1.", "Every sitemap URL returned successfully and included a unique title, description, canonical, social metadata and one H1."), note: copy("De audit bewijst technische levering en crawlbaarheid, maar garandeert geen zoekpositie.", "The audit proves technical delivery and crawlability, but does not guarantee rankings.") },
       { number: "06", eyebrow: copy("Gedrag", "Behaviour"), title: copy("Bezoekers verdiepen zich verder dan de entree", "Visitors move beyond the entrance"), body: copy("De 145 paginaweergaven bij 52 unieke bezoekers laten zien dat behandelingen en vertrouwenscontent daadwerkelijk worden geopend.", "145 pageviews from 52 unique visitors show that treatment and trust content is actively explored."), note: copy("Gemiddeld 2,8 paginaweergaven per unieke bezoeker in de gemeten 30 dagen.", "An average of 2.8 pageviews per unique visitor during the measured 30 days.") },
@@ -312,9 +312,9 @@ const clientStories: Record<ClientSlug, ClientStory> = {
       },
       {
         number: "04", eyebrow: copy("Het eerste resultaat", "The first outcome"),
-        title: copy("De rustige route vertaalt zich al naar concrete boekingswaarde.", "The calm journey is already translating into concrete booking value."),
-        body: copy("Sinds de lancering in juli 2026 heeft de website volgens de eigenaar meer dan €2.000 aan boekingen gegenereerd. De publieke audit bevestigt daarnaast een technisch complete drietalige basis.", "Since launching in July 2026, the website has generated more than €2,000 in bookings according to the owner. The public audit also confirms a technically complete trilingual foundation."),
-        note: copy("Boekingswaarde is klantgerapporteerd; technische bevindingen zijn publiek gecontroleerd.", "Booking value is client-reported; technical findings were checked publicly."),
+        title: copy("Drie talen kwamen niet uit een strategie, maar uit haar klantenkring.", "Three languages came from her client base, not from a strategy."),
+        body: copy("Chaima spreekt naast Nederlands ook Engels en Frans, net als een deel van de gezinnen waar ze eerder oppaste. Daarom drie versies, die ze zelf heeft nagekeken. Na drie maanden komt 43% van het zoekverkeer via die twee pagina’s binnen.", "Alongside Dutch, Chaima speaks English and French, as did some of the families she used to sit for. Hence three versions, which she checked herself. Three months in, 43% of search traffic arrives through those two pages."),
+        note: copy("Boekingswaarde is klantgerapporteerd, technische bevindingen zijn publiek gecontroleerd. De zoekcijfers zijn klein: ze zeggen wie haar vindt, niet dat de site nieuwe ouders werft.", "Booking value is client-reported, technical findings were checked publicly. The search figures are small: they say who finds her, not that the site is winning new parents."),
         tone: "oppas-ink", metrics: true,
       },
     ],
@@ -324,7 +324,7 @@ const clientStories: Record<ClientSlug, ClientStory> = {
       { value: "05", label: copy("velden in de WhatsApp-intake", "fields in the WhatsApp intake"), source: copy("Live route", "Live journey") },
       { value: "0", label: copy("kapotte beelden of mobiele overflow", "broken images or mobile overflow"), source: copy("Desktop + mobiel", "Desktop + mobile") },
     ],
-    metricContext: copy("Alle drie taalpagina’s gaven een succesvolle respons, met eigen taalcode, canonical en social metadata. Alle zeven gecontroleerde afbeeldingen hebben een ingevulde alt-tekst.", "All three language pages returned successfully, with their own language code, canonical and social metadata. All seven checked images have non-empty alt text."),
+    metricContext: copy("Alle drie taalpagina’s gaven een succesvolle respons, met eigen taalcode, canonical en social metadata. Alle zeven gecontroleerde afbeeldingen hebben een ingevulde alt-tekst. Search Console, 15 juli tot 14 oktober 2026: 35 klikken op 255 vertoningen, waarvan vijftien via de Engelse en Franse pagina’s.", "All three language pages returned successfully, with their own language code, canonical and social metadata. All seven checked images have non-empty alt text. Search Console, 15 July to 14 October 2026: 35 clicks from 255 impressions, fifteen of them through the English and French pages."),
     deepDive: [
       { number: "05", eyebrow: copy("Publieke audit", "Public audit"), title: copy("Drie talen, technisch als drie echte ingangen", "Three languages built as three real entrances"), body: copy("De Nederlandse, Engelse en Franse pagina’s hebben ieder correcte taalinstellingen, unieke metadata en structured data voor LocalBusiness, Person en ContactPoint.", "The Dutch, English and French pages each have correct language settings, unique metadata and structured data for LocalBusiness, Person and ContactPoint."), note: copy("Lokalisatie zit in de structuur, niet alleen in de vertaalde woorden.", "Localisation lives in the structure, not just the translated words.") },
       { number: "06", eyebrow: copy("Toegankelijke levering", "Accessible delivery"), title: copy("Beelden, bediening en mobiele layout blijven bruikbaar", "Images, controls and mobile layout remain usable"), body: copy("De audit vond geen ontbrekende alt-teksten, geen onbenoemde bediening, geen kapotte afbeeldingen en geen horizontale overflow.", "The audit found no missing alt text, unnamed controls, broken images or horizontal overflow."), note: copy("Dit zijn sterke toegankelijkheidssignalen, geen volledige WCAG-certificering.", "These are strong accessibility signals, not full WCAG certification.") },
