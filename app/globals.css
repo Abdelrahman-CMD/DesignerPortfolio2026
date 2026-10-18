@@ -589,8 +589,13 @@
   .tc-hero-copy { min-height: 78svh; padding: var(--space-8) var(--space-2) var(--space-6); }
   .tc-hero-media { min-height: 66svh; }
   .tc-card { grid-template-columns: minmax(17rem, 0.9fr) minmax(22rem, 1.1fr); }
-  .tc-proof-heading { grid-template-columns: 1fr 2fr; }
-  .tc-proof-heading > p:last-child { grid-column: 2; }
+  /* Hier stond "1fr 2fr". De kop ernaast eist meer breedte dan er is, en dan
+     knijpt een fr-kolom terug tot nul: het kopnummer kwam in een kolom van 0px
+     te staan en brak af tot een verticale sliert van losse letters. Onder 720px
+     stond deze kop al als blok; dat trekken we door naar de hele band. */
+  .tc-proof-heading { display: block; }
+  .tc-proof-heading h2 { margin-top: var(--space-4); }
+  .tc-proof-heading > p:last-child { width: min(100%, 46ch); margin-top: var(--space-4); }
 }
 
 @media (min-width: 721px) and (max-width: 980px) {
@@ -7110,6 +7115,19 @@ html.is-cta-captured a { cursor: none !important; }
     box-shadow: 0 1.5rem 3.5rem rgba(45, 42, 38, 0.13);
   }
 
+  /* Die tweede rij is op 48svh gemaximeerd omdat er normaal een beeld in staat.
+     In de bewijskaart staat daar het cijferbord, en dat is tekst: op een telefoon
+     is het ruim 870px hoog en werd het op 405px afgesneden, middenin het derde
+     cijfer. Staat er een bord in, dan groeit de rij mee. */
+  .tc-card:has(> .cc-card-metrics) {
+    grid-template-rows: auto auto;
+  }
+
+  .cc-card-metrics {
+    min-height: 0;
+    overflow: visible;
+  }
+
   .tc-card-shell:nth-child(even) .tc-card-copy,
   .tc-card-shell:nth-child(even) .tc-card-media {
     grid-column: 1;
@@ -9630,8 +9648,43 @@ html.is-cta-captured a { cursor: none !important; }
 }
 
 @media (max-width: 980px) {
+  /* Oppas is sinds 25 september een editorial-case: losse kaarten onder elkaar
+     in plaats van de stapel. Dat is boven 981px geregeld en onder 721px ook,
+     maar de band ertussen was nooit meegenomen. Daar kreeg de kaart wel een
+     kolom met twee rijen - tekst boven, beeld eronder - terwijl hij de vaste
+     deck-hoogte van 84svh hield en overflow verbergt. Twee rijen in een kaart
+     die niet mag groeien: het beeld schoof over de tekst heen. Hier krijgt hij
+     dezelfde behandeling als aan weerszijden van de band. */
   .tc-page-oppas .tc-card {
+    position: relative;
+    top: auto;
+    height: auto;
+    min-height: 0;
+    overflow: visible;
     grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+  }
+
+  .tc-page-oppas .tc-card-shell,
+  .tc-page-oppas .tc-card-shell:last-child {
+    min-height: auto;
+  }
+
+  .tc-page-oppas .tc-card-shell + .tc-card-shell {
+    margin-top: clamp(1.5rem, 4svh, 3.5rem);
+  }
+
+  /* Tekst boven, beeld eronder. Dit stond verderop al, maar werd overruled:
+     beeld en tekst belandden allebei in rij 1 en lagen dus op elkaar. Met de
+     kindcombinator wint het wel. */
+  .tc-page-oppas .tc-card > .tc-card-copy {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .tc-page-oppas .tc-card > .tc-card-media {
+    grid-column: 1;
+    grid-row: 2;
   }
 
   .tc-page-oppas .tc-card-shell:nth-child(even) .tc-card-copy,
