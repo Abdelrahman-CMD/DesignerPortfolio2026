@@ -616,6 +616,11 @@ function rememberHomeMotion() {
 export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
   const root = useRef<HTMLElement>(null);
   const [activeMindZone, setActiveMindZone] = useState<string | null>(null);
+  const mindDismissTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const keepMindCard = () => {
+    if (mindDismissTimer.current) clearTimeout(mindDismissTimer.current);
+    mindDismissTimer.current = null;
+  };
   const [isMindTouchReady, setIsMindTouchReady] = useState(false);
   const [activeNav, setActiveNav] = useState("");
   const [flippedNotes, setFlippedNotes] = useState<number[]>([]);
@@ -625,32 +630,33 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
   const touchMindZone = mindZones.find((zone) => zone.id === activeMindZone) ?? mindZones[0];
 
   useEffect(() => {
+    const contours = root.current?.querySelector<SVGElement>(".mind-brain-contours");
+    if (!contours) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return;
+      contours.dataset.intro = "seen";
+      observer.disconnect();
+    }, { threshold: 0.35 });
+    observer.observe(contours);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const dismiss = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setActiveMindZone(null);
+    };
+    window.addEventListener("keydown", dismiss);
+    return () => {
+      window.removeEventListener("keydown", dismiss);
+      if (mindDismissTimer.current) clearTimeout(mindDismissTimer.current);
+    };
+  }, []);
+
+  useEffect(() => {
     const layer = root.current?.querySelector<HTMLElement>(".mind-zone-layer");
-    if (!layer) return;
     const photo = root.current?.querySelector<HTMLElement>(".mind-hero-photo-slide");
-    const layoutPosition = (element: HTMLElement) => {
-      let x = 0;
-      let y = 0;
-      let current: HTMLElement | null = element;
-      while (current) {
-        x += current.offsetLeft;
-        y += current.offsetTop;
-        current = current.offsetParent as HTMLElement | null;
-      }
-      return { x, y };
-    };
-    const alignHoverLayer = () => {
-      if (!photo) return;
-      const imagePosition = layoutPosition(photo);
-      const hoverPosition = layoutPosition(layer);
-      layer.style.translate = `${imagePosition.x - hoverPosition.x}px ${imagePosition.y - hoverPosition.y}px`;
-    };
-    const alignmentObserver = new ResizeObserver(alignHoverLayer);
-    if (photo) alignmentObserver.observe(photo);
-    if (photo?.parentElement) alignmentObserver.observe(photo.parentElement);
-    window.addEventListener("resize", alignHoverLayer);
-    alignHoverLayer();
-    const desktop = window.matchMedia("(min-width: 981px) and (hover: hover) and (pointer: fine)");
+    if (!layer || !photo) return;
+    const desktop = window.matchMedia("(min-width: 721px) and (hover: hover) and (pointer: fine)");
     let frame = 0;
     let pointerX = 0;
     let pointerY = 0;
@@ -688,21 +694,18 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
       pointerY = rect.top;
       positionCard();
     };
-    layer.addEventListener("pointermove", onMove, { passive: true });
-    layer.addEventListener("focusin", onFocus);
+    photo.addEventListener("pointermove", onMove, { passive: true });
+    photo.addEventListener("focusin", onFocus);
     return () => {
       cancelAnimationFrame(frame);
-      alignmentObserver.disconnect();
-      window.removeEventListener("resize", alignHoverLayer);
-      layer.style.removeProperty("translate");
-      layer.removeEventListener("pointermove", onMove);
-      layer.removeEventListener("focusin", onFocus);
+      photo.removeEventListener("pointermove", onMove);
+      photo.removeEventListener("focusin", onFocus);
     };
   }, []);
 
   useEffect(() => {
     const touchHero = window.matchMedia(
-      "(max-width: 980px), (hover: none), (pointer: coarse)",
+      "(max-width: 720px), (hover: none), (pointer: coarse)",
     );
 
     const syncTouchState = () => {
@@ -760,7 +763,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
         ignoreMobileResize: true,
         limitCallbacks: true,
       });
-      const touchHeroVisual = window.matchMedia("(max-width: 980px), (hover: none), (pointer: coarse)").matches;
+      const touchHeroVisual = window.matchMedia("(max-width: 720px), (hover: none), (pointer: coarse)").matches;
 
       const motion = {
         ease: "power4.out",
@@ -1033,7 +1036,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
         let pointerFrame = 0;
         let isNear = false;
         let hasFocus = false;
-        const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
+        const finePointer = window.matchMedia("(min-width: 981px) and (hover: hover) and (pointer: fine)");
 
         if (!prefersReducedMotion) {
           /* Was 11 seconden per omwenteling, oftewel 33 graden per seconde.
@@ -1092,6 +1095,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
         };
 
         const handlePointerMove = (event: PointerEvent) => {
+          if (!finePointer.matches) return;
           if (event.pointerType && event.pointerType !== "mouse" && event.pointerType !== "pen") return;
           pointerX = event.clientX;
           pointerY = event.clientY;
@@ -1110,6 +1114,18 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
           resetMagnet();
         };
 
+        const handleMagnetModeChange = () => {
+          pointerX = -1000;
+          pointerY = -1000;
+          if (pointerFrame) window.cancelAnimationFrame(pointerFrame);
+          pointerFrame = 0;
+          moveX.tween.pause();
+          moveY.tween.pause();
+          gsap.set(heroCta, { x: 0, y: 0 });
+          setEngaged(hasFocus);
+        };
+
+        finePointer.addEventListener("change", handleMagnetModeChange);
         window.addEventListener("pointermove", handlePointerMove, { passive: true });
         window.addEventListener("blur", resetMagnet);
         heroCta.addEventListener("focus", handleFocus);
@@ -1130,6 +1146,7 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
         }
 
         cleanupHeroCta = () => {
+          finePointer.removeEventListener("change", handleMagnetModeChange);
           window.removeEventListener("pointermove", handlePointerMove);
           window.removeEventListener("blur", resetMagnet);
           heroCta.removeEventListener("focus", handleFocus);
@@ -2123,6 +2140,54 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
           <div className="mind-hero-canvas">
             <div className="mind-hero-visual">
               <div className="mind-hero-photo-slide">
+                <div className="mind-hit-layer" role="group" aria-label="Interactieve kaart van mijn ontwerpdenken">
+              {mindZones.map((zone) => {
+                const isActive = activeMindZone === zone.id;
+                const zoneLabel = translateText(locale, zone.label);
+                const zoneTitle = translateText(locale, zone.title);
+                const zoneDetail = translateText(locale, zone.detail);
+
+                return (
+                  <button
+                    key={zone.id}
+                    type="button"
+                    className={`mind-zone mind-zone-${zone.id}${isActive ? " is-active" : ""}`}
+                    data-mind-zone={zone.id}
+                    style={{ "--zone-color": zone.color, "--zone-ink": zone.ink } as CSSProperties}
+                    aria-pressed={isActive}
+                    aria-label={`${zone.number} ${zoneLabel}: ${zoneTitle}. ${zoneDetail}`}
+                    onPointerEnter={(event) => {
+                      if (event.pointerType === "mouse" || event.pointerType === "pen") {
+                        keepMindCard();
+                        setActiveMindZone(zone.id);
+                      }
+                    }}
+                    onPointerLeave={(event) => {
+                      if (event.pointerType === "mouse" || event.pointerType === "pen") {
+                        keepMindCard();
+                        mindDismissTimer.current = setTimeout(() => setActiveMindZone(null), 240);
+                      }
+                    }}
+                    onFocus={(event) => {
+                      if (event.currentTarget.matches(":focus-visible")) setActiveMindZone(zone.id);
+                    }}
+                    onBlur={() => setActiveMindZone(null)}
+                    onClick={() => {
+                      if (window.matchMedia("(max-width: 720px), (hover: none), (pointer: coarse)").matches) {
+                        setActiveMindZone(zone.id);
+                      }
+                    }}
+                  >
+                    <span className="mind-zone-surface" aria-hidden="true" />
+                    <span className="mind-zone-mobile-copy">
+                      <span className="mind-zone-mobile-kicker label">{zone.number} / {zoneLabel}</span>
+                      <strong>{zoneTitle}</strong>
+                      <span>{zoneDetail}</span>
+                    </span>
+                  </button>
+                );
+              })}
+                </div>
                 <Image
                   className="mind-hero-base"
                   src="/about/hero-abdel-profile.png"
@@ -2135,6 +2200,32 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
                 />
                 <canvas className="mind-hero-mosaic" width="1" height="1" aria-hidden="true" />
                 <div className="mind-brain-stage" aria-hidden="true">
+                  <svg className="mind-brain-contours" viewBox="0 0 261 233" aria-hidden="true">
+                    <defs>
+                      {mindZones.map((zone) => (
+                        <filter id={`brain-edge-${zone.id}`} key={zone.id} x="-5%" y="-5%" width="110%" height="110%" colorInterpolationFilters="sRGB">
+                          <feMorphology in="SourceAlpha" operator="dilate" radius="2" result="expanded" />
+                          <feMorphology in="expanded" operator="erode" radius="2" result="silhouette" />
+                          <feMorphology in="silhouette" operator="erode" radius="1.2" result="inner" />
+                          <feComposite in="silhouette" in2="inner" operator="out" result="edge" />
+                          <feFlood floodColor={`color-mix(in srgb, ${zone.color} 35%, white)`} result="light" />
+                          <feComposite in="light" in2="edge" operator="in" />
+                        </filter>
+                      ))}
+                    </defs>
+                    {mindZones.map((zone, index) => (
+                      <image
+                        key={zone.id}
+                        href={`/about/brain-mask-${zone.id}.png`}
+                        width="261"
+                        height="233"
+                        preserveAspectRatio="none"
+                        filter={`url(#brain-edge-${zone.id})`}
+                        className={activeMindZone === zone.id ? "is-active" : ""}
+                        style={{ "--contour-delay": `${index * 160}ms` } as CSSProperties}
+                      />
+                    ))}
+                  </svg>
                   <Image
                     className="mind-brain-state mind-brain-default"
                     src="/about/brain-default.svg"
@@ -2219,8 +2310,6 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
                         <span
                           style={{
                             "--ring-angle": `${(index / characters.length) * 360}deg`,
-                            "--ring-delay": `${-(Math.floor(index / (characters.length / 2)) * 0.5 + (index % (characters.length / 2)) / (characters.length / 2) * 0.32) * 26}s`,
-                            "--ring-progress": `${(Math.floor(index / (characters.length / 2)) * 0.5 + (index % (characters.length / 2)) / (characters.length / 2) * 0.32) * 100}%`,
                           } as CSSProperties}
                           key={`idle-${character}-${index}`}
                         >
@@ -2233,8 +2322,6 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
                         <span
                           style={{
                             "--ring-angle": `${(index / characters.length) * 360}deg`,
-                            "--ring-delay": `${-(Math.floor(index / (characters.length / 2)) * 0.5 + (index % (characters.length / 2)) / (characters.length / 2) * 0.32) * 26}s`,
-                            "--ring-progress": `${(Math.floor(index / (characters.length / 2)) * 0.5 + (index % (characters.length / 2)) / (characters.length / 2) * 0.32) * 100}%`,
                           } as CSSProperties}
                           key={`active-${character}-${index}`}
                         >
@@ -2249,50 +2336,6 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
             </div>
 
             <div className="mind-zone-layer" role="group" aria-label="Interactieve kaart van mijn ontwerpdenken">
-              {mindZones.map((zone) => {
-                const isActive = activeMindZone === zone.id;
-                const zoneLabel = translateText(locale, zone.label);
-                const zoneTitle = translateText(locale, zone.title);
-                const zoneDetail = translateText(locale, zone.detail);
-
-                return (
-                  <button
-                    key={zone.id}
-                    type="button"
-                    className={`mind-zone mind-zone-${zone.id}${isActive ? " is-active" : ""}`}
-                    data-mind-zone={zone.id}
-                    style={{ "--zone-color": zone.color, "--zone-ink": zone.ink } as CSSProperties}
-                    aria-pressed={isActive}
-                    aria-label={`${zone.number} ${zoneLabel}: ${zoneTitle}. ${zoneDetail}`}
-                    onPointerEnter={(event) => {
-                      if (event.pointerType === "mouse" || event.pointerType === "pen") {
-                        setActiveMindZone(zone.id);
-                      }
-                    }}
-                    onPointerLeave={(event) => {
-                      if (event.pointerType === "mouse" || event.pointerType === "pen") {
-                        setActiveMindZone(null);
-                      }
-                    }}
-                    onFocus={(event) => {
-                      if (event.currentTarget.matches(":focus-visible")) setActiveMindZone(zone.id);
-                    }}
-                    onBlur={() => setActiveMindZone(null)}
-                    onClick={() => {
-                      if (window.matchMedia("(max-width: 980px), (hover: none), (pointer: coarse)").matches) {
-                        setActiveMindZone(zone.id);
-                      }
-                    }}
-                  >
-                    <span className="mind-zone-surface" aria-hidden="true" />
-                    <span className="mind-zone-mobile-copy">
-                      <span className="mind-zone-mobile-kicker label">{zone.number} / {zoneLabel}</span>
-                      <strong>{zoneTitle}</strong>
-                      <span>{zoneDetail}</span>
-                    </span>
-                  </button>
-                );
-              })}
 
               {mindZones.map((zone) => {
                 const isActive = activeMindZone === zone.id;
@@ -2307,6 +2350,8 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
                     style={{ "--zone-color": zone.color, "--zone-ink": zone.ink } as CSSProperties}
                     aria-hidden={!isActive}
                     key={`annotation-${zone.id}`}
+                    onPointerEnter={keepMindCard}
+                    onPointerLeave={() => setActiveMindZone(null)}
                   >
                       <span className="mind-annotation-kicker label">
                         {zone.number} / {zoneLabel}
@@ -2361,26 +2406,6 @@ export function HomeExperience({ locale = "nl" }: { locale?: Locale }) {
               role="region"
               aria-label="Onderdelen van mijn ontwerpdenken"
             >
-              <div className="mind-touch-tabs" role="group" aria-label="Kies een hersendeel">
-                {mindZones.map((zone) => {
-                  const isActive = touchMindZone.id === zone.id;
-
-                  return (
-                    <button
-                      key={`touch-${zone.id}`}
-                      type="button"
-                      className={`mind-touch-tab${isActive ? " is-active" : ""}`}
-                      style={{ "--zone-color": zone.color, "--zone-ink": zone.ink } as CSSProperties}
-                      aria-pressed={isActive}
-                      aria-controls="mind-touch-detail"
-                      aria-label={`${zone.number} ${translateText(locale, zone.label)}`}
-                      onClick={() => setActiveMindZone(zone.id)}
-                    >
-                      <span>{zone.number}</span>
-                    </button>
-                  );
-                })}
-              </div>
               <div
                 className="mind-touch-detail"
                 id="mind-touch-detail"

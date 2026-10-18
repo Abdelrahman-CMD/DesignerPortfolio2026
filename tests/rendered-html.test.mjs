@@ -47,7 +47,8 @@ test("server-renders the complete portfolio homepage", async () => {
   assert.match(html, /brain-default\.svg/);
   assert.equal((html.match(/class="mind-brain-region(?: is-active)?"/g) ?? []).length, 5);
   assert.equal((html.match(/class="mind-zone mind-zone-/g) ?? []).length, 5);
-  assert.equal((html.match(/class="mind-touch-tab(?: is-active)?"/g) ?? []).length, 5);
+  assert.equal((html.match(/class="mind-touch-tab(?: is-active)?"/g) ?? []).length, 0);
+  assert.match(html, /class="mind-brain-contours"/);
   assert.match(html, /Bekijk werk/);
   assert.equal((html.match(/class="manifesto-marker-stroke"/g) ?? []).length, 3);
   assert.match(html, /class="mind-brain-stage"/);
@@ -588,9 +589,9 @@ test("ships the narrow-screen navigation with the header", async () => {
 test("keeps the switch to the hamburger tied to the measured breakpoint", async () => {
   const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
 
-  // Op 810px stonden de pil en de tekstnavigatie met nul tussenruimte tegen
-  // elkaar. Verschuift deze grens, dan gaan ze elkaar weer raken.
-  assert.match(css, /@media \(max-width: 859px\) \{[^}]*\.site-header \.top-nav/s);
+  // Switch before the full English labels crowd the brand or wrap.
+  assert.match(css, /@media \(max-width: 1100px\) \{[^}]*\.site-header \.top-nav/s);
+  assert.match(css, /\.top-nav a \{[^}]*white-space: nowrap/s);
   assert.match(css, /\.mobile-nav \{ display: none; \}/);
 });
 

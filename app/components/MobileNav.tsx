@@ -10,10 +10,8 @@ import { LanguageSwitcher, Locale, localeHref } from "../i18n";
 /* De navigatie voor smalle schermen, naar het ontwerp van Abdelrahman.
 
    Waarom hij bestaat: op de brede header staan de pil, vijf tekstknoppen en de
-   taalschakelaar naast elkaar. Onder ongeveer 860px raken die elkaar - gemeten
-   op 810px stonden de pil en de navigatie met nul tussenruimte tegen elkaar -
-   en daaronder knipte .site-shell (overflow-x: clip) de taalschakelaar stil af.
-   Vanaf dat punt neemt deze knop het over.
+   taalschakelaar naast elkaar. Vanaf 1100px en smaller neemt deze knop het
+   over, voordat de volledige Engelse labels het merk raken of afbreken.
 
    De drie streken in het icoon zijn met de hand getrokken van vorm: ze lopen
    licht golvend en zijn niet even lang, zodat ze bij het merk horen in plaats
